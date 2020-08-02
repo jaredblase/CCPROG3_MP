@@ -4,7 +4,7 @@
  * @author Sy, Jared
  * @version 1.0
  */
-public class Citizen implements Cloneable {
+public class Citizen {
     protected Name name;
     protected String homeAddress;
     protected String officeAddress;
@@ -22,9 +22,9 @@ public class Citizen implements Cloneable {
         maybePositive = false;
     }
 
-    // protected Citizen clone() {
-    //    return Citizen
-    // }
+     protected <E extends Citizen> Citizen(E citizen) {
+        this(citizen.name, citizen.homeAddress, citizen.officeAddress, citizen.email);
+     }
 
     public void showMenu() {
         prompt();
