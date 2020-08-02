@@ -4,7 +4,6 @@
  * @author Sy, Jared
  * @version 1.0
  */
-
 public class Citizen implements Cloneable {
     protected Name name;
     protected String homeAddress;
@@ -29,12 +28,7 @@ public class Citizen implements Cloneable {
 
     public void showMenu() {
         prompt();
-        System.out.println("Main Menu:");
-        System.out.println("1 - Check in");
-        System.out.println("2 - Report positive");
-        System.out.println("3 - Update profile information");
-        // note: use .wait() here
-        System.out.println("0 - Log out");
+        Menu.display("Main Menu", "Check in", "Report positive", "Update profile information", "Log out");
     }
 
     private void prompt() {
@@ -52,8 +46,7 @@ public class Citizen implements Cloneable {
     }
 
     private void updateInfo() {
-        System.out.println("Update Information Menu: ");
-        System.out.println("1 - ");
+        Menu.display("Update Information Menu", "Name");
     }
 
     private void logOut() {
