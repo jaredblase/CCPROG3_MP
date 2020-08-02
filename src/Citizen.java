@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * This class holds the information of a citizen and methods available for them.
  * @author Pua, Gabriel
@@ -9,7 +11,7 @@ public class Citizen {
     protected String homeAddress;
     protected String officeAddress;
     protected String email;
-    //protected ArrayList<Visit> visitRec;
+    protected ArrayList<Visit> visitRec;
     private boolean isPositive;
     private boolean maybePositive;
 
@@ -18,6 +20,7 @@ public class Citizen {
         this.homeAddress = homeAddress;
         this.officeAddress = officeAddress;
         this.email = email;
+        visitRec = new ArrayList<>();
         isPositive = false;
         maybePositive = false;
     }
