@@ -2,8 +2,8 @@ import java.util.Scanner;
 
 /**
  * This class is used for generating menus and retrieving an answer from the user.
- * @author Pua, Gabriel
- * @author Sy, Jared
+ * @author Gabriel Pua
+ * @author Jared Sy
  * @version 1.0
  */
 public class Menu {
@@ -18,7 +18,7 @@ public class Menu {
         int ctr = 1;
 
         //display menu
-        System.out.println(header);
+        System.out.println(header + " Menu");
         for (String i: options) {
             System.out.println(ctr++ + " - " + i);
         }
