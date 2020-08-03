@@ -2,9 +2,10 @@ import java.util.ArrayList;
 
 /**
  * This class holds the information of a citizen and methods available for them.
- * @author Pua, Gabriel
- * @author Sy, Jared
+ * @author Gabriel Pua
+ * @author Jared Sy
  * @version 1.0
+ * @see GovOfficial
  */
 public class Citizen {
     protected Name name;
@@ -31,7 +32,7 @@ public class Citizen {
 
     public void showMenu() {
         prompt();
-        Menu.display("Main Menu", "Check in", "Report positive", "Update profile information", "Log out");
+        Menu.display("User", "Check in", "Report positive", "Update profile information", "Log out");
     }
 
     private void prompt() {
