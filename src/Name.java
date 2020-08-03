@@ -1,8 +1,10 @@
+import java.util.Scanner;
+
 /**
  * This class holds the information of a name
  * and methods available for them.
- * @author Pua, Gabriel
- * @author Sy, Jared
+ * @author Gabriel Pua
+ * @author Jared Sy
  * @version 1.0
  */
 public class Name {
@@ -16,6 +18,39 @@ public class Name {
     public Name(String first, String middle, String last) {
         this.first = first;
         this.middle = middle;
+        this.last = last;
+    }
+
+    public void changeName() {
+        Scanner input = new Scanner(System.in);
+        int opt;
+
+        do {
+            opt = Menu.display("Name Change", "First Name", "Middle Name", "Last Name", "Back");
+            if(opt != 4) {
+                System.out.print("New Name: ");
+                switch (opt) {
+                    case 1 -> setFirst(input.nextLine());
+                    case 2 -> setMiddle(input.nextLine());
+                    case 3 -> setLast(input.nextLine());
+                }
+                System.out.println("New name:");
+                System.out.println(this);
+            }
+        } while (opt != 4);
+
+        input.close();
+    }
+
+    private void setFirst(String first) {
+        this.first = first;
+    }
+
+    private void setMiddle(String middle) {
+        this.middle = middle;
+    }
+
+    private void setLast(String last) {
         this.last = last;
     }
 
