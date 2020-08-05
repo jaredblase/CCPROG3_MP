@@ -140,7 +140,7 @@ public abstract class User {
 
         File file = new File(username + ".act");
         try (Scanner reader = new Scanner(file)) {
-            if(!password.equals(reader.nextLine())) {
+            if(!password.equals(reader.nextLine()) || isUnique(username)) {
                 throw new FileNotFoundException();
             }
 
