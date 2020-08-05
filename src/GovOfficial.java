@@ -8,8 +8,9 @@
  */
 public class GovOfficial extends Citizen {
 
-    private GovOfficial(Name name, String homeAddress, String officeAddress, String phoneNumber, String email) {
-        super(name, homeAddress, officeAddress, phoneNumber, email);
+    public GovOfficial(Name name, String homeAddress, String officeAddress, String phoneNumber,
+                        String email, String username) {
+        super(name, homeAddress, officeAddress, phoneNumber, email, username);
         String[] temp = new String[menuOptions.length + 6];
         System.arraycopy(menuOptions, 0, temp, 0, menuOptions.length);
         temp[3] = "Show Unassigned Cases";
@@ -18,6 +19,7 @@ public class GovOfficial extends Citizen {
         temp[6] = "Create Government Official Account";
         temp[7] = "Create Contact Tracer Account";
         temp[8] = "Terminate Account";
+        temp[9] = "Logout";
         menuOptions = temp;
     }
 
@@ -26,16 +28,28 @@ public class GovOfficial extends Citizen {
         int opt;
 
         do {
+            super.prompt();
             opt = Menu.display("User", menuOptions);
+            chooseMenu(opt);
+        } while (opt != 9);
+
+        super.logOut();
+    }
+
+    @Override
+    protected void chooseMenu(int opt) {
+        if (opt < 4) {
+            super.chooseMenu(opt);
+        } else {
             switch (opt) {
-                case 1 -> showUnassigned();
-                case 2 -> showUpdates();
-                case 3 -> showAnalytics();
-                case 4 -> createGov();
-                case 5 -> createTrace();
-                case 6 -> terminateAcc();
+                case 4 -> showUnassigned();
+                case 5 -> showUpdates();
+                case 6 -> showAnalytics();
+                case 7 -> createGov();
+                case 8 -> createTrace();
+                case 9 -> terminateAcc();
             }
-        } while (opt != 7);
+        }
     }
 
     private void showUnassigned() {
