@@ -8,12 +8,12 @@ import java.util.Scanner;
 public class User {
     private static ArrayList<String> usernames;
     private static ArrayList<String> roles;
-    private final String username;
-    private String role;
+    private final String USERNAME;
+    private final String ROLE;
 
     public User(String username, String role) {
-        this.username = username;
-        this.role = role;
+        USERNAME = username;
+        ROLE = role;
     }
 
     /**
@@ -65,9 +65,22 @@ public class User {
             System.out.print("Email address: ");
             writer.write("EMAIL:" + input.nextLine() + "\n");
 
+            // add username and role to ArrayList
+            usernames.add(username);
+            roles.add("ctizen");
+
             System.out.println("----YOU MAY NOW LOGIN WITH YOUR NEW ACCOUNT----");
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // attempt to write to the master list
+        try (FileWriter masterlist = new FileWriter("Master_List.txt", true)) {
+            masterlist.write(username + " citizen\n");
+        } catch (FileNotFoundException e) {
+            System.out.println("Error! Master list not found.\nNo admin currently.");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -84,11 +97,11 @@ public class User {
     }
 
     private String getUsername() {
-        return username;
+        return USERNAME;
     }
 
     private String getRole() {
-        return role;
+        return ROLE;
     }
 
     public static void loadUsers() {
