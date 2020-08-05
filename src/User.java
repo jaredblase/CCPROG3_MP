@@ -27,6 +27,8 @@ public class User {
         String username = input.nextLine();
         while(!isUnique(username)) {
             System.out.println("Username has already been taken!");
+            System.out.print("Username: ");
+            username = input.nextLine();
         }
         String path = username + ".act";
 
