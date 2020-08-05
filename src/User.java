@@ -1,9 +1,13 @@
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class User {
-    private static ArrayList<User> usernames;
+    private static ArrayList<String> usernames;
+    private static ArrayList<String> roles;
     private final String username;
     private String role;
 
@@ -12,24 +16,69 @@ public class User {
         this.role = role;
     }
 
+    /**
+     * Handles the registration of a new user
+     */
     public static void register() {
         Scanner input = new Scanner(System.in);
-        String str;
 
         System.out.println("ACCOUNT CREATION\n");
-        System.out.println("Username: ");
-        str = input.nextLine();
-        while(!isUnique(str)) {
+        System.out.print("Username: ");
+        String username = input.nextLine();
+        while(!isUnique(username)) {
             System.out.println("Username has already been taken!");
         }
-        setPassword();
+        String path = username + ".act";
+
+        // attempt to create a file
+        try {
+            File file = new File(path);
+            if(file.createNewFile()) {
+                System.out.println("Welcome " + username);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // attempt to write to the file
+        try (FileWriter writer = new FileWriter(path)) {
+            writer.write(setPassword() + "\n");
+            System.out.println("Personal Information:");
+
+            // get name
+            System.out.print("First name: ");
+            writer.write(input.nextLine() + ",");
+            System.out.print("Middle name: ");
+            writer.write(input.nextLine() + ",");
+            System.out.print("Last name: ");
+            writer.write(input.nextLine() + "\n");
+
+            // other information
+            System.out.print("Home address: ");
+            writer.write("HOME:" + input.nextLine() + "\n");
+            System.out.print("Office address: ");
+            writer.write("OFFICE:" + input.nextLine() + "\n");
+            System.out.print("Phone number: ");
+            writer.write("PHONE:" + input.nextLine() + "\n");
+            System.out.print("Email address: ");
+            writer.write("EMAIL:" + input.nextLine() + "\n");
+
+            System.out.println("----YOU MAY NOW LOGIN WITH YOUR NEW ACCOUNT----");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
+    /**
+     * Checks if the username received is not in the master list.
+     *
+     * @param username the name to be checked in the master list.
+     * @return true if the username is not in the master list.
+     */
     public static boolean isUnique(String username) {
-        for (User user: usernames)
-            if (user.getUsername().equals(username))
-                return false;
-        return true;
+        return !usernames.contains(username);
     }
 
     private String getUsername() {
@@ -42,11 +91,20 @@ public class User {
 
     public static void loadUsers() {
         usernames = new ArrayList<>();
+        roles = new ArrayList<>();
+        String[] info;
+
         File masterList = new File("Master_List.txt");
         try (Scanner input = new Scanner(masterList)) {
-
+            do {
+                info = input.nextLine().split(" ");
+                usernames.add(info[0]);
+                roles.add(info[1]);
+            } while (input.hasNextLine());
+        } catch (FileNotFoundException e) {
+            System.out.println("Error! Master list not found.\nNo admin currently.");
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
 
     }
@@ -65,7 +123,6 @@ public class User {
             pass = input.nextLine();
         }
 
-        input.close();
         return pass;
     }
 
@@ -73,8 +130,34 @@ public class User {
         String pass = setPassword();
     }
 
-    public static void login() {
+    public static Citizen login() {
+        Scanner input = new Scanner(System.in);
 
+        System.out.print("Username: ");
+        String username = input.nextLine();
+        System.out.print("Password: ");
+        String password = input.nextLine();
+        input.close();
+
+        File file = new File(username + ".act");
+        try (Scanner reader = new Scanner(file)) {
+            if(!password.equals(reader.nextLine())) {
+                throw new FileNotFoundException();
+            }
+
+            String[] name = reader.nextLine().split(",");
+            String homeAdd = reader.nextLine().substring(5);
+            String officeAdd = reader.nextLine().substring(8);
+            String phoneNumber = reader.nextLine().substring(7);
+            String email = reader.nextLine().substring(7);
+            return new Citizen(new Name(name[0], name[1], name[2]), homeAdd, officeAdd, phoneNumber, email);
+        } catch (FileNotFoundException e) {
+            System.out.println("Invalid username/password");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     @Override
