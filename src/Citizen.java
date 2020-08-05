@@ -8,25 +8,32 @@ import java.util.ArrayList;
  * @see GovOfficial
  */
 public class Citizen {
-    protected Name name;
-    protected String homeAddress;
-    protected String officeAddress;
-    protected String phoneNumber;
-    protected String email;
-    protected ArrayList<Visit> visitRec;
-    protected static String[] menuOptions = {"Check in", "Report positive", "Update profile information", "Log out"};
+    private Name name;
+    private String homeAddress;
+    private String officeAddress;
+    private String phoneNumber;
+    private String email;
+    private ArrayList<Visit> visitRec;
+    private String username;
     private boolean isPositive;
     private boolean maybePositive;
+    protected static String[] menuOptions = {"Check in", "Report positive", "Update profile information", "Logout"};
 
-    public Citizen(Name name, String homeAddress, String officeAddress, String phoneNumber, String email) {
+    public Citizen(Name name, String homeAddress, String officeAddress, String phoneNumber,
+                   String email, String username) {
         this.name = name;
         this.homeAddress = homeAddress;
         this.officeAddress = officeAddress;
         this.phoneNumber = phoneNumber;
         this.email = email;
+        this.username = username;
         visitRec = new ArrayList<>();
         isPositive = false;
         maybePositive = false;
+    }
+
+    protected String getUsername() {
+        return username;
     }
 
     public void showMenu() {
@@ -35,18 +42,22 @@ public class Citizen {
         do {
             prompt();
             opt = Menu.display("User", menuOptions);
-            switch (opt) {
-                case 1 -> checkIn();
-                case 2 -> reportPositive();
-                case 3 -> updateInfo();
-            }
+            chooseMenu(opt);
         } while (opt != 4);
 
         logOut();
     }
 
-    private void prompt() {
-        if(!isPositive && maybePositive) {
+    protected void chooseMenu(int opt) {
+        switch (opt) {
+            case 1 -> checkIn();
+            case 2 -> reportPositive();
+            case 3 -> updateInfo();
+        }
+    }
+
+    protected void prompt() {
+        if (!isPositive && maybePositive) {
             System.out.println("You might be positive!");
         }
     }
@@ -63,7 +74,7 @@ public class Citizen {
         Menu.display("Update Information Menu", "Name");
     }
 
-    private void logOut() {
+    protected void logOut() {
 
     }
 }
