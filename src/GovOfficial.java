@@ -8,8 +8,17 @@
  */
 public class GovOfficial extends Citizen {
 
-    private GovOfficial(Citizen citizen) {
-        super(citizen);
+    private GovOfficial(Name name, String homeAddress, String officeAddress, String phoneNumber, String email) {
+        super(name, homeAddress, officeAddress, phoneNumber, email);
+        String[] temp = new String[menuOptions.length + 6];
+        System.arraycopy(menuOptions, 0, temp, 0, menuOptions.length);
+        temp[3] = "Show Unassigned Cases";
+        temp[4] = "Show Contact Tracing Updates";
+        temp[5] = "Analytics";
+        temp[6] = "Create Government Official Account";
+        temp[7] = "Create Contact Tracer Account";
+        temp[8] = "Terminate Account";
+        menuOptions = temp;
     }
 
     @Override
@@ -17,8 +26,7 @@ public class GovOfficial extends Citizen {
         int opt;
 
         do {
-            opt = Menu.display("User", "Show Unassigned Cases", "Show Contact Tracing Updates", "Analytics",
-                    "Create Government Official Account", "Create Contact Tracer Account", "Terminate Account");
+            opt = Menu.display("User", menuOptions);
             switch (opt) {
                 case 1 -> showUnassigned();
                 case 2 -> showUpdates();
