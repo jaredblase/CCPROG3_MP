@@ -5,16 +5,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class User {
+public abstract class User {
     private static ArrayList<String> usernames;
     private static ArrayList<String> roles;
-    private final String USERNAME;
-    private final String ROLE;
-
-    public User(String username, String role) {
-        USERNAME = username;
-        ROLE = role;
-    }
 
     /**
      * Handles the registration of a new user
@@ -25,7 +18,7 @@ public class User {
         System.out.println("ACCOUNT CREATION\n");
         System.out.print("Username: ");
         String username = input.nextLine();
-        while(!isUnique(username)) {
+        while (!isUnique(username)) {
             System.out.println("Username has already been taken!");
             System.out.print("Username: ");
             username = input.nextLine();
@@ -35,7 +28,7 @@ public class User {
         // attempt to create a file
         try {
             File file = new File(path);
-            if(file.createNewFile()) {
+            if (file.createNewFile()) {
                 System.out.println("Welcome " + username);
             }
         } catch (IOException e) {
@@ -67,20 +60,9 @@ public class User {
 
             // add username and role to ArrayList
             usernames.add(username);
-            roles.add("ctizen");
+            roles.add("citizen");
 
             System.out.println("----YOU MAY NOW LOGIN WITH YOUR NEW ACCOUNT----");
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        // attempt to write to the master list
-        try (FileWriter masterlist = new FileWriter("Master_List.txt", true)) {
-            masterlist.write(username + " citizen\n");
-        } catch (FileNotFoundException e) {
-            System.out.println("Error! Master list not found.\nNo admin currently.");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -94,14 +76,6 @@ public class User {
      */
     public static boolean isUnique(String username) {
         return !usernames.contains(username);
-    }
-
-    private String getUsername() {
-        return USERNAME;
-    }
-
-    private String getRole() {
-        return ROLE;
     }
 
     public static void loadUsers() {
@@ -122,6 +96,16 @@ public class User {
             e.printStackTrace();
         }
 
+    }
+
+    public static void saveUsers() {
+        try (FileWriter masterList = new FileWriter("Master_List.txt", false)) {
+            for (int i = 0; i < usernames.size(); i++) {
+                masterList.write(usernames.get(i) + " " + roles.get(i) + "\n");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private static String setPassword() {
@@ -152,7 +136,7 @@ public class User {
         String username = input.nextLine();
         System.out.print("Password: ");
         String password = input.nextLine();
-        input.close();
+//        input.close();
 
         File file = new File(username + ".act");
         try (Scanner reader = new Scanner(file)) {
@@ -160,12 +144,27 @@ public class User {
                 throw new FileNotFoundException();
             }
 
+            String role = roles.get(usernames.indexOf(username));
             String[] name = reader.nextLine().split(",");
             String homeAdd = reader.nextLine().substring(5);
             String officeAdd = reader.nextLine().substring(8);
             String phoneNumber = reader.nextLine().substring(7);
             String email = reader.nextLine().substring(7);
-            return new Citizen(new Name(name[0], name[1], name[2]), homeAdd, officeAdd, phoneNumber, email);
+
+            switch (role) {
+                case "citizen":
+                    return new Citizen(new Name(name[0], name[1], name[2]), homeAdd,
+                        officeAdd, phoneNumber, email, username);
+
+                case "official":
+                    return new GovOfficial(new Name(name[0], name[1], name[2]), homeAdd,
+                            officeAdd, phoneNumber, email, username);
+
+                case "tracer":
+                    System.out.println("Feature under maintenance...");
+//                    return new Tracer(new Name(name[0], name[1], name[2]), homeAdd,
+//                            officeAdd, phoneNumber, email, username);
+            }
         } catch (FileNotFoundException e) {
             System.out.println("Invalid username/password");
         } catch (Exception e) {
@@ -173,10 +172,5 @@ public class User {
         }
 
         return null;
-    }
-
-    @Override
-    public String toString() {
-        return username + " " + role;
     }
 }
