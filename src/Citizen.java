@@ -11,15 +11,17 @@ public class Citizen {
     protected Name name;
     protected String homeAddress;
     protected String officeAddress;
+    protected String phoneNumber;
     protected String email;
     protected ArrayList<Visit> visitRec;
     private boolean isPositive;
     private boolean maybePositive;
 
-    public Citizen(Name name, String homeAddress, String officeAddress, String email) {
+    public Citizen(Name name, String homeAddress, String officeAddress, String phoneNumber, String email) {
         this.name = name;
         this.homeAddress = homeAddress;
         this.officeAddress = officeAddress;
+        this.phoneNumber = phoneNumber;
         this.email = email;
         visitRec = new ArrayList<>();
         isPositive = false;
@@ -27,7 +29,7 @@ public class Citizen {
     }
 
      protected <E extends Citizen> Citizen(E citizen) {
-        this(citizen.name, citizen.homeAddress, citizen.officeAddress, citizen.email);
+        this(citizen.name, citizen.homeAddress, citizen.officeAddress, citizen.phoneNumber, citizen.email);
      }
 
     public void showMenu() {
