@@ -27,6 +27,26 @@ public class Menu {
         return getAnswer(options.length); //return option input
     }
 
+    private static char display(String question) {
+        String opt;
+
+        do {
+            System.out.println(question + "? (Y/N)");
+            try (Scanner input = new Scanner(System.in)) {
+                opt = input.nextLine(); // get input
+                opt = opt.toUpperCase(); // capitalize
+                if (!opt.equals("Y") && !opt.equals("N")) { //invalid option input
+                    throw new Exception();
+                }
+            } catch (Exception e) {
+                System.out.println("Invalid option!\n");
+                opt = null;
+            }
+        } while (opt == null);
+
+        return opt.charAt(0);
+    }
+
     /**
      * Obtains an integer by means of the Scanner class and also performs
      * exception handling in case an invalid option is input by the user.
