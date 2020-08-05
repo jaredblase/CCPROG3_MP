@@ -14,6 +14,7 @@ public class Citizen {
     protected String phoneNumber;
     protected String email;
     protected ArrayList<Visit> visitRec;
+    protected static String[] menuOptions = {"Check in", "Report positive", "Update profile information", "Log out"};
     private boolean isPositive;
     private boolean maybePositive;
 
@@ -28,13 +29,20 @@ public class Citizen {
         maybePositive = false;
     }
 
-     protected <E extends Citizen> Citizen(E citizen) {
-        this(citizen.name, citizen.homeAddress, citizen.officeAddress, citizen.phoneNumber, citizen.email);
-     }
-
     public void showMenu() {
-        prompt();
-        Menu.display("User", "Check in", "Report positive", "Update profile information", "Log out");
+        int opt;
+
+        do {
+            prompt();
+            opt = Menu.display("User", menuOptions);
+            switch (opt) {
+                case 1 -> checkIn();
+                case 2 -> reportPositive();
+                case 3 -> updateInfo();
+            }
+        } while (opt != 4);
+
+        logOut();
     }
 
     private void prompt() {

@@ -27,6 +27,12 @@ public class Menu {
         return getAnswer(options.length); //return option input
     }
 
+    /**
+     * Displays yes or no question and returns a validated answer.
+     *
+     * @param question the question to be displayed.
+     * @return Y for yes, N for no.
+     */
     private static char display(String question) {
         String opt;
 
@@ -48,31 +54,29 @@ public class Menu {
     }
 
     /**
-     * Obtains an integer by means of the Scanner class and also performs
+     * Obtains an integer by means of the Scanner and Integer class. Also performs
      * exception handling in case an invalid option is input by the user.
      * @param max indicates the number of menu options available
      * @return a number representing the chosen option of the user
      */
     private static int getAnswer(int max) {
-        int opt;
         Scanner input = new Scanner(System.in);
+        int opt;
 
         do {
             System.out.print("Option: ");
             try {
-                opt = input.nextInt(); // get input
+                opt = Integer.parseInt(input.nextLine()); // get input
                 if (opt < 1 || opt > max) {//invalid option input
                     throw new Exception();
                 }
             } catch (Exception e) {
                 System.out.println("Invalid option!\n");
                 opt = max + 1; //set opt to loop again
-            } finally {
-                input.nextLine();
             }
         } while (opt > max);
 
-        input.close();
+       // input.close();
         return opt;
     }
 }
