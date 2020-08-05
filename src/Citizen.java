@@ -1,15 +1,18 @@
+import java.util.ArrayList;
+
 /**
  * This class holds the information of a citizen and methods available for them.
- * @author Pua, Gabriel
- * @author Sy, Jared
+ * @author Gabriel Pua
+ * @author Jared Sy
  * @version 1.0
+ * @see GovOfficial
  */
-public class Citizen implements Cloneable {
+public class Citizen {
     protected Name name;
     protected String homeAddress;
     protected String officeAddress;
     protected String email;
-    //protected ArrayList<Visit> visitRec;
+    protected ArrayList<Visit> visitRec;
     private boolean isPositive;
     private boolean maybePositive;
 
@@ -18,17 +21,18 @@ public class Citizen implements Cloneable {
         this.homeAddress = homeAddress;
         this.officeAddress = officeAddress;
         this.email = email;
+        visitRec = new ArrayList<>();
         isPositive = false;
         maybePositive = false;
     }
 
-    // protected Citizen clone() {
-    //    return Citizen
-    // }
+     protected <E extends Citizen> Citizen(E citizen) {
+        this(citizen.name, citizen.homeAddress, citizen.officeAddress, citizen.email);
+     }
 
     public void showMenu() {
         prompt();
-        Menu.display("Main Menu", "Check in", "Report positive", "Update profile information", "Log out");
+        Menu.display("User", "Check in", "Report positive", "Update profile information", "Log out");
     }
 
     private void prompt() {

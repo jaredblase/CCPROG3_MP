@@ -2,8 +2,8 @@ import java.util.Scanner;
 
 /**
  * This class is used for generating menus and retrieving an answer from the user.
- * @author Pua, Gabriel
- * @author Sy, Jared
+ * @author Gabriel Pua
+ * @author Jared Sy
  * @version 1.0
  */
 public class Menu {
@@ -18,13 +18,33 @@ public class Menu {
         int ctr = 1;
 
         //display menu
-        System.out.println(header);
+        System.out.println(header + " Menu");
         for (String i: options) {
             System.out.println(ctr++ + " - " + i);
         }
         System.out.println();
 
         return getAnswer(options.length); //return option input
+    }
+
+    private static char display(String question) {
+        String opt;
+
+        do {
+            System.out.println(question + "? (Y/N)");
+            try (Scanner input = new Scanner(System.in)) {
+                opt = input.nextLine(); // get input
+                opt = opt.toUpperCase(); // capitalize
+                if (!opt.equals("Y") && !opt.equals("N")) { //invalid option input
+                    throw new Exception();
+                }
+            } catch (Exception e) {
+                System.out.println("Invalid option!\n");
+                opt = null;
+            }
+        } while (opt == null);
+
+        return opt.charAt(0);
     }
 
     /**
