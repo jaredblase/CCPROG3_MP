@@ -2,8 +2,18 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * This class handles everything that deals with any actions of a user outside of his account
+ * such as registering, login, loading and saving of users to the master list, and changing of
+ * passwords-since they are not loaded into the memory during the session.
+ * @author Gabriel Pua
+ * @author Jared Sy
+ * @version 1.0
+ */
 public abstract class User {
+    /** All the registered usernames */
     private static ArrayList<String> usernames;
+    /** The roles of the registered users */
     private static ArrayList<String> roles;
 
     /**
@@ -34,7 +44,7 @@ public abstract class User {
 
         // attempt to write to the file
         try (FileWriter writer = new FileWriter(path)) {
-            writer.write(setPassword() + "\n");
+            writer.write(checkPassword() + "\n");
             System.out.println("Personal Information:");
 
             // get name
@@ -66,6 +76,55 @@ public abstract class User {
     }
 
     /**
+     * Handles the logging in of an existing user. It asks the user to input his username
+     * and password. Once valid, loads everything from the user's text file.
+     * @return a constructed Citizen object with the user's details.
+     */
+    public static Citizen login() {
+        Scanner input = new Scanner(System.in);
+
+        System.out.print("Username: ");
+        String username = input.nextLine();
+        System.out.print("Password: ");
+        String password = input.nextLine();
+//        input.close();
+
+        try (Scanner reader = new Scanner(new File(username + ".act"))) {
+            if(!password.equals(reader.nextLine()) || isUnique(username)) {
+                throw new FileNotFoundException();
+            }
+
+            String role = roles.get(usernames.indexOf(username));
+            String[] name = reader.nextLine().split(",");
+            String homeAdd = reader.nextLine().substring(5);
+            String officeAdd = reader.nextLine().substring(7);
+            String phoneNumber = reader.nextLine().substring(6);
+            String email = reader.nextLine().substring(6);
+
+            switch (role) {
+                case "citizen":
+                    return new Citizen(new Name(name[0], name[1], name[2]), homeAdd,
+                            officeAdd, phoneNumber, email, username);
+
+                case "official":
+                    return new GovOfficial(new Name(name[0], name[1], name[2]), homeAdd,
+                            officeAdd, phoneNumber, email, username);
+
+                case "tracer":
+                    System.out.println("Feature under maintenance...");
+//                    return new Tracer(new Name(name[0], name[1], name[2]), homeAdd,
+//                            officeAdd, phoneNumber, email, username);
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("Invalid username/password");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /**
      * Checks if the username received is not in the master list.
      *
      * @param username the name to be checked in the master list.
@@ -73,6 +132,52 @@ public abstract class User {
      */
     public static boolean isUnique(String username) {
         return !usernames.contains(username);
+    }
+
+    /** Asks the user to enter a new password and check it for validity. Once valid
+     * return the chosen password.
+     * @return valid password entered by the user.
+     */
+    private static String checkPassword() {
+        Scanner input = new Scanner(System.in);
+        String regex = "[\\w\\s]*[\\W\\d][\\w\\s]*";
+        String pass;
+
+        System.out.print("New Password: ");
+        pass = input.nextLine();
+        while(pass.length() < 6 || !pass.replaceAll("\\s+", "").matches(regex)) {
+            System.out.println("Password must contain at least 6 characters including 1 special " +
+                    "character that is not a space!\n");
+            System.out.print("New Password: ");
+            pass = input.nextLine();
+        }
+
+        return pass;
+    }
+
+    /**
+     * Only called by existing users wanting to change their passwords. Calls checkPassword()
+     * to validate and updates the user's data in the text file.
+     * @param username the user's username
+     */
+    public static void setPassword(String username) {
+        String pass = checkPassword();
+        File file = new File(username + ".act");
+        char[] info = new char[(int) file.length()];
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            reader.readLine();                      // reads the old password (and throws it)
+            reader.read(info, 0, info.length);  // copies the rest of the file into the char[]
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+            writer.write(pass + "\n");
+            writer.write(info);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -108,86 +213,5 @@ public abstract class User {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    private static String setPassword() {
-        Scanner input = new Scanner(System.in);
-        String regex = "[\\w\\s]*[\\W\\d][\\w\\s]*";
-        String pass;
-
-        System.out.print("New Password: ");
-        pass = input.nextLine();
-        while(pass.length() < 6 || !pass.replaceAll("\\s+", "").matches(regex)) {
-            System.out.println("Password must contain at least 6 characters including 1 special " +
-                    "character that is not a space!\n");
-            System.out.print("New Password: ");
-            pass = input.nextLine();
-        }
-
-        return pass;
-    }
-
-    public static void setPassword(String username) {
-        String pass = setPassword();
-        File file = new File(username + ".act");
-        char[] info = new char[(int) file.length()];
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            String temp = reader.readLine();
-            reader.read(info, 0, info.length);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-            writer.write(pass + "\n");
-            writer.write(info);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static Citizen login() {
-        Scanner input = new Scanner(System.in);
-
-        System.out.print("Username: ");
-        String username = input.nextLine();
-        System.out.print("Password: ");
-        String password = input.nextLine();
-//        input.close();
-
-        try (Scanner reader = new Scanner(new File(username + ".act"))) {
-            if(!password.equals(reader.nextLine()) || isUnique(username)) {
-                throw new FileNotFoundException();
-            }
-
-            String role = roles.get(usernames.indexOf(username));
-            String[] name = reader.nextLine().split(",");
-            String homeAdd = reader.nextLine().substring(5);
-            String officeAdd = reader.nextLine().substring(7);
-            String phoneNumber = reader.nextLine().substring(6);
-            String email = reader.nextLine().substring(6);
-
-            switch (role) {
-                case "citizen":
-                    return new Citizen(new Name(name[0], name[1], name[2]), homeAdd,
-                        officeAdd, phoneNumber, email, username);
-
-                case "official":
-                    return new GovOfficial(new Name(name[0], name[1], name[2]), homeAdd,
-                            officeAdd, phoneNumber, email, username);
-
-                case "tracer":
-                    System.out.println("Feature under maintenance...");
-//                    return new Tracer(new Name(name[0], name[1], name[2]), homeAdd,
-//                            officeAdd, phoneNumber, email, username);
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("Invalid username/password");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
     }
 }
