@@ -31,7 +31,7 @@ public class GovOfficial extends Citizen {
             super.prompt();
             opt = Menu.display("User", menuOptions);
             chooseMenu(opt);
-        } while (opt != 9);
+        } while (opt != 10);
 
         super.logOut();
     }
