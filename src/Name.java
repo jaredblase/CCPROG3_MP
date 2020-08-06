@@ -26,32 +26,20 @@ public class Name {
         int opt;
 
         do {
-            opt = Menu.display("Name Change", "First Name", "Middle Name", "Last Name", "Back");
+            opt = Menu.display("Name Change", menuOptions);
             if(opt != 4) {
-                System.out.print("New Name: ");
+                System.out.print("New " + menuOptions[opt - 1] + ": ");
+                String str = input.nextLine();
+
                 switch (opt) {
-                    case 1 -> setFirst(input.nextLine());
-                    case 2 -> setMiddle(input.nextLine());
-                    case 3 -> setLast(input.nextLine());
+                    case 1 -> this.first = str;
+                    case 2 -> this.middle = str;
+                    case 3 -> this.last = str;
                 }
                 System.out.println("New name:");
-                System.out.println(this);
+                System.out.println(first + " " + middle + " " + last);
             }
         } while (opt != 4);
-
-        input.close();
-    }
-
-    private void setFirst(String first) {
-        this.first = first;
-    }
-
-    private void setMiddle(String middle) {
-        this.middle = middle;
-    }
-
-    private void setLast(String last) {
-        this.last = last;
     }
 
     /**
@@ -61,7 +49,7 @@ public class Name {
      */
     @Override
     public String toString() {
-        return first + " " + middle + " " + last;
+        return first + "," + middle + "," + last;
     }
 
     /** first is the first name */
@@ -70,4 +58,6 @@ public class Name {
     private String middle;
     /** last is the last name */
     private String last;
+    /** change name menu options */
+    private static final String[] menuOptions = {"First Name", "Middle Name", "Last Name", "Back"};
 }
