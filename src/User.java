@@ -1,7 +1,4 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -78,13 +75,15 @@ public abstract class User {
         return !usernames.contains(username);
     }
 
+    /**
+     * Called to load the users from Master_List.txt to static ArrayList usernames and roles
+     */
     public static void loadUsers() {
         usernames = new ArrayList<>();
         roles = new ArrayList<>();
         String[] info;
 
-        File masterList = new File("Master_List.txt");
-        try (Scanner input = new Scanner(masterList)) {
+        try (Scanner input = new Scanner(new File("Master_List.txt"))) {
             do {
                 info = input.nextLine().split(" ");
                 usernames.add(info[0]);
@@ -98,6 +97,9 @@ public abstract class User {
 
     }
 
+    /**
+     * Called to save the users from static ArrayList usernames and roles to Master_List.txt
+     */
     public static void saveUsers() {
         try (FileWriter masterList = new FileWriter("Master_List.txt", false)) {
             for (int i = 0; i < usernames.size(); i++) {
@@ -127,6 +129,22 @@ public abstract class User {
 
     public static void setPassword(String username) {
         String pass = setPassword();
+        File file = new File(username + ".act");
+        char[] info = new char[(int) file.length()];
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String temp = reader.readLine();
+            reader.read(info, 0, info.length);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+            writer.write(pass + "\n");
+            writer.write(info);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static Citizen login() {
@@ -138,8 +156,7 @@ public abstract class User {
         String password = input.nextLine();
 //        input.close();
 
-        File file = new File(username + ".act");
-        try (Scanner reader = new Scanner(file)) {
+        try (Scanner reader = new Scanner(new File(username + ".act"))) {
             if(!password.equals(reader.nextLine()) || isUnique(username)) {
                 throw new FileNotFoundException();
             }
@@ -147,9 +164,9 @@ public abstract class User {
             String role = roles.get(usernames.indexOf(username));
             String[] name = reader.nextLine().split(",");
             String homeAdd = reader.nextLine().substring(5);
-            String officeAdd = reader.nextLine().substring(8);
-            String phoneNumber = reader.nextLine().substring(7);
-            String email = reader.nextLine().substring(7);
+            String officeAdd = reader.nextLine().substring(7);
+            String phoneNumber = reader.nextLine().substring(6);
+            String email = reader.nextLine().substring(6);
 
             switch (role) {
                 case "citizen":
