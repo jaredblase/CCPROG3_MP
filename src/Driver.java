@@ -8,20 +8,18 @@ public class Driver {
         do {
             opt = Menu.display("Main", "Register", "Login", "Exit");
             switch (opt) {
-                case 1:
-                    User.register();
-                    break;
-
-                case 2:
+                case 1 -> User.register();
+                case 2 -> {
                     Citizen citizen = User.login();
-                    if(citizen != null) {
-                        citizen.showMenu();
+                        if (citizen != null) {
+                            citizen.showMenu();
                     }
-                    break;
+                }
             }
+            System.out.println();
         } while (opt != 3);
 
+        User.saveUsers();
         System.out.println("Terminating program...");
-        User.setPassword("Hello");
     }
 }
