@@ -19,6 +19,15 @@ public class Citizen {
     private boolean maybePositive;
     protected static String[] menuOptions = {"Check in", "Report positive", "Update profile information", "Logout"};
 
+    /**
+     *
+     * @param name
+     * @param homeAddress
+     * @param officeAddress
+     * @param phoneNumber
+     * @param email
+     * @param username
+     */
     public Citizen(Name name, String homeAddress, String officeAddress, String phoneNumber,
                    String email, String username) {
         this.name = name;
