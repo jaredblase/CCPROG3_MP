@@ -9,12 +9,12 @@
 public class GovOfficial extends Citizen {
     /**
      *
-     * @param name
-     * @param homeAddress
-     * @param officeAddress
-     * @param phoneNumber
-     * @param email
-     * @param username
+     * @param name the Name of object containing the name of the user
+     * @param homeAddress the home address of the user
+     * @param officeAddress the office address of the user
+     * @param phoneNumber the phone number of the user
+     * @param email the email address of the user
+     * @param username the username of the user
      */
     public GovOfficial(Name name, String homeAddress, String officeAddress, String phoneNumber,
                         String email, String username) {
