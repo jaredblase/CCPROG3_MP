@@ -13,8 +13,8 @@ public class Citizen {
     private String officeAddress;
     private String phoneNumber;
     private String email;
-    private ArrayList<Visit> visitRec;
     private String username;
+    private ArrayList<Visit> visitRec;
     private boolean isPositive;
     private boolean maybePositive;
     protected static String[] menuOptions = {"Check in", "Report positive", "Update profile information", "Logout"};
