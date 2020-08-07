@@ -10,7 +10,7 @@ import java.util.Scanner;
  * @author Jared Sy
  * @version 1.0
  */
-public abstract class User {
+public class User {
     /** All the registered usernames */
     private static ArrayList<String> usernames;
     /** The roles of the registered users */
@@ -25,7 +25,7 @@ public abstract class User {
         System.out.println("ACCOUNT CREATION\n");
         System.out.print("Username: ");
         String username = input.nextLine();
-        while (!isUnique(username)) {
+        while (getIndexOf(username) != -1) {
             System.out.println("Username has already been taken!");
             System.out.print("Username: ");
             username = input.nextLine();
@@ -90,7 +90,7 @@ public abstract class User {
 //        input.close();
 
         try (Scanner reader = new Scanner(new File(username + ".act"))) {
-            if(!password.equals(reader.nextLine()) || isUnique(username)) {
+            if(!password.equals(reader.nextLine()) || getIndexOf(username) == -1) {
                 throw new FileNotFoundException();
             }
 
@@ -128,10 +128,28 @@ public abstract class User {
      * Checks if the username received is not in the master list.
      *
      * @param username the name to be checked in the master list.
-     * @return true if the username is not in the master list.
+     * @return -1 if not found, greater than or equal to 0 otherwise.
      */
-    public static boolean isUnique(String username) {
-        return !usernames.contains(username);
+    public static int getIndexOf(String username) {
+        return usernames.indexOf(username);
+    }
+
+    /**
+     * Returns the role of specific user in the system given his index
+     * @param index the index of a specific user in the system
+     * @return the role of a user
+     */
+    public static String getRoleOf(int index) {
+        return roles.get(index);
+    }
+
+    /**
+     * Sets a new role for a specific user in the system given his index
+     * @param index the index of a specific user in the system
+     * @param role the new role to be assigned to the user
+     */
+    public static void setRoleOf(int index, String role) {
+        roles.set(index, role);
     }
 
     /** Asks the user to enter a new password and check it for validity. Once valid
