@@ -4,4 +4,5 @@
 out/
 .idea/
 *.act
+*.txt
 /MP specs -S15 S16.pdf
