@@ -9,21 +9,29 @@ import java.util.Scanner;
  * @author Jared Sy
  * @version 1.0
  * @see GovOfficial
+ * @see Tracer
  */
 public class Citizen {
-    private Name name;
+    /** The name contained in a Name object */
+    private final Name name;
+    /** The home address */
     private String homeAddress;
+    /** The office address */
     private String officeAddress;
+    /** The phone number */
     private String phoneNumber;
+    /** The email address */
     private String email;
-    private String username;
+    /** The permanent username in the system */
+    private final String USERNAME;
+    /** The list of visit records */
     private ArrayList<Visit> visitRec;
     private boolean isPositive;
     private boolean maybePositive;
     private boolean isChanged;
-    protected static String[] menuOptions = {"Check in", "Report positive", "Update profile information", "Logout"};
-    private static final String[] updateOptions = {"Name", "Home Address", "Office Address", "Phone Number",
+    private static final String[] UPDATE_OPTIONS = {"Name", "Home Address", "Office Address", "Phone Number",
             "E-Mail", "Password", "Back to User Menu"};
+    protected static String[] menuOptions = {"Check in", "Report positive", "Update profile information", "Logout"};
 
     /**
      *
@@ -41,7 +49,7 @@ public class Citizen {
         this.officeAddress = officeAddress;
         this.phoneNumber = phoneNumber;
         this.email = email;
-        this.username = username;
+        this.USERNAME = username;
         visitRec = new ArrayList<>();
         isPositive = false;
         maybePositive = false;
@@ -49,7 +57,7 @@ public class Citizen {
     }
 
     protected String getUsername() {
-        return username;
+        return USERNAME;
     }
 
     public void showMenu() {
@@ -89,18 +97,18 @@ public class Citizen {
     }
 
     private void updateInfo() {
-        int opt, max = updateOptions.length;
+        int opt, max = UPDATE_OPTIONS.length;
 
         do {
-            opt = Menu.display("Update Information", updateOptions);
+            opt = Menu.display("Update Information", UPDATE_OPTIONS);
             if (opt != max) {
                 if (opt == 1) {
                     name.changeName();
                 } else if (opt == max - 1) {
-                    User.setPassword(this.username);
+                    User.setPassword(this.USERNAME);
                 } else {
                     Scanner input = new Scanner(System.in);
-                    System.out.print("New " + updateOptions[opt - 1] + ": ");
+                    System.out.print("New " + UPDATE_OPTIONS[opt - 1] + ": ");
                     String str = input.nextLine();
 
                     switch (opt) {
@@ -110,22 +118,25 @@ public class Citizen {
                         case 5 -> this.email = str;
                     }
                 }
-                System.out.println(updateOptions[opt - 1] + " has been updated!\n");
+                System.out.println(UPDATE_OPTIONS[opt - 1] + " has been updated!\n");
                 isChanged = true;
             }
         } while (opt != max);
     }
 
+    /**
+     * Updates the text file with changes made while the user was logged in
+     */
     protected void logOut() {
         String pass = null;
 
-        try (Scanner input = new Scanner(new File(username + ".act"))) {
+        try (Scanner input = new Scanner(new File(USERNAME + ".act"))) {
             pass = input.nextLine();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        try (FileWriter writer = new FileWriter(username + ".act", false)) {
+        try (FileWriter writer = new FileWriter(USERNAME + ".act", false)) {
             writer.write(pass + "\n");
             writer.write(name.toString() + "\n");
             writer.write("HOME:" + homeAddress + "\n");
