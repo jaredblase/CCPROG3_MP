@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 /**
  * This class is used
  *
@@ -31,6 +33,9 @@ public class GovOfficial extends Citizen {
         menuOptions = temp;
     }
 
+    /**
+     *
+     */
     @Override
     public void showMenu() {
         int opt;
@@ -53,9 +58,9 @@ public class GovOfficial extends Citizen {
                 case 4 -> showUnassigned();
                 case 5 -> showUpdates();
                 case 6 -> showAnalytics();
-                case 7 -> createGov();
-                case 8 -> createTrace();
-                case 9 -> terminateAcc();
+                case 7 -> modifyRole("official");
+                case 8 -> modifyRole("tracer");
+                case 9 -> modifyRole("citizen");
             }
         }
     }
@@ -72,15 +77,18 @@ public class GovOfficial extends Citizen {
 
     }
 
-    private void createGov() {
-        //get user name
-    }
-
-    private void createTrace() {
-
-    }
-
-    private void terminateAcc() {
-
+    private void modifyRole(String role) {
+        Scanner input = new Scanner(System.in);
+        System.out.print("Account username to be modified: ");
+        int index = User.getIndexOf(input.nextLine());
+        if (index != -1) {
+            if (User.getRoleOf(index).equals(role)) {
+                User.setRoleOf(index, role);
+            } else {
+                System.out.println("Account is already a " + role + "!");
+            }
+        } else {
+            System.out.println("Account does not exist!");
+        }
     }
 }
