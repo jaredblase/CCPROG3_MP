@@ -24,6 +24,8 @@ public class Citizen {
     private String email;
     /** The permanent username in the system */
     private final String USERNAME;
+    /** The password of the user */
+    private String password;
     /** The list of visit records */
     private ArrayList<Visit> visitRec;
     private boolean isPositive;
@@ -41,9 +43,10 @@ public class Citizen {
      * @param phoneNumber the phone number of the user
      * @param email the email address of the user
      * @param username the username of the user
+     * @param password the password of the user
      */
     public Citizen(Name name, String homeAddress, String officeAddress, String phoneNumber,
-                   String email, String username) {
+                   String email, String username, String password) {
         this.name = name;
         this.homeAddress = homeAddress;
         this.officeAddress = officeAddress;
@@ -56,8 +59,30 @@ public class Citizen {
         isChanged = false;
     }
 
+    /**
+     * Creates a copy from an object of the same class
+     * @param other the object to be copied
+     */
+    public Citizen(Citizen other) {
+        this.name = other.name;
+        this.homeAddress = other.homeAddress;
+        this.officeAddress = other.officeAddress;
+        this.phoneNumber = other.phoneNumber;
+        this.email = other.email;
+        this.USERNAME = other.USERNAME;
+        this.password = other.password;
+        this.visitRec = other.visitRec;
+        this.isPositive = other.isPositive;
+        this.maybePositive = other.maybePositive;
+        this.isChanged = other.isChanged;
+    }
+
     protected String getUsername() {
         return USERNAME;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public void showMenu() {
