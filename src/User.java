@@ -133,8 +133,9 @@ public abstract class User {
         char[] info = new char[(int) file.length()];
 
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            String temp = reader.readLine();
-            reader.read(info, 0, info.length);
+            reader.readLine();
+            if(reader.read(info, 0, info.length) == -1)
+                throw new Exception();
         } catch (Exception e) {
             e.printStackTrace();
         }
