@@ -49,6 +49,10 @@ public class Tracer extends Citizen {
 
     }
 
+    private void trace() {
+
+    }
+
     private void broadcast() {
 
     }
