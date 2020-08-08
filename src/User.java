@@ -2,8 +2,18 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * This class handles everything that deals with any actions of a user outside of his account
+ * such as registering, login, loading and saving of users to the master list, and changing of
+ * passwords-since they are not loaded into the memory during the session.
+ * @author Gabriel Pua
+ * @author Jared Sy
+ * @version 1.0
+ */
 public abstract class User {
+    /** All the registered usernames */
     private static ArrayList<String> usernames;
+    /** The roles of the registered users */
     private static ArrayList<String> roles;
 
     /**
@@ -110,6 +120,39 @@ public abstract class User {
         }
     }
 
+    /**
+     * Checks if the username received is not in the master list.
+     *
+     * @param username the name to be checked in the master list.
+     * @return -1 if not found, greater than or equal to 0 otherwise.
+     */
+    public static int getIndexOf(String username) {
+        return usernames.indexOf(username);
+    }
+
+    /**
+     * Returns the role of specific user in the system given his index
+     * @param index the index of a specific user in the system
+     * @return the role of a user
+     */
+    public static String getRoleOf(int index) {
+        return roles.get(index);
+    }
+
+    /**
+     * Sets a new role for a specific user in the system given his index
+     * @param index the index of a specific user in the system
+     * @param role the new role to be assigned to the user
+     */
+    public static void setRoleOf(int index, String role) {
+        roles.set(index, role);
+    }
+
+    /**
+     * Asks the user to enter a new password and check it for validity. Once valid
+     * return the chosen password.
+     * @return valid password entered by the user.
+     */
     private static String setPassword() {
         Scanner input = new Scanner(System.in);
         String regex = "[\\w\\s]*[\\W\\d][\\w\\s]*";
@@ -127,6 +170,11 @@ public abstract class User {
         return pass;
     }
 
+    /**
+     * Only called by existing users wanting to change their passwords. Calls checkPassword()
+     * to validate and updates the user's data in the text file.
+     * @param username the user's username
+     */
     public static void setPassword(String username) {
         String pass = setPassword();
         File file = new File(username + ".act");
@@ -148,6 +196,11 @@ public abstract class User {
         }
     }
 
+    /**
+     * Handles the logging in of an existing user. It asks the user to input his username
+     * and password. Once valid, loads everything from the user's text file.
+     * @return a constructed Citizen object with the user's details.
+     */
     public static Citizen login() {
         Scanner input = new Scanner(System.in);
 
