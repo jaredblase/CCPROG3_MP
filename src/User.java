@@ -179,9 +179,8 @@ public abstract class User {
                             officeAdd, phoneNumber, email, username);
 
                 case "tracer":
-                    System.out.println("Feature under maintenance...");
-//                    return new Tracer(new Name(name[0], name[1], name[2]), homeAdd,
-//                            officeAdd, phoneNumber, email, username);
+                    return new Tracer(new Name(name[0], name[1], name[2]), homeAdd,
+                            officeAdd, phoneNumber, email, username);
             }
         } catch (FileNotFoundException e) {
             System.out.println("Invalid username/password");
