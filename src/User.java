@@ -133,8 +133,9 @@ public abstract class User {
         char[] info = new char[(int) file.length()];
 
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            String temp = reader.readLine();
-            reader.read(info, 0, info.length);
+            reader.readLine();
+            if (reader.read(info, 0, info.length) == -1)
+                throw new Exception();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -157,7 +158,7 @@ public abstract class User {
 //        input.close();
 
         try (Scanner reader = new Scanner(new File(username + ".act"))) {
-            if(!password.equals(reader.nextLine()) || isUnique(username)) {
+            if (!password.equals(reader.nextLine()) || isUnique(username)) {
                 throw new FileNotFoundException();
             }
 
@@ -178,9 +179,8 @@ public abstract class User {
                             officeAdd, phoneNumber, email, username);
 
                 case "tracer":
-                    System.out.println("Feature under maintenance...");
-//                    return new Tracer(new Name(name[0], name[1], name[2]), homeAdd,
-//                            officeAdd, phoneNumber, email, username);
+                    return new Tracer(new Name(name[0], name[1], name[2]), homeAdd,
+                            officeAdd, phoneNumber, email, username);
             }
         } catch (FileNotFoundException e) {
             System.out.println("Invalid username/password");
