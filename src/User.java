@@ -134,7 +134,7 @@ public abstract class User {
 
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             reader.readLine();
-            if(reader.read(info, 0, info.length) == -1)
+            if (reader.read(info, 0, info.length) == -1)
                 throw new Exception();
         } catch (Exception e) {
             e.printStackTrace();
@@ -158,7 +158,7 @@ public abstract class User {
 //        input.close();
 
         try (Scanner reader = new Scanner(new File(username + ".act"))) {
-            if(!password.equals(reader.nextLine()) || isUnique(username)) {
+            if (!password.equals(reader.nextLine()) || isUnique(username)) {
                 throw new FileNotFoundException();
             }
 
