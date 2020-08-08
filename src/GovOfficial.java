@@ -7,7 +7,15 @@
  * @see Citizen
  */
 public class GovOfficial extends Citizen {
-
+    /**
+     *
+     * @param name
+     * @param homeAddress
+     * @param officeAddress
+     * @param phoneNumber
+     * @param email
+     * @param username
+     */
     public GovOfficial(Name name, String homeAddress, String officeAddress, String phoneNumber,
                         String email, String username) {
         super(name, homeAddress, officeAddress, phoneNumber, email, username);
