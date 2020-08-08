@@ -27,7 +27,7 @@ public class Citizen {
 
     /**
      *
-     * @param name the Name of object containing the name of the user
+     * @param name the Name object containing the name of the user
      * @param homeAddress the home address of the user
      * @param officeAddress the office address of the user
      * @param phoneNumber the phone number of the user
@@ -86,6 +86,8 @@ public class Citizen {
 
     private void reportPositive() {
         isPositive = true;
+
+        String temp = MyDate.getDate().toString();
     }
 
     private void updateInfo() {
@@ -135,6 +137,5 @@ public class Citizen {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 }
