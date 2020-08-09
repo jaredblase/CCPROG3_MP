@@ -1,4 +1,4 @@
-import java.io.*;
+//import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -10,7 +10,7 @@ import java.util.Scanner;
  * @author Jared Sy
  * @version 1.0
  */
-public abstract class User {
+public abstract class UserSystem {
     /** All the registered usernames */
     private static ArrayList<String> usernames = new ArrayList<>();
     /** The roles of the registered users */
@@ -155,7 +155,7 @@ public abstract class User {
      * return the chosen password.
      * @return valid password entered by the user.
      */
-    private static String setPassword() {
+    public static String setPassword() {
         Scanner input = new Scanner(System.in);
         String regex = "[\\w\\s]*[\\W\\d][\\w\\s]*";
         String pass;
@@ -172,31 +172,31 @@ public abstract class User {
         return pass;
     }
 
-    /**
-     * Only called by existing users wanting to change their passwords. Calls checkPassword()
-     * to validate and updates the user's data in the text file.
-     * @param username the user's username
-     */
-    public static void setPassword(String username) {
-        String pass = setPassword();
-        File file = new File(username + ".act");
-        char[] info = new char[(int) file.length()];
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            reader.readLine();
-            if (reader.read(info, 0, info.length) == -1)
-                throw new Exception();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-            writer.write(pass + "\n");
-            writer.write(info);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    /**
+//     * Only called by existing users wanting to change their passwords. Calls setPassword()
+//     * to validate and updates the user's data in the text file.
+//     * @param username the user's username
+//     */
+//    public static void setPassword(String username) {
+//        String pass = setPassword();
+//        File file = new File(username + ".act");
+//        char[] info = new char[(int) file.length()];
+//
+//        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+//            reader.readLine();
+//            if (reader.read(info, 0, info.length) == -1)
+//                throw new Exception();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+//            writer.write(pass + "\n");
+//            writer.write(info);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     /**
      * Handles the logging in of an existing user. It asks the user to input his username
