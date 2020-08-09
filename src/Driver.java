@@ -8,9 +8,9 @@ public class Driver {
         do {
             opt = Menu.display("Main", "Register", "Login", "Exit");
             switch (opt) {
-                case 1 -> User.register();
+                case 1 -> UserSystem.register();
                 case 2 -> {
-                    Citizen citizen = User.login();
+                    Citizen citizen = UserSystem.login();
                         if (citizen != null) {
                             citizen.showMenu();
                     }
