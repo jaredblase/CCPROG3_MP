@@ -2,7 +2,7 @@
 
 public class Driver {
     public static void main(String[] args) {
-        User.loadUsers();
+//        User.loadUsers();
         int opt;
 
         do {
@@ -19,7 +19,7 @@ public class Driver {
             System.out.println();
         } while (opt != 3);
 
-        User.saveUsers();
+//        User.saveUsers();
         System.out.println("Terminating program...");
     }
 }

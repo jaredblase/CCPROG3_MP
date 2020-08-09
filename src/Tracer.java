@@ -8,8 +8,19 @@
  */
 public class Tracer extends Citizen {
     public Tracer(Name name, String homeAddress, String officeAddress, String phoneNumber,
-                       String email, String username) {
-        super(name, homeAddress, officeAddress, phoneNumber, email, username);
+                       String email, String username, String password) {
+        super(name, homeAddress, officeAddress, phoneNumber, email, username, password);
+        String[] temp = new String[menuOptions.length + 6];
+        System.arraycopy(menuOptions, 0, temp, 0, menuOptions.length);
+        temp[3] = "Show Cases";
+        temp[4] = "Trace Specific Case";
+        temp[5] = "Inform Citizens Possibly Exposed";
+        temp[6] = "Logout";
+        menuOptions = temp;
+    }
+
+    public <E extends Citizen> Tracer(E citizen) {
+        super(citizen);
         String[] temp = new String[menuOptions.length + 6];
         System.arraycopy(menuOptions, 0, temp, 0, menuOptions.length);
         temp[3] = "Show Cases";

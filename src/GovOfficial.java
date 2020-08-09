@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 /**
  * This class is used
  *
@@ -9,16 +11,16 @@
 public class GovOfficial extends Citizen {
     /**
      *
-     * @param name
-     * @param homeAddress
-     * @param officeAddress
-     * @param phoneNumber
-     * @param email
-     * @param username
+     * @param name the Name of object containing the name of the user
+     * @param homeAddress the home address of the user
+     * @param officeAddress the office address of the user
+     * @param phoneNumber the phone number of the user
+     * @param email the email address of the user
+     * @param username the username of the user
      */
     public GovOfficial(Name name, String homeAddress, String officeAddress, String phoneNumber,
-                        String email, String username) {
-        super(name, homeAddress, officeAddress, phoneNumber, email, username);
+                        String email, String username, String password) {
+        super(name, homeAddress, officeAddress, phoneNumber, email, username, password);
         String[] temp = new String[menuOptions.length + 6];
         System.arraycopy(menuOptions, 0, temp, 0, menuOptions.length);
         temp[3] = "Show Unassigned Cases";
@@ -31,6 +33,23 @@ public class GovOfficial extends Citizen {
         menuOptions = temp;
     }
 
+    public <E extends Citizen> GovOfficial(E citizen) {
+        super(citizen);
+        String[] temp = new String[menuOptions.length + 6];
+        System.arraycopy(menuOptions, 0, temp, 0, menuOptions.length);
+        temp[3] = "Show Unassigned Cases";
+        temp[4] = "Show Contact Tracing Updates";
+        temp[5] = "Analytics";
+        temp[6] = "Create Government Official Account";
+        temp[7] = "Create Contact Tracer Account";
+        temp[8] = "Terminate Account";
+        temp[9] = "Logout";
+        menuOptions = temp;
+    }
+
+    /**
+     * Main entry point of the user after logging in.
+     */
     @Override
     public void showMenu() {
         int opt;
@@ -39,7 +58,7 @@ public class GovOfficial extends Citizen {
             super.prompt();
             opt = Menu.display("User", menuOptions);
             chooseMenu(opt);
-        } while (opt != 10);
+        } while (opt != menuOptions.length);
 
         super.logOut();
     }
@@ -53,9 +72,9 @@ public class GovOfficial extends Citizen {
                 case 4 -> showUnassigned();
                 case 5 -> showUpdates();
                 case 6 -> showAnalytics();
-                case 7 -> createGov();
-                case 8 -> createTrace();
-                case 9 -> terminateAcc();
+                case 7 -> modifyRole("official");
+                case 8 -> modifyRole("tracer");
+                case 9 -> modifyRole("citizen");
             }
         }
     }
@@ -72,15 +91,23 @@ public class GovOfficial extends Citizen {
 
     }
 
-    private void createGov() {
-        //get user name
-    }
+    /**
+     * Handles the promotion and demotion of an account.
+     * @param role the new role to be assigned to an account.
+     */
+    private void modifyRole(String role) {
+        Scanner input = new Scanner(System.in);
+        System.out.print("Account username to be modified: ");
+        int index = User.getIndexOf(input.nextLine());
 
-    private void createTrace() {
-
-    }
-
-    private void terminateAcc() {
-
+        if (index != -1) {
+            if (User.getRoleOf(index).equals(role)) {
+                User.setRoleOf(index, role);
+            } else {
+                System.out.println("Account is already a " + role + "!");
+            }
+        } else {
+            System.out.println("Account does not exist!");
+        }
     }
 }
