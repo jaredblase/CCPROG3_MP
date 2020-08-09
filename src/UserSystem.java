@@ -12,15 +12,15 @@ import java.util.Scanner;
  */
 public abstract class UserSystem {
     /** All the registered usernames */
-    private static ArrayList<String> usernames = new ArrayList<>();
+    private static ArrayList<String> usernames;
     /** The roles of the registered users */
-    private static ArrayList<String> roles = new ArrayList<>();
+    private static ArrayList<String> roles;
     /** The data of each user */
-    private static ArrayList<Citizen> users = new ArrayList<>();
+    private static ArrayList<Citizen> users;
     /** The visit records of each user */
-    private static ArrayList<ArrayList<Visit>> records= new ArrayList<>();
+    private static ArrayList<ArrayList<Visit>> records;
     /** The list of positive cases */
-    private static ArrayList<Case> cases = new ArrayList<>();
+    private static ArrayList<Case> cases;
 
     /**
      * Handles the registration of a new user
@@ -94,9 +94,23 @@ public abstract class UserSystem {
 //    /**
 //     * Called to load the users from Master_List.txt to static ArrayList usernames and roles
 //     */
-//    public static void loadUsers() {
-//        usernames = new ArrayList<>();
-//        roles = new ArrayList<>();
+
+    /**
+     * Initializes all the ArrayLists and creates the admin account
+     */
+    public static void loadUsers() {
+        usernames = new ArrayList<>();
+        roles = new ArrayList<>();
+        users = new ArrayList<>();
+        records= new ArrayList<>();
+        cases = new ArrayList<>();
+
+        usernames.add("Admin2020");
+        roles.add("official");
+        users.add(new GovOfficial(new Citizen(new Name("Admin", "A", "Gov"), "Malacañang",
+                "City Hall", "09328287114", "admin@gov.ph", "Admin2020",
+                "@Dm1n0202")));
+        records.add(new ArrayList<>());
 //        String[] info;
 //
 //        try (Scanner input = new Scanner(new File("Master_List.txt"))) {
@@ -124,7 +138,7 @@ public abstract class UserSystem {
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
-//    }
+    }
 
     /**
      * Checks if the username received is not in the master list.
@@ -246,6 +260,8 @@ public abstract class UserSystem {
 //                    return new Tracer(new Name(name[0], name[1], name[2]), homeAdd,
 //                            officeAdd, phoneNumber, email, username);
             }
+        } else {
+            System.out.println("Invalid username/password!");
         }
 //        } catch (FileNotFoundException e) {
 //            System.out.println("Invalid username/password");
@@ -254,6 +270,10 @@ public abstract class UserSystem {
 //        }
 
         return null;
+    }
+
+    public static void updateUser(Citizen citizen) {
+        users.set(usernames.indexOf(citizen.getUsername()), citizen);
     }
 
     public static void addCase(Case positive) {
