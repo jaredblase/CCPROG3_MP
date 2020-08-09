@@ -1,5 +1,5 @@
-import java.io.File;
-import java.io.FileWriter;
+//import java.io.File;
+//import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
@@ -95,9 +95,9 @@ public class Citizen {
             chooseMenu(opt);
         } while (opt != 4);
 
-        if(isChanged) {
-            logOut();
-        }
+//        if(isChanged) {
+//            logOut();
+//        }
     }
 
     protected void chooseMenu(int opt) {
@@ -116,30 +116,28 @@ public class Citizen {
 
     private void checkIn() {
         Scanner input = new Scanner(System.in);
-        Calendar date = null;
         Calendar.Builder builder = new Calendar.Builder();
-        int year, month, day;
-
+        int time;
         builder.setLenient(false);
+
         System.out.print("Establishment Code: ");
         String estCode = input.nextLine();
+
+        Calendar date = getDate();
+        Calendar temp = null;
         do {
-            System.out.println("-DATE-");
-            System.out.print("Year: ");
-            year = Integer.parseInt(input.nextLine());
-
-            System.out.print("Month: ");
-            month = Integer.parseInt(input.nextLine());
-
-            System.out.print("Day: ");
-            day = Integer.parseInt(input.nextLine());
             try {
-                builder.setDate(year, month - 1, day);
-                date = builder.build();
+                System.out.println("-TIME-");
+                System.out.print("Military Time: ");
+                time = Integer.parseInt(input.nextLine());
+
+                builder.setTimeOfDay(time / 100, time % 100, 0);
+                builder.setDate(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DAY_OF_MONTH));
+                temp = builder.build();
             } catch (Exception e) {
-                System.out.println("Invalid date input!");
+                System.out.println("Invalid time input!\n");
             }
-        } while (date == null);
+        } while (temp == null);
 
         visitRec.add(new Visit(estCode, date));
     }
@@ -147,7 +145,7 @@ public class Citizen {
     private void reportPositive() {
         isPositive = true;
 
-        String temp = MyDate.getDate().toString();
+        UserSystem.addCase(new Case(this.USERNAME, getDate()));
     }
 
     private void updateInfo() {
@@ -179,27 +177,57 @@ public class Citizen {
         } while (opt != max);
     }
 
-    /**
-     * Updates the text file with changes made while the user was logged in
-     */
-    protected void logOut() {
-        String pass = null;
+//    /**
+//     * Updates the text file with changes made while the user was logged in
+//     */
+//    protected void logOut() {
+//        String pass = null;
+//
+//        try (Scanner input = new Scanner(new File(USERNAME + ".act"))) {
+//            pass = input.nextLine();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        try (FileWriter writer = new FileWriter(USERNAME + ".act", false)) {
+//            writer.write(pass + "\n");
+//            writer.write(name.toString() + "\n");
+//            writer.write("HOME:" + homeAddress + "\n");
+//            writer.write("OFFICE:" + officeAddress + "\n");
+//            writer.write("PHONE:" + phoneNumber + "\n");
+//            writer.write("EMAIL:" + email + "\n");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        this.isChanged = false;
+//    }
 
-        try (Scanner input = new Scanner(new File(USERNAME + ".act"))) {
-            pass = input.nextLine();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private static Calendar getDate() {
+        Scanner input = new Scanner(System.in);
+        Calendar date = null;
+        Calendar.Builder builder = new Calendar.Builder();
+        builder.setLenient(false);
+        int year, month, day;
 
-        try (FileWriter writer = new FileWriter(USERNAME + ".act", false)) {
-            writer.write(pass + "\n");
-            writer.write(name.toString() + "\n");
-            writer.write("HOME:" + homeAddress + "\n");
-            writer.write("OFFICE:" + officeAddress + "\n");
-            writer.write("PHONE:" + phoneNumber + "\n");
-            writer.write("EMAIL:" + email + "\n");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        do {
+            try {
+                System.out.println("-DATE-");
+                System.out.print("Year: ");
+                year = Integer.parseInt(input.nextLine());
+
+                System.out.print("Month: ");
+                month = Integer.parseInt(input.nextLine());
+
+                System.out.print("Day: ");
+                day = Integer.parseInt(input.nextLine());
+
+                builder.setDate(year, month - 1, day);
+                date = builder.build();
+            } catch (Exception e) {
+                System.out.println("Invalid date input!\n");
+            }
+        } while (date == null);
+
+        return date;
     }
 }
