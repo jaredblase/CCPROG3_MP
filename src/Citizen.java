@@ -159,7 +159,8 @@ public class Citizen {
                 if (opt == 1) {
                     name.changeName();
                 } else if (opt == max - 1) {
-                    UserSystem.setPassword(this.USERNAME);
+//                    UserSystem.setPassword(this.USERNAME);
+                    this.password = UserSystem.setPassword();
                 } else {
                     Scanner input = new Scanner(System.in);
                     System.out.print("New " + UPDATE_OPTIONS[opt - 1] + ": ");
