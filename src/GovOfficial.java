@@ -102,9 +102,9 @@ public class GovOfficial extends Citizen {
 
         if (index != -1) {
             if (User.getRoleOf(index).equals(role)) {
-                User.setRoleOf(index, role);
-            } else {
                 System.out.println("Account is already a " + role + "!");
+            } else {
+                User.setRoleOf(index, role);
             }
         } else {
             System.out.println("Account does not exist!");
