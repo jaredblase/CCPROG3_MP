@@ -1,3 +1,4 @@
+import java.util.Calendar;
 import java.util.Scanner;
 
 /**
@@ -9,6 +10,8 @@ import java.util.Scanner;
  * @see Citizen
  */
 public class GovOfficial extends Citizen {
+    private static final String[] analyticsMenu = {"Number of positive cases in a city within a duration",
+            "Number of positive cases within a duration", "Number of positive cases in a city", "Back"};
 //    /**
 //     *
 //     * @param name the Name object containing the name of the user
@@ -35,16 +38,18 @@ public class GovOfficial extends Citizen {
 
     public <E extends Citizen> GovOfficial(E citizen) {
         super(citizen);
-        String[] temp = new String[menuOptions.length + 6];
-        System.arraycopy(menuOptions, 0, temp, 0, menuOptions.length);
-        temp[3] = "Show Unassigned Cases";
-        temp[4] = "Show Contact Tracing Updates";
-        temp[5] = "Analytics";
-        temp[6] = "Create Government Official Account";
-        temp[7] = "Create Contact Tracer Account";
-        temp[8] = "Terminate Account";
-        temp[9] = "Logout";
-        menuOptions = temp;
+        if (menuOptions.length <= 4) {
+            String[] temp = new String[menuOptions.length + 6];
+            System.arraycopy(menuOptions, 0, temp, 0, menuOptions.length);
+            temp[3] = "Show Unassigned Cases";
+            temp[4] = "Show Contact Tracing Updates";
+            temp[5] = "Analytics";
+            temp[6] = "Create Government Official Account";
+            temp[7] = "Create Contact Tracer Account";
+            temp[8] = "Terminate Account";
+            temp[9] = "Logout";
+            menuOptions = temp;
+        }
     }
 
     /**
@@ -60,7 +65,7 @@ public class GovOfficial extends Citizen {
             chooseMenu(opt);
         } while (opt != menuOptions.length);
 
-//        super.logOut();
+        super.logOut();
     }
 
     @Override
@@ -80,7 +85,10 @@ public class GovOfficial extends Citizen {
     }
 
     private void showUnassigned() {
-
+//        for (Case i: ) {
+//            if(i.getTracer().equals("000"))
+//                System.out.println(i);
+//        }
     }
 
     private void showUpdates() {
@@ -88,7 +96,40 @@ public class GovOfficial extends Citizen {
     }
 
     private void showAnalytics() {
+        int opt;
 
+        do {
+            opt = Menu.display("Analytics", analyticsMenu);
+
+            switch (opt) {
+                case 1 -> {
+                    Scanner input = new Scanner(System.in);
+                    Calendar[] dates = obtainDateRange();
+                    System.out.print("City: ");
+                    String city = input.nextLine();
+                }
+                case 2 -> {
+                    Calendar[] dates = obtainDateRange();
+                }
+                case 3 -> {
+                    Scanner input = new Scanner(System.in);
+                    String city = input.nextLine();
+                }
+            }
+        } while (opt != analyticsMenu.length);
+    }
+
+    private Calendar[] obtainDateRange() {
+        Calendar start, end;
+
+        System.out.println("Starting date:");
+        start = getDate();
+        do {
+            System.out.println("End date");
+            end = getDate();
+        } while (start.after(end));
+
+        return new Calendar[] {start, end};
     }
 
     /**
