@@ -1,5 +1,6 @@
 //import java.io.File;
 //import java.io.FileWriter;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
@@ -54,6 +55,7 @@ public class Citizen {
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.USERNAME = username;
+        this.password = password;
         visitRec = new ArrayList<>();
         isPositive = false;
         maybePositive = false;
@@ -95,9 +97,9 @@ public class Citizen {
             chooseMenu(opt);
         } while (opt != 4);
 
-//        if(isChanged) {
-//            logOut();
-//        }
+        if (isChanged) {
+            logOut();
+        }
     }
 
     protected void chooseMenu(int opt) {
@@ -144,7 +146,7 @@ public class Citizen {
 
     private void reportPositive() {
         isPositive = true;
-
+        isChanged = true;
         UserSystem.addCase(new Case(this.USERNAME, getDate()));
     }
 
@@ -180,7 +182,11 @@ public class Citizen {
 //    /**
 //     * Updates the text file with changes made while the user was logged in
 //     */
-//    protected void logOut() {
+
+    /**
+     * Replaces the object in the System
+     */
+    protected void logOut() {
 //        String pass = null;
 //
 //        try (Scanner input = new Scanner(new File(USERNAME + ".act"))) {
@@ -199,10 +205,11 @@ public class Citizen {
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
-//        this.isChanged = false;
-//    }
+        UserSystem.updateUser(this);
+        this.isChanged = false;
+    }
 
-    private static Calendar getDate() {
+    protected static Calendar getDate() {
         Scanner input = new Scanner(System.in);
         Calendar date = null;
         Calendar.Builder builder = new Calendar.Builder();
