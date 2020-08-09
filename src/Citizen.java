@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Scanner;
 
 /**
@@ -114,7 +115,33 @@ public class Citizen {
     }
 
     private void checkIn() {
+        Scanner input = new Scanner(System.in);
+        Calendar date = null;
+        Calendar.Builder builder = new Calendar.Builder();
+        int year, month, day;
 
+        builder.setLenient(false);
+        System.out.print("Establishment Code: ");
+        String estCode = input.nextLine();
+        do {
+            System.out.println("-DATE-");
+            System.out.print("Year: ");
+            year = Integer.parseInt(input.nextLine());
+
+            System.out.print("Month: ");
+            month = Integer.parseInt(input.nextLine());
+
+            System.out.print("Day: ");
+            day = Integer.parseInt(input.nextLine());
+            try {
+                builder.setDate(year, month - 1, day);
+                date = builder.build();
+            } catch (Exception e) {
+                System.out.println("Invalid date input!");
+            }
+        } while (date == null);
+
+        visitRec.add(new Visit(estCode, date));
     }
 
     private void reportPositive() {

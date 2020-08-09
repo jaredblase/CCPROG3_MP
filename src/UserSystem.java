@@ -17,6 +17,8 @@ public abstract class UserSystem {
     private static ArrayList<String> roles = new ArrayList<>();
     /** The data of each user */
     private static ArrayList<Citizen> users = new ArrayList<>();
+    /** The visit records of each user */
+    private static ArrayList<ArrayList<Visit>> records= new ArrayList<>();
 
     /**
      * Handles the registration of a new user
