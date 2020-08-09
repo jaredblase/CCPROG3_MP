@@ -19,6 +19,8 @@ public abstract class UserSystem {
     private static ArrayList<Citizen> users = new ArrayList<>();
     /** The visit records of each user */
     private static ArrayList<ArrayList<Visit>> records= new ArrayList<>();
+    /** The list of positive cases */
+    private static ArrayList<Case> cases = new ArrayList<>();
 
     /**
      * Handles the registration of a new user
@@ -252,5 +254,9 @@ public abstract class UserSystem {
 //        }
 
         return null;
+    }
+
+    public static void addCase(Case positive) {
+        cases.add(positive);
     }
 }
