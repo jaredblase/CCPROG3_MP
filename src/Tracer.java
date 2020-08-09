@@ -40,7 +40,7 @@ public class Tracer extends Citizen {
             chooseMenu(opt);
         } while (opt != 7);
 
-        super.logOut();
+//        super.logOut();
     }
 
     @Override

@@ -60,7 +60,7 @@ public class GovOfficial extends Citizen {
             chooseMenu(opt);
         } while (opt != menuOptions.length);
 
-        super.logOut();
+//        super.logOut();
     }
 
     @Override
