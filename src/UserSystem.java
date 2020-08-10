@@ -21,6 +21,7 @@ public abstract class UserSystem {
     private static ArrayList<ArrayList<Visit>> records;
     /** The list of positive cases */
     private static ArrayList<Case> cases;
+    /** The number of registered tracers */
     private static int nTracers;
 
     /**
@@ -53,7 +54,7 @@ public abstract class UserSystem {
 //        try (FileWriter writer = new FileWriter(path)) {
 //            writer.write(setPassword() + "\n");
         String password = setPassword();
-        System.out.println("Personal Information:");
+        System.out.println("\nPersonal Information:");
 
         // get name
         System.out.print("First name: ");
@@ -168,8 +169,10 @@ public abstract class UserSystem {
      */
     public static void setRoleOf(int index, String role) {
         roles.set(index, role);
-        if (role.equals("tracer"))
+        if (role.equals("tracer")) {
             nTracers++;
+        }
+        System.out.println("Modification success!");
     }
 
     /**
@@ -232,7 +235,6 @@ public abstract class UserSystem {
         int index = getIndexOf(input.nextLine());
         System.out.print("Password: ");
         String password = input.nextLine();
-//        input.close();
 
 //        try (Scanner reader = new Scanner(new File(username + ".act"))) {
 //            if (!password.equals(reader.nextLine()) || index == -1) {
@@ -245,12 +247,11 @@ public abstract class UserSystem {
 //            String officeAdd = reader.nextLine().substring(7);
 //            String phoneNumber = reader.nextLine().substring(6);
 //            String email = reader.nextLine().substring(6);
-
         if (index != -1 && users.get(index).getPassword().equals(password)) {
             String role = getRoleOf(index);
             switch (role) {
                 case "citizen":
-                    return users.get(index);
+                    return new Citizen(users.get(index));
 //                    return new Citizen(new Name(name[0], name[1], name[2]), homeAdd,
 //                            officeAdd, phoneNumber, email, username);
 
@@ -276,19 +277,43 @@ public abstract class UserSystem {
         return null;
     }
 
+    /**
+     * Replaces the object in the system with the new and update one.
+     * @param citizen the object to replace the one in the system.
+     */
     public static void updateUser(Citizen citizen) {
         users.set(usernames.indexOf(citizen.getUsername()), citizen);
     }
 
+    /**
+     * Adds a case to the list of cases in the system
+     * @param positive the case to be added
+     */
     public static void addCase(Case positive) {
         cases.add(positive);
     }
 
+    /**
+     * Returns the list of cases.
+     * @return the list of cases.
+     */
     public static ArrayList<Case> getCases() {
         return cases;
     }
 
+    /**
+     * Returns the number of registered tracers.
+     * @return the number of registered tracers in the system.
+     */
     public static int getNumTracers() {
         return nTracers;
+    }
+
+    /**
+     * Returns the number of registered users.
+     * @return the number of registered users in the system.
+     */
+    public static int getNumUsers() {
+        return usernames.size();
     }
 }
