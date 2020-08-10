@@ -279,4 +279,8 @@ public abstract class UserSystem {
     public static void addCase(Case positive) {
         cases.add(positive);
     }
+
+    public static ArrayList<Case> getCases() {
+        return cases;
+    }
 }
