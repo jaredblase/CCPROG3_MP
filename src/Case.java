@@ -34,6 +34,14 @@ public class Case {
         return REPORT_DATE;
     }
 
+    public int getCaseNum() {
+        return CASE_NUM;
+    }
+
+    public static int getCount() {
+        return ctr;
+    }
+
     @Override
     public String toString() {
         return CASE_NUM + " " + USERNAME + format.format(REPORT_DATE.getTime()) + tracer + " " + status;
