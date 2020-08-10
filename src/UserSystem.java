@@ -21,6 +21,7 @@ public abstract class UserSystem {
     private static ArrayList<ArrayList<Visit>> records;
     /** The list of positive cases */
     private static ArrayList<Case> cases;
+    private static int nTracers;
 
     /**
      * Handles the registration of a new user
@@ -104,6 +105,7 @@ public abstract class UserSystem {
         users = new ArrayList<>();
         records= new ArrayList<>();
         cases = new ArrayList<>();
+        nTracers = 0;
 
         usernames.add("Admin2020");
         roles.add("official");
@@ -166,6 +168,8 @@ public abstract class UserSystem {
      */
     public static void setRoleOf(int index, String role) {
         roles.set(index, role);
+        if (role.equals("tracer"))
+            nTracers++;
     }
 
     /**
@@ -278,5 +282,13 @@ public abstract class UserSystem {
 
     public static void addCase(Case positive) {
         cases.add(positive);
+    }
+
+    public static ArrayList<Case> getCases() {
+        return cases;
+    }
+
+    public static int getNumTracers() {
+        return nTracers;
     }
 }
