@@ -85,10 +85,64 @@ public class GovOfficial extends Citizen {
     }
 
     private void showUnassigned() {
-//        for (Case i: ) {
-//            if(i.getTracer().equals("000"))
-//                System.out.println(i);
-//        }
+        int[] caseNums = new int[Case.getCount()];
+        int ctr = 0;
+        System.out.println("Unassigned Cases:");
+        for (Case i: UserSystem.getCases()) {
+            if (i.getTracer().equals("000")) {
+                System.out.println(i.getCaseNum());
+                caseNums[ctr++] = i.getCaseNum();
+            }
+        }
+
+
+        if (UserSystem.getNumTracers() == 0)
+            System.out.println("Create contact tracer accounts to assign cases.\n");
+        else {
+            Scanner input = new Scanner(System.in);
+            boolean status = false;
+            int posCase = 0;
+
+            do {
+                try {
+                    System.out.print("Assign case number: ");
+                    posCase = Integer.parseInt(input.nextLine());
+
+                    for (int j = 0; j < ctr; j++)
+                        if (caseNums[j] == posCase) {
+                            status = true;
+                            break;
+                        }
+
+                    if (!status)
+                        throw new Exception();
+                } catch (Exception e) {
+                    System.out.println("Invalid input!\n");
+                }
+            } while (!status);
+
+            status = false;
+
+            do {
+                System.out.print("Enter username of tracer: ");
+                String tracer = input.nextLine();
+
+                int index = UserSystem.getIndexOf(tracer);
+                if (index == -1) {
+                    System.out.println("No user with username \"" + tracer + "\" found.\n");
+                } else if (UserSystem.getRoleOf(index).equals("tracer")) {
+                    status = true;
+
+                    for (Case i: UserSystem.getCases()) {
+                        if (i.getCaseNum() == posCase) {
+                            i.setTracer(tracer);
+                            break;
+                        }
+                    }
+                } else
+                    System.out.println("User " + tracer + " is not a contact tracer.\n");
+            } while (!status);
+        }
     }
 
     private void showUpdates() {
