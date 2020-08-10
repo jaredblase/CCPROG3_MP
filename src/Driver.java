@@ -1,5 +1,3 @@
-
-
 public class Driver {
     public static void main(String[] args) {
         UserSystem.loadUsers();
@@ -13,8 +11,8 @@ public class Driver {
                     Citizen citizen = UserSystem.login();
                         if (citizen != null) {
                             citizen.showMenu();
+                            System.out.println("Logged out.");
                         }
-                    System.out.println("Logged out.");
                 }
             }
             System.out.println();
