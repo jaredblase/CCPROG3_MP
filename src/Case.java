@@ -26,6 +26,14 @@ public class Case {
         this.status = status;
     }
 
+    public String getTracer() {
+        return tracer;
+    }
+
+    public Calendar getReportDate() {
+        return REPORT_DATE;
+    }
+
     @Override
     public String toString() {
         return CASE_NUM + " " + USERNAME + format.format(REPORT_DATE.getTime()) + tracer + " " + status;
