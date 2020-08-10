@@ -97,9 +97,7 @@ public class Citizen {
             chooseMenu(opt);
         } while (opt != 4);
 
-        if (isChanged) {
-            logOut();
-        }
+        logOut();
     }
 
     protected void chooseMenu(int opt) {
@@ -187,26 +185,28 @@ public class Citizen {
      * Replaces the object in the System
      */
     protected void logOut() {
-//        String pass = null;
+        if (isChanged) {
+//            String pass = null;
 //
-//        try (Scanner input = new Scanner(new File(USERNAME + ".act"))) {
-//            pass = input.nextLine();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+//            try (Scanner input = new Scanner(new File(USERNAME + ".act"))) {
+//                pass = input.nextLine();
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
 //
-//        try (FileWriter writer = new FileWriter(USERNAME + ".act", false)) {
-//            writer.write(pass + "\n");
-//            writer.write(name.toString() + "\n");
-//            writer.write("HOME:" + homeAddress + "\n");
-//            writer.write("OFFICE:" + officeAddress + "\n");
-//            writer.write("PHONE:" + phoneNumber + "\n");
-//            writer.write("EMAIL:" + email + "\n");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-        UserSystem.updateUser(this);
-        this.isChanged = false;
+//            try (FileWriter writer = new FileWriter(USERNAME + ".act", false)) {
+//                writer.write(pass + "\n");
+//                writer.write(name.toString() + "\n");
+//                writer.write("HOME:" + homeAddress + "\n");
+//                writer.write("OFFICE:" + officeAddress + "\n");
+//                writer.write("PHONE:" + phoneNumber + "\n");
+//                writer.write("EMAIL:" + email + "\n");
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+            UserSystem.updateUser(this);
+            this.isChanged = false;
+        }
     }
 
     protected static Calendar getDate() {
