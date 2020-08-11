@@ -1,4 +1,6 @@
 //import java.io.*;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -15,8 +17,6 @@ public abstract class UserSystem {
     private static ArrayList<String> usernames;
     /** The roles of the registered users */
     private static ArrayList<String> roles;
-    /** The data of each user */
-    private static ArrayList<Citizen> users;
     /** The visit records of each user */
     private static ArrayList<ArrayList<Visit>> records;
     /** The list of positive cases */
@@ -37,109 +37,90 @@ public abstract class UserSystem {
             System.out.print("Username: ");
             username = input.nextLine();
         }
-//        String path = username + ".act";
+        String path = username + ".act";
 
-//        // attempt to create a file
-//        try {
-//            File file = new File(path);
-//            if (file.createNewFile()) {
-//                System.out.println("Welcome " + username);
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        // attempt to write to the file
-//        try (FileWriter writer = new FileWriter(path)) {
-//            writer.write(setPassword() + "\n");
-        String password = setPassword();
-        System.out.println("Personal Information:");
+        // attempt to create a file
+        try {
+            File file = new File(path);
+            if (file.createNewFile()) {
+                System.out.println("Welcome " + username);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        // get name
-        System.out.print("First name: ");
-        String firstName = input.nextLine();
-//            writer.write(input.nextLine() + ",");
-        System.out.print("Middle name: ");
-        String secondName = input.nextLine();
-//            writer.write(input.nextLine() + ",");
-        System.out.print("Last name: ");
-        String lastName = input.nextLine();
-//            writer.write(input.nextLine() + "\n");
+        // attempt to write to the file
+        try (FileWriter writer = new FileWriter(path)) {
+            writer.write(setPassword() + "\n");
+            String password = setPassword();
+            System.out.println("Personal Information:");
 
-        // other information
-        System.out.print("Home address: ");
-        String homeAdd = input.nextLine();
-//            writer.write("HOME:" + input.nextLine() + "\n");
-        System.out.print("Office address: ");
-        String officeAdd = input.nextLine();
-//            writer.write("OFFICE:" + input.nextLine() + "\n");
-        System.out.print("Phone number: ");
-        String phoneNumber = input.nextLine();
-//            writer.write("PHONE:" + input.nextLine() + "\n");
-        System.out.print("Email address: ");
-        String email = input.nextLine();
-//            writer.write("EMAIL:" + input.nextLine() + "\n");
+            // get name
+            System.out.print("First name: ");
+            writer.write(input.nextLine() + ",");
+            System.out.print("Middle name: ");
+            writer.write(input.nextLine() + ",");
+            System.out.print("Last name: ");
+            writer.write(input.nextLine() + "\n");
 
-        // add username, role, and information to ArrayList
-        usernames.add(username);
-        roles.add("citizen");
-        users.add(new Citizen(new Name(firstName, secondName, lastName), homeAdd, officeAdd, phoneNumber,
-                email, username, password));
+            // other information
+            System.out.print("Home address: ");
+            writer.write("HOME:" + input.nextLine() + "\n");
+            System.out.print("Office address: ");
+            writer.write("OFFICE:" + input.nextLine() + "\n");
+            System.out.print("Phone number: ");
+            writer.write("PHONE:" + input.nextLine() + "\n");
+            System.out.print("Email address: ");
+            writer.write("EMAIL:" + input.nextLine() + "\n");
 
-        System.out.println("----YOU MAY NOW LOGIN WITH YOUR NEW ACCOUNT----");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+            // add username, role, and information to ArrayList
+            usernames.add(username);
+            roles.add("citizen");
+
+            System.out.println("----YOU MAY NOW LOGIN WITH YOUR NEW ACCOUNT----");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-//    /**
-//     * Called to load the users from Master_List.txt to static ArrayList usernames and roles
-//     */
-
     /**
-     * Initializes all the ArrayLists and creates the admin account
+     * Called to load the users from Master_List.txt to static ArrayList usernames and roles
      */
-    public static void loadUsers() {
+    public static void loadSystem() {
         usernames = new ArrayList<>();
         roles = new ArrayList<>();
-        users = new ArrayList<>();
         records= new ArrayList<>();
         cases = new ArrayList<>();
         nTracers = 0;
 
-        usernames.add("Admin2020");
-        roles.add("official");
-        users.add(new GovOfficial(new Citizen(new Name("Admin", "A", "Gov"), "Malacañang",
-                "City Hall", "09328287114", "admin@gov.ph", "Admin2020",
-                "@Dm1n0202")));
-        records.add(new ArrayList<>());
-//        String[] info;
-//
-//        try (Scanner input = new Scanner(new File("Master_List.txt"))) {
-//            do {
-//                info = input.nextLine().split(" ");
-//                usernames.add(info[0]);
-//                roles.add(info[1]);
-//            } while (input.hasNextLine());
-//        } catch (FileNotFoundException e) {
-//            System.out.println("Error! Master list not found.\nNo admin currently.");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//    }
+        String[] info;
 
-//    /**
-//     * Called to save the users from static ArrayList usernames and roles to Master_List.txt
-//     */
-//    public static void saveUsers() {
-//        try (FileWriter masterList = new FileWriter("Master_List.txt", false)) {
-//            for (int i = 0; i < usernames.size(); i++) {
-//                masterList.write(usernames.get(i) + " " + roles.get(i) + "\n");
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        try (Scanner input = new Scanner(new File("Master_List.txt"))) {
+            do {
+                info = input.nextLine().split(" ");
+                usernames.add(info[0]);
+                roles.add(info[1]);
+            } while (input.hasNextLine());
+        } catch (FileNotFoundException e) {
+            System.out.println("Error! Master list not found.\nNo admin currently.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // load visit records here
+    }
+
+    /**
+     * Called to save the users from static ArrayList usernames and roles to Master_List.txt
+     */
+    public static void saveSystem() {
+        try (FileWriter masterList = new FileWriter("Master_List.txt", false)) {
+            for (int i = 0; i < usernames.size(); i++) {
+                masterList.write(usernames.get(i) + " " + roles.get(i) + "\n");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -194,31 +175,31 @@ public abstract class UserSystem {
         return pass;
     }
 
-//    /**
-//     * Only called by existing users wanting to change their passwords. Calls setPassword()
-//     * to validate and updates the user's data in the text file.
-//     * @param username the user's username
-//     */
-//    public static void setPassword(String username) {
-//        String pass = setPassword();
-//        File file = new File(username + ".act");
-//        char[] info = new char[(int) file.length()];
-//
-//        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-//            reader.readLine();
-//            if (reader.read(info, 0, info.length) == -1)
-//                throw new Exception();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-//            writer.write(pass + "\n");
-//            writer.write(info);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
+    /**
+     * Only called by existing users wanting to change their passwords. Calls setPassword()
+     * to validate and updates the user's data in the text file.
+     * @param username the user's username
+     */
+    public static void setPassword(String username) {
+        String pass = setPassword();
+        File file = new File(username + ".act");
+        char[] info = new char[(int) file.length()];
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            reader.readLine();
+            if (reader.read(info, 0, info.length) == -1)
+                throw new Exception();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+            writer.write(pass + "\n");
+            writer.write(info);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Handles the logging in of an existing user. It asks the user to input his username
@@ -229,55 +210,44 @@ public abstract class UserSystem {
         Scanner input = new Scanner(System.in);
 
         System.out.print("Username: ");
-        int index = getIndexOf(input.nextLine());
+        String username = input.nextLine();
+        int index = usernames.indexOf(username);
+
         System.out.print("Password: ");
         String password = input.nextLine();
-//        input.close();
 
-//        try (Scanner reader = new Scanner(new File(username + ".act"))) {
-//            if (!password.equals(reader.nextLine()) || index == -1) {
-//                throw new FileNotFoundException();
-//            }
-//
-//            String role = roles.get(index);
-//            String[] name = reader.nextLine().split(",");
-//            String homeAdd = reader.nextLine().substring(5);
-//            String officeAdd = reader.nextLine().substring(7);
-//            String phoneNumber = reader.nextLine().substring(6);
-//            String email = reader.nextLine().substring(6);
+        try (Scanner reader = new Scanner(new File(username + ".act"))) {
+            if (!password.equals(reader.nextLine()) || index == -1) {
+                throw new FileNotFoundException();
+            }
 
-        if (index != -1 && users.get(index).getPassword().equals(password)) {
-            String role = getRoleOf(index);
+            String role = roles.get(index);
+            String[] name = reader.nextLine().split(",");
+            String homeAdd = reader.nextLine().substring(5);
+            String officeAdd = reader.nextLine().substring(7);
+            String phoneNumber = reader.nextLine().substring(6);
+            String email = reader.nextLine().substring(6);
+
             switch (role) {
                 case "citizen":
-                    return users.get(index);
-//                    return new Citizen(new Name(name[0], name[1], name[2]), homeAdd,
-//                            officeAdd, phoneNumber, email, username);
+                    return new Citizen(new Name(name[0], name[1], name[2]), homeAdd,
+                            officeAdd, phoneNumber, email, username, records.get(index));
 
                 case "official":
-                    return new GovOfficial(users.get(index));
-//                    return new GovOfficial(new Name(name[0], name[1], name[2]), homeAdd,
-//                            officeAdd, phoneNumber, email, username);
+                    return new GovOfficial(new Name(name[0], name[1], name[2]), homeAdd,
+                            officeAdd, phoneNumber, email, username, records.get(index));
 
                 case "tracer":
-                    return new Tracer(users.get(index));
-//                    return new Tracer(new Name(name[0], name[1], name[2]), homeAdd,
-//                            officeAdd, phoneNumber, email, username);
+                    return new Tracer(new Name(name[0], name[1], name[2]), homeAdd,
+                            officeAdd, phoneNumber, email, username, records.get(index));
             }
-        } else {
-            System.out.println("Invalid username/password!");
+        } catch (FileNotFoundException e) {
+            System.out.println("Invalid username/password");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-//        } catch (FileNotFoundException e) {
-//            System.out.println("Invalid username/password");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
 
         return null;
-    }
-
-    public static void updateUser(Citizen citizen) {
-        users.set(usernames.indexOf(citizen.getUsername()), citizen);
     }
 
     public static void addCase(Case positive) {
