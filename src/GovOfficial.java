@@ -12,6 +12,9 @@ import java.util.function.Predicate;
  */
 public class GovOfficial extends Citizen {
     /** */
+    protected static String[] menuOptions = {"Check in", "Report positive", "Update profile information",
+            "Show Unassigned Cases", "Show Contact Tracing Updates", "Analytics",
+            "Create Government Official Account", "Create Contact Tracer Account", "Terminate Account", "Logout"};
     private static final String[] analyticsMenu = {"Number of positive cases in a city within a duration",
             "Number of positive cases within a duration", "Number of positive cases in a city", "Back"};
 
@@ -21,16 +24,6 @@ public class GovOfficial extends Citizen {
      */
     public GovOfficial(Citizen citizen) {
         super(citizen);
-        String[] temp = new String[menuOptions.length + 6];
-        System.arraycopy(menuOptions, 0, temp, 0, menuOptions.length);
-        temp[3] = "Show Unassigned Cases";
-        temp[4] = "Show Contact Tracing Updates";
-        temp[5] = "Analytics";
-        temp[6] = "Create Government Official Account";
-        temp[7] = "Create Contact Tracer Account";
-        temp[8] = "Terminate Account";
-        temp[9] = "Logout";
-        menuOptions = temp;
     }
 
     /**

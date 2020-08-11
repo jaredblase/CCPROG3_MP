@@ -9,28 +9,16 @@ import java.util.ArrayList;
  * @see Citizen
  */
 public class Tracer extends Citizen {
+    protected static String[] menuOptions = {"Check in", "Report positive", "Update profile information",
+            "Show Cases", "Trace Specific Case", "Inform Citizens Possibly Exposed", "Logout"};
     private ArrayList<Case> assigned;
-//    public Tracer(Name name, String homeAddress, String officeAddress, String phoneNumber,
-//                       String email, String username, String password) {
-//        super(name, homeAddress, officeAddress, phoneNumber, email, username, password);
-//        String[] temp = new String[menuOptions.length + 6];
-//        System.arraycopy(menuOptions, 0, temp, 0, menuOptions.length);
-//        temp[3] = "Show Cases";
-//        temp[4] = "Trace Specific Case";
-//        temp[5] = "Inform Citizens Possibly Exposed";
-//        temp[6] = "Logout";
-//        menuOptions = temp;
-//    }
 
+    /**
+     * Receives a Citizen class and makes an exact copy of its attributes.
+     * @param citizen the object used to construct the new object.
+     */
     public Tracer(Citizen citizen) {
         super(citizen);
-        String[] temp = new String[menuOptions.length + 3];
-        System.arraycopy(menuOptions, 0, temp, 0, menuOptions.length);
-        temp[3] = "Show Cases";
-        temp[4] = "Trace Specific Case";
-        temp[5] = "Inform Citizens Possibly Exposed";
-        temp[6] = "Logout";
-        menuOptions = temp;
     }
 
     @Override

@@ -1,6 +1,3 @@
-//import java.io.File;
-//import java.io.FileWriter;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
@@ -37,7 +34,7 @@ public class Citizen {
     private boolean isChanged;
     private static final String[] UPDATE_OPTIONS = {"Name", "Home Address", "Office Address", "Phone Number",
             "E-Mail", "Password", "Back to User Menu"};
-    protected String[] menuOptions = {"Check in", "Report positive", "Update profile information", "Logout"};
+    protected static String[] menuOptions = {"Check in", "Report positive", "Update profile information", "Logout"};
 
     /**
      * Receives the personal information of the user, along with the username and password
@@ -69,7 +66,6 @@ public class Citizen {
      * Creates a copy from an object of the same class
      * @param other the object to be copied
      */
-    @SuppressWarnings("IncompleteCopyConstructor")
     public Citizen(Citizen other) {
         this.name = other.name;
         this.homeAddress = other.homeAddress;
