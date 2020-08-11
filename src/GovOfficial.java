@@ -75,7 +75,7 @@ public class GovOfficial extends Citizen {
         System.out.println("Unassigned Cases:");
         for (Case i: UserSystem.getCases()) {
             if (i.getTracer().equals("000")) {
-                System.out.println(i); // display case num
+                System.out.println(i.getCaseNum()); // display case num
                 caseNums[ctr++] = i.getCaseNum(); // add case num to array of caseNums
             }
         }
@@ -189,7 +189,7 @@ public class GovOfficial extends Citizen {
         System.out.println();
         for (Case i: UserSystem.getCases()) {
             if (filter.test(i)) {
-                System.out.println(i);
+                System.out.println(i.getCaseNum());
                 found = true;
             }
         }
