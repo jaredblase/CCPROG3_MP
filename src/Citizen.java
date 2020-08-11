@@ -1,6 +1,5 @@
-//import java.io.File;
-//import java.io.FileWriter;
-
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
@@ -26,8 +25,6 @@ public class Citizen {
     private String email;
     /** The permanent username in the system */
     private final String USERNAME;
-    /** The password of the user */
-    private String password;
     /** The list of visit records */
     private ArrayList<Visit> visitRec;
     /** Indicator if the user is infected */
@@ -37,7 +34,7 @@ public class Citizen {
     private boolean isChanged;
     private static final String[] UPDATE_OPTIONS = {"Name", "Home Address", "Office Address", "Phone Number",
             "E-Mail", "Password", "Back to User Menu"};
-    protected String[] menuOptions = {"Check in", "Report positive", "Update profile information", "Logout"};
+    protected static String[] menuOptions = {"Check in", "Report positive", "Update profile information", "Logout"};
 
     /**
      * Receives the personal information of the user, along with the username and password
@@ -48,40 +45,19 @@ public class Citizen {
      * @param phoneNumber the phone number of the user
      * @param email the email address of the user
      * @param username the username of the user
-     * @param password the password of the user
      */
     public Citizen(Name name, String homeAddress, String officeAddress, String phoneNumber,
-                   String email, String username, String password) {
+                   String email, String username, ArrayList<Visit> visit) {
         this.name = name;
         this.homeAddress = homeAddress;
         this.officeAddress = officeAddress;
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.USERNAME = username;
-        this.password = password;
-        visitRec = new ArrayList<>();
+        visitRec = visit;
         isPositive = false;
         maybePositive = false;
         isChanged = false;
-    }
-
-    /**
-     * Creates a copy from an object of the same class
-     * @param other the object to be copied
-     */
-    @SuppressWarnings("IncompleteCopyConstructor")
-    public Citizen(Citizen other) {
-        this.name = other.name;
-        this.homeAddress = other.homeAddress;
-        this.officeAddress = other.officeAddress;
-        this.phoneNumber = other.phoneNumber;
-        this.email = other.email;
-        this.USERNAME = other.USERNAME;
-        this.password = other.password;
-        this.visitRec = other.visitRec;
-        this.isPositive = other.isPositive;
-        this.maybePositive = other.maybePositive;
-        this.isChanged = other.isChanged;
     }
 
     /**
@@ -90,14 +66,6 @@ public class Citizen {
      */
     protected String getUsername() {
         return USERNAME;
-    }
-
-    /**
-     * Returns the password of the user.
-     * @return the password of the user.
-     */
-    public String getPassword() {
-        return password;
     }
 
     /**
@@ -184,7 +152,7 @@ public class Citizen {
                 if (opt == 1) {
                     name.changeName();
                 } else if (opt == max - 1) {
-                    this.password = UserSystem.setPassword();
+                    UserSystem.setPassword(this.USERNAME);
                 } else {
                     Scanner input = new Scanner(System.in);
                     System.out.print("New " + UPDATE_OPTIONS[opt - 1] + ": ");
@@ -204,12 +172,28 @@ public class Citizen {
     }
 
     /**
-     * Replaces the object in the System
+     * Updates the text file with changes made while the user was logged in
      */
     protected void logOut() {
         if (isChanged) {
-            UserSystem.updateUser(this);
-            this.isChanged = false;
+            String pass = null;
+
+            try (Scanner input = new Scanner(new File(USERNAME + ".act"))) {
+                pass = input.nextLine();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try (FileWriter writer = new FileWriter(USERNAME + ".act", false)) {
+                writer.write(pass + "\n");
+                writer.write(name.toString() + "\n");
+                writer.write("HOME:" + homeAddress + "\n");
+                writer.write("OFFICE:" + officeAddress + "\n");
+                writer.write("PHONE:" + phoneNumber + "\n");
+                writer.write("EMAIL:" + email + "\n");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

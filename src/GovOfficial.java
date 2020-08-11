@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
 import java.util.function.Predicate;
@@ -16,11 +17,17 @@ public class GovOfficial extends Citizen {
             "Number of positive cases within a duration", "Number of positive cases in a city", "Back"};
 
     /**
-     * Receives a Citizen class and makes an exact copy of its attributes.
-     * @param citizen the object used to construct the new object.
+     *
+     * @param name the Name object containing the name of the user
+     * @param homeAddress the home address of the user
+     * @param officeAddress the office address of the user
+     * @param phoneNumber the phone number of the user
+     * @param email the email address of the user
+     * @param username the username of the user
      */
-    public GovOfficial(Citizen citizen) {
-        super(citizen);
+    public GovOfficial(Name name, String homeAddress, String officeAddress, String phoneNumber,
+                       String email, String username, ArrayList<Visit> visit) {
+        super(name, homeAddress, officeAddress, phoneNumber, email, username, visit);
         String[] temp = new String[menuOptions.length + 6];
         System.arraycopy(menuOptions, 0, temp, 0, menuOptions.length);
         temp[3] = "Show Unassigned Cases";
@@ -75,8 +82,8 @@ public class GovOfficial extends Citizen {
         System.out.println("Unassigned Cases:");
         for (Case i: UserSystem.getCases()) {
             if (i.getTracer().equals("000")) {
-                System.out.println(i); // display case num
-                caseNums[ctr++] = i.getCaseNum(); // add case num to array of caseNums
+                System.out.println(i.getCaseNum());
+                caseNums[ctr++] = i.getCaseNum();
             }
         }
 

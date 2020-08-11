@@ -1,6 +1,6 @@
 public class Driver {
     public static void main(String[] args) {
-        UserSystem.loadUsers();
+        UserSystem.loadSystem();
         int opt;
 
         do {
@@ -18,6 +18,7 @@ public class Driver {
             System.out.println();
         } while (opt != 3);
 
+        UserSystem.saveSystem();
         System.out.println("Terminating program...");
     }
 }
