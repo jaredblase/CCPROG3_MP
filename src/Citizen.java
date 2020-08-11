@@ -184,7 +184,6 @@ public class Citizen {
                 if (opt == 1) {
                     name.changeName();
                 } else if (opt == max - 1) {
-//                    UserSystem.setPassword(this.USERNAME);
                     this.password = UserSystem.setPassword();
                 } else {
                     Scanner input = new Scanner(System.in);
@@ -204,33 +203,11 @@ public class Citizen {
         } while (opt != max);
     }
 
-//    /**
-//     * Updates the text file with changes made while the user was logged in
-//     */
-
     /**
      * Replaces the object in the System
      */
     protected void logOut() {
         if (isChanged) {
-//            String pass = null;
-//
-//            try (Scanner input = new Scanner(new File(USERNAME + ".act"))) {
-//                pass = input.nextLine();
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//
-//            try (FileWriter writer = new FileWriter(USERNAME + ".act", false)) {
-//                writer.write(pass + "\n");
-//                writer.write(name.toString() + "\n");
-//                writer.write("HOME:" + homeAddress + "\n");
-//                writer.write("OFFICE:" + officeAddress + "\n");
-//                writer.write("PHONE:" + phoneNumber + "\n");
-//                writer.write("EMAIL:" + email + "\n");
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
             UserSystem.updateUser(this);
             this.isChanged = false;
         }

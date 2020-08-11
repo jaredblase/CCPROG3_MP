@@ -14,29 +14,6 @@ public class GovOfficial extends Citizen {
     /** */
     private static final String[] analyticsMenu = {"Number of positive cases in a city within a duration",
             "Number of positive cases within a duration", "Number of positive cases in a city", "Back"};
-//    /**
-//     *
-//     * @param name the Name object containing the name of the user
-//     * @param homeAddress the home address of the user
-//     * @param officeAddress the office address of the user
-//     * @param phoneNumber the phone number of the user
-//     * @param email the email address of the user
-//     * @param username the username of the user
-//     */
-//    public GovOfficial(Name name, String homeAddress, String officeAddress, String phoneNumber,
-//                        String email, String username, String password) {
-//        super(name, homeAddress, officeAddress, phoneNumber, email, username, password);
-//        String[] temp = new String[menuOptions.length + 6];
-//        System.arraycopy(menuOptions, 0, temp, 0, menuOptions.length);
-//        temp[3] = "Show Unassigned Cases";
-//        temp[4] = "Show Contact Tracing Updates";
-//        temp[5] = "Analytics";
-//        temp[6] = "Create Government Official Account";
-//        temp[7] = "Create Contact Tracer Account";
-//        temp[8] = "Terminate Account";
-//        temp[9] = "Logout";
-//        menuOptions = temp;
-//    }
 
     /**
      * Receives a Citizen class and makes an exact copy of its attributes.

@@ -18,7 +18,6 @@ public class Driver {
             System.out.println();
         } while (opt != 3);
 
-//        User.saveUsers();
         System.out.println("Terminating program...");
     }
 }
