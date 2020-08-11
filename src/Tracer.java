@@ -22,7 +22,7 @@ public class Tracer extends Citizen {
 //        menuOptions = temp;
 //    }
 
-    public <E extends Citizen> Tracer(E citizen) {
+    public Tracer(Citizen citizen) {
         super(citizen);
         String[] temp = new String[menuOptions.length + 3];
         System.arraycopy(menuOptions, 0, temp, 0, menuOptions.length);

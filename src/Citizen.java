@@ -30,15 +30,18 @@ public class Citizen {
     private String password;
     /** The list of visit records */
     private ArrayList<Visit> visitRec;
+    /** Indicator if the user is infected */
     private boolean isPositive;
     private boolean maybePositive;
+    /** Indicator if any detail was changed during the session*/
     private boolean isChanged;
     private static final String[] UPDATE_OPTIONS = {"Name", "Home Address", "Office Address", "Phone Number",
             "E-Mail", "Password", "Back to User Menu"};
-    protected static String[] menuOptions = {"Check in", "Report positive", "Update profile information", "Logout"};
+    protected String[] menuOptions = {"Check in", "Report positive", "Update profile information", "Logout"};
 
     /**
-     *
+     * Receives the personal information of the user, along with the username and password
+     * and initializes the object from them.
      * @param name the Name object containing the name of the user
      * @param homeAddress the home address of the user
      * @param officeAddress the office address of the user
@@ -66,6 +69,7 @@ public class Citizen {
      * Creates a copy from an object of the same class
      * @param other the object to be copied
      */
+    @SuppressWarnings("IncompleteCopyConstructor")
     public Citizen(Citizen other) {
         this.name = other.name;
         this.homeAddress = other.homeAddress;
@@ -80,14 +84,25 @@ public class Citizen {
         this.isChanged = other.isChanged;
     }
 
+    /**
+     * Returns the username of the user.
+     * @return the username of the user.
+     */
     protected String getUsername() {
         return USERNAME;
     }
 
+    /**
+     * Returns the password of the user.
+     * @return the password of the user.
+     */
     public String getPassword() {
         return password;
     }
 
+    /**
+     * Main entry point of the user after logging in.
+     */
     public void showMenu() {
         int opt;
 
@@ -100,6 +115,10 @@ public class Citizen {
         logOut();
     }
 
+    /**
+     * Calls the appropriate function based on the user's input.
+     * @param opt integer representing the chosen menu option.
+     */
     protected void chooseMenu(int opt) {
         switch (opt) {
             case 1 -> checkIn();
@@ -108,6 +127,10 @@ public class Citizen {
         }
     }
 
+    /**
+     * Display a message if the user has possibly came in contact
+     * with >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+     */
     protected void prompt() {
         if (!isPositive && maybePositive) {
             System.out.println("You might be positive!");
@@ -143,9 +166,13 @@ public class Citizen {
     }
 
     private void reportPositive() {
-        isPositive = true;
-        isChanged = true;
-        UserSystem.addCase(new Case(this.USERNAME, getDate()));
+        if (!isPositive) {
+            isPositive = true;
+            isChanged = true;
+            UserSystem.addCase(new Case(this.USERNAME, getDate()));
+        } else {
+            System.out.println("You are already reported positive!");
+        }
     }
 
     private void updateInfo() {
@@ -157,7 +184,6 @@ public class Citizen {
                 if (opt == 1) {
                     name.changeName();
                 } else if (opt == max - 1) {
-//                    UserSystem.setPassword(this.USERNAME);
                     this.password = UserSystem.setPassword();
                 } else {
                     Scanner input = new Scanner(System.in);
@@ -177,33 +203,11 @@ public class Citizen {
         } while (opt != max);
     }
 
-//    /**
-//     * Updates the text file with changes made while the user was logged in
-//     */
-
     /**
      * Replaces the object in the System
      */
     protected void logOut() {
         if (isChanged) {
-//            String pass = null;
-//
-//            try (Scanner input = new Scanner(new File(USERNAME + ".act"))) {
-//                pass = input.nextLine();
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//
-//            try (FileWriter writer = new FileWriter(USERNAME + ".act", false)) {
-//                writer.write(pass + "\n");
-//                writer.write(name.toString() + "\n");
-//                writer.write("HOME:" + homeAddress + "\n");
-//                writer.write("OFFICE:" + officeAddress + "\n");
-//                writer.write("PHONE:" + phoneNumber + "\n");
-//                writer.write("EMAIL:" + email + "\n");
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
             UserSystem.updateUser(this);
             this.isChanged = false;
         }
