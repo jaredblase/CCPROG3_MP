@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
+import java.util.function.Predicate;
 
 /**
  * This class is used
@@ -11,8 +12,10 @@ import java.util.Scanner;
  * @see Citizen
  */
 public class GovOfficial extends Citizen {
+    /** */
     private static final String[] analyticsMenu = {"Number of positive cases in a city within a duration",
             "Number of positive cases within a duration", "Number of positive cases in a city", "Back"};
+
     /**
      *
      * @param name the Name object containing the name of the user
@@ -53,6 +56,10 @@ public class GovOfficial extends Citizen {
         super.logOut();
     }
 
+    /**
+     * Calls the appropriate function based on the user's input.
+     * @param opt integer representing the chosen menu option.
+     */
     @Override
     protected void chooseMenu(int opt) {
         if (opt < 4) {
@@ -62,8 +69,8 @@ public class GovOfficial extends Citizen {
                 case 4 -> showUnassigned();
                 case 5 -> showUpdates();
                 case 6 -> showAnalytics();
-                case 7 -> modifyRole("official");
-                case 8 -> modifyRole("tracer");
+                case 7 -> promoteAccount("official");
+                case 8 -> promoteAccount("tracer");
                 case 9 -> modifyRole("citizen");
             }
         }
@@ -134,8 +141,13 @@ public class GovOfficial extends Citizen {
 
     }
 
+    /**
+     * Asks the user what filter will be used when displaying the cases, can be:
+     * within a date range, within a city, or both.
+     */
     private void showAnalytics() {
         int opt;
+        Predicate<Case> filter = null;
 
         do {
             opt = Menu.display("Analytics", analyticsMenu);
@@ -146,18 +158,56 @@ public class GovOfficial extends Citizen {
                     Calendar[] dates = obtainDateRange();
                     System.out.print("City: ");
                     String city = input.nextLine();
+
+                    filter = (case1) -> case1.getReportDate().after(dates[0]) && case1.getReportDate().before(dates[1]);
                 }
                 case 2 -> {
                     Calendar[] dates = obtainDateRange();
+
+                    filter = (case1) -> case1.getReportDate().after(dates[0]) && case1.getReportDate().before(dates[1]);
                 }
                 case 3 -> {
                     Scanner input = new Scanner(System.in);
                     String city = input.nextLine();
+
+//                    filter = (case1) -> {
+//                        return case1.get
+//                    };
                 }
+            }
+
+            if (opt != 4) {
+                displayCases(filter);
             }
         } while (opt != analyticsMenu.length);
     }
 
+    /**
+     * Iterates through all the cases and displays only what passes
+     * the test (filter).
+     * @param filter is the test to be done on each entry.
+     */
+    private void displayCases(Predicate<Case> filter) {
+        boolean found = false;
+
+        System.out.println();
+        for (Case i: UserSystem.getCases()) {
+            if (filter.test(i)) {
+                System.out.println(i);
+                found = true;
+            }
+        }
+
+        if (!found) {
+            System.out.println("No cases match the criteria specified.\n");
+        }
+    }
+
+    /**
+     * Obtains the start and end date from the user. The first element in the
+     * returned Calendar array is the starting date while the second is the end date.
+     * @return the start and end date through a Calendar array
+     */
     private Calendar[] obtainDateRange() {
         Calendar start, end;
 
@@ -166,13 +216,26 @@ public class GovOfficial extends Citizen {
         do {
             System.out.println("End date");
             end = getDate();
-        } while (start.after(end));
+        } while (start.after(end)); // check if the input date is after the start date
 
         return new Calendar[] {start, end};
     }
 
     /**
-     * Handles the promotion and demotion of an account.
+     * Handles the promotion of an account
+     * @param role the role to be promoted to
+     */
+    private void promoteAccount(String role) {
+        if (Menu.YorN("Does the user already have a registered account") == 'Y') {
+            modifyRole(role);
+        } else {
+            UserSystem.register();
+            UserSystem.setRoleOf(UserSystem.getNumUsers() - 1, role);
+        }
+    }
+
+    /**
+     * Handles the role modification of an existing account.
      * @param role the new role to be assigned to an account.
      */
     private void modifyRole(String role) {

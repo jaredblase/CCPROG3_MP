@@ -21,6 +21,7 @@ public abstract class UserSystem {
     private static ArrayList<ArrayList<Visit>> records;
     /** The list of positive cases */
     private static ArrayList<Case> cases;
+    /** The number of registered tracers */
     private static int nTracers;
 
     /**
@@ -149,8 +150,10 @@ public abstract class UserSystem {
      */
     public static void setRoleOf(int index, String role) {
         roles.set(index, role);
-        if (role.equals("tracer"))
+        if (role.equals("tracer")) {
             nTracers++;
+        }
+        System.out.println("Modification success!");
     }
 
     /**
@@ -250,15 +253,35 @@ public abstract class UserSystem {
         return null;
     }
 
+    /**
+     * Adds a case to the list of cases in the system
+     * @param positive the case to be added
+     */
     public static void addCase(Case positive) {
         cases.add(positive);
     }
 
+    /**
+     * Returns the list of cases.
+     * @return the list of cases.
+     */
     public static ArrayList<Case> getCases() {
         return cases;
     }
 
+    /**
+     * Returns the number of registered tracers.
+     * @return the number of registered tracers in the system.
+     */
     public static int getNumTracers() {
         return nTracers;
+    }
+
+    /**
+     * Returns the number of registered users.
+     * @return the number of registered users in the system.
+     */
+    public static int getNumUsers() {
+        return usernames.size();
     }
 }

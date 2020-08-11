@@ -30,15 +30,18 @@ public class Citizen {
     private final String USERNAME;
     /** The list of visit records */
     private ArrayList<Visit> visitRec;
+    /** Indicator if the user is infected */
     private boolean isPositive;
     private boolean maybePositive;
+    /** Indicator if any detail was changed during the session*/
     private boolean isChanged;
     private static final String[] UPDATE_OPTIONS = {"Name", "Home Address", "Office Address", "Phone Number",
             "E-Mail", "Password", "Back to User Menu"};
     protected static String[] menuOptions = {"Check in", "Report positive", "Update profile information", "Logout"};
 
     /**
-     *
+     * Receives the personal information of the user, along with the username and password
+     * and initializes the object from them.
      * @param name the Name object containing the name of the user
      * @param homeAddress the home address of the user
      * @param officeAddress the office address of the user
@@ -60,10 +63,17 @@ public class Citizen {
         isChanged = false;
     }
 
+    /**
+     * Returns the username of the user.
+     * @return the username of the user.
+     */
     protected String getUsername() {
         return USERNAME;
     }
 
+    /**
+     * Main entry point of the user after logging in.
+     */
     public void showMenu() {
         int opt;
 
@@ -76,6 +86,10 @@ public class Citizen {
         logOut();
     }
 
+    /**
+     * Calls the appropriate function based on the user's input.
+     * @param opt integer representing the chosen menu option.
+     */
     protected void chooseMenu(int opt) {
         switch (opt) {
             case 1 -> checkIn();
@@ -84,6 +98,10 @@ public class Citizen {
         }
     }
 
+    /**
+     * Display a message if the user has possibly came in contact
+     * with >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+     */
     protected void prompt() {
         if (!isPositive && maybePositive) {
             System.out.println("You might be positive!");
