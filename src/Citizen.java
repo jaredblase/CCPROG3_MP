@@ -32,8 +32,10 @@ public class Citizen {
     private boolean maybePositive;
     /** Indicator if any detail was changed during the session */
     private boolean isChanged;
+    /** The String array containing the update details options of the user */
     private static final String[] UPDATE_OPTIONS = {"Name", "Home Address", "Office Address", "Phone Number",
             "E-Mail", "Password", "Back to User Menu"};
+    /** The String array containing the menu options of the user */
     protected static String[] menuOptions = {"Check in", "Report positive", "Update profile information", "Logout"};
 
     /**
