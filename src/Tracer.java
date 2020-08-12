@@ -19,6 +19,12 @@ public class Tracer extends Citizen {
      */
     public Tracer(Citizen citizen) {
         super(citizen);
+
+        assigned = new ArrayList<>();
+        for (Case i: UserSystem.getCases()) {
+            if (i.getTracer().equals(getUsername()) && i.getStatus() == 'P' && !assigned.contains(i))
+                assigned.add(i);
+        }
     }
 
     @Override
@@ -31,7 +37,7 @@ public class Tracer extends Citizen {
             chooseMenu(opt);
         } while (opt != 7);
 
-//        super.logOut();
+        super.logOut();
     }
 
     @Override
