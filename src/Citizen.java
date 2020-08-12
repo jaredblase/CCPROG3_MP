@@ -30,7 +30,7 @@ public class Citizen {
     /** Indicator if the user is infected */
     private boolean isPositive;
     private boolean maybePositive;
-    /** Indicator if any detail was changed during the session*/
+    /** Indicator if any detail was changed during the session */
     private boolean isChanged;
     private static final String[] UPDATE_OPTIONS = {"Name", "Home Address", "Office Address", "Phone Number",
             "E-Mail", "Password", "Back to User Menu"};
@@ -129,7 +129,8 @@ public class Citizen {
      */
     protected void prompt() {
         if (!isPositive && maybePositive) {
-            System.out.println("You might be positive!");
+            System.out.println("You may have been in contact with a positive patient on <date> in <establishment>.");
+            System.out.println("You are advised to get tested and report via the app should the result be positive.");
         }
     }
 
