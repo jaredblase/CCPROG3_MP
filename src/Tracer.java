@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * This class is used
@@ -12,6 +13,7 @@ public class Tracer extends Citizen {
     protected static String[] menuOptions = {"Check in", "Report positive", "Update profile information",
             "Show Cases", "Trace Specific Case", "Inform Citizens Possibly Exposed", "Logout"};
     private ArrayList<Case> assigned;
+    private ArrayList<ArrayList<String>> contacts;
 
     /**
      * Receives a Citizen class and makes an exact copy of its attributes.
@@ -21,12 +23,17 @@ public class Tracer extends Citizen {
         super(citizen);
 
         assigned = new ArrayList<>();
+        contacts = new ArrayList<>();
         for (Case i: UserSystem.getCases()) {
+            //tracer is assigned to case and status is pending and case not yet in list of assigned cases
             if (i.getTracer().equals(getUsername()) && i.getStatus() == 'P' && !assigned.contains(i))
                 assigned.add(i);
         }
     }
 
+    /**
+     * Main entry point of the user after logging in.
+     */
     @Override
     public void showMenu() {
         int opt;
@@ -40,6 +47,10 @@ public class Tracer extends Citizen {
         super.logOut();
     }
 
+    /**
+     * Calls the appropriate function based on the user's input.
+     * @param opt integer representing the chosen menu option.
+     */
     @Override
     protected void chooseMenu(int opt) {
         if (opt < 4) {
@@ -53,6 +64,9 @@ public class Tracer extends Citizen {
         }
     }
 
+    /**
+     * Displays the case numbers of the assigned cases to the contact tracer.
+     */
     private void showCases() {
         System.out.println("Cases Assigned:");
         for (Case i: assigned) {
