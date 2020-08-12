@@ -116,10 +116,16 @@ public abstract class UserSystem {
      * @param role the new role to be assigned to the user
      */
     public static void setRoleOf(int index, String role) {
+        if (roles.get(index).equals("tracer")) { //previous role is tracer
+            nTracers--;
+        }
+
         roles.set(index, role);
-        if (role.equals("tracer")) {
+
+        if (role.equals("tracer")) { //new role is tracer
             nTracers++;
         }
+
         System.out.println("Modification success!");
     }
 
