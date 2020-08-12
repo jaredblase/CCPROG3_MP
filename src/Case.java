@@ -42,6 +42,10 @@ public class Case {
         return ctr;
     }
 
+    public char getStatus() {
+        return status;
+    }
+
     @Override
     public String toString() {
         return CASE_NUM + " " + USERNAME + format.format(REPORT_DATE.getTime()) + tracer + " " + status;
