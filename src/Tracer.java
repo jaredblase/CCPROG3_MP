@@ -54,7 +54,10 @@ public class Tracer extends Citizen {
     }
 
     private void showCases() {
-
+        System.out.println("Cases Assigned:");
+        for (Case i: assigned) {
+            System.out.println(i.getCaseNum());
+        }
     }
 
     private void trace() {
