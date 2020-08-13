@@ -246,7 +246,9 @@ public class GovOfficial extends Citizen {
         System.out.print("Account username to be modified: ");
         int index = UserSystem.getIndexOf(input.nextLine());
 
-        if (index != -1) {
+        if (index == UserSystem.getIndexOf(this.getUsername())) {
+            System.out.println("You cannot modify your own role!");
+        } else if (index != -1) {
             if (UserSystem.getRoleOf(index).equals(role)) {
                 System.out.println("Account is already a " + role + "!");
             } else {
