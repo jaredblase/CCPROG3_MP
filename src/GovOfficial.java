@@ -57,8 +57,8 @@ public class GovOfficial extends Citizen {
                 case 4 -> showUnassigned();
                 case 5 -> showUpdates();
                 case 6 -> showAnalytics();
-                case 7 -> promoteAccount("official");
-                case 8 -> promoteAccount("tracer");
+                case 7 -> modifyRole("official");
+                case 8 -> modifyRole("tracer");
                 case 9 -> modifyRole("citizen");
             }
         }
@@ -225,28 +225,16 @@ public class GovOfficial extends Citizen {
     }
 
     /**
-     * Handles the promotion of an account
-     * @param role the role to be promoted to
-     */
-    private void promoteAccount(String role) {
-        if (Menu.YorN("Does the user already have a registered account") == 'Y') {
-            modifyRole(role);
-        } else {
-            UserSystem.register();
-            UserSystem.setRoleOf(UserSystem.getNumUsers() - 1, role);
-        }
-    }
-
-    /**
      * Handles the role modification of an existing account.
      * @param role the new role to be assigned to an account.
      */
     private void modifyRole(String role) {
         Scanner input = new Scanner(System.in);
         System.out.print("Account username to be modified: ");
-        int index = UserSystem.getIndexOf(input.nextLine());
+        String username = input.nextLine();
+        int index = UserSystem.getIndexOf(username);
 
-        if (index == UserSystem.getIndexOf(this.getUsername())) {
+        if (username.equals(this.getUsername())) {
             System.out.println("You cannot modify your own role!");
         } else if (index != -1) {
             if (UserSystem.getRoleOf(index).equals(role)) {
@@ -254,6 +242,9 @@ public class GovOfficial extends Citizen {
             } else {
                 UserSystem.setRoleOf(index, role);
             }
+        } else if (!role.equals("citizen")) {
+            UserSystem.register(username);
+            UserSystem.setRoleOf(UserSystem.getNumUsers() - 1, role);
         } else {
             System.out.println("Account does not exist!");
         }
