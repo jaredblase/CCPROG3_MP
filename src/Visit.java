@@ -14,6 +14,10 @@ public class Visit {
         this.checkIn = checkIn;
     }
 
+    public Calendar getCheckIn() {
+        return checkIn;
+    }
+
     @Override
     public String toString() {
         return estCode + " " + format.format(checkIn.getTime());
