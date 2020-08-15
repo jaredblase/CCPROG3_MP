@@ -24,14 +24,24 @@ public abstract class UserSystem {
     private static int nTracers;
 
     /**
-     * Handles the registration of a new user
+     * Obtains the input username then calls register(username) to handle
+     * the rest of the registration process.
      */
     public static void register() {
         Scanner input = new Scanner(System.in);
 
         System.out.println("ACCOUNT CREATION\n");
         System.out.print("Username: ");
-        String username = input.nextLine();
+        register(input.nextLine());
+    }
+
+    /**
+     * Handles the registration of a new user given a username
+     * @param username the desired username of the account to created
+     */
+    public static void register(String username) {
+        Scanner input = new Scanner(System.in);
+
         while (getIndexOf(username) != -1) {
             System.out.println("Username has already been taken!");
             System.out.print("Username: ");

@@ -11,10 +11,12 @@ import java.util.function.Predicate;
  * @see Citizen
  */
 public class GovOfficial extends Citizen {
-    /** */
+    /** The String array containing the menu options of the user */
     protected static String[] menuOptions = {"Check in", "Report positive", "Update profile information",
             "Show Unassigned Cases", "Show Contact Tracing Updates", "Analytics",
             "Create Government Official Account", "Create Contact Tracer Account", "Terminate Account", "Logout"};
+
+    /** The String array containing the analytics menu options of the user */
     private static final String[] analyticsMenu = {"Number of positive cases in a city within a duration",
             "Number of positive cases within a duration", "Number of positive cases in a city", "Back"};
 
@@ -55,13 +57,16 @@ public class GovOfficial extends Citizen {
                 case 4 -> showUnassigned();
                 case 5 -> showUpdates();
                 case 6 -> showAnalytics();
-                case 7 -> promoteAccount("official");
-                case 8 -> promoteAccount("tracer");
+                case 7 -> modifyRole("official");
+                case 8 -> modifyRole("tracer");
                 case 9 -> modifyRole("citizen");
             }
         }
     }
 
+    /**
+     * Displays all the unassigned cases and displays the case numbers
+     */
     private void showUnassigned() {
         int[] caseNums = new int[Case.getCount()];
         int ctr = 0;
@@ -126,8 +131,18 @@ public class GovOfficial extends Citizen {
         }
     }
 
+    /**
+     * Displays a list of positive cases from a specific input date range and
+     * their status.
+     */
     private void showUpdates() {
+        Calendar[] dates = obtainDateRange();
 
+        for (Case i: UserSystem.getCases()) {
+            if (i.getReportDate().after(dates[0]) && i.getReportDate().before(dates[1])) {
+                System.out.println(i);
+            }
+        }
     }
 
     /**
@@ -166,28 +181,27 @@ public class GovOfficial extends Citizen {
             }
 
             if (opt != 4) {
-                displayCases(filter);
+                countCases(filter);
             }
         } while (opt != analyticsMenu.length);
     }
 
     /**
-     * Iterates through all the cases and displays only what passes
-     * the test (filter).
+     * Iterates through all the cases and counts the cases that pass
+     * the test (filter). Displays the final count.
      * @param filter is the test to be done on each entry.
      */
-    private void displayCases(Predicate<Case> filter) {
-        boolean found = false;
+    private void countCases(Predicate<Case> filter) {
+        int ctr = 0;
 
         System.out.println();
         for (Case i: UserSystem.getCases()) {
             if (filter.test(i)) {
-                System.out.println(i.getCaseNum());
-                found = true;
+                ctr++;
             }
         }
 
-        if (!found) {
+        if (ctr == 0) {
             System.out.println("No cases match the criteria specified.\n");
         }
     }
@@ -211,33 +225,26 @@ public class GovOfficial extends Citizen {
     }
 
     /**
-     * Handles the promotion of an account
-     * @param role the role to be promoted to
-     */
-    private void promoteAccount(String role) {
-        if (Menu.YorN("Does the user already have a registered account") == 'Y') {
-            modifyRole(role);
-        } else {
-            UserSystem.register();
-            UserSystem.setRoleOf(UserSystem.getNumUsers() - 1, role);
-        }
-    }
-
-    /**
      * Handles the role modification of an existing account.
      * @param role the new role to be assigned to an account.
      */
     private void modifyRole(String role) {
         Scanner input = new Scanner(System.in);
         System.out.print("Account username to be modified: ");
-        int index = UserSystem.getIndexOf(input.nextLine());
+        String username = input.nextLine();
+        int index = UserSystem.getIndexOf(username);
 
-        if (index != -1) {
+        if (username.equals(this.getUsername())) {
+            System.out.println("You cannot modify your own role!");
+        } else if (index != -1) {
             if (UserSystem.getRoleOf(index).equals(role)) {
                 System.out.println("Account is already a " + role + "!");
             } else {
                 UserSystem.setRoleOf(index, role);
             }
+        } else if (!role.equals("citizen")) {
+            UserSystem.register(username);
+            UserSystem.setRoleOf(UserSystem.getNumUsers() - 1, role);
         } else {
             System.out.println("Account does not exist!");
         }
