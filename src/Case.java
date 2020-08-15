@@ -81,6 +81,14 @@ public class Case {
         return status;
     }
 
+    /**
+     * Returns the username of the positive case
+     * @return the username of the positive case
+     */
+    public String getUsername() {
+        return USERNAME;
+    }
+
     @Override
     public String toString() {
         return CASE_NUM + " " + USERNAME + format.format(REPORT_DATE.getTime()) + tracer + " " + status;
