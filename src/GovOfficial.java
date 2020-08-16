@@ -238,7 +238,11 @@ public class GovOfficial extends Citizen {
             System.out.println("You cannot modify your own role!");
         } else if (index != -1) {
             if (UserSystem.getRoleOf(index).equals(role)) {
-                System.out.println("Account is already a " + role + "!");
+                switch (role) {
+                    case "official" -> System.out.println("Account is already a government official!");
+                    case "tracer" -> System.out.println("Account is already a contact tracer!");
+                }
+
             } else {
                 UserSystem.setRoleOf(index, role);
             }

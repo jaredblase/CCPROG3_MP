@@ -81,7 +81,6 @@ public abstract class UserSystem {
 
     }
 
-
     /**
      * Initializes all the ArrayLists and creates the admin account
      */
@@ -231,5 +230,19 @@ public abstract class UserSystem {
      */
     public static int getNumUsers() {
         return usernames.size();
+    }
+
+    /**
+     * Returns the user given a specified username. If the username
+     * is not found in the master list, it returns null.
+     * @param username the name to be checked in the master list
+     * @return the user with the specified username if found, null otherwise
+     */
+    public static Citizen getUser(String username) {
+        int index = getIndexOf(username);
+        if (index != -1)
+            return users.get(index);
+        else
+            return null;
     }
 }

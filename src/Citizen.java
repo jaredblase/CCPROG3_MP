@@ -240,4 +240,8 @@ public class Citizen {
 
         return date;
     }
+
+    public ArrayList<Visit> getVisitRec() {
+        return visitRec;
+    }
 }
