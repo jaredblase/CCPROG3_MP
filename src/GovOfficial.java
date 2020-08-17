@@ -158,12 +158,19 @@ public class GovOfficial extends Citizen {
 
             switch (opt) {
                 case 1 -> {
-                    Scanner input = new Scanner(System.in);
                     Calendar[] dates = obtainDateRange();
-                    System.out.print("City: ");
-                    String city = input.nextLine();
+                    String city = obtainValidCity();
 
-                    filter = (case1) -> case1.getReportDate().after(dates[0]) && case1.getReportDate().before(dates[1]);
+                    filter = (case1) -> {
+                        Citizen temp = UserSystem.getUser(case1.getUsername());
+
+                        if (temp != null) {
+                            return case1.getReportDate().after(dates[0]) && case1.getReportDate().before(dates[1])
+                                    && temp.getHomeAddress().contains(city);
+                        } else {
+                            return false;
+                        }
+                    };
                 }
                 case 2 -> {
                     Calendar[] dates = obtainDateRange();
@@ -171,12 +178,17 @@ public class GovOfficial extends Citizen {
                     filter = (case1) -> case1.getReportDate().after(dates[0]) && case1.getReportDate().before(dates[1]);
                 }
                 case 3 -> {
-                    Scanner input = new Scanner(System.in);
-                    String city = input.nextLine();
+                    String city = obtainValidCity();
 
-//                    filter = (case1) -> {
-//                        return case1.get
-//                    };
+                    filter = (case1) -> {
+                        Citizen temp = UserSystem.getUser(case1.getUsername());
+
+                        if (temp != null) {
+                            return temp.getHomeAddress().contains(city);
+                        } else {
+                            return false;
+                        }
+                    };
                 }
             }
 
@@ -201,9 +213,13 @@ public class GovOfficial extends Citizen {
             }
         }
 
-        if (ctr == 0) {
-            System.out.println("No cases match the criteria specified.\n");
+        if (ctr != 0) {
+            System.out.println("Number of cases that match the criteria:");
+            System.out.println(ctr);
+        } else {
+            System.out.println("No cases match the criteria specified.");
         }
+        System.out.println();
     }
 
     /**
@@ -222,6 +238,25 @@ public class GovOfficial extends Citizen {
         } while (start.after(end)); // check if the input date is after the start date
 
         return new Calendar[] {start, end};
+    }
+
+    /**
+     * Obtains an input from the user and check if it is a valid input for a city
+     * or not (empty or contains a number and other special characters).
+     * @return the valid String representing the chosen city
+     */
+    public static String obtainValidCity() {
+        Scanner input = new Scanner(System.in);
+        System.out.print("Input city: ");
+        String city = input.nextLine();
+
+        while (city.isEmpty() || !city.replaceAll("[^-.'\\s\\w]+", "1").matches("\\D+")) {
+            System.out.println("Invalid input for city!\n");
+            System.out.print("Input city: ");
+            city = input.nextLine();
+        }
+
+        return city;
     }
 
     /**
