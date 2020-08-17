@@ -72,22 +72,23 @@ public class GovOfficial extends Citizen {
         int ctr = 0;
         System.out.println("Unassigned Cases:");
         for (Case i: UserSystem.getCases()) {
-            if (i.getTracer().equals("000")) {
+            if (i.getTracer().equals("000")) { // no tracer assigned
                 System.out.println(i.getCaseNum()); // display case num
                 caseNums[ctr++] = i.getCaseNum(); // add case num to array of caseNums
             }
         }
 
-        if (ctr == 0) {
+        if (ctr == 0) { // no cases
             System.out.println("No cases to display.");
         } else {
-            if (UserSystem.getNumTracers() == 0)
+            if (UserSystem.getNumTracers() == 0) // no tracers
                 System.out.println("Create contact tracer accounts to assign cases.\n");
             else {
                 Scanner input = new Scanner(System.in);
                 boolean status = false;
                 int posCase = 0;
 
+                // get case number
                 do {
                     try {
                         System.out.print("Assign case number: ");
@@ -108,23 +109,25 @@ public class GovOfficial extends Citizen {
 
                 status = false;
 
+                // get tracer username
                 do {
                     System.out.print("Enter username of tracer: ");
                     String tracer = input.nextLine();
 
                     int index = UserSystem.getIndexOf(tracer);
-                    if (index == -1) {
+                    if (index == -1) { // user not found
                         System.out.println("No user with username \"" + tracer + "\" found.\n");
                     } else if (UserSystem.getRoleOf(index).equals("tracer")) {
                         status = true;
 
+                        // assign tracer
                         for (Case i : UserSystem.getCases()) {
                             if (i.getCaseNum() == posCase) {
                                 i.setTracer(tracer);
                                 break;
                             }
                         }
-                    } else
+                    } else // user is found but is not a tracer
                         System.out.println("User " + tracer + " is not a contact tracer.\n");
                 } while (!status);
             }
@@ -233,7 +236,7 @@ public class GovOfficial extends Citizen {
         System.out.println("Starting date:");
         start = getDate();
         do {
-            System.out.println("End date");
+            System.out.println("End date:");
             end = getDate();
         } while (start.after(end)); // check if the input date is after the start date
 
