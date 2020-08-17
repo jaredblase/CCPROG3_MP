@@ -28,7 +28,7 @@ public class Tracer extends Citizen {
         contacts = new ArrayList<>();
         estCodes = new ArrayList<>();
         for (Case i: UserSystem.getCases()) {
-            //tracer is assigned to case and status is pending and case not yet in list of assigned cases
+            // tracer is assigned to case and status is pending and case not yet in list of assigned cases
             if (i.getTracer().equals(getUsername()) && i.getStatus() == 'P' && !assigned.contains(i))
                 assigned.add(i);
         }
@@ -78,52 +78,75 @@ public class Tracer extends Citizen {
     }
 
     private void trace() {
-        if (assigned.size() == 0) { //no cases assigned
+        if (assigned.size() == 0) { // no cases assigned
             System.out.println("No assigned cases");
-        } else { //at least 1 assigned case
+        } else { // at least 1 assigned case
             Scanner input = new Scanner(System.in);
             int caseNum;
             Case positive = null;
 
-            do {
-                //get case number
-                try {
-                    System.out.print("Enter case number to be traced: ");
-                    caseNum = Integer.parseInt(input.nextLine());
+            // get case number
+            try {
+                System.out.print("Enter case number to be traced: ");
+                caseNum = Integer.parseInt(input.nextLine());
 
-                    for (Case i: assigned) {
-                        if (i.getCaseNum() == caseNum) { //case number is assigned
-                            positive = i;
-                            break;
-                        }
+                for (Case i: assigned) {
+                    if (i.getCaseNum() == caseNum) { // case number is assigned
+                        positive = i;
+                        break;
                     }
-
-                    if (positive == null) //case number is not among assigned cases
-                        throw new Exception();
-                } catch (Exception e) {
-                    System.out.println("Invalid input. Use the show cases option to view your assigned cases.\n");
                 }
-            } while (positive == null);
 
-            if (contacts.get(assigned.indexOf(positive)) == null) { //never traced before
-                Citizen patient = UserSystem.getUser(positive.getUsername());
-                if (patient != null) {
-                    ArrayList<Visit> records = new ArrayList<>();
-                    for (Visit i: patient.getVisitRec()) {
-                        if (i.getCheckIn().get(Calendar.DAY_OF_YEAR) ==
-                                positive.getReportDate().get(Calendar.DAY_OF_YEAR) && //same day of year
-                                i.getCheckIn().get(Calendar.YEAR) ==
-                                        positive.getReportDate().get(Calendar.YEAR)) // same year
-                            records.add(i);
-                    }
-                    //check each time frame from records
-                    //iterate through all records of all users
-                    //if check in has same date, check if estCode is same and if there is intersection in time
-                    //if same estCode and there is intersection, add username and estCode to array lists
-                    //after the whole process if index in array lists are empty,
-                    //set them to contain the String "none"
+                if (positive == null) // case number is not among assigned cases
+                    throw new Exception();
+            } catch (Exception e) {
+                System.out.println("Invalid input. Use the show cases option to view your assigned cases.\n");
+            }
+
+            if (positive != null) { // valid input
+                int posIndex = assigned.indexOf(positive);
+
+                if (contacts.get(posIndex) == null) { // never traced before
+                    checkContacts(positive);
+                    displayContacts(contacts.get(posIndex));
+                } else {
+                    displayContacts(contacts.get(posIndex));
                 }
             }
+        }
+    }
+
+    private void checkContacts(Case positive) {
+        Citizen patient = UserSystem.getUser(positive.getUsername());
+        if (patient != null) {
+            ArrayList<Visit> records = new ArrayList<>(); // visit records of positive case on report date
+            for (Visit i: patient.getVisitRec()) { // set records
+                if (i.getCheckIn().get(Calendar.DAY_OF_YEAR) ==
+                        positive.getReportDate().get(Calendar.DAY_OF_YEAR) && // same day of year
+                        i.getCheckIn().get(Calendar.YEAR) ==
+                                positive.getReportDate().get(Calendar.YEAR)) // same year
+                    records.add(i);
+            }
+
+            ArrayList<ArrayList<Visit>> masterRecords = UserSystem.getRecords(); // all visit records
+
+
+            //check each time frame from records
+            //iterate through all records of all users
+            //if check in has same date, check if estCode is same and if there is intersection in time
+            //if same estCode and there is intersection, add username and estCode to array lists
+            //after the whole process if index in array lists are empty,
+            //set them to contain the String "none"
+        }
+    }
+
+    private void displayContacts(ArrayList<String> contacts) {
+        if (contacts.get(0).equals("")) { // no contacts
+            System.out.println("Positive case did not come into contact with anyone.");
+        } else {
+            System.out.println("Persons at risk of possible exposure:");
+            for (String i: contacts)
+                System.out.println(i);
         }
     }
 
