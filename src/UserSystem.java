@@ -42,8 +42,11 @@ public abstract class UserSystem {
     public static void register(String username) {
         Scanner input = new Scanner(System.in);
 
-        while (getIndexOf(username) != -1) {
-            System.out.println("Username has already been taken!");
+        while (getIndexOf(username) != -1 || username.isBlank()) {
+            if (getIndexOf(username) != -1) // taken username
+                System.out.println("Username has already been taken!\n");
+            else // username is blank
+                System.out.println("Invalid username!\n");
             System.out.print("Username: ");
             username = input.nextLine();
         }
