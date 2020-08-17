@@ -245,7 +245,7 @@ public class GovOfficial extends Citizen {
      * or not (empty or contains a number and other special characters).
      * @return the valid String representing the chosen city
      */
-    public static String obtainValidCity() {
+    private static String obtainValidCity() {
         Scanner input = new Scanner(System.in);
         System.out.print("Input city: ");
         String city = input.nextLine();
