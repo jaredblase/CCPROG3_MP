@@ -42,8 +42,11 @@ public abstract class UserSystem {
     public static void register(String username) {
         Scanner input = new Scanner(System.in);
 
-        while (getIndexOf(username) != -1) {
-            System.out.println("Username has already been taken!");
+        while (getIndexOf(username) != -1 || username.isBlank()) {
+            if (getIndexOf(username) != -1) // taken username
+                System.out.println("Username has already been taken!\n");
+            else // username is blank
+                System.out.println("Invalid username!\n");
             System.out.print("Username: ");
             username = input.nextLine();
         }
@@ -125,13 +128,13 @@ public abstract class UserSystem {
      * @param role the new role to be assigned to the user
      */
     public static void setRoleOf(int index, String role) {
-        if (roles.get(index).equals("tracer")) { //previous role is tracer
+        if (roles.get(index).equals("tracer")) { // previous role is tracer
             nTracers--;
         }
 
         roles.set(index, role);
 
-        if (role.equals("tracer")) { //new role is tracer
+        if (role.equals("tracer")) { // new role is tracer
             nTracers++;
         }
 
@@ -244,5 +247,13 @@ public abstract class UserSystem {
             return users.get(index);
         else
             return null;
+    }
+
+    /**
+     * Returns the visit records of each user
+     * @return the visit records of each user
+     */
+    public static ArrayList<ArrayList<Visit>> getRecords() {
+        return records;
     }
 }
