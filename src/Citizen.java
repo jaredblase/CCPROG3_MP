@@ -99,6 +99,14 @@ public class Citizen {
     }
 
     /**
+     * Returns the home address of the user.
+     * @return the home address of the user.
+     */
+    public String getHomeAddress() {
+        return homeAddress;
+    }
+
+    /**
      * Main entry point of the user after logging in.
      */
     public void showMenu() {
