@@ -12,10 +12,10 @@ public class Name {
      * Initializes a Name object and sets the fields with the given parameters:
      * first, middle, and last name.<br>
      * Preconditions: The parameters are valid names and not empty or blank Strings.
-     * @since 1.0
      * @param first the first name.
      * @param middle the middle name.
      * @param last the last name.
+     * @since 1.0
      */
     public Name(String first, String middle, String last) {
         this.first = first;
@@ -53,8 +53,8 @@ public class Name {
 
     /**
      * Returns the full name of a Name object in String format.
-     * @since 1.0
      * @return the full name separated by commas.
+     * @since 1.0
      */
     @Override
     public String toString() {
