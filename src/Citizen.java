@@ -138,29 +138,14 @@ public class Citizen {
      */
     private void checkIn() {
         Scanner input = new Scanner(System.in);
-        Calendar.Builder builder = new Calendar.Builder();
-        int time;
-        builder.setLenient(false);
 
         System.out.print("Establishment Code: ");
         String estCode = input.nextLine();
 
         Calendar date = getDate();
-        Calendar temp = null;
-        do {
-            try {
-                System.out.println("-TIME-");
-                System.out.print("Military Time: ");
-                time = Integer.parseInt(input.nextLine());
-
-                builder.setTimeOfDay(time / 100, time % 100, 0);
-                builder.setDate(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DAY_OF_MONTH));
-                temp = builder.build();
-            } catch (Exception e) {
-                System.out.println("Invalid time input!\n");
-            }
-        } while (temp == null);
-
+        Calendar time = Calendar.getInstance();
+        date.set(Calendar.HOUR_OF_DAY, time.get(Calendar.HOUR_OF_DAY));
+        date.set(Calendar.MINUTE, time.get(Calendar.MINUTE));
         visitRec.add(new Visit(estCode, date));
     }
 
