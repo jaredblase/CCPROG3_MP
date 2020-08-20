@@ -176,7 +176,7 @@ public class Citizen {
                 if (opt == 1) {
                     name.changeName();
                 } else if (opt == max - 1) {
-                    this.password = UserSystem.setPassword();
+                    this.password = UserSystem.checkPassword();
                 } else {
                     Scanner input = new Scanner(System.in);
                     System.out.print("New " + UPDATE_OPTIONS[opt - 1] + ": ");

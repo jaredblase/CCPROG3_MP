@@ -116,7 +116,7 @@ public class UserSystem {
             System.out.print("Username: ");
             username = input.nextLine();
         }
-        String password = setPassword();
+        String password = checkPassword();
         System.out.println("\nPersonal Information:");
 
         // get name
@@ -186,7 +186,7 @@ public class UserSystem {
      * Once valid, returns the chosen password.
      * @return valid password entered by the user.
      */
-    public static String setPassword() {
+    public static String checkPassword() {
         Scanner input = new Scanner(System.in);
         String regex = "[\\w\\s]*[\\W\\d][\\w\\s]*"; // looks for at least one special character
 

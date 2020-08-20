@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 /**
- * This Menu class is used for generating menus and retrieving an answer from the user.
+ * The Menu class is used for generating menus and retrieving an answer from the user.
  * @author Gabriel Pua
  * @author Jared Sy
  * @version 1.1
