@@ -1,19 +1,21 @@
 import java.util.Scanner;
 
 /**
- * This class holds the information of a name
- * and methods available for them.
+ * The Name class holds all the information of a name
+ * and methods available for changing them.
  * @author Gabriel Pua
  * @author Jared Sy
- * @version 1.0
+ * @version 1.1
  */
 public class Name {
     /**
-     * This constructor initializes a Name object with a first, 
-     * middle, and last name.
-     * @param first is the first name
-     * @param middle is the middle name
-     * @param last is the last name
+     * Initializes a Name object and sets the fields with the given parameters:
+     * first, middle, and last name.<br>
+     * Preconditions: The parameters are valid names and not empty or blank Strings.
+     * @since 1.0
+     * @param first the first name.
+     * @param middle the middle name.
+     * @param last the last name.
      */
     public Name(String first, String middle, String last) {
         this.first = first;
@@ -21,14 +23,21 @@ public class Name {
         this.last = last;
     }
 
+    /**
+     * Main entry point of the user when opting to change his name.<br>
+     * Will display the menu, get the input, and replace the chosen field.<br><br>
+     * Preconditions: The input is a valid name and not an empty or a blank String.
+     * @since 1.0
+     * @see Menu
+     */
     public void changeName() {
         Scanner input = new Scanner(System.in);
         int opt;
 
         do {
-            opt = Menu.display("Name Change", menuOptions);
+            opt = Menu.display("Name Change", MENU_OPTIONS);
             if(opt != 4) {
-                System.out.print("New " + menuOptions[opt - 1] + ": ");
+                System.out.print("New " + MENU_OPTIONS[opt - 1] + ": ");
                 String str = input.nextLine();
 
                 switch (opt) {
@@ -43,21 +52,21 @@ public class Name {
     }
 
     /**
-     * This method returns the full name of a Name object in String 
-     * format. 
-     * @return the full name
+     * Returns the full name of a Name object in String format.
+     * @since 1.0
+     * @return the full name separated by commas.
      */
     @Override
     public String toString() {
         return first + "," + middle + "," + last;
     }
 
-    /** first is the first name */
+    /** The first name. */
     private String first;
-    /** middle is the middle name */
+    /** The middle name. */
     private String middle;
-    /** last is the last name */
+    /** The last name. */
     private String last;
-    /** change name menu options */
-    private static final String[] menuOptions = {"First Name", "Middle Name", "Last Name", "Back"};
+    /** Menu options for changing names. */
+    private static final String[] MENU_OPTIONS = {"First Name", "Middle Name", "Last Name", "Back"};
 }
