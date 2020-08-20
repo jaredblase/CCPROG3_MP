@@ -235,10 +235,13 @@ public class GovOfficial extends Citizen {
 
         System.out.println("Starting date:");
         start = getDate();
-        do {
-            System.out.println("End date:");
+        System.out.println("\nEnd date:");
+        end = getDate();
+        while (start.after(end)) { // check if the input date is before the start date
+            System.out.println("Invalid end date!");
+            System.out.println("\nEnd date:");
             end = getDate();
-        } while (start.after(end)); // check if the input date is after the start date
+        }
 
         return new Calendar[] {start, end};
     }
@@ -281,12 +284,12 @@ public class GovOfficial extends Citizen {
                 switch (role) {
                     case "official" -> System.out.println("Account is already a government official!");
                     case "tracer" -> System.out.println("Account is already a contact tracer!");
+                    default -> System.out.println("Account is already a citizen!");
                 }
-
             } else {
                 UserSystem.setRoleOf(index, role);
             }
-        } else if (!role.equals("citizen")) {
+        } else if (!role.equals("citizen")) {  // if not terminating account to citizen
             UserSystem.register(username);
             UserSystem.setRoleOf(UserSystem.getNumUsers() - 1, role);
         } else {
