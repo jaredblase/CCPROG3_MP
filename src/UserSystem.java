@@ -194,7 +194,7 @@ public class UserSystem {
         String pass = input.nextLine();
         // Loops and asks for another password while the password is invalid.
         while(pass.length() < 6 || !pass.replaceAll("\\s+", "").matches(regex)) {
-            System.out.println("Password must contain at least 6 characters including 1 special " +
+            System.out.println("Password must contain at least 6 characters including 1 digit or special " +
                     "character that is not a space!\n");
             System.out.print("New Password: ");
             pass = input.nextLine();
