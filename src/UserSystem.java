@@ -211,14 +211,11 @@ public class UserSystem {
     public static void setRoleOf(int index, String role) {
         if (roles.get(index).equals("tracer")) { // previous role is tracer
             nTracers--;
-        }
-
-        roles.set(index, role);
-
-        if (role.equals("tracer")) { // new role is tracer
+        } else if (role.equals("tracer")) { // new role is tracer
             nTracers++;
         }
 
+        roles.set(index, role);
         System.out.println("Modification success!");
     }
 
