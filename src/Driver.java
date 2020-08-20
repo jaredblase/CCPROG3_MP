@@ -9,10 +9,10 @@ public class Driver {
                 case 1 -> UserSystem.register();
                 case 2 -> {
                     Citizen citizen = UserSystem.login();
-                        if (citizen != null) {
-                            citizen.showMenu();
-                            System.out.println("Logged out.");
-                        }
+                    if (citizen != null) {
+                        citizen.showMenu();
+                        System.out.println("Logged out.");
+                    }
                 }
             }
             System.out.println();
