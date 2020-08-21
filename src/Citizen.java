@@ -174,23 +174,31 @@ public class Citizen {
             opt = Menu.display("Update Information", UPDATE_OPTIONS);
             if (opt != max) {
                 if (opt == 1) {
-                    name.changeName();
+                    isChanged = name.changeName();
                 } else if (opt == max - 1) {
                     this.password = UserSystem.checkPassword();
+                    isChanged = true;
                 } else {
                     Scanner input = new Scanner(System.in);
                     System.out.print("New " + UPDATE_OPTIONS[opt - 1] + ": ");
                     String str = input.nextLine();
 
-                    switch (opt) {
-                        case 2 -> this.homeAddress = str;
-                        case 3 -> this.officeAddress = str;
-                        case 4 -> this.phoneNumber = str;
-                        case 5 -> this.email = str;
+                    if (!str.isBlank()) {
+                        switch (opt) {
+                            case 2 -> this.homeAddress = str;
+                            case 3 -> this.officeAddress = str;
+                            case 4 -> this.phoneNumber = str;
+                            case 5 -> this.email = str;
+                        }
+                        isChanged = true;
+                    } else {
+                        System.out.println("Invalid input!");
                     }
                 }
-                System.out.println(UPDATE_OPTIONS[opt - 1] + " has been updated!\n");
-                isChanged = true;
+
+                if (isChanged) {
+                    System.out.println(UPDATE_OPTIONS[opt - 1] + " has been updated!\n");
+                }
             }
         } while (opt != max);
     }
