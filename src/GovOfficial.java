@@ -290,8 +290,10 @@ public class GovOfficial extends Citizen {
                 UserSystem.setRoleOf(index, role);
             }
         } else if (!role.equals("citizen")) {  // if not terminating account to citizen
-            UserSystem.register(username);
-            UserSystem.setRoleOf(UserSystem.getNumUsers() - 1, role);
+            if(Menu.YorN("This user does not exist. Create account") == 'Y') {
+                UserSystem.register(username);
+                UserSystem.setRoleOf(UserSystem.getNumUsers() - 1, role);
+            }
         } else {
             System.out.println("Account does not exist!");
         }
