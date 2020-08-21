@@ -120,25 +120,16 @@ public class UserSystem {
         System.out.println("\nPersonal Information:");
 
         // get name
-        System.out.print("First name: ");
-        String firstName = input.nextLine();
-        System.out.print("Middle name: ");
-        String secondName = input.nextLine();
-        System.out.print("Last name: ");
-        String lastName = input.nextLine();
+        String firstName = getValidString("First name");
+        System.out.println("Middle name: ");
+        String secondName = input.nextLine().trim();
+        String lastName = getValidString("Last name");
 
         // other information
-        System.out.print("Home address: ");
-        String homeAdd = input.nextLine();
-
-        System.out.print("Office address: ");
-        String officeAdd = input.nextLine();
-
-        System.out.print("Phone number: ");
-        String phoneNumber = input.nextLine();
-
-        System.out.print("Email address: ");
-        String email = input.nextLine();
+        String homeAdd = getValidString("Home address");
+        String officeAdd = getValidString("Office address");
+        String phoneNumber = getValidString("Phone number");
+        String email = getValidString("Email address");
 
         // add username, role, and information to ArrayList
         usernames.add(username);
@@ -147,6 +138,26 @@ public class UserSystem {
                 email, username, password));
 
         System.out.println("----YOU MAY NOW LOGIN WITH YOUR NEW ACCOUNT----");
+    }
+
+    /**
+     * Prints the question and receives a String input. If the input is invalid, it loops.
+     * @param question the question to be printed
+     * @return a non empty String
+     */
+    private static String getValidString(String question) {
+        Scanner input = new Scanner(System.in);
+        question += ": ";
+
+        System.out.print(question);
+        String str = input.nextLine().trim();
+        while (str.isEmpty()) {
+            System.out.println("Invalid input!\n");
+            System.out.print(question);
+            str = input.nextLine();
+        }
+
+        return str;
     }
 
     /**
@@ -252,5 +263,18 @@ public class UserSystem {
                 "City Hall", "09328287114", "admin@gov.ph", "Admin2020",
                 "@Dm1n0202")));
         records.add(new ArrayList<>());
+    }
+
+    /**
+     * Called when terminating the program to free all the memory used.
+     */
+    public static void exitSystem() {
+        usernames = null;
+        roles = null;
+        users = null;
+        records = null;
+        cases = null;
+
+        System.gc();
     }
 }
