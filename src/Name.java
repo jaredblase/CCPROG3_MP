@@ -30,25 +30,33 @@ public class Name {
      * @since 1.0
      * @see Menu
      */
-    public void changeName() {
+    public boolean changeName() {
         Scanner input = new Scanner(System.in);
+        boolean isChanged = false;
         int opt;
 
         do {
             opt = Menu.display("Name Change", MENU_OPTIONS);
             if(opt != 4) {
-                System.out.print("New " + MENU_OPTIONS[opt - 1] + ": ");
-                String str = input.nextLine();
+                System.out.print("New " + MENU_OPTIONS[opt - 1].toLowerCase() + ": ");
+                String str = input.nextLine().trim();   // removes excess whitespace before and after the String
 
-                switch (opt) {
-                    case 1 -> this.first = str;
-                    case 2 -> this.middle = str;
-                    case 3 -> this.last = str;
+                if (!str.isEmpty() || opt == 2) {       // allows middle name to be empty
+                    switch (opt) {
+                        case 1 -> this.first = str;
+                        case 2 -> this.middle = str;
+                        case 3 -> this.last = str;
+                    }
+                    System.out.println("New name:");
+                    System.out.println((first + " " + (middle.isEmpty()? "" : (middle + " ")) + last));
+                    isChanged = true;
+                } else {
+                    System.out.println(MENU_OPTIONS[opt - 1] + " cannot be left blank!");
                 }
-                System.out.println("New name:");
-                System.out.println(first + " " + middle + " " + last);
             }
         } while (opt != 4);
+
+        return isChanged;
     }
 
     /**
