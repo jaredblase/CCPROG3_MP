@@ -3,7 +3,9 @@ import java.util.Calendar;
 import java.util.Scanner;
 
 /**
- * This class holds the information of a citizen and methods available for them.
+ * This Citizen class holds the information of a citizen and methods
+ * available for handling them such as retrieving contact information and
+ * visit records for tracing.
  * @author Gabriel Pua
  * @author Jared Sy
  * @version 1.0
@@ -29,6 +31,7 @@ public class Citizen {
     private ArrayList<Visit> visitRec;
     /** Indicator if the user is infected */
     private boolean isPositive;
+    /** Indicator if the user may be infected */
     private boolean maybePositive;
     /** Indicator if any detail was changed during the session */
     private boolean isChanged;
@@ -41,13 +44,13 @@ public class Citizen {
     /**
      * Receives the personal information of the user, along with the username and password
      * and initializes the object from them.
-     * @param name the Name object containing the name of the user
-     * @param homeAddress the home address of the user
-     * @param officeAddress the office address of the user
-     * @param phoneNumber the phone number of the user
-     * @param email the email address of the user
-     * @param username the username of the user
-     * @param password the password of the user
+     * @param name the Name object containing the name of the user.
+     * @param homeAddress the home address of the user.
+     * @param officeAddress the office address of the user.
+     * @param phoneNumber the phone number of the user.
+     * @param email the email address of the user.
+     * @param username the username of the user.
+     * @param password the password of the user.
      */
     public Citizen(Name name, String homeAddress, String officeAddress, String phoneNumber,
                    String email, String username, String password) {
@@ -65,8 +68,8 @@ public class Citizen {
     }
 
     /**
-     * Creates a copy from an object of the same class
-     * @param other the object to be copied
+     * Creates a copy from an object of the same class.
+     * @param other the object to be copied.
      */
     public Citizen(Citizen other) {
         this.name = other.name;
@@ -80,6 +83,14 @@ public class Citizen {
         this.isPositive = other.isPositive;
         this.maybePositive = other.maybePositive;
         this.isChanged = other.isChanged;
+    }
+
+    /**
+     * Returns the home address of the user.
+     * @return the home address of the user.
+     */
+    public String getHomeAddress() {
+        return homeAddress;
     }
 
     /**
@@ -99,11 +110,11 @@ public class Citizen {
     }
 
     /**
-     * Returns the home address of the user.
-     * @return the home address of the user.
+     * Returns the records of visits of the user.
+     * @return the records of the user.
      */
-    public String getHomeAddress() {
-        return homeAddress;
+    public ArrayList<Visit> getVisitRec() {
+        return visitRec;
     }
 
     /**
@@ -122,6 +133,77 @@ public class Citizen {
     }
 
     /**
+     * Retrieves the visitation information from the user such as the establishment
+     * code and date and adds this to his visit records.
+     */
+    private void checkIn() {
+        Scanner input = new Scanner(System.in);
+
+        System.out.print("Establishment Code: ");
+        String estCode = input.nextLine();
+
+        Calendar date = getDate();
+        Calendar time = Calendar.getInstance();
+        date.set(Calendar.HOUR_OF_DAY, time.get(Calendar.HOUR_OF_DAY));
+        date.set(Calendar.MINUTE, time.get(Calendar.MINUTE));
+        visitRec.add(new Visit(estCode, date));
+    }
+
+    /**
+     * Changes the isPositive field to true and automatically adds
+     * this record to the list of cases in the system only if the user
+     * has not reported positive before.
+     */
+    private void reportPositive() {
+        if (!isPositive) {
+            isPositive = true;
+            isChanged = true;
+            UserSystem.addCase(new Case(this.USERNAME, getDate()));
+        } else {
+            System.out.println("You are already reported positive!");
+        }
+    }
+
+    /**
+     * The facility that handles the updating of personal information.
+     */
+    private void updateInfo() {
+        int opt, max = UPDATE_OPTIONS.length;
+
+        do {
+            opt = Menu.display("Update Information", UPDATE_OPTIONS);
+            if (opt != max) {
+                if (opt == 1) {
+                    isChanged = name.changeName();
+                } else if (opt == max - 1) {
+                    this.password = UserSystem.checkPassword();
+                    isChanged = true;
+                } else {
+                    Scanner input = new Scanner(System.in);
+                    System.out.print("New " + UPDATE_OPTIONS[opt - 1] + ": ");
+                    String str = input.nextLine();
+
+                    if (!str.isBlank()) {
+                        switch (opt) {
+                            case 2 -> this.homeAddress = str;
+                            case 3 -> this.officeAddress = str;
+                            case 4 -> this.phoneNumber = str;
+                            case 5 -> this.email = str;
+                        }
+                        isChanged = true;
+                    } else {
+                        System.out.println("Invalid input!");
+                    }
+                }
+
+                if (isChanged) {
+                    System.out.println(UPDATE_OPTIONS[opt - 1] + " has been updated!\n");
+                }
+            }
+        } while (opt != max);
+    }
+
+    /**
      * Calls the appropriate function based on the user's input.
      * @param opt integer representing the chosen menu option.
      */
@@ -135,7 +217,7 @@ public class Citizen {
 
     /**
      * Display a message if the user has possibly came in contact
-     * with >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+     * with
      */
     protected void prompt() {
         if (!isPositive && maybePositive) {
@@ -144,83 +226,12 @@ public class Citizen {
         }
     }
 
-    private void checkIn() {
-        Scanner input = new Scanner(System.in);
-        Calendar.Builder builder = new Calendar.Builder();
-        int time;
-        builder.setLenient(false);
-
-        System.out.print("Establishment Code: ");
-        String estCode = input.nextLine();
-
-        Calendar date = getDate();
-        Calendar temp = null;
-        do {
-            try {
-                System.out.println("-TIME-");
-                System.out.print("Military Time: ");
-                time = Integer.parseInt(input.nextLine());
-
-                builder.setTimeOfDay(time / 100, time % 100, 0);
-                builder.setDate(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DAY_OF_MONTH));
-                temp = builder.build();
-            } catch (Exception e) {
-                System.out.println("Invalid time input!\n");
-            }
-        } while (temp == null);
-
-        visitRec.add(new Visit(estCode, date));
-    }
-
-    private void reportPositive() {
-        if (!isPositive) {
-            isPositive = true;
-            isChanged = true;
-            UserSystem.addCase(new Case(this.USERNAME, getDate()));
-        } else {
-            System.out.println("You are already reported positive!");
-        }
-    }
-
-    private void updateInfo() {
-        int opt, max = UPDATE_OPTIONS.length;
-
-        do {
-            opt = Menu.display("Update Information", UPDATE_OPTIONS);
-            if (opt != max) {
-                if (opt == 1) {
-                    name.changeName();
-                } else if (opt == max - 1) {
-                    this.password = UserSystem.setPassword();
-                } else {
-                    Scanner input = new Scanner(System.in);
-                    System.out.print("New " + UPDATE_OPTIONS[opt - 1] + ": ");
-                    String str = input.nextLine();
-
-                    switch (opt) {
-                        case 2 -> this.homeAddress = str;
-                        case 3 -> this.officeAddress = str;
-                        case 4 -> this.phoneNumber = str;
-                        case 5 -> this.email = str;
-                    }
-                }
-                System.out.println(UPDATE_OPTIONS[opt - 1] + " has been updated!\n");
-                isChanged = true;
-            }
-        } while (opt != max);
-    }
-
     /**
-     * Replaces the object in the System
+     * Retrieves a date input from the user and attempts to build a Calendar object
+     * from it.
+     * @return a valid date.
      */
-    protected void logOut() {
-        if (isChanged) {
-            UserSystem.updateUser(this);
-            this.isChanged = false;
-        }
-    }
-
-    protected static Calendar getDate() {
+    protected Calendar getDate() {
         Scanner input = new Scanner(System.in);
         Calendar date = null;
         Calendar.Builder builder = new Calendar.Builder();
@@ -249,7 +260,13 @@ public class Citizen {
         return date;
     }
 
-    public ArrayList<Visit> getVisitRec() {
-        return visitRec;
+    /**
+     * Replaces the object in the system if there modification done during the session.
+     */
+    protected void logOut() {
+        if (isChanged) {
+            UserSystem.updateUser(this);
+            this.isChanged = false;
+        }
     }
 }

@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 /**
- * This class is used for generating menus and retrieving an answer from the user.
+ * The Menu class is used for generating menus and retrieving an answer from the user.
  * @author Gabriel Pua
  * @author Jared Sy
  * @version 1.1
@@ -12,7 +12,8 @@ public class Menu {
      * to the method in a numbered order.
      * @param header the header of the menu to be printed i.e. Main Menu.
      * @param options a variable argument to store the menu options in an array.
-     * @return the option number chosen
+     * @return the option number chosen.
+     * @since 1.0
      */
     public static int display(String header, String...options) {
         int ctr = 1;
@@ -30,9 +31,9 @@ public class Menu {
 
     /**
      * Displays yes or no question and returns a validated answer.
-     *
      * @param question the question to be displayed.
      * @return Y for yes, N for no.
+     * @since 1.1
      */
     public static char YorN(String question) {
         String opt;
@@ -58,8 +59,9 @@ public class Menu {
     /**
      * Obtains an integer by means of the Scanner and Integer class. Also performs
      * exception handling in case an invalid option is input by the user.
-     * @param max indicates the number of menu options available
-     * @return a number representing the chosen option of the user
+     * @param max indicates the number of menu options available.
+     * @return a number representing the chosen option of the user.
+     * @since 1.0
      */
     private static int getAnswer(int max) {
         Scanner input = new Scanner(System.in);

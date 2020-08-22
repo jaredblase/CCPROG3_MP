@@ -3,8 +3,8 @@ import java.util.Scanner;
 import java.util.function.Predicate;
 
 /**
- * This class is used
- *
+ * This Government class extends the Citizen class and includes administrator
+ * facilities such as viewing analytics, assigning cases, and promoting or terminating accounts.
  * @author Gabriel Pua
  * @author Jared Sy
  * @version 0.1
@@ -17,7 +17,7 @@ public class GovOfficial extends Citizen {
             "Create Government Official Account", "Create Contact Tracer Account", "Terminate Account", "Logout"};
 
     /** The String array containing the analytics menu options of the user */
-    private static final String[] analyticsMenu = {"Number of positive cases in a city within a duration",
+    private static final String[] ANALYTICS_MENU = {"Number of positive cases in a city within a duration",
             "Number of positive cases within a duration", "Number of positive cases in a city", "Back"};
 
     /**
@@ -65,7 +65,7 @@ public class GovOfficial extends Citizen {
     }
 
     /**
-     * Displays all the unassigned cases and displays the case numbers
+     * Displays all the unassigned cases and displays their case numbers.
      */
     private void showUnassigned() {
         int[] caseNums = new int[Case.getCount()];
@@ -157,7 +157,7 @@ public class GovOfficial extends Citizen {
         Predicate<Case> filter = null;
 
         do {
-            opt = Menu.display("Analytics", analyticsMenu);
+            opt = Menu.display("Analytics", ANALYTICS_MENU);
 
             switch (opt) {
                 case 1 -> {
@@ -198,13 +198,13 @@ public class GovOfficial extends Citizen {
             if (opt != 4) {
                 countCases(filter);
             }
-        } while (opt != analyticsMenu.length);
+        } while (opt != ANALYTICS_MENU.length);
     }
 
     /**
      * Iterates through all the cases and counts the cases that pass
      * the test (filter). Displays the final count.
-     * @param filter is the test to be done on each entry.
+     * @param filter the test to be performed on each entry.
      */
     private void countCases(Predicate<Case> filter) {
         int ctr = 0;
@@ -228,37 +228,42 @@ public class GovOfficial extends Citizen {
     /**
      * Obtains the start and end date from the user. The first element in the
      * returned Calendar array is the starting date while the second is the end date.
-     * @return the start and end date through a Calendar array
+     * @return the start and end date by means of a Calendar array.
      */
     private Calendar[] obtainDateRange() {
         Calendar start, end;
 
         System.out.println("Starting date:");
         start = getDate();
-        do {
-            System.out.println("End date:");
+        System.out.println("\nEnd date:");
+        end = getDate();
+        while (start.after(end)) { // check if the input date is before the start date
+            System.out.println("Invalid end date!");
+            System.out.println("\nEnd date:");
             end = getDate();
-        } while (start.after(end)); // check if the input date is after the start date
+        }
 
         return new Calendar[] {start, end};
     }
 
     /**
      * Obtains an input from the user and check if it is a valid input for a city
-     * or not (empty or contains a number and other special characters).
-     * @return the valid String representing the chosen city
+     * or not (empty or contains a number and other special characters).<br>
+     * Precondition: There are no cities which names have numbers and special symbols in them except
+     * apostrophes, periods, and hyphens.
+     * @return the valid String representing the chosen city.
      */
     private static String obtainValidCity() {
         Scanner input = new Scanner(System.in);
         System.out.print("Input city: ");
         String city = input.nextLine();
 
+        // checks if the input is valid, loops if not
         while (city.isEmpty() || !city.replaceAll("[^-.'\\s\\w]+", "1").matches("\\D+")) {
             System.out.println("Invalid input for city!\n");
             System.out.print("Input city: ");
             city = input.nextLine();
         }
-
         return city;
     }
 
@@ -279,14 +284,16 @@ public class GovOfficial extends Citizen {
                 switch (role) {
                     case "official" -> System.out.println("Account is already a government official!");
                     case "tracer" -> System.out.println("Account is already a contact tracer!");
+                    default -> System.out.println("Account is already a citizen!");
                 }
-
             } else {
                 UserSystem.setRoleOf(index, role);
             }
-        } else if (!role.equals("citizen")) {
-            UserSystem.register(username);
-            UserSystem.setRoleOf(UserSystem.getNumUsers() - 1, role);
+        } else if (!role.equals("citizen")) {  // if not terminating account to citizen
+            if(Menu.YorN("This user does not exist. Create account") == 'Y') {
+                UserSystem.register(username);
+                UserSystem.setRoleOf(UserSystem.getNumUsers() - 1, role);
+            }
         } else {
             System.out.println("Account does not exist!");
         }
