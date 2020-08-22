@@ -170,34 +170,36 @@ public class Citizen {
      */
     private void updateInfo() {
         int opt, max = UPDATE_OPTIONS.length;
+        boolean validChange = false;
 
         do {
             opt = Menu.display("Update Information", UPDATE_OPTIONS);
             if (opt != max) {
                 if (opt == 1) {
-                    isChanged = name.changeName();
+                    validChange = isChanged = name.changeName();
                 } else if (opt == max - 1) {
                     this.password = UserSystem.checkPassword();
-                    isChanged = true;
+                    validChange = isChanged = true;
                 } else {
                     Scanner input = new Scanner(System.in);
                     System.out.print("New " + UPDATE_OPTIONS[opt - 1] + ": ");
                     String str = input.nextLine();
 
-                    if (!str.isBlank()) {
+                    if (!str.isBlank()) {           // will not allow blank inputs
                         switch (opt) {
                             case 2 -> this.homeAddress = str;
                             case 3 -> this.officeAddress = str;
                             case 4 -> this.phoneNumber = str;
                             case 5 -> this.email = str;
                         }
-                        isChanged = true;
+                        validChange = isChanged = true;
                     } else {
                         System.out.println("Invalid input!");
+                        validChange = false;
                     }
                 }
 
-                if (isChanged) {
+                if (validChange) {
                     System.out.println(UPDATE_OPTIONS[opt - 1] + " has been updated!\n");
                 }
             }
