@@ -150,7 +150,7 @@ public class GovOfficial extends Citizen {
 
     /**
      * Asks the user what filter will be used when displaying the cases, can be:
-     * within a date range, within a city, or both.
+     * within a date range, within a city (case insensitive), or both.
      */
     private void showAnalytics() {
         int opt;
@@ -168,8 +168,9 @@ public class GovOfficial extends Citizen {
                         Citizen temp = UserSystem.getUser(case1.getUsername());
 
                         if (temp != null) {
-                            return case1.getReportDate().after(dates[0]) && case1.getReportDate().before(dates[1])
-                                    && temp.getHomeAddress().contains(city);
+                            return case1.getReportDate().compareTo(dates[0]) >= 0
+                                    && case1.getReportDate().before(dates[1])
+                                    && temp.getHomeAddress().toUpperCase().contains(city);
                         } else {
                             return false;
                         }
@@ -178,7 +179,8 @@ public class GovOfficial extends Citizen {
                 case 2 -> {
                     Calendar[] dates = obtainDateRange();
 
-                    filter = (case1) -> case1.getReportDate().after(dates[0]) && case1.getReportDate().before(dates[1]);
+                    filter = (case1) -> case1.getReportDate().compareTo(dates[0]) >= 0 &&
+                            case1.getReportDate().before(dates[1]);
                 }
                 case 3 -> {
                     String city = obtainValidCity();
@@ -187,7 +189,7 @@ public class GovOfficial extends Citizen {
                         Citizen temp = UserSystem.getUser(case1.getUsername());
 
                         if (temp != null) {
-                            return temp.getHomeAddress().contains(city);
+                            return temp.getHomeAddress().toUpperCase().contains(city);
                         } else {
                             return false;
                         }
@@ -242,6 +244,8 @@ public class GovOfficial extends Citizen {
             System.out.println("\nEnd date:");
             end = getDate();
         }
+        // sets end date to 12 am the next day
+        end.add(Calendar.DATE, 1);
 
         return new Calendar[] {start, end};
     }
@@ -264,7 +268,7 @@ public class GovOfficial extends Citizen {
             System.out.print("Input city: ");
             city = input.nextLine();
         }
-        return city;
+        return city.toUpperCase();
     }
 
     /**
