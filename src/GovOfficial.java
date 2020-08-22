@@ -254,8 +254,8 @@ public class GovOfficial extends Citizen {
      * Obtains an input from the user and check if it is a valid input for a city
      * or not (empty or contains a number and other special characters).<br>
      * Precondition: There are no cities which names have numbers and special symbols in them except
-     * apostrophes, periods, and hyphens.
-     * @return the valid String representing the chosen city.
+     * apostrophes, periods, hyphens, and accented characters.
+     * @return the valid String representing the chosen city in uppercase form.
      */
     private static String obtainValidCity() {
         Scanner input = new Scanner(System.in);
@@ -263,7 +263,9 @@ public class GovOfficial extends Citizen {
         String city = input.nextLine();
 
         // checks if the input is valid, loops if not
-        while (city.isEmpty() || !city.replaceAll("[^-.'\\s\\w]+", "1").matches("\\D+")) {
+        // first, it replaces all invalid characters with "1" before checking for no numbers
+        while (city.isEmpty() ||
+                !city.replaceAll("[^-.'\\s\\w\\u00C0-\\u00FF]+", "1").matches("\\D+")) {
             System.out.println("Invalid input for city!\n");
             System.out.print("Input city: ");
             city = input.nextLine();
