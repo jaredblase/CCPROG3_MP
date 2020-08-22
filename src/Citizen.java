@@ -43,7 +43,7 @@ public class Citizen {
 
     /**
      * Receives the personal information of the user, along with the username and password
-     * and initializes the object from them.
+     * and initializes the object from them. Used when a user registers.
      * @param name the Name object containing the name of the user.
      * @param homeAddress the home address of the user.
      * @param officeAddress the office address of the user.
@@ -68,7 +68,7 @@ public class Citizen {
     }
 
     /**
-     * Creates a copy from an object of the same class.
+     * Creates a copy from an object of the same class. Used when user logs in.
      * @param other the object to be copied.
      */
     public Citizen(Citizen other) {
@@ -159,6 +159,7 @@ public class Citizen {
             isPositive = true;
             isChanged = true;
             UserSystem.addCase(new Case(this.USERNAME, getDate()));
+            System.out.println("Case reported. Thank you.\n");
         } else {
             System.out.println("You are already reported positive!");
         }
