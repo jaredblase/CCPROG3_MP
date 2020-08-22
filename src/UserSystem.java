@@ -121,7 +121,7 @@ public class UserSystem {
 
         // get name
         String firstName = getValidString("First name");
-        System.out.println("Middle name: ");
+        System.out.print("Middle name: ");
         String secondName = input.nextLine().trim();
         String lastName = getValidString("Last name");
 
