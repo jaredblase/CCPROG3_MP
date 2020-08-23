@@ -33,8 +33,6 @@ public class Citizen {
     private boolean isPositive;
     /** Indicator if the user may be infected */
     private boolean maybePositive;
-    /** Indicator if any detail was changed during the session */
-    private boolean isChanged;
     /** The String array containing the update details options of the user */
     private static final String[] UPDATE_OPTIONS = {"Name", "Home Address", "Office Address", "Phone Number",
             "E-Mail", "Password", "Back to User Menu"};
@@ -43,7 +41,7 @@ public class Citizen {
 
     /**
      * Receives the personal information of the user, along with the username and password
-     * and initializes the object from them.
+     * and initializes the object from them. Used when a user registers.
      * @param name the Name object containing the name of the user.
      * @param homeAddress the home address of the user.
      * @param officeAddress the office address of the user.
@@ -64,11 +62,10 @@ public class Citizen {
         visitRec = new ArrayList<>();
         isPositive = false;
         maybePositive = false;
-        isChanged = false;
     }
 
     /**
-     * Creates a copy from an object of the same class.
+     * Creates a copy from an object of the same class. Used when user logs in.
      * @param other the object to be copied.
      */
     public Citizen(Citizen other) {
@@ -82,7 +79,6 @@ public class Citizen {
         this.visitRec = other.visitRec;
         this.isPositive = other.isPositive;
         this.maybePositive = other.maybePositive;
-        this.isChanged = other.isChanged;
     }
 
     /**
@@ -129,7 +125,7 @@ public class Citizen {
             chooseMenu(opt);
         } while (opt != 4);
 
-        logOut();
+//        logOut();
     }
 
     /**
@@ -157,8 +153,8 @@ public class Citizen {
     private void reportPositive() {
         if (!isPositive) {
             isPositive = true;
-            isChanged = true;
             UserSystem.addCase(new Case(this.USERNAME, getDate()));
+            System.out.println("Case reported. Thank you.\n");
         } else {
             System.out.println("You are already reported positive!");
         }
@@ -171,6 +167,7 @@ public class Citizen {
         int opt, max = UPDATE_OPTIONS.length;
 
         do {
+            boolean isChanged = false;
             opt = Menu.display("Update Information", UPDATE_OPTIONS);
             if (opt != max) {
                 if (opt == 1) {
@@ -183,7 +180,7 @@ public class Citizen {
                     System.out.print("New " + UPDATE_OPTIONS[opt - 1] + ": ");
                     String str = input.nextLine();
 
-                    if (!str.isBlank()) {
+                    if (!str.isBlank()) {           // will not allow blank inputs
                         switch (opt) {
                             case 2 -> this.homeAddress = str;
                             case 3 -> this.officeAddress = str;
@@ -197,6 +194,7 @@ public class Citizen {
                 }
 
                 if (isChanged) {
+                    UserSystem.updateUser(this);
                     System.out.println(UPDATE_OPTIONS[opt - 1] + " has been updated!\n");
                 }
             }
@@ -258,15 +256,5 @@ public class Citizen {
         } while (date == null);
 
         return date;
-    }
-
-    /**
-     * Replaces the object in the system if there modification done during the session.
-     */
-    protected void logOut() {
-        if (isChanged) {
-            UserSystem.updateUser(this);
-            this.isChanged = false;
-        }
     }
 }

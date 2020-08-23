@@ -46,8 +46,6 @@ public class Tracer extends Citizen {
             opt = Menu.display("User", menuOptions);
             chooseMenu(opt);
         } while (opt != 7);
-
-        super.logOut();
     }
 
     /**

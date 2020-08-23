@@ -40,8 +40,6 @@ public class GovOfficial extends Citizen {
             opt = Menu.display("User", menuOptions);
             chooseMenu(opt);
         } while (opt != menuOptions.length);
-
-        super.logOut();
     }
 
     /**
@@ -150,7 +148,7 @@ public class GovOfficial extends Citizen {
 
     /**
      * Asks the user what filter will be used when displaying the cases, can be:
-     * within a date range, within a city, or both.
+     * within a date range, within a city (case insensitive), or both.
      */
     private void showAnalytics() {
         int opt;
@@ -168,8 +166,9 @@ public class GovOfficial extends Citizen {
                         Citizen temp = UserSystem.getUser(case1.getUsername());
 
                         if (temp != null) {
-                            return case1.getReportDate().after(dates[0]) && case1.getReportDate().before(dates[1])
-                                    && temp.getHomeAddress().contains(city);
+                            return case1.getReportDate().compareTo(dates[0]) >= 0
+                                    && case1.getReportDate().before(dates[1])
+                                    && temp.getHomeAddress().toUpperCase().contains(city);
                         } else {
                             return false;
                         }
@@ -178,7 +177,8 @@ public class GovOfficial extends Citizen {
                 case 2 -> {
                     Calendar[] dates = obtainDateRange();
 
-                    filter = (case1) -> case1.getReportDate().after(dates[0]) && case1.getReportDate().before(dates[1]);
+                    filter = (case1) -> case1.getReportDate().compareTo(dates[0]) >= 0 &&
+                            case1.getReportDate().before(dates[1]);
                 }
                 case 3 -> {
                     String city = obtainValidCity();
@@ -187,7 +187,7 @@ public class GovOfficial extends Citizen {
                         Citizen temp = UserSystem.getUser(case1.getUsername());
 
                         if (temp != null) {
-                            return temp.getHomeAddress().contains(city);
+                            return temp.getHomeAddress().toUpperCase().contains(city);
                         } else {
                             return false;
                         }
@@ -242,6 +242,8 @@ public class GovOfficial extends Citizen {
             System.out.println("\nEnd date:");
             end = getDate();
         }
+        // sets end date to 12 am the next day
+        end.add(Calendar.DATE, 1);
 
         return new Calendar[] {start, end};
     }
@@ -250,8 +252,8 @@ public class GovOfficial extends Citizen {
      * Obtains an input from the user and check if it is a valid input for a city
      * or not (empty or contains a number and other special characters).<br>
      * Precondition: There are no cities which names have numbers and special symbols in them except
-     * apostrophes, periods, and hyphens.
-     * @return the valid String representing the chosen city.
+     * apostrophes, periods, hyphens, and accented characters.
+     * @return the valid String representing the chosen city in uppercase form.
      */
     private static String obtainValidCity() {
         Scanner input = new Scanner(System.in);
@@ -259,12 +261,14 @@ public class GovOfficial extends Citizen {
         String city = input.nextLine();
 
         // checks if the input is valid, loops if not
-        while (city.isEmpty() || !city.replaceAll("[^-.'\\s\\w]+", "1").matches("\\D+")) {
+        // first, it replaces all invalid characters with "1" before checking for no numbers
+        while (city.isEmpty() ||
+                !city.replaceAll("[^-.'\\s\\w\\u00C0-\\u00FF]+", "1").matches("\\D+")) {
             System.out.println("Invalid input for city!\n");
             System.out.print("Input city: ");
             city = input.nextLine();
         }
-        return city;
+        return city.toUpperCase();
     }
 
     /**
