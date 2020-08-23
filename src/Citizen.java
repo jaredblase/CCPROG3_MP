@@ -142,7 +142,10 @@ public class Citizen {
         Calendar time = Calendar.getInstance();
         date.set(Calendar.HOUR_OF_DAY, time.get(Calendar.HOUR_OF_DAY));
         date.set(Calendar.MINUTE, time.get(Calendar.MINUTE));
-        visitRec.add(new Visit(estCode, date));
+
+        Visit temp = new Visit(estCode, date);
+        visitRec.add(temp);
+        UserSystem.addRecord(temp, USERNAME);
     }
 
     /**
