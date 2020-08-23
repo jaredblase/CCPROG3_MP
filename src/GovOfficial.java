@@ -40,8 +40,6 @@ public class GovOfficial extends Citizen {
             opt = Menu.display("User", menuOptions);
             chooseMenu(opt);
         } while (opt != menuOptions.length);
-
-        super.logOut();
     }
 
     /**

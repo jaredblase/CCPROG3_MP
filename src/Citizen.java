@@ -33,8 +33,6 @@ public class Citizen {
     private boolean isPositive;
     /** Indicator if the user may be infected */
     private boolean maybePositive;
-    /** Indicator if any detail was changed during the session */
-    private boolean isChanged;
     /** The String array containing the update details options of the user */
     private static final String[] UPDATE_OPTIONS = {"Name", "Home Address", "Office Address", "Phone Number",
             "E-Mail", "Password", "Back to User Menu"};
@@ -64,7 +62,6 @@ public class Citizen {
         visitRec = new ArrayList<>();
         isPositive = false;
         maybePositive = false;
-        isChanged = false;
     }
 
     /**
@@ -82,7 +79,6 @@ public class Citizen {
         this.visitRec = other.visitRec;
         this.isPositive = other.isPositive;
         this.maybePositive = other.maybePositive;
-        this.isChanged = other.isChanged;
     }
 
     /**
@@ -129,7 +125,7 @@ public class Citizen {
             chooseMenu(opt);
         } while (opt != 4);
 
-        logOut();
+//        logOut();
     }
 
     /**
@@ -157,7 +153,6 @@ public class Citizen {
     private void reportPositive() {
         if (!isPositive) {
             isPositive = true;
-            isChanged = true;
             UserSystem.addCase(new Case(this.USERNAME, getDate()));
             System.out.println("Case reported. Thank you.\n");
         } else {
@@ -170,16 +165,16 @@ public class Citizen {
      */
     private void updateInfo() {
         int opt, max = UPDATE_OPTIONS.length;
-        boolean validChange = false;
 
         do {
+            boolean isChanged = false;
             opt = Menu.display("Update Information", UPDATE_OPTIONS);
             if (opt != max) {
                 if (opt == 1) {
-                    validChange = isChanged = name.changeName();
+                    isChanged = name.changeName();
                 } else if (opt == max - 1) {
                     this.password = UserSystem.checkPassword();
-                    validChange = isChanged = true;
+                    isChanged = true;
                 } else {
                     Scanner input = new Scanner(System.in);
                     System.out.print("New " + UPDATE_OPTIONS[opt - 1] + ": ");
@@ -192,14 +187,14 @@ public class Citizen {
                             case 4 -> this.phoneNumber = str;
                             case 5 -> this.email = str;
                         }
-                        validChange = isChanged = true;
+                        isChanged = true;
                     } else {
                         System.out.println("Invalid input!");
-                        validChange = false;
                     }
                 }
 
-                if (validChange) {
+                if (isChanged) {
+                    UserSystem.updateUser(this);
                     System.out.println(UPDATE_OPTIONS[opt - 1] + " has been updated!\n");
                 }
             }
@@ -261,15 +256,5 @@ public class Citizen {
         } while (date == null);
 
         return date;
-    }
-
-    /**
-     * Replaces the object in the system if there modification done during the session.
-     */
-    protected void logOut() {
-        if (isChanged) {
-            UserSystem.updateUser(this);
-            this.isChanged = false;
-        }
     }
 }
