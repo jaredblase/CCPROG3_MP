@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
+import java.text.SimpleDateFormat;
 
 /**
  * This Citizen class holds the information of a citizen and methods
@@ -231,13 +232,27 @@ public class Citizen {
     }
 
     /**
-     * Display a message if the user has possibly came in contact
+     * Displays a message if the user has possibly came in contact
      * with a positive case.
      */
     protected void prompt() {
         if (!isPositive) {
-            System.out.println("You may have been in contact with a positive patient on <date> in <establishment>.");
-            System.out.println("You are advised to get tested and report via the app should the result be positive.");
+            SimpleDateFormat format = new SimpleDateFormat("MM,dd,yyyy");
+            Calendar temp = Calendar.getInstance();
+            temp.add(Calendar.DAY_OF_YEAR, -14);
+            for (int i = 0; i < contactDates.size(); i++) {
+                if (contactDates.get(i).before(temp)) { // not within prompting date range
+                    contactDates.remove(i);
+                    contactPlaces.remove(i);
+                }
+            }
+
+            if (contactDates.size() != 0) { // there are still possible contact times after removing
+                System.out.println("You may have been in contact with a positive patient on: ");
+                for (int i = 0; i < contactDates.size(); i++)
+                    System.out.println(format.format(contactDates.get(i)) + " in " + contactPlaces.get(i));
+                System.out.println("You are advised to get tested and report via the app should the result be positive.\n");
+            }
         }
     }
 
