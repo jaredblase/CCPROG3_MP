@@ -130,42 +130,48 @@ public class Tracer extends Citizen {
     private void checkContacts(Case positive, int posIndex) {
         Citizen patient = UserSystem.getUser(positive.getUsername());
         if (patient != null) {
-            ArrayList<Visit> records = new ArrayList<>(); // visit records of positive case on report date
-            Calendar temp = positive.getReportDate();
-            Calendar.Builder builder = new Calendar.Builder();
-            builder.setDate(temp.get(Calendar.YEAR), temp.get(Calendar.MONTH), temp.get(Calendar.DAY_OF_MONTH));
-            temp = builder.build();
+            ArrayList<Visit> posRecords = new ArrayList<>(); // visit records of positive case on report date
+            Calendar temp = (Calendar) positive.getReportDate().clone();
             temp.add(Calendar.DAY_OF_YEAR, -14); // get date 14 days before positive report
+
             for (Visit i: patient.getVisitRec()) { // set records
                 if (i.getCheckIn().after(temp)) { // visit is within tracing range
-                    records.add(i);
+                    posRecords.add(i);
                 }
             }
+            int posRecordLength = posRecords.size();
 
             ArrayList<ArrayList<Visit>> masterRecords = UserSystem.getRecords(); // all visit records
             Calendar startA, endA, startB, endB;
-            for (int i = 0; i < masterRecords.size(); i++) { // iterate through each user
-                for (int j = 0; j < masterRecords.get(i).size(); j++) { // iterate through each user record
-                    // user record within tracing period
-                    if (masterRecords.get(i).get(j).getCheckIn().after(temp)) {
-                        // iterate through each positive case record
-                        for (int k = 0; k < records.size(); k++) {
-                            // same est_code
-                            if (masterRecords.get(i).get(j).getEstCode().equals(records.get(k).getEstCode())) {
-                                startA = masterRecords.get(i).get(j).getCheckIn();
-                                if (j == masterRecords.get(i).size() - 1)
+
+            for (int i = 0; i < masterRecords.size(); i++) {                // iterate through each user
+                ArrayList<Visit> userRec = masterRecords.get(i);
+
+                for (int j = 0; j < userRec.size(); j++) {                  // iterate through each user record
+                    Visit userVisit = userRec.get(j);
+
+                    if (userVisit.getCheckIn().after(temp)) {                   // user record within tracing period
+                        for (int k = 0; k < posRecordLength; k++) {         // iterate through each positive case record
+                            Visit posRec = posRecords.get(k);
+
+                            if (userVisit.getEstCode().equals(posRec.getEstCode())) {   // same est_code
+                                startA = userVisit.getCheckIn();
+                                try {
+                                    endA = userRec.get(j + 1).getCheckIn();
+                                } catch (Exception e) {
                                     endA = null;
-                                else
-                                    endA = masterRecords.get(i).get(j + 1).getCheckIn();
-                                startB = records.get(k).getCheckIn();
-                                if (k == records.size() - 1)
+                                }
+
+                                startB = posRec.getCheckIn();
+                                try {
+                                    endB = posRecords.get(k + 1).getCheckIn();
+                                } catch (Exception e) {
                                     endB = null;
-                                else
-                                    endB = records.get(k + 1).getCheckIn();
+                                }
 
                                 if (hasIntersection(startA, endA, startB, endB)) {
                                     contacts.get(posIndex).add(UserSystem.getUsername(i));
-                                    estCodes.get(posIndex).add(records.get(k).getEstCode());
+                                    estCodes.get(posIndex).add(posRec.getEstCode());
                                 }
                             }
                         }
@@ -174,7 +180,7 @@ public class Tracer extends Citizen {
             }
 
             if (contacts.get(posIndex).get(0) == null) // no contacts
-                contacts.get(posIndex).add(""); // add null string to mark cone checking but no contacts
+                contacts.get(posIndex).add(""); // add empty string to mark done checking but no contacts
         }
     }
 
@@ -188,6 +194,7 @@ public class Tracer extends Citizen {
             endOne = 2359;
         else
             endOne = endA.get(Calendar.HOUR_OF_DAY) * 100 + endA.get(Calendar.MINUTE);
+
         startTwo = startB.get(Calendar.HOUR_OF_DAY) * 100 + startB.get(Calendar.MINUTE);
         // check if same day
         if (endB == null || startB.get(Calendar.DAY_OF_YEAR) != endB.get(Calendar.DAY_OF_YEAR))
@@ -199,7 +206,7 @@ public class Tracer extends Citizen {
     }
 
     private void displayContacts(ArrayList<String> contacts) {
-        if (contacts.get(0).equals("")) { // no contacts
+        if (contacts.get(0).isEmpty()) { // no contacts
             System.out.println("Positive case did not come into contact with anyone.");
         } else {
             System.out.println("Persons at risk of possible exposure:");
