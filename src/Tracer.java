@@ -15,6 +15,7 @@ public class Tracer extends Citizen {
             "Show Cases", "Trace Specific Case", "Inform Citizens Possibly Exposed", "Logout"};
     private ArrayList<Case> assigned;
     private ArrayList<ArrayList<String>> contacts;
+    private ArrayList<ArrayList<Calendar>> dates;
     private ArrayList<ArrayList<String>> estCodes;
 
     /**
@@ -26,13 +27,17 @@ public class Tracer extends Citizen {
 
         assigned = new ArrayList<>();
         contacts = new ArrayList<>();
-        contacts.add(new ArrayList<>());
+        dates = new ArrayList<>();
         estCodes = new ArrayList<>();
-        estCodes.add(new ArrayList<>());
+
         for (Case i: UserSystem.getCases()) {
             // tracer is assigned to case and status is pending and case not yet in list of assigned cases
-            if (i.getTracer().equals(getUsername()) && i.getStatus() == 'P' && !assigned.contains(i))
+            if (i.getTracer().equals(getUsername()) && i.getStatus() == 'P' && !assigned.contains(i)) {
                 assigned.add(i);
+                contacts.add(new ArrayList<>());
+                dates.add(new ArrayList<>());
+                estCodes.add(new ArrayList<>());
+            }
         }
     }
 
@@ -103,7 +108,7 @@ public class Tracer extends Citizen {
                 System.out.println("Invalid input. Use the show cases option to view your assigned cases.\n");
             }
 
-            if (caseNum != -1) // valid case number input
+            if (status) // valid case number input
                 trace(caseNum);
         }
     }
@@ -171,6 +176,7 @@ public class Tracer extends Citizen {
 
                                 if (hasIntersection(startA, endA, startB, endB)) {
                                     contacts.get(posIndex).add(UserSystem.getUsername(i));
+                                    dates.get(posIndex).add(posRec.getCheckIn());
                                     estCodes.get(posIndex).add(posRec.getEstCode());
                                 }
                             }
@@ -179,12 +185,15 @@ public class Tracer extends Citizen {
                 }
             }
 
-            if (contacts.get(posIndex).get(0) == null) // no contacts
+            if (contacts.get(posIndex).size() == 0) // no contacts
                 contacts.get(posIndex).add(""); // add empty string to mark done checking but no contacts
         }
     }
 
     private boolean hasIntersection(Calendar startA, Calendar endA, Calendar startB, Calendar endB) {
+        if (startA.get(Calendar.DAY_OF_YEAR) != startB.get(Calendar.DAY_OF_YEAR)) // not the same day
+            return false;
+
         int startOne, endOne, startTwo, endTwo;
 
         // convert time to military time
@@ -216,6 +225,25 @@ public class Tracer extends Citizen {
     }
 
     private void broadcast() {
+        for (int i = 0; i < contacts.size(); i++) {
+            if (contacts.get(i) == null)
+                continue;
+            if (!contacts.get(i).get(0).isEmpty()) { // there are people possibly exposed
+                for (int j = 0; j < contacts.get(i).size(); j++) {
+                    Citizen user = UserSystem.getUser(contacts.get(i).get(j));
+                    if (user != null) {
+                        // add info to prompt user that he may be infected
+                        user.addContactInfo(dates.get(i).get(j), estCodes.get(i).get(j));
+                    }
+                }
+            }
 
+            // tracing is complete
+            Case remove = assigned.remove(i);
+            remove.setStatus('T');
+            contacts.remove(i);
+            dates.remove(i);
+            estCodes.remove(i);
+        }
     }
 }
