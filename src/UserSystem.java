@@ -33,7 +33,16 @@ public class UserSystem {
     }
 
     /**
-     * Returns the role of specific user in the system given his index.
+     * Returns the username of a specific user in the system given his index.
+     * @param index the index of a specific user in the system.
+     * @return the username of the user.
+     */
+    public static String getUsername(int index) {
+        return usernames.get(index);
+    }
+
+    /**
+     * Returns the role of a specific user in the system given his index.
      * @param index the index of a specific user in the system.
      * @return the role of the user.
      */
@@ -236,6 +245,15 @@ public class UserSystem {
      */
     public static void updateUser(Citizen citizen) {
         users.set(usernames.indexOf(citizen.getUsername()), citizen);
+    }
+
+    /**
+     * Adds a visit record to the list of visit records in the system.
+     * @param record the visit record to be added.
+     * @param username the name to be checked in the master list.
+     */
+    public static void addRecord(Visit record, String username) {
+        records.get(getIndexOf(username)).add(record);
     }
 
     /**
