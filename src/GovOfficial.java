@@ -119,7 +119,7 @@ public class GovOfficial extends Citizen {
                         status = true;
 
                         // assign tracer
-                        for (Case i : UserSystem.getCases()) {
+                        for (Case i: UserSystem.getCases()) {
                             if (i.getCaseNum() == posCase) {
                                 i.setTracer(tracer);
                                 break;
