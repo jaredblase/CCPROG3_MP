@@ -73,13 +73,8 @@ public class Citizen {
      * @param other the object to be copied.
      */
     public Citizen(Citizen other) {
-        this.name = other.name;
-        this.homeAddress = other.homeAddress;
-        this.officeAddress = other.officeAddress;
-        this.phoneNumber = other.phoneNumber;
-        this.email = other.email;
-        this.USERNAME = other.USERNAME;
-        this.password = other.password;
+        this(other.name, other.homeAddress, other.officeAddress, other.phoneNumber, other.email,
+                other.USERNAME, other.password);
         this.visitRec = other.visitRec;
         this.isPositive = other.isPositive;
         this.contactDates = other.contactDates;
