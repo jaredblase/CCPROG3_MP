@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
+import java.text.SimpleDateFormat;
 
 /**
  * This Citizen class holds the information of a citizen and methods
@@ -31,8 +32,10 @@ public class Citizen {
     private ArrayList<Visit> visitRec;
     /** Indicator if the user is infected */
     private boolean isPositive;
-    /** Indicator if the user may be infected */
-    private boolean maybePositive;
+    /** Dates when the user may be infected */
+    private ArrayList<Calendar> contactDates;
+    /** Codes for the establishments where the user may be infected */
+    private ArrayList<String> contactPlaces;
     /** The String array containing the update details options of the user */
     private static final String[] UPDATE_OPTIONS = {"Name", "Home Address", "Office Address", "Phone Number",
             "E-Mail", "Password", "Back to User Menu"};
@@ -61,7 +64,8 @@ public class Citizen {
         this.password = password;
         visitRec = new ArrayList<>();
         isPositive = false;
-        maybePositive = false;
+        contactDates = new ArrayList<>();
+        contactPlaces = new ArrayList<>();
     }
 
     /**
@@ -78,7 +82,8 @@ public class Citizen {
         this.password = other.password;
         this.visitRec = other.visitRec;
         this.isPositive = other.isPositive;
-        this.maybePositive = other.maybePositive;
+        this.contactDates = other.contactDates;
+        this.contactPlaces = other.contactPlaces;
     }
 
     /**
@@ -217,13 +222,37 @@ public class Citizen {
     }
 
     /**
-     * Display a message if the user has possibly came in contact
-     * with
+     * Adds where and when a user may be infected.
+     * @param contactDate the date when the user may be infected.
+     * @param contactPlace the code for the establishment where the user may be infected.
+     */
+    public void addContactInfo(Calendar contactDate, String contactPlace) {
+        contactDates.add(contactDate);
+        contactPlaces.add(contactPlace);
+    }
+
+    /**
+     * Displays a message if the user has possibly came in contact
+     * with a positive case.
      */
     protected void prompt() {
-        if (!isPositive && maybePositive) {
-            System.out.println("You may have been in contact with a positive patient on <date> in <establishment>.");
-            System.out.println("You are advised to get tested and report via the app should the result be positive.");
+        if (!isPositive) {
+            SimpleDateFormat format = new SimpleDateFormat("MM,dd,yyyy");
+            Calendar temp = Calendar.getInstance();
+            temp.add(Calendar.DAY_OF_YEAR, -14);
+            for (int i = 0; i < contactDates.size(); i++) {
+                if (contactDates.get(i).before(temp)) { // not within prompting date range
+                    contactDates.remove(i);
+                    contactPlaces.remove(i);
+                }
+            }
+
+            if (contactDates.size() != 0) { // there are still possible contact times after removing
+                System.out.println("You may have been in contact with a positive patient on: ");
+                for (int i = 0; i < contactDates.size(); i++)
+                    System.out.println(format.format(contactDates.get(i)) + " in " + contactPlaces.get(i));
+                System.out.println("You are advised to get tested and report via the app should the result be positive.\n");
+            }
         }
     }
 
