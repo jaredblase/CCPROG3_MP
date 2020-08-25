@@ -92,8 +92,8 @@ public class GovOfficial extends Citizen {
                         System.out.print("Assign case number: ");
                         posCase = Integer.parseInt(input.nextLine());
 
-                        for (int j = 0; j < ctr; j++)
-                            if (caseNums[j] == posCase) {
+                        for (int caseNum: caseNums)
+                            if (caseNum == posCase) {
                                 status = true;
                                 break;
                             }
