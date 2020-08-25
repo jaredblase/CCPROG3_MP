@@ -185,7 +185,7 @@ public class Tracer extends Citizen {
                 }
             }
 
-            if (contacts.get(posIndex).size() == 0) // no contacts
+            if (contacts.get(posIndex).isEmpty()) // no contacts
                 contacts.get(posIndex).add(""); // add empty string to mark done checking but no contacts
         }
     }
