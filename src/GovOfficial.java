@@ -140,7 +140,7 @@ public class GovOfficial extends Citizen {
         Calendar[] dates = obtainDateRange();
 
         for (Case i: UserSystem.getCases()) {
-            if (i.getReportDate().after(dates[0]) && i.getReportDate().before(dates[1])) {
+            if (i.getReportDate().compareTo(dates[0]) >= 0 && i.getReportDate().before(dates[1])) {
                 System.out.println(i);
             }
         }
