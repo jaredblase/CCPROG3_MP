@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Calendar;
 
 /**
  * This class handles everything that deals with any actions of a user outside of his account
@@ -140,12 +141,12 @@ public class UserSystem {
         String phoneNumber = getValidString("Phone number");
         String email = getValidString("Email address");
 
-        // add username, role, and information to ArrayList
+        // add username, role, and information to ArrayList and add new ArrayList for visit records
         usernames.add(username);
         roles.add("citizen");
         users.add(new Citizen(new Name(firstName, secondName, lastName), homeAdd, officeAdd, phoneNumber,
                 email, username, password));
-
+        records.add(new ArrayList<>());
         System.out.println("----YOU MAY NOW LOGIN WITH YOUR NEW ACCOUNT----");
     }
 
@@ -192,7 +193,7 @@ public class UserSystem {
                     return new GovOfficial(users.get(index));
 
                 case "tracer":
-                    return new Tracer(users.get(index));
+                    return new Tracer((Tracer) users.get(index));
             }
         } else {
             System.out.println("Invalid username/password!");
@@ -230,6 +231,8 @@ public class UserSystem {
      */
     public static void setRoleOf(int index, String role) {
         if (roles.get(index).equals("tracer")) { // previous role is tracer
+            Tracer temp = (Tracer) users.get(index);
+            temp.demote();
             nTracers--;
         } else if (role.equals("tracer")) { // new role is tracer
             nTracers++;
@@ -258,10 +261,11 @@ public class UserSystem {
 
     /**
      * Adds a case to the list of cases in the system.
-     * @param positive the case to be added.
+     * @param username the username of the user who reported positive.
+     * @param date the date when the case is reported.
      */
-    public static void addCase(Case positive) {
-        cases.add(positive);
+    public static void addCase(String username, Calendar date) {
+        cases.add(new Case(username, date));
     }
 
     /**
