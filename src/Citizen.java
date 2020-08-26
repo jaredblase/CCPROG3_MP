@@ -156,7 +156,7 @@ public class Citizen {
     private void reportPositive() {
         if (!isPositive) {
             isPositive = true;
-            UserSystem.addCase(new Case(this.USERNAME, getDate()));
+            UserSystem.addCase(this.USERNAME, getDate());
             System.out.println("Case reported. Thank you.\n");
         } else {
             System.out.println("You are already reported positive!");

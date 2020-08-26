@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Calendar;
 
 /**
  * This class handles everything that deals with any actions of a user outside of his account
@@ -258,10 +259,11 @@ public class UserSystem {
 
     /**
      * Adds a case to the list of cases in the system.
-     * @param positive the case to be added.
+     * @param username the username of the user who reported positive.
+     * @param date the date when the case is reported.
      */
-    public static void addCase(Case positive) {
-        cases.add(positive);
+    public static void addCase(String username, Calendar date) {
+        cases.add(new Case(username, date));
     }
 
     /**
