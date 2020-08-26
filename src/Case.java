@@ -2,7 +2,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
- * The Case class...
+ * The Case class holds all the information for a positive case. It also
+ * provides methods to retrieve data from it, and set some of the other data.
+ * @author Gabriel Pua
+ * @author Jared
+ * @version 1.1
  */
 public class Case {
     /** The case number. */
@@ -97,6 +101,10 @@ public class Case {
         this.status = status;
     }
 
+    /**
+     * Returns a String representation of a case.
+     * @return a String that represents a case.
+     */
     @Override
     public String toString() {
         SimpleDateFormat format = new SimpleDateFormat(" MM,dd,yyyy ");
