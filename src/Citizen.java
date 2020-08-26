@@ -32,10 +32,8 @@ public class Citizen {
     private ArrayList<Visit> visitRec;
     /** Indicator if the user is infected */
     private boolean isPositive;
-    /** Dates when the user may be infected */
-    private ArrayList<Calendar> contactDates;
-    /** Codes for the establishments where the user may be infected */
-    private ArrayList<String> contactPlaces;
+    /** Records that indicate when and where the user may be infected */
+    private ArrayList<Visit> contactPlaces;
     /** The String array containing the update details options of the user */
     private static final String[] UPDATE_OPTIONS = {"Name", "Home Address", "Office Address", "Phone Number",
             "E-Mail", "Password", "Back to User Menu"};
@@ -64,7 +62,6 @@ public class Citizen {
         this.password = password;
         visitRec = new ArrayList<>();
         isPositive = false;
-        contactDates = new ArrayList<>();
         contactPlaces = new ArrayList<>();
     }
 
@@ -77,7 +74,6 @@ public class Citizen {
                 other.USERNAME, other.password);
         this.visitRec = other.visitRec;
         this.isPositive = other.isPositive;
-        this.contactDates = other.contactDates;
         this.contactPlaces = other.contactPlaces;
     }
 
@@ -218,12 +214,20 @@ public class Citizen {
 
     /**
      * Adds where and when a user may be infected.
-     * @param contactDate the date when the user may be infected.
-     * @param contactPlace the code for the establishment where the user may be infected.
+     * @param contactPlace the record that indicates when and where the user may be infected.
      */
-    public void addContactInfo(Calendar contactDate, String contactPlace) {
-        contactDates.add(contactDate);
-        contactPlaces.add(contactPlace);
+    public void addContactInfo(Visit contactPlace) {
+        int i;
+        for (i = 0; i < contactPlaces.size(); i++) {
+            if (contactPlaces.get(i).getCheckIn().before(contactPlace.getCheckIn()))
+                break;
+        }
+
+        if (i == contactPlaces.size()) {
+            contactPlaces.add(contactPlace);
+        } else {
+            contactPlaces.add(i, contactPlace);
+        }
     }
 
     /**
@@ -235,17 +239,17 @@ public class Citizen {
             SimpleDateFormat format = new SimpleDateFormat("MM,dd,yyyy");
             Calendar temp = Calendar.getInstance();
             temp.add(Calendar.DAY_OF_YEAR, -14);
-            for (int i = 0; i < contactDates.size(); i++) {
-                if (contactDates.get(i).before(temp)) { // not within prompting date range
-                    contactDates.remove(i);
+            for (int i = 0; i < contactPlaces.size(); i++) {
+                if (contactPlaces.get(i).getCheckIn().before(temp)) { // not within prompting date range
                     contactPlaces.remove(i);
                 }
             }
 
-            if (contactDates.size() != 0) { // there are still possible contact times after removing
+            if (contactPlaces.size() != 0) { // there are still possible contact times after removing
                 System.out.println("You may have been in contact with a positive patient on: ");
-                for (int i = 0; i < contactDates.size(); i++)
-                    System.out.println(format.format(contactDates.get(i)) + " in " + contactPlaces.get(i));
+                for (Visit contactPlace : contactPlaces)
+                    System.out.println(format.format(contactPlace.getCheckIn()) + " in " +
+                            contactPlace.getEstCode());
                 System.out.println("You are advised to get tested and report via the app should the result be positive.\n");
             }
         }

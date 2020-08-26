@@ -15,8 +15,7 @@ public class Tracer extends Citizen {
             "Show Cases", "Trace Specific Case", "Inform Citizens Possibly Exposed", "Logout"};
     private ArrayList<Case> assigned;
     private ArrayList<ArrayList<String>> contacts;
-    private ArrayList<ArrayList<Calendar>> dates;
-    private ArrayList<ArrayList<String>> estCodes;
+    private ArrayList<ArrayList<Visit>> contactPlaces;
 
     /**
      * Receives a Citizen class and makes an exact copy of its attributes.
@@ -27,16 +26,14 @@ public class Tracer extends Citizen {
 
         assigned = new ArrayList<>();
         contacts = new ArrayList<>();
-        dates = new ArrayList<>();
-        estCodes = new ArrayList<>();
+        contactPlaces = new ArrayList<>();
 
         for (Case i: UserSystem.getCases()) {
             // tracer is assigned to case and status is pending and case not yet in list of assigned cases
             if (i.getTracer().equals(getUsername()) && i.getStatus() == 'P' && !assigned.contains(i)) {
                 assigned.add(i);
                 contacts.add(new ArrayList<>());
-                dates.add(new ArrayList<>());
-                estCodes.add(new ArrayList<>());
+                contactPlaces.add(new ArrayList<>());
             }
         }
     }
@@ -140,7 +137,7 @@ public class Tracer extends Citizen {
             temp.add(Calendar.DAY_OF_YEAR, -14); // get date 14 days before positive report
 
             for (Visit i: patient.getVisitRec()) { // set records
-                if (i.getCheckIn().after(temp)) { // visit is within tracing range
+                if (i.getCheckIn().compareTo(temp) >= 0) { // visit is within tracing range
                     posRecords.add(i);
                 }
             }
@@ -176,8 +173,7 @@ public class Tracer extends Citizen {
 
                                 if (hasIntersection(startA, endA, startB, endB)) {
                                     contacts.get(posIndex).add(UserSystem.getUsername(i));
-                                    dates.get(posIndex).add(posRec.getCheckIn());
-                                    estCodes.get(posIndex).add(posRec.getEstCode());
+                                    contactPlaces.get(posIndex).add(posRec);
                                 }
                             }
                         }
@@ -233,7 +229,7 @@ public class Tracer extends Citizen {
                     Citizen user = UserSystem.getUser(contacts.get(i).get(j));
                     if (user != null) {
                         // add info to prompt user that he may be infected
-                        user.addContactInfo(dates.get(i).get(j), estCodes.get(i).get(j));
+                        user.addContactInfo(contactPlaces.get(i).get(j));
                     }
                 }
             }
@@ -242,8 +238,7 @@ public class Tracer extends Citizen {
             Case remove = assigned.remove(i);
             remove.setStatus('T');
             contacts.remove(i);
-            dates.remove(i);
-            estCodes.remove(i);
+            contactPlaces.remove(i);
         }
     }
 }
