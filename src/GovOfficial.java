@@ -40,6 +40,8 @@ public class GovOfficial extends Citizen {
             opt = Menu.display("User", menuOptions);
             chooseMenu(opt);
         } while (opt != menuOptions.length);
+
+        UserSystem.updateUser(this);
     }
 
     /**
@@ -288,7 +290,7 @@ public class GovOfficial extends Citizen {
                 switch (role) {
                     case "official" -> System.out.println("Account is already a government official!");
                     case "tracer" -> System.out.println("Account is already a contact tracer!");
-                    default -> System.out.println("Account is already a citizen!");
+                    default -> System.out.println("Cannot terminate citizen account!");
                 }
             } else {
                 UserSystem.setRoleOf(index, role);

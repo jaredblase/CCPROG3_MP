@@ -19,14 +19,20 @@ public class Tracer extends Citizen {
 
     /**
      * Receives a Citizen class and makes an exact copy of its attributes.
-     * @param citizen the object used to construct the new object.
+     * @param other the object used to construct the new object.
      */
-    public Tracer(Citizen citizen) {
-        super(citizen);
+    public Tracer(Tracer other) {
+        super(other);
 
-        assigned = new ArrayList<>();
-        contacts = new ArrayList<>();
-        contactPlaces = new ArrayList<>();
+        if (assigned.isEmpty()) {
+            assigned = new ArrayList<>();
+            contacts = new ArrayList<>();
+            contactPlaces = new ArrayList<>();
+        } else {
+            this.assigned = other.assigned;
+            this.contacts = other.contacts;
+            this.contactPlaces = other.contactPlaces;
+        }
 
         for (Case i: UserSystem.getCases()) {
             // tracer is assigned to case and status is pending and case not yet in list of assigned cases
@@ -50,6 +56,8 @@ public class Tracer extends Citizen {
             opt = Menu.display("User", menuOptions);
             chooseMenu(opt);
         } while (opt != 7);
+
+        UserSystem.updateUser(this);
     }
 
     /**
@@ -240,5 +248,14 @@ public class Tracer extends Citizen {
             contacts.remove(i);
             contactPlaces.remove(i);
         }
+    }
+
+    public void demote() {
+        for (Case i: assigned)
+            i.setTracer("000");
+        assigned = null;
+        contacts = null;
+        contactPlaces = null;
+        System.gc();
     }
 }

@@ -121,7 +121,7 @@ public class Citizen {
             chooseMenu(opt);
         } while (opt != 4);
 
-//        logOut();
+        UserSystem.updateUser(this);
     }
 
     /**
