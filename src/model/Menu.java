@@ -1,3 +1,5 @@
+package model;
+
 import java.util.Scanner;
 
 /**
@@ -10,7 +12,7 @@ public class Menu {
     /**
      * Displays the header of the menu before showing all the menu options passed
      * to the method in a numbered order.
-     * @param header the header of the menu to be printed i.e. Main Menu.
+     * @param header the header of the menu to be printed i.e. Main model.Menu.
      * @param options a variable argument to store the menu options in an array.
      * @return the option number chosen
      */
@@ -19,7 +21,7 @@ public class Menu {
 
         //display menu
         System.out.println();
-        System.out.println(header + " Menu");
+        System.out.println(header + " model.Menu");
         for (String i: options) {
             System.out.println(ctr++ + " - " + i);
         }

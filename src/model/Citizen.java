@@ -1,4 +1,4 @@
-//import java.io.File;
+package model;//import java.io.File;
 //import java.io.FileWriter;
 
 import java.io.File;
@@ -16,7 +16,7 @@ import java.util.Scanner;
  * @see Tracer
  */
 public class Citizen {
-    /** The name contained in a Name object */
+    /** The name contained in a model.Name object */
     private final Name name;
     /** The home address */
     private String homeAddress;
@@ -35,14 +35,14 @@ public class Citizen {
     private boolean maybePositive;
     /** Indicator if any detail was changed during the session*/
     private boolean isChanged;
-    private static final String[] UPDATE_OPTIONS = {"Name", "Home Address", "Office Address", "Phone Number",
-            "E-Mail", "Password", "Back to User Menu"};
+    private static final String[] UPDATE_OPTIONS = {"model.Name", "Home Address", "Office Address", "Phone Number",
+            "E-Mail", "Password", "Back to User model.Menu"};
     protected static String[] menuOptions = {"Check in", "Report positive", "Update profile information", "Logout"};
 
     /**
      * Receives the personal information of the user, along with the username and password
      * and initializes the object from them.
-     * @param name the Name object containing the name of the user
+     * @param name the model.Name object containing the name of the user
      * @param homeAddress the home address of the user
      * @param officeAddress the office address of the user
      * @param phoneNumber the phone number of the user

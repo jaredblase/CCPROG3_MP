@@ -1,3 +1,5 @@
+package model;
+
 import java.util.Scanner;
 
 /**
@@ -9,7 +11,7 @@ import java.util.Scanner;
  */
 public class Name {
     /**
-     * This constructor initializes a Name object with a first, 
+     * This constructor initializes a model.Name object with a first,
      * middle, and last name.
      * @param first is the first name
      * @param middle is the middle name
@@ -26,7 +28,7 @@ public class Name {
         int opt;
 
         do {
-            opt = Menu.display("Name Change", menuOptions);
+            opt = Menu.display("model.Name Change", menuOptions);
             if(opt != 4) {
                 System.out.print("New " + menuOptions[opt - 1] + ": ");
                 String str = input.nextLine();
@@ -43,7 +45,7 @@ public class Name {
     }
 
     /**
-     * This method returns the full name of a Name object in String 
+     * This method returns the full name of a model.Name object in String
      * format. 
      * @return the full name
      */
@@ -59,5 +61,5 @@ public class Name {
     /** last is the last name */
     private String last;
     /** change name menu options */
-    private static final String[] menuOptions = {"First Name", "Middle Name", "Last Name", "Back"};
+    private static final String[] menuOptions = {"First model.Name", "Middle model.Name", "Last model.Name", "Back"};
 }

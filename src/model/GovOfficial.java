@@ -1,3 +1,5 @@
+package model;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
@@ -18,7 +20,7 @@ public class GovOfficial extends Citizen {
 
     /**
      *
-     * @param name the Name object containing the name of the user
+     * @param name the model.Name object containing the name of the user
      * @param homeAddress the home address of the user
      * @param officeAddress the office address of the user
      * @param phoneNumber the phone number of the user
@@ -34,7 +36,7 @@ public class GovOfficial extends Citizen {
         temp[4] = "Show Contact Tracing Updates";
         temp[5] = "Analytics";
         temp[6] = "Create Government Official Account";
-        temp[7] = "Create Contact Tracer Account";
+        temp[7] = "Create Contact model.Tracer Account";
         temp[8] = "Terminate Account";
         temp[9] = "Logout";
         menuOptions = temp;

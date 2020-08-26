@@ -1,3 +1,5 @@
+package model;
+
 import java.util.ArrayList;
 
 /**
@@ -16,7 +18,7 @@ public class Tracer extends Citizen {
         String[] temp = new String[menuOptions.length + 6];
         System.arraycopy(menuOptions, 0, temp, 0, menuOptions.length);
         temp[3] = "Show Cases";
-        temp[4] = "Trace Specific Case";
+        temp[4] = "Trace Specific model.Case";
         temp[5] = "Inform Citizens Possibly Exposed";
         temp[6] = "Logout";
         menuOptions = temp;

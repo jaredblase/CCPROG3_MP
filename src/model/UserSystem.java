@@ -1,4 +1,4 @@
-//import java.io.*;
+package model;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -207,7 +207,7 @@ public abstract class UserSystem {
     /**
      * Handles the logging in of an existing user. It asks the user to input his username
      * and password. Once valid, loads everything from the user's text file.
-     * @return a constructed Citizen object with the user's details.
+     * @return a constructed model.Citizen object with the user's details.
      */
     public static Citizen login() {
         Scanner input = new Scanner(System.in);
