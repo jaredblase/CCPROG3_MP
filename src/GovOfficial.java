@@ -3,7 +3,7 @@ import java.util.Scanner;
 import java.util.function.Predicate;
 
 /**
- * This Government class extends the Citizen class and includes administrator
+ * This GovOfficial class extends the Citizen class and includes administrator
  * facilities such as viewing analytics, assigning cases, and promoting or terminating accounts.
  * @author Gabriel Pua
  * @author Jared Sy
@@ -11,12 +11,12 @@ import java.util.function.Predicate;
  * @see Citizen
  */
 public class GovOfficial extends Citizen {
-    /** The String array containing the menu options of the user */
+    /** The String array containing the menu options of the user. */
     protected static String[] menuOptions = {"Check in", "Report positive", "Update profile information",
             "Show Unassigned Cases", "Show Contact Tracing Updates", "Analytics",
             "Create Government Official Account", "Create Contact Tracer Account", "Terminate Account", "Logout"};
 
-    /** The String array containing the analytics menu options of the user */
+    /** The String array containing the analytics menu options of the user. */
     private static final String[] ANALYTICS_MENU = {"Number of positive cases in a city within a duration",
             "Number of positive cases within a duration", "Number of positive cases in a city", "Back"};
 
@@ -143,7 +143,7 @@ public class GovOfficial extends Citizen {
 
         for (Case i: UserSystem.getCases()) {
             if (i.getReportDate().compareTo(dates[0]) >= 0 && i.getReportDate().before(dates[1])) {
-                System.out.println(i);
+                System.out.println(i.toString());
             }
         }
     }

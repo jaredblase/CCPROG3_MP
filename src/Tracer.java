@@ -3,18 +3,23 @@ import java.util.Calendar;
 import java.util.Scanner;
 
 /**
- * This class is used
- *
+ * This Tracer class extends the Citizen class and includes contact tracer
+ * facilities such as viewing assigned cases, tracing contacts of positive cases,
+ * and informing contacts of their possible exposure.
  * @author Gabriel Pua
  * @author Jared Sy
  * @version 0.1
  * @see Citizen
  */
 public class Tracer extends Citizen {
+    /** The String array containing the menu options of the user. */
     protected static String[] menuOptions = {"Check in", "Report positive", "Update profile information",
             "Show Cases", "Trace Specific Case", "Inform Citizens Possibly Exposed", "Logout"};
+    /** The list of cases assigned to the contact tracer. */
     private ArrayList<Case> assigned;
+    /** The list of contacts of all cases. */
     private ArrayList<ArrayList<String>> contacts;
+    /** The list of visit records when and where the contacts may have been exposed. */
     private ArrayList<ArrayList<Visit>> contactPlaces;
 
     /**
@@ -87,6 +92,10 @@ public class Tracer extends Citizen {
         }
     }
 
+    /**
+     * Gets a case number from the user and traces and displays the contacts
+     * of the corresponding case.
+     */
     private void trace() {
         if (assigned.size() == 0) { // no cases assigned
             System.out.println("No assigned cases");
@@ -118,6 +127,10 @@ public class Tracer extends Citizen {
         }
     }
 
+    /**
+     * Traces the contacts of a case given the case number and displays them.
+     * @param caseNum the case number of a case.
+     */
     private void trace(int caseNum) {
         Case positive = null;
         for (Case i: assigned) {
@@ -137,6 +150,14 @@ public class Tracer extends Citizen {
         }
     }
 
+    /**
+     * Searches through the visit records of all users to determine the
+     * contacts of a given case and updates the list of contacts and list of
+     * when and where the contacts were exposed. An empty string is added to the
+     * list of contacts if no contacts for the case is found.
+     * @param positive the positive case.
+     * @param posIndex the index of the case being traced in the list of assigned cases.
+     */
     private void checkContacts(Case positive, int posIndex) {
         Citizen patient = UserSystem.getUser(positive.getUsername());
         if (patient != null) {
@@ -155,33 +176,35 @@ public class Tracer extends Citizen {
             Calendar startA, endA, startB, endB;
 
             for (int i = 0; i < masterRecords.size(); i++) {                // iterate through each user
-                ArrayList<Visit> userRec = masterRecords.get(i);
+                if (i != UserSystem.getIndexOf(positive.getUsername())) { // records to be checked not that of positive case
+                    ArrayList<Visit> userRec = masterRecords.get(i);
 
-                for (int j = 0; j < userRec.size(); j++) {                  // iterate through each user record
-                    Visit userVisit = userRec.get(j);
+                    for (int j = 0; j < userRec.size(); j++) {                  // iterate through each user record
+                        Visit userVisit = userRec.get(j);
 
-                    if (userVisit.getCheckIn().after(temp)) {                   // user record within tracing period
-                        for (int k = 0; k < posRecordLength; k++) {         // iterate through each positive case record
-                            Visit posRec = posRecords.get(k);
+                        if (userVisit.getCheckIn().after(temp)) {                   // user record within tracing period
+                            for (int k = 0; k < posRecordLength; k++) {         // iterate through each positive case record
+                                Visit posRec = posRecords.get(k);
 
-                            if (userVisit.getEstCode().equals(posRec.getEstCode())) {   // same est_code
-                                startA = userVisit.getCheckIn();
-                                try {
-                                    endA = userRec.get(j + 1).getCheckIn();
-                                } catch (Exception e) {
-                                    endA = null;
-                                }
+                                if (userVisit.getEstCode().equals(posRec.getEstCode())) {   // same est_code
+                                    startA = userVisit.getCheckIn();
+                                    try {
+                                        endA = userRec.get(j + 1).getCheckIn();
+                                    } catch (Exception e) {
+                                        endA = null;
+                                    }
 
-                                startB = posRec.getCheckIn();
-                                try {
-                                    endB = posRecords.get(k + 1).getCheckIn();
-                                } catch (Exception e) {
-                                    endB = null;
-                                }
+                                    startB = posRec.getCheckIn();
+                                    try {
+                                        endB = posRecords.get(k + 1).getCheckIn();
+                                    } catch (Exception e) {
+                                        endB = null;
+                                    }
 
-                                if (hasIntersection(startA, endA, startB, endB)) {
-                                    contacts.get(posIndex).add(UserSystem.getUsername(i));
-                                    contactPlaces.get(posIndex).add(posRec);
+                                    if (hasIntersection(startA, endA, startB, endB)) {
+                                        contacts.get(posIndex).add(UserSystem.getUsername(i));
+                                        contactPlaces.get(posIndex).add(posRec);
+                                    }
                                 }
                             }
                         }
@@ -194,6 +217,15 @@ public class Tracer extends Citizen {
         }
     }
 
+    /**
+     * Determines if there is an intersection between two time intervals.
+     * Returns true if there is an intersection and false otherwise.
+     * @param startA the starting time of the first interval.
+     * @param endA the ending time of the first interval.
+     * @param startB the starting time of the second interval.
+     * @param endB the ending time of the second interval.
+     * @return true if there is an intersection and false otherwise.
+     */
     private boolean hasIntersection(Calendar startA, Calendar endA, Calendar startB, Calendar endB) {
         if (startA.get(Calendar.DAY_OF_YEAR) != startB.get(Calendar.DAY_OF_YEAR)) // not the same day
             return false;
@@ -218,6 +250,10 @@ public class Tracer extends Citizen {
         return (startOne >= startTwo && startOne <= endTwo) || (startTwo >= startOne && startTwo <= endOne);
     }
 
+    /**
+     * Displays the contacts of a case.
+     * @param contacts the contacts of a case.
+     */
     private void displayContacts(ArrayList<String> contacts) {
         if (contacts.get(0).isEmpty()) { // no contacts
             System.out.println("Positive case did not come into contact with anyone.");
@@ -228,6 +264,10 @@ public class Tracer extends Citizen {
         }
     }
 
+    /**
+     * Informs the contacts that they may possibly be exposed. Contacts
+     * are also informed when and where they may possibly be exposed.
+     */
     private void broadcast() {
         for (int i = 0; i < contacts.size(); i++) {
             if (contacts.get(i) == null)
@@ -250,6 +290,10 @@ public class Tracer extends Citizen {
         }
     }
 
+    /**
+     * Called when a contact tracer is demoted to a citizen. Sets
+     * all assigned cases to become unassigned.
+     */
     public void demote() {
         for (Case i: assigned)
             i.setTracer("000");

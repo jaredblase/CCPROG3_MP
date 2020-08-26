@@ -14,30 +14,30 @@ import java.text.SimpleDateFormat;
  * @see Tracer
  */
 public class Citizen {
-    /** The name contained in a Name object */
+    /** The name contained in a Name object. */
     private final Name name;
-    /** The home address */
+    /** The home address. */
     private String homeAddress;
-    /** The office address */
+    /** The office address. */
     private String officeAddress;
-    /** The phone number */
+    /** The phone number. */
     private String phoneNumber;
-    /** The email address */
+    /** The email address. */
     private String email;
-    /** The permanent username in the system */
+    /** The permanent username in the system. */
     private final String USERNAME;
-    /** The password of the user */
+    /** The password of the user. */
     private String password;
-    /** The list of visit records */
+    /** The list of visit records. */
     private ArrayList<Visit> visitRec;
-    /** Indicator if the user is infected */
+    /** Indicator if the user is infected. */
     private boolean isPositive;
-    /** Records that indicate when and where the user may be infected */
+    /** Records that indicate when and where the user may be infected. */
     private ArrayList<Visit> contactPlaces;
-    /** The String array containing the update details options of the user */
+    /** The String array containing the update details options of the user. */
     private static final String[] UPDATE_OPTIONS = {"Name", "Home Address", "Office Address", "Phone Number",
             "E-Mail", "Password", "Back to User Menu"};
-    /** The String array containing the menu options of the user */
+    /** The String array containing the menu options of the user. */
     protected static String[] menuOptions = {"Check in", "Report positive", "Update profile information", "Logout"};
 
     /**

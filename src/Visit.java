@@ -10,9 +10,9 @@ import java.util.Calendar;
  * @version 1.1
  */
 public class Visit {
-    /** The establishment code */
+    /** The establishment code. */
     private final String EST_CODE;
-    /** The check in time and date */
+    /** The check in time and date. */
     private final Calendar CHECK_IN;
 
     /**
