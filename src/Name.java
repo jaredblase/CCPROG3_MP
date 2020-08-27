@@ -15,7 +15,7 @@ public class Name {
     /** The last name. */
     private String last;
     /** Menu options for changing names. */
-    private static final Menu CHANGE_NAME_OPTIONS = new Menu ("First Name", "Middle Name",
+    public static final Menu CHANGE_NAME_OPTIONS = new Menu ("First Name", "Middle Name",
             "Last Name", "Back");
 
     /**
@@ -46,7 +46,7 @@ public class Name {
         int opt;
 
         do {
-            opt = CHANGE_NAME_OPTIONS.display();
+            CHANGE_NAME_OPTIONS.display();
             if(opt != 4) {
                 System.out.print("New " + CHANGE_NAME_OPTIONS[opt - 1].toLowerCase() + ": ");
                 String str = input.nextLine().trim();   // removes excess whitespace before and after the String
