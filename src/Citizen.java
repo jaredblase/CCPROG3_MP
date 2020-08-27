@@ -133,6 +133,13 @@ public class Citizen {
         return isPositive;
     }
 
+    /**
+     * Sets the personal details fields of the object (indicated by opt) with updated information.
+     * @param opt indicates which field to replace.
+     * @param info the new String to replace the current personal details.
+     * @throws Exception if the String received is empty or not comprised of digits when replacing
+     *                      the phone number information.
+     */
     public void setPersonalDetails(int opt, String info) throws Exception {
         info = info.trim();
 
@@ -154,6 +161,11 @@ public class Citizen {
         }
     }
 
+    /**
+     * Sets the password of the user.
+     * @param password the new password to replace the old one.
+     * @throws Exception if the new password is invalid.
+     */
     public void setPassword(String password) throws Exception {
         if (UserSystem.isValidPassword(password)) {
             this.password = password;
@@ -223,12 +235,13 @@ public class Citizen {
                 }
             }
 
-            if (contactPlaces.size() != 0) { // there are still possible contact times after removing
+            if (!contactPlaces.isEmpty()) { // there are still possible contact times after removing
                 System.out.println("You may have been in contact with a positive patient on: ");
                 for (Visit contactPlace : contactPlaces)
                     System.out.println(format.format(contactPlace.getCheckIn()) + " in " +
                             contactPlace.getEstCode());
-                System.out.println("You are advised to get tested and report via the app should the result be positive.\n");
+                System.out.println("You are advised to get tested and report via the " +
+                        "app should the result be positive.\n");
             }
         }
     }

@@ -1,5 +1,4 @@
-import javax.imageio.stream.IIOByteBuffer;
-import java.util.Scanner;
+
 
 /**
  * The Menu class is used for generating menus and retrieving an answer from the user.
@@ -46,33 +45,6 @@ public class Menu {
             System.out.println(ctr++ + " - " + i);
         }
         System.out.println();
-    }
-
-    /**
-     * Displays yes or no question and returns a validated answer.
-     * @param question the question to be displayed.
-     * @return Y for yes, N for no.
-     * @since 1.1
-     */
-    public static char YorN(String question) {
-        String opt;
-        Scanner input = new Scanner(System.in);
-
-        do {
-            System.out.print(question + "? (Y/N) ");
-            try {
-                opt = input.nextLine(); // get input
-                opt = opt.toUpperCase(); // capitalize
-                if (!opt.equals("Y") && !opt.equals("N")) { //invalid option input
-                    throw new Exception();
-                }
-            } catch (Exception e) {
-                System.out.println("Invalid option!\n");
-                opt = null;
-            }
-        } while (opt == null);
-
-        return opt.charAt(0);
     }
 
     /**

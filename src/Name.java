@@ -1,11 +1,9 @@
-
-
 /**
  * The Name class holds all the information of a name
  * and methods available for changing them.
  * @author Gabriel Pua
  * @author Jared Sy
- * @version 1.1
+ * @version 1.2
  */
 public class Name {
     /** The first name. */
@@ -34,11 +32,12 @@ public class Name {
     }
 
     /**
-     * Main entry point of the user when opting to change his name.<br>
-     * Will display the menu, get the input, and replace the chosen field.<br><br>
-     * Preconditions: The input is a valid name and not an empty or a blank String.
+     * Sets the first, middle, or last name (indicated by opt), and replace it
+     * with str.
+     * @param opt indicates which part of the name to change.
+     * @param str the String to replace the name.
+     * @throws Exception if an empty String is received to replace the first or last name.
      * @since 1.0
-     * @see Menu
      */
     public void setName(int opt, String str) throws Exception {
         str = str.trim();   // removes excess whitespace before and after the String
@@ -54,6 +53,11 @@ public class Name {
         }
     }
 
+    /**
+     * Returns the full name of a Name object in String format.
+     * @return the full name separated by commas.
+     * @since 1.2
+     */
     public String displayName() {
         return first + " " + (middle.isEmpty()? "" : (middle + " ")) + last;
     }

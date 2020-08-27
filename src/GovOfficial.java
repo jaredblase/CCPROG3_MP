@@ -47,7 +47,7 @@ public class GovOfficial extends Citizen {
     public int[] showUnassigned() {
         int[] caseNums = new int[Case.getCount()];
         int ctr = 0;
-        System.out.println("Unassigned Cases:");
+
         for (Case i : UserSystem.getCases()) {
             if (i.getTracer().equals("000")) { // no tracer assigned
                 System.out.println(i.getCaseNum()); // display case num
@@ -56,7 +56,6 @@ public class GovOfficial extends Citizen {
         }
 
         if (ctr == 0) { // no cases
-            System.out.println("No cases to display.");
             caseNums = null;
         }
 
@@ -147,7 +146,6 @@ public class GovOfficial extends Citizen {
     private int countCases(Predicate<Case> filter) {
         int ctr = 0;
 
-        System.out.println();
         for (Case i: UserSystem.getCases()) {
             if (filter.test(i)) {
                 ctr++;
@@ -194,10 +192,8 @@ public class GovOfficial extends Citizen {
                 UserSystem.setRoleOf(index, role);
             }
         } else if (!role.equals("citizen")) {  // if not terminating account to citizen
-            if(Menu.YorN("This user does not exist. Create account") == 'Y') {
-                Driver.register(username, 1);
-                UserSystem.setRoleOf(UserSystem.getNumUsers() - 1, role);
-            }
+            Driver.register(username, 1);
+            UserSystem.setRoleOf(UserSystem.getNumUsers() - 1, role);
         } else {
             throw new Exception("Account does not exist!");
         }

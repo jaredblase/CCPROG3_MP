@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Scanner;
 
 /**
  * This Tracer class extends the Citizen class and includes contact tracer
@@ -8,7 +7,7 @@ import java.util.Scanner;
  * and informing contacts of their possible exposure.
  * @author Gabriel Pua
  * @author Jared Sy
- * @version 0.1
+ * @version 1
  * @see Citizen
  */
 public class Tracer extends Citizen {
@@ -65,7 +64,6 @@ public class Tracer extends Citizen {
      * Displays the case numbers of the assigned cases to the contact tracer.
      */
     public void showCases() {
-        System.out.println("Cases Assigned:");
         for (Case i: assigned) {
             System.out.println(i.getCaseNum());
         }

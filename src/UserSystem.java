@@ -170,7 +170,6 @@ public class UserSystem {
         }
 
         roles.set(index, role);
-        System.out.println("Modification success!");
     }
 
     /**

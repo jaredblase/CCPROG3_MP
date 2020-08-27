@@ -112,6 +112,9 @@ public class Driver {
         System.out.println("----YOU MAY NOW LOGIN WITH YOUR NEW ACCOUNT----");
     }
 
+    /**
+     * Handles the login session of the user.
+     */
     private static void login() {
         Scanner input = new Scanner(System.in);
 
@@ -270,6 +273,10 @@ public class Driver {
         } while (opt != max);
     }
 
+    /**
+     * Handles the name change of the user.
+     * @param user the user logged in.
+     */
     private static void changeName(Citizen user) {
         Scanner input = new Scanner(System.in);
         Menu menu = Name.CHANGE_NAME_MENU;
@@ -297,6 +304,7 @@ public class Driver {
     private static void governmentActions(int opt, GovOfficial user) {
         switch (opt) {
             case 4 -> {
+                System.out.println("Unassigned Cases:");
                 int[] caseNums = user.showUnassigned();
 
                 if (caseNums != null) {
@@ -306,6 +314,8 @@ public class Driver {
                         int caseNum = getCaseNum(caseNums); // get case
                         assignCase(user, caseNum); // get tracer and assign case to tracer
                     }
+                } else {
+                    System.out.println("No cases to display.");
                 }
             }
             case 5 -> user.showUpdates(obtainDateRange());
@@ -395,6 +405,10 @@ public class Driver {
         return new Calendar[] {start, end};
     }
 
+    /**
+     * The facility that handles the showing of Analytics.
+     * @param user the government official logged in
+     */
     private static void showAnalytics(GovOfficial user) {
         Scanner input = new Scanner(System.in);
         Menu menu = GovOfficial.ANALYTICS_MENU;
@@ -418,7 +432,7 @@ public class Driver {
                         ctr = user.showAnalytics(input.nextLine());
                     }
                 }
-
+                System.out.println();
                 if (ctr == 0) {
                     System.out.println("No cases match the criteria specified");
                 } else {
@@ -443,6 +457,7 @@ public class Driver {
 
         try {
             user.modifyRole(role, username);
+            System.out.println("Modification success!");
         } catch (Exception e) {
             System.out.println(e.toString());
         }
@@ -457,7 +472,10 @@ public class Driver {
         Scanner input = new Scanner(System.in);
 
         switch (opt) {
-            case 4 -> user.showCases();
+            case 4 -> {
+                System.out.println("Cases Assigned:");
+                user.showCases();
+            }
             case 5 -> {
                 ArrayList<Case> assigned = user.getAssigned();
                 if (assigned.isEmpty()) { // no cases assigned
