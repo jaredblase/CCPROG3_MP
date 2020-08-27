@@ -8,9 +8,9 @@
  */
 public class Menu {
     /** The header of the menu. */
-    private final String header;
+    private final String HEADER;
     /** The options that may be selected in the menu. */
-    private final String[] options;
+    private final String[] OPTIONS;
 
     /**
      * Constructs a Menu object and assigns the header and the list of options.
@@ -18,8 +18,8 @@ public class Menu {
      * @param options the options that may be selected in the menu.
      */
     public Menu(String header, String...options) {
-        this.header = header + " Menu";
-        this.options = options;
+        this.HEADER = header + " Menu";
+        this.OPTIONS = options;
     }
 
     /**
@@ -27,7 +27,7 @@ public class Menu {
      * @return the number of options of the menu.
      */
     public int length() {
-        return options.length;
+        return OPTIONS.length;
     }
 
     /**
@@ -40,8 +40,8 @@ public class Menu {
 
         //display menu
         System.out.println();
-        System.out.println(header);
-        for (String i: options) {
+        System.out.println(HEADER);
+        for (String i: OPTIONS) {
             System.out.println(ctr++ + " - " + i);
         }
         System.out.println();
@@ -54,7 +54,7 @@ public class Menu {
      */
     public String getOption(int index) {
         try {
-            return options[index];
+            return OPTIONS[index];
         } catch (Exception e) {
             return e.toString();
         }
