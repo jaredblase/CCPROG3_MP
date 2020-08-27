@@ -208,10 +208,13 @@ public class GovOfficial extends Citizen {
                 UserSystem.setRoleOf(index, role);
             }
         } else if (!role.equals("citizen")) {  // if not terminating account to citizen
-            Driver.register(username, 1);
-            UserSystem.setRoleOf(UserSystem.getNumUsers() - 1, role);
+            throw new AccountCreationNeededException();
         } else {
             throw new Exception("Account does not exist!");
         }
     }
+}
+
+class AccountCreationNeededException extends Exception {
+
 }

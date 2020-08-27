@@ -463,6 +463,9 @@ public class Driver {
         try {
             user.modifyRole(role, username);
             System.out.println("Modification success!");
+        } catch (AccountCreationNeededException e) {
+            register(username, 1);
+            UserSystem.setRoleOf(UserSystem.getNumUsers() - 1, role);
         } catch (Exception e) {
             System.out.println(e.toString());
         }
