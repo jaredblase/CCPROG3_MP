@@ -228,12 +228,7 @@ public class Driver {
                     String str = input.nextLine();
 
                     try {
-                        switch (opt) {
-                            case 2 -> user.setHomeAddress(str);
-                            case 3 -> user.setOfficeAddress(str);
-                            case 4 -> user.setPhoneNumber(str);
-                            case 5 -> user.setEmail(str);
-                        }
+                        user.setPersonalDetails(opt, str);
                         isChanged = true;
                     } catch (Exception e) {
                         System.out.println(e.toString());

@@ -133,39 +133,24 @@ public class Citizen {
         return isPositive;
     }
 
-    public void setHomeAddress(String homeAddress) throws Exception {
-        if (!homeAddress.isBlank()) {
-            this.homeAddress = homeAddress;
-        } else {
-            throw new Exception("Address cannot be left blank!");
-        }
-    }
+    public void setPersonalDetails(int opt, String info) throws Exception {
+        info = info.trim();
 
-    public void setOfficeAddress(String officeAddress) throws Exception {
-        if (!officeAddress.isBlank()) {
-            this.officeAddress = officeAddress;
-        } else {
-            throw new Exception("Address cannot be left blank!");
-        }
-    }
-
-    public void setPhoneNumber(String phoneNumber) throws Exception {
-        if (!phoneNumber.isBlank()) {
-            if (phoneNumber.matches("\\d+")) {
-                this.phoneNumber = phoneNumber;
-            } else {
-                throw new Exception("Invalid phone number!");
+        if (!info.isBlank()) {
+            switch (opt) {
+                case 2 -> homeAddress = info;
+                case 3 -> officeAddress = info;
+                case 4 -> {
+                    if (info.matches("\\d+")) {
+                        phoneNumber = info;
+                    } else {
+                        throw new Exception("Phone number must only contain digits!");
+                    }
+                }
+                case 5 -> email = info;
             }
         } else {
-            throw new Exception("Phone number cannot be left blank!");
-        }
-    }
-
-    public void setEmail(String email) throws Exception {
-        if (!email.isBlank()) {
-            this.email = email;
-        } else {
-            throw new Exception("Email cannot be left blank!");
+            throw new Exception(UPDATE_OPTIONS.getOption(opt - 1) + " cannot be left blank!");
         }
     }
 
@@ -249,6 +234,4 @@ public class Citizen {
             }
         }
     }
-
-
 }
