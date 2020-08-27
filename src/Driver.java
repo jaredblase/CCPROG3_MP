@@ -10,7 +10,7 @@ public class Driver {
 
         do {
             mainMenu.display();
-            opt = getMenuAnswer(mainMenu.getLength());
+            opt = getMenuAnswer(mainMenu.length());
             switch (opt) {
                 case 1 -> register();
                 case 2 -> login();
@@ -98,7 +98,7 @@ public class Driver {
 
         Citizen user = UserSystem.login(username, password);
         if (user != null) {
-            int opt, max = user.getUserMenu().getLength();
+            int opt, max = user.getUserMenu().length();
             do {
                 user.prompt();
                 user.getUserMenu().display();
@@ -206,7 +206,7 @@ public class Driver {
     private static void updateInfo(Citizen user) {
         Scanner input = new Scanner(System.in);
         Menu menu = Citizen.UPDATE_OPTIONS;
-        int opt, max = menu.getLength();
+        int opt, max = menu.length();
 
         do {
             boolean isChanged = false;
@@ -214,7 +214,7 @@ public class Driver {
             opt = getMenuAnswer(max);
             if (opt != max) {
                 if (opt == 1) {
-                    //isChanged = name.changeName();
+                    changeName(user);
                 } else if (opt == max - 1) {
                     try {
                         System.out.print("New Password: ");
@@ -248,6 +248,25 @@ public class Driver {
         } while (opt != max);
     }
 
+    private static void changeName(Citizen user) {
+        Scanner input = new Scanner(System.in);
+        Menu menu = Name.CHANGE_NAME_MENU;
+        int max = menu.length(), opt;
+
+        do {
+            menu.display();
+            opt = getMenuAnswer(max);
+            System.out.print("New " + menu.getOption(opt).toLowerCase() + ": ");
+            try {
+                user.getName().setName(opt, input.nextLine());
+                System.out.println("New name:");
+                user.getName().displayName();
+            } catch (Exception e) {
+                System.out.println(e.toString());
+            }
+        } while (opt != max);
+    }
+
     private static void governmentActions(int opt, GovOfficial user) {
 
     }
@@ -259,7 +278,7 @@ public class Driver {
             case 4 -> user.showCases();
             case 5 -> {
                 ArrayList<Case> assigned = user.getAssigned();
-                if (assigned.size() == 0) { // no cases assigned
+                if (assigned.isEmpty()) { // no cases assigned
                     System.out.println("No assigned cases");
                 } else { // at least 1 assigned case
                     int caseNum = -1;
