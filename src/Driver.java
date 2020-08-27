@@ -218,7 +218,7 @@ public class Driver {
                 user.checkIn(estCode, date);
             }
             case 2 -> {     // Report Positive
-                if (user.getIsPositive()) {
+                if (!user.getIsPositive()) {
                     user.reportPositive(getDate());
                     System.out.println("Case reported. Thank you.\n");
                 } else {
