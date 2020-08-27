@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Driver {
     public static void main(String[] args) {
-        UserSystem.loadUsers();
+        UserSystem.loadSystem();
         Menu mainMenu = new Menu("Main", "Register", "Login", "Exit");
         int opt;
 

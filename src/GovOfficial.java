@@ -89,7 +89,6 @@ public class GovOfficial extends Citizen {
         }
     }
 
-
     /**
      * Filters the cases given the criteria (parameter) and returns the count.
      * @param dates the date range.

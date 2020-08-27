@@ -201,7 +201,7 @@ public class UserSystem {
     /**
      * Initializes all the ArrayLists and creates the admin account.
      */
-    public static void loadUsers() {
+    public static void loadSystem() {
         usernames = new ArrayList<>();
         roles = new ArrayList<>();
         users = new ArrayList<>();
