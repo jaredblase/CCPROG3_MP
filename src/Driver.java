@@ -100,13 +100,13 @@ public class Driver {
                 opt = getMenuAnswer(input, max);
 
                 if (opt <= 3) {         // citizen account options
-                    CitizenActions(opt, user);
+                    citizenActions(opt, user);
                 } else if (opt == max) {    // logout
                     break;
                 } else if (user instanceof GovOfficial) {
-
+                    governmentActions(opt, (GovOfficial) user);
                 } else {
-
+                    tracerActions(opt, (Tracer) user);
                 }
             } while (true);
                 System.out.println("Logged out.");
@@ -169,7 +169,7 @@ public class Driver {
         return date;
     }
 
-    private static void CitizenActions(int opt, Citizen user) {
+    private static void citizenActions(int opt, Citizen user) {
         Scanner input = new Scanner(System.in);
 
         switch (opt) {
@@ -191,5 +191,13 @@ public class Driver {
 
             }
         }
+    }
+
+    private static void governmentActions(int opt, GovOfficial user) {
+
+    }
+
+    private static void tracerActions(int opt, Tracer user) {
+
     }
 }
