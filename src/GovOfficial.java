@@ -94,7 +94,8 @@ public class GovOfficial extends Citizen {
      * within a date range, within a city (case insensitive), or both.
      */
     public int showAnalytics(Calendar[] dates, String city) throws Exception {
-        if (!isValidCity(city)) {
+        final String CITY = city.toUpperCase();
+        if (!isValidCity(CITY)) {
             throw new Exception("Invalid City!");
         }
 
@@ -104,7 +105,7 @@ public class GovOfficial extends Citizen {
             if (temp != null) {
                 return case1.getReportDate().compareTo(dates[0]) >= 0
                         && case1.getReportDate().before(dates[1])
-                        && temp.getHomeAddress().toUpperCase().contains(city);
+                        && temp.getHomeAddress().toUpperCase().contains(CITY);
             } else {
                 return false;
             }
@@ -121,7 +122,8 @@ public class GovOfficial extends Citizen {
     }
 
     public int showAnalytics(String city) throws Exception {
-        if (!isValidCity(city)) {
+        final String CITY = city.toUpperCase();
+        if (!isValidCity(CITY)) {
             throw new Exception("Invalid city!");
         }
 
@@ -129,7 +131,7 @@ public class GovOfficial extends Citizen {
             Citizen temp = UserSystem.getUser(case1.getUsername());
 
             if (temp != null) {
-                return temp.getHomeAddress().toUpperCase().contains(city);
+                return temp.getHomeAddress().toUpperCase().contains(CITY);
             } else {
                 return false;
             }

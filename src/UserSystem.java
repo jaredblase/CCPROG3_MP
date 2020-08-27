@@ -212,7 +212,7 @@ public class UserSystem {
         usernames.add("ADMIN2020");
         roles.add("official");
         users.add(new GovOfficial(new Citizen(new Name("Admin", "A", "Gov"), "Malacañang",
-                "City Hall", "09328287114", "admin@gov.ph", "Admin2020",
+                "City Hall", "09328287114", "admin@gov.ph", "ADMIN2020",
                 "@Dm1n0202")));
         records.add(new ArrayList<>());
     }

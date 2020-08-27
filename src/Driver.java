@@ -282,18 +282,20 @@ public class Driver {
         Menu menu = Name.CHANGE_NAME_MENU;
         int max = menu.length(), opt;
 
-        do {
-            menu.display();
-            opt = getMenuAnswer(max);
-            System.out.print("New " + menu.getOption(opt).toLowerCase() + ": ");
+        menu.display();
+        opt = getMenuAnswer(max);
+        while (opt != max) {
+            System.out.print("New " + menu.getOption(opt - 1).toLowerCase() + ": ");
             try {
                 user.getName().setName(opt, input.nextLine());
-                System.out.println("New name:");
+                System.out.println("New " + Name.CHANGE_NAME_MENU.getOption(opt - 1) + ": ");
                 System.out.println(user.getName().getFullName());
             } catch (Exception e) {
                 System.out.println(e.toString());
             }
-        } while (opt != max);
+            menu.display();
+            opt = getMenuAnswer(max);
+        }
     }
 
     /**
@@ -414,8 +416,9 @@ public class Driver {
         Menu menu = GovOfficial.ANALYTICS_MENU;
         int opt, max = menu.length(), ctr = 0;
 
-        do {
-            opt = getMenuAnswer(max);
+        menu.display();
+        opt = getMenuAnswer(max);
+        while (opt != max) {
             try {
                 switch (opt) {
                     case 1 -> {
@@ -436,12 +439,14 @@ public class Driver {
                 if (ctr == 0) {
                     System.out.println("No cases match the criteria specified");
                 } else {
-                    System.out.println("Number of cases that match the criteria specified:" + ctr);
+                    System.out.println("Number of cases that match the criteria specified: " + ctr);
                 }
             } catch (Exception e) {
                 System.out.println(e.toString());
             }
-        } while (opt != max);
+            menu.display();
+            opt = getMenuAnswer(max);
+        }
     }
 
     /**

@@ -13,8 +13,8 @@ public class Name {
     /** The last name. */
     private String last;
     /** Menu options for changing names. */
-    public static final Menu CHANGE_NAME_MENU = new Menu ("First Name", "Middle Name",
-            "Last Name", "Back");
+    public static final Menu CHANGE_NAME_MENU = new Menu ("Change Name","First Name",
+            "Middle Name", "Last Name", "Back");
 
     /**
      * Initializes a Name object and sets the fields with the given parameters:
