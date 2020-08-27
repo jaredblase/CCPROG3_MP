@@ -38,7 +38,7 @@ public class Citizen {
     private static final Menu UPDATE_OPTIONS = new Menu("Update", "Name", "Home Address",
             "Office Address", "Phone Number", "E-Mail", "Password", "Back to User Menu");
     /** The Menu class for the menu options of the user. */
-    protected Menu userMenu = new Menu("User", "Check in", "Report positive",
+    protected static Menu userMenu = new Menu("User", "Check in", "Report positive",
             "Update profile information", "Logout");
 
     /**
@@ -110,17 +110,27 @@ public class Citizen {
         return visitRec;
     }
 
+    /**
+     * Returns the Menu object for the Citizen class.
+     * @return the Menu object for the Citizen class.
+     */
     public Menu getUserMenu() {
         return userMenu;
     }
 
+    /**
+     * Returns the status whether the user is reported positive or not.
+     * @return the status whether the user is reported positive or not.
+     */
     public boolean getIsPositive() {
         return isPositive;
     }
 
     /**
-     * Retrieves the visitation information from the user such as the establishment
-     * code and date and adds this to his visit records.
+     * Adds a new visit records to the list of visit records based on the given
+     * visitation information such as the establishment code and date.
+     * @param estCode the establishment code of the visit record.
+     * @param date the date when the visit was made.
      */
     public void checkIn(String estCode, Calendar date) {
         // get machine time
@@ -145,58 +155,46 @@ public class Citizen {
 
     }
 
-    /**
-     * The facility that handles the updating of personal information.
-     */
-    private void updateInfo() {
-        int opt, max = UPDATE_OPTIONS.getLength();
-
-        do {
-            boolean isChanged = false;
-            opt = Menu.display("Update Information", UPDATE_OPTIONS);
-            if (opt != max) {
-                if (opt == 1) {
-                    isChanged = name.changeName();
-                } else if (opt == max - 1) {
-                    this.password = UserSystem.checkPassword();
-                    isChanged = true;
-                } else {
-                    Scanner input = new Scanner(System.in);
-                    System.out.print("New " + UPDATE_OPTIONS[opt - 1] + ": ");
-                    String str = input.nextLine();
-
-                    if (!str.isBlank()) {           // will not allow blank inputs
-                        switch (opt) {
-                            case 2 -> this.homeAddress = str;
-                            case 3 -> this.officeAddress = str;
-                            case 4 -> this.phoneNumber = str;
-                            case 5 -> this.email = str;
-                        }
-                        isChanged = true;
-                    } else {
-                        System.out.println("Invalid input!");
-                    }
-                }
-
-                if (isChanged) {
-                    UserSystem.updateUser(this);
-                    System.out.println(UPDATE_OPTIONS[opt - 1] + " has been updated!\n");
-                }
-            }
-        } while (opt != max);
-    }
-
-    /**
-     * Calls the appropriate function based on the user's input.
-     * @param opt integer representing the chosen menu option.
-     */
-    protected void chooseMenu(int opt) {
-        switch (opt) {
-            case 1 -> checkIn();
-            case 2 -> reportPositive();
-            case 3 -> updateInfo();
-        }
-    }
+//    /**
+//     * The facility that handles the updating of personal information.
+//     */
+//    private void updateInfo() {
+//        int opt, max = UPDATE_OPTIONS.getLength();
+//
+//        do {
+//            boolean isChanged = false;
+//            userMenu.display();
+//            if (opt != max) {
+//                if (opt == 1) {
+//                    isChanged = name.changeName();
+//                } else if (opt == max - 1) {
+//                    this.password = UserSystem.checkPassword();
+//                    isChanged = true;
+//                } else {
+//                    Scanner input = new Scanner(System.in);
+//                    System.out.print("New " + UPDATE_OPTIONS[opt - 1] + ": ");
+//                    String str = input.nextLine();
+//
+//                    if (!str.isBlank()) {           // will not allow blank inputs
+//                        switch (opt) {
+//                            case 2 -> this.homeAddress = str;
+//                            case 3 -> this.officeAddress = str;
+//                            case 4 -> this.phoneNumber = str;
+//                            case 5 -> this.email = str;
+//                        }
+//                        isChanged = true;
+//                    } else {
+//                        System.out.println("Invalid input!");
+//                    }
+//                }
+//
+//                if (isChanged) {
+//                    UserSystem.updateUser(this);
+//                    System.out.println(UPDATE_OPTIONS[opt - 1] + " has been updated!\n");
+//                }
+//            }
+//        } while (opt != max);
+//    }
 
     /**
      * Adds where and when a user may be infected.
@@ -220,7 +218,7 @@ public class Citizen {
      * Displays a message if the user has possibly came in contact
      * with a positive case.
      */
-    protected void prompt() {
+    public void prompt() {
         if (!isPositive) {
             SimpleDateFormat format = new SimpleDateFormat("MM,dd,yyyy");
             Calendar temp = Calendar.getInstance();

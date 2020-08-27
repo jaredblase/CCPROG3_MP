@@ -125,8 +125,11 @@ public class UserSystem {
     }
 
     /**
-     * Handles the logging in of an existing user. It asks the user to input his username
-     * and password. Once valid, loads everything from the user's information in the system.
+     * Handles the logging in of an existing user. Based on the username and password,
+     * determines if they are valid. Once valid, loads everything from the user's
+     * information in the system.
+     * @param username the username of the user logging in.
+     * @param password the password of the user logging in.
      * @return a constructed Citizen object with the user's details.
      */
     public static Citizen login(String username, String password) {

@@ -13,8 +13,9 @@ import java.util.Scanner;
  */
 public class Tracer extends Citizen {
     /** The String array containing the menu options of the user. */
-    protected static String[] menuOptions = {"Check in", "Report positive", "Update profile information",
-            "Show Cases", "Trace Specific Case", "Inform Citizens Possibly Exposed", "Logout"};
+    protected static Menu userMenu = new Menu("User","Check in", "Report positive",
+            "Update profile information", "Show Cases", "Trace Specific Case",
+            "Inform Citizens Possibly Exposed", "Logout");
     /** The list of cases assigned to the contact tracer. */
     private ArrayList<Case> assigned;
     /** The list of contacts of all cases. */
@@ -50,42 +51,18 @@ public class Tracer extends Citizen {
     }
 
     /**
-     * Main entry point of the user after logging in.
+     * Returns the Menu object for the Citizen class.
+     * @return the Menu object for the Citizen class.
      */
     @Override
-    public void showMenu() {
-        int opt;
-
-        do {
-            super.prompt();
-            opt = Menu.display("User", menuOptions);
-            chooseMenu(opt);
-        } while (opt != 7);
-
-        UserSystem.updateUser(this);
-    }
-
-    /**
-     * Calls the appropriate function based on the user's input.
-     * @param opt integer representing the chosen menu option.
-     */
-    @Override
-    protected void chooseMenu(int opt) {
-        if (opt < 4) {
-            super.chooseMenu(opt);
-        } else {
-            switch (opt) {
-                case 4 -> showCases();
-                case 5 -> trace();
-                case 6 -> broadcast();
-            }
-        }
+    public Menu getUserMenu() {
+        return userMenu;
     }
 
     /**
      * Displays the case numbers of the assigned cases to the contact tracer.
      */
-    private void showCases() {
+    public void showCases() {
         System.out.println("Cases Assigned:");
         for (Case i: assigned) {
             System.out.println(i.getCaseNum());
@@ -93,45 +70,18 @@ public class Tracer extends Citizen {
     }
 
     /**
-     * Gets a case number from the user and traces and displays the contacts
-     * of the corresponding case.
+     * Returns the list of cases assigned to the contact tracer.
+     * @return the list of cases assigned to the contact tracer.
      */
-    private void trace() {
-        if (assigned.size() == 0) { // no cases assigned
-            System.out.println("No assigned cases");
-        } else { // at least 1 assigned case
-            Scanner input = new Scanner(System.in);
-            int caseNum = -1;
-            boolean status = false;
-
-            // get case number
-            try {
-                System.out.print("Enter case number to be traced: ");
-                caseNum = Integer.parseInt(input.nextLine());
-
-                for (Case i: assigned) {
-                    if (i.getCaseNum() == caseNum) { // case number is assigned
-                        status = true;
-                        break;
-                    }
-                }
-
-                if (!status) // case number is not among assigned cases
-                    throw new Exception();
-            } catch (Exception e) {
-                System.out.println("Invalid input. Use the show cases option to view your assigned cases.\n");
-            }
-
-            if (status) // valid case number input
-                trace(caseNum);
-        }
+    public ArrayList<Case> getAssigned() {
+        return assigned;
     }
 
     /**
      * Traces the contacts of a case given the case number and displays them.
      * @param caseNum the case number of a case.
      */
-    private void trace(int caseNum) {
+    public void trace(int caseNum) {
         Case positive = null;
         for (Case i: assigned) {
             if (i.getCaseNum() == caseNum) { // case number is assigned
@@ -268,7 +218,7 @@ public class Tracer extends Citizen {
      * Informs the contacts that they may possibly be exposed. Contacts
      * are also informed when and where they may possibly be exposed.
      */
-    private void broadcast() {
+    public void broadcast() {
         for (int i = 0; i < contacts.size(); i++) {
             if (contacts.get(i) == null)
                 continue;

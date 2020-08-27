@@ -22,7 +22,6 @@ public class Menu {
     /**
      * Displays the header of the menu before showing all the options
      * in a numbered order.
-     * @return the option number chosen.
      * @since 1.0
      */
     public void display() {
