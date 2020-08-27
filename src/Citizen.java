@@ -1,7 +1,6 @@
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Scanner;
-import java.text.SimpleDateFormat;
 
 /**
  * This Citizen class holds the information of a citizen and methods
@@ -35,7 +34,7 @@ public class Citizen {
     /** Records that indicate when and where the user may be infected. */
     private ArrayList<Visit> contactPlaces;
     /** The Menu class for the update details options of the user. */
-    private static final Menu UPDATE_OPTIONS = new Menu("Update", "Name", "Home Address",
+    public static final Menu UPDATE_OPTIONS = new Menu("Update", "Name", "Home Address",
             "Office Address", "Phone Number", "E-Mail", "Password", "Back to User Menu");
     /** The Menu class for the menu options of the user. */
     protected Menu userMenu = new Menu("User", "Check in", "Report positive",
@@ -118,6 +117,51 @@ public class Citizen {
         return isPositive;
     }
 
+    public void setHomeAddress(String homeAddress) throws Exception {
+        if (!homeAddress.isBlank()) {
+            this.homeAddress = homeAddress;
+        } else {
+            throw new Exception("Address cannot be left blank!");
+        }
+    }
+
+    public void setOfficeAddress(String officeAddress) throws Exception {
+        if (!officeAddress.isBlank()) {
+            this.officeAddress = officeAddress;
+        } else {
+            throw new Exception("Address cannot be left blank!");
+        }
+    }
+
+    public void setPhoneNumber(String phoneNumber) throws Exception {
+        if (!phoneNumber.isBlank()) {
+            if (phoneNumber.matches("\\d+")) {
+                this.phoneNumber = phoneNumber;
+            } else {
+                throw new Exception("Invalid phone number!");
+            }
+        } else {
+            throw new Exception("Phone number cannot be left blank!");
+        }
+    }
+
+    public void setEmail(String email) throws Exception {
+        if (!email.isBlank()) {
+            this.email = email;
+        } else {
+            throw new Exception("Email cannot be left blank!");
+        }
+    }
+
+    public void setPassword(String password) throws Exception {
+        if (UserSystem.isValidPassword(password)) {
+            this.password = password;
+        } else {
+            throw new Exception("Password must contain at least 6 characters including 1 digit or special " +
+                    "character that is not a space!\n");
+        }
+    }
+
     /**
      * Retrieves the visitation information from the user such as the establishment
      * code and date and adds this to his visit records.
@@ -143,59 +187,6 @@ public class Citizen {
         UserSystem.addCase(this.USERNAME, date);
         System.out.println("Case reported. Thank you.\n");
 
-    }
-
-    /**
-     * The facility that handles the updating of personal information.
-     */
-    private void updateInfo() {
-        int opt, max = UPDATE_OPTIONS.getLength();
-
-        do {
-            boolean isChanged = false;
-            opt = Menu.display("Update Information", UPDATE_OPTIONS);
-            if (opt != max) {
-                if (opt == 1) {
-                    isChanged = name.changeName();
-                } else if (opt == max - 1) {
-                    this.password = UserSystem.checkPassword();
-                    isChanged = true;
-                } else {
-                    Scanner input = new Scanner(System.in);
-                    System.out.print("New " + UPDATE_OPTIONS[opt - 1] + ": ");
-                    String str = input.nextLine();
-
-                    if (!str.isBlank()) {           // will not allow blank inputs
-                        switch (opt) {
-                            case 2 -> this.homeAddress = str;
-                            case 3 -> this.officeAddress = str;
-                            case 4 -> this.phoneNumber = str;
-                            case 5 -> this.email = str;
-                        }
-                        isChanged = true;
-                    } else {
-                        System.out.println("Invalid input!");
-                    }
-                }
-
-                if (isChanged) {
-                    UserSystem.updateUser(this);
-                    System.out.println(UPDATE_OPTIONS[opt - 1] + " has been updated!\n");
-                }
-            }
-        } while (opt != max);
-    }
-
-    /**
-     * Calls the appropriate function based on the user's input.
-     * @param opt integer representing the chosen menu option.
-     */
-    protected void chooseMenu(int opt) {
-        switch (opt) {
-            case 1 -> checkIn();
-            case 2 -> reportPositive();
-            case 3 -> updateInfo();
-        }
     }
 
     /**
