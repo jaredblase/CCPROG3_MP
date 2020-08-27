@@ -24,7 +24,9 @@ public class Tracer extends Citizen {
     private ArrayList<ArrayList<Visit>> contactPlaces;
 
     /**
-     * Receives a Citizen class and makes an exact copy of its attributes.
+     * Receives a Citizen class and makes an exact copy of its attributes. The list
+     * of all cases in the system is also checked. If a case is assigned to the
+     * contact tracer, the case is added to the list of assigned cases.
      * @param other the object used to construct the new object.
      */
     public Tracer(Tracer other) {

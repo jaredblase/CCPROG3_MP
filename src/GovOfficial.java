@@ -18,7 +18,7 @@ public class GovOfficial extends Citizen {
             "Terminate Account", "Logout");
 
     /** The String array containing the analytics menu options of the user. */
-    private static final Menu ANALYTICS_MENU = new Menu("Analytics",
+    public static final Menu ANALYTICS_MENU = new Menu("Analytics",
             "Number of positive cases in a city within a duration",
             "Number of positive cases within a duration",
             "Number of positive cases in a city", "Back");
@@ -41,33 +41,15 @@ public class GovOfficial extends Citizen {
     }
 
     /**
-     * Calls the appropriate function based on the user's input.
-     * @param opt integer representing the chosen menu option.
+     * Displays all the case number of unassigned cases and returns the array
+     * of those case numbers.
+     * @return the array of case numbers of unassigned cases.
      */
-    @Override
-    protected void chooseMenu(int opt) {
-        if (opt < 4) {
-            super.chooseMenu(opt);
-        } else {
-            switch (opt) {
-                case 4 -> showUnassigned();
-                case 5 -> showUpdates();
-                case 6 -> showAnalytics();
-                case 7 -> modifyRole("official");
-                case 8 -> modifyRole("tracer");
-                case 9 -> modifyRole("citizen");
-            }
-        }
-    }
-
-    /**
-     * Displays all the unassigned cases and displays their case numbers.
-     */
-    private void showUnassigned() {
+    public int[] showUnassigned() {
         int[] caseNums = new int[Case.getCount()];
         int ctr = 0;
         System.out.println("Unassigned Cases:");
-        for (Case i: UserSystem.getCases()) {
+        for (Case i : UserSystem.getCases()) {
             if (i.getTracer().equals("000")) { // no tracer assigned
                 System.out.println(i.getCaseNum()); // display case num
                 caseNums[ctr++] = i.getCaseNum(); // add case num to array of caseNums
@@ -76,67 +58,32 @@ public class GovOfficial extends Citizen {
 
         if (ctr == 0) { // no cases
             System.out.println("No cases to display.");
-        } else {
-            if (UserSystem.getNumTracers() == 0) // no tracers
-                System.out.println("Create contact tracer accounts to assign cases.\n");
-            else {
-                Scanner input = new Scanner(System.in);
-                boolean status = false;
-                int posCase = 0;
+            caseNums = null;
+        }
 
-                // get case number
-                do {
-                    try {
-                        System.out.print("Assign case number: ");
-                        posCase = Integer.parseInt(input.nextLine());
+        return caseNums;
+    }
 
-                        for (int caseNum: caseNums)
-                            if (caseNum == posCase) {
-                                status = true;
-                                break;
-                            }
-
-                        if (!status)
-                            throw new Exception();
-                    } catch (Exception e) {
-                        System.out.println("Invalid input!\n");
-                    }
-                } while (!status);
-
-                status = false;
-
-                // get tracer username
-                do {
-                    System.out.print("Enter username of tracer: ");
-                    String tracer = input.nextLine();
-
-                    int index = UserSystem.getIndexOf(tracer);
-                    if (index == -1) { // user not found
-                        System.out.println("No user with username \"" + tracer + "\" found.\n");
-                    } else if (UserSystem.getRoleOf(index).equals("tracer")) {
-                        status = true;
-
-                        // assign tracer
-                        for (Case i: UserSystem.getCases()) {
-                            if (i.getCaseNum() == posCase) {
-                                i.setTracer(tracer);
-                                break;
-                            }
-                        }
-                    } else // user is found but is not a tracer
-                        System.out.println("User " + tracer + " is not a contact tracer.\n");
-                } while (!status);
+    /**
+     * Assigns a case to a contact tracer based on the given case number and the given
+     * username of the contact tracer.
+     * @param caseNum the case number of the case to be assigned.
+     * @param tracer the username of the contact tracer the case is to be assigned to.
+     */
+    public void assignCase(int caseNum, String tracer) {
+        for (Case i: UserSystem.getCases()) {
+            if (i.getCaseNum() == caseNum) {
+                i.setTracer(tracer);
+                break;
             }
         }
     }
 
     /**
-     * Displays a list of positive cases from a specific input date range and
-     * their status.
+     * Displays a list of positive cases and their statuses from a given date range.
+     * @param dates the date range.
      */
-    private void showUpdates() {
-        Calendar[] dates = obtainDateRange();
-
+    public void showUpdates(Calendar[] dates) {
         for (Case i: UserSystem.getCases()) {
             if (i.getReportDate().compareTo(dates[0]) >= 0 && i.getReportDate().before(dates[1])) {
                 System.out.println(i.toString());
@@ -144,60 +91,60 @@ public class GovOfficial extends Citizen {
         }
     }
 
-    /**
-     * Asks the user what filter will be used when displaying the cases, can be:
-     * within a date range, within a city (case insensitive), or both.
-     */
-    private void showAnalytics() {
-        int opt;
-        Predicate<Case> filter = null;
-
-        do {
-            ANALYTICS_MENU.display();
-
-            switch (opt) {
-                case 1 -> {
-                    Calendar[] dates = obtainDateRange();
-                    String city = obtainValidCity();
-
-                    filter = (case1) -> {
-                        Citizen temp = UserSystem.getUser(case1.getUsername());
-
-                        if (temp != null) {
-                            return case1.getReportDate().compareTo(dates[0]) >= 0
-                                    && case1.getReportDate().before(dates[1])
-                                    && temp.getHomeAddress().toUpperCase().contains(city);
-                        } else {
-                            return false;
-                        }
-                    };
-                }
-                case 2 -> {
-                    Calendar[] dates = obtainDateRange();
-
-                    filter = (case1) -> case1.getReportDate().compareTo(dates[0]) >= 0 &&
-                            case1.getReportDate().before(dates[1]);
-                }
-                case 3 -> {
-                    String city = obtainValidCity();
-
-                    filter = (case1) -> {
-                        Citizen temp = UserSystem.getUser(case1.getUsername());
-
-                        if (temp != null) {
-                            return temp.getHomeAddress().toUpperCase().contains(city);
-                        } else {
-                            return false;
-                        }
-                    };
-                }
-            }
-
-            if (opt != 4) {
-                countCases(filter);
-            }
-        } while (opt != ANALYTICS_MENU.length);
-    }
+//    /**
+//     * Asks the user what filter will be used when displaying the cases, can be:
+//     * within a date range, within a city (case insensitive), or both.
+//     */
+//    private void showAnalytics() {
+//        int opt;
+//        Predicate<Case> filter = null;
+//
+//        do {
+//            ANALYTICS_MENU.display();
+//
+//            switch (opt) {
+//                case 1 -> {
+//                    Calendar[] dates = obtainDateRange();
+//                    String city = obtainValidCity();
+//
+//                    filter = (case1) -> {
+//                        Citizen temp = UserSystem.getUser(case1.getUsername());
+//
+//                        if (temp != null) {
+//                            return case1.getReportDate().compareTo(dates[0]) >= 0
+//                                    && case1.getReportDate().before(dates[1])
+//                                    && temp.getHomeAddress().toUpperCase().contains(city);
+//                        } else {
+//                            return false;
+//                        }
+//                    };
+//                }
+//                case 2 -> {
+//                    Calendar[] dates = obtainDateRange();
+//
+//                    filter = (case1) -> case1.getReportDate().compareTo(dates[0]) >= 0 &&
+//                            case1.getReportDate().before(dates[1]);
+//                }
+//                case 3 -> {
+//                    String city = obtainValidCity();
+//
+//                    filter = (case1) -> {
+//                        Citizen temp = UserSystem.getUser(case1.getUsername());
+//
+//                        if (temp != null) {
+//                            return temp.getHomeAddress().toUpperCase().contains(city);
+//                        } else {
+//                            return false;
+//                        }
+//                    };
+//                }
+//            }
+//
+//            if (opt != 4) {
+//                countCases(filter);
+//            }
+//        } while (opt != ANALYTICS_MENU.length);
+//    }
 
     /**
      * Iterates through all the cases and counts the cases that pass
@@ -221,29 +168,6 @@ public class GovOfficial extends Citizen {
             System.out.println("No cases match the criteria specified.");
         }
         System.out.println();
-    }
-
-    /**
-     * Obtains the start and end date from the user. The first element in the
-     * returned Calendar array is the starting date while the second is the end date.
-     * @return the start and end date by means of a Calendar array.
-     */
-    private Calendar[] obtainDateRange() {
-        Calendar start, end;
-
-        System.out.println("Starting date:");
-        start = getDate();
-        System.out.println("\nEnd date:");
-        end = getDate();
-        while (start.after(end)) { // check if the input date is before the start date
-            System.out.println("Invalid end date!");
-            System.out.println("\nEnd date:");
-            end = getDate();
-        }
-        // sets end date to 12 am the next day
-        end.add(Calendar.DATE, 1);
-
-        return new Calendar[] {start, end};
     }
 
     /**
@@ -293,7 +217,7 @@ public class GovOfficial extends Citizen {
             }
         } else if (!role.equals("citizen")) {  // if not terminating account to citizen
             if(Menu.YorN("This user does not exist. Create account") == 'Y') {
-                UserSystem.register(username);
+//                UserSystem.register(username);
                 UserSystem.setRoleOf(UserSystem.getNumUsers() - 1, role);
             }
         } else {

@@ -1,3 +1,4 @@
+import javax.imageio.stream.IIOByteBuffer;
 import java.util.Scanner;
 
 /**
@@ -7,14 +8,25 @@ import java.util.Scanner;
  * @version 1.1
  */
 public class Menu {
+    /** The header of the menu. */
     private final String header;
+    /** The options that may be selected in the menu. */
     private final String[] options;
 
+    /**
+     * Constructs a Menu object and assigns the header and the list of options.
+     * @param header the header of the menu.
+     * @param options the options that may be selected in the menu.
+     */
     public Menu(String header, String...options) {
         this.header = header + " Menu";
         this.options = options;
     }
 
+    /**
+     * Returns the number of options of the menu.
+     * @return the number of options of the menu.
+     */
     public int length() {
         return options.length;
     }
@@ -63,6 +75,11 @@ public class Menu {
         return opt.charAt(0);
     }
 
+    /**
+     * Returns the option that is located in the given index of the list of options.
+     * @param index the index of the option in the list of options.
+     * @return the option that is located in the given index of the list of options.
+     */
     public String getOption(int index) {
         try {
             return options[index];

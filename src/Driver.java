@@ -114,7 +114,8 @@ public class Driver {
                     tracerActions(opt, (Tracer) user);
                 }
             } while (true);
-                System.out.println("Logged out.");
+            UserSystem.updateUser(user);
+            System.out.println("Logged out.");
         } else {
             System.out.println("Invalid username/password!");
         }
@@ -177,6 +178,7 @@ public class Driver {
     /**
      * Calls the appropriate function based on the user's input.
      * @param opt integer representing the chosen menu option.
+     * @param user the user that is currently logged in.
      */
     private static void citizenActions(int opt, Citizen user) {
         Scanner input = new Scanner(System.in);
@@ -263,7 +265,113 @@ public class Driver {
     }
 
     private static void governmentActions(int opt, GovOfficial user) {
+        switch (opt) {
+            case 4 -> {
+                int[] caseNums = user.showUnassigned();
 
+                if (caseNums != null) {
+                    if (UserSystem.getNumTracers() == 0) // no tracers
+                        System.out.println("Create contact tracer accounts to assign cases.\n");
+                    else {
+                        int caseNum = getCaseNum(caseNums); // get case
+                        assignCase(user, caseNum); // get tracer and assign case to tracer
+                    }
+                }
+            }
+            case 5 -> user.showUpdates(obtainDateRange());
+//            case 6 -> showAnalytics(user);
+//            case 7 -> modifyRole("official");
+//            case 8 -> modifyRole("tracer");
+//            case 9 -> modifyRole("citizen");
+        }
+    }
+
+    /**
+     * Gets a case number input from the user that corresponds to the case to be assigned.
+     * If the case number input is found in the given array of case numbers, it is
+     * valid. Once valid, the case number is returned.
+     * @param caseNums the array of case numbers of unassigned cases.
+     * @return the valid case number.
+     */
+    private static int getCaseNum(int[] caseNums) {
+        Scanner input = new Scanner(System.in);
+        int caseNum = 0;
+
+        // get case number
+        do {
+            try {
+                System.out.print("Assign case number: ");
+                caseNum = Integer.parseInt(input.nextLine());
+
+                for (int i: caseNums)
+                    if (caseNum == i) {
+                        return caseNum;
+                    }
+
+                throw new Exception();
+            } catch (Exception e) {
+                System.out.println("Invalid input!\n");
+            }
+        } while (true);
+    }
+
+    /**
+     * Gets a username input from the user that corresponds to the contact tracer that
+     * the case referenced by the given case number is being assigned to.
+     * @param user the government official assigning the case.
+     * @param caseNum the case number corresponding to the case to be assigned.
+     */
+    private static void assignCase(GovOfficial user, int caseNum) {
+        Scanner input = new Scanner(System.in);
+        boolean status = false;
+
+        // get tracer username
+        do {
+            System.out.print("Enter username of tracer: ");
+            String tracer = input.nextLine();
+
+            int index = UserSystem.getIndexOf(tracer);
+            if (index == -1) { // user not found
+                System.out.println("No user with username \"" + tracer + "\" found.\n");
+            } else if (UserSystem.getRoleOf(index).equals("tracer")) {
+                status = true;
+
+                // assign case to tracer
+                user.assignCase(caseNum, tracer);
+            } else // user is found but is not a tracer
+                System.out.println("User " + tracer + " is not a contact tracer.\n");
+        } while (!status);
+    }
+
+    /**
+     * Obtains the start and end date from the user. The first element in the
+     * returned Calendar array is the starting date while the second is the end date.
+     * @return the start and end date by means of a Calendar array.
+     */
+    private static Calendar[] obtainDateRange() {
+        Calendar start, end;
+
+        System.out.println("Starting date:");
+        start = getDate();
+        System.out.println("\nEnd date:");
+        end = getDate();
+        while (start.after(end)) { // check if the input date is before the start date
+            System.out.println("Invalid end date!");
+            System.out.println("\nEnd date:");
+            end = getDate();
+        }
+        // sets end date to 12 am the next day
+        end.add(Calendar.DATE, 1);
+
+        return new Calendar[] {start, end};
+    }
+
+    private static void showAnalytics(GovOfficial user) {
+        Scanner input = new Scanner(System.in);
+        Menu menu = GovOfficial.ANALYTICS_MENU;
+        int opt, max = menu.length();
+
+        //unfinished
     }
 
     private static void tracerActions(int opt, Tracer user) {
