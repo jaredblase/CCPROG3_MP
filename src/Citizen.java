@@ -196,6 +196,7 @@ public class Citizen {
      * Changes the isPositive field to true and automatically adds
      * this record to the list of cases in the system only if the user
      * has not reported positive before.
+     * @param date the date when user reported positive.
      */
     public void reportPositive(Calendar date) {
         isPositive = true;

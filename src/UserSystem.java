@@ -107,6 +107,7 @@ public class UserSystem {
 
     /**
      * Adds the citizen object to the database.
+     * @param citizen the new user to add to the database.
      */
     public static void register(Citizen citizen) {
         // add username, role, and information to ArrayList and add new ArrayList for visit records
@@ -147,6 +148,7 @@ public class UserSystem {
     /**
      * Asks the user to enter a new password and check it for validity.<br>
      * Once valid, returns the chosen password.
+     * @param pass the String to be checked.
      * @return true if it valid, false otherwise.
      */
     public static boolean isValidPassword(String pass) {
