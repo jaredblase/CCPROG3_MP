@@ -194,13 +194,12 @@ public class GovOfficial extends Citizen {
     }
 
     /**
-     * Handles the role modification of an existing account.
+     * Handles the role modification of an existing account or the creation
+     * of a new account.
      * @param role the new role to be assigned to an account.
+     * @param username the username of the account to be modified or the account to be made.
      */
-    private void modifyRole(String role) {
-        Scanner input = new Scanner(System.in);
-        System.out.print("Account username to be modified: ");
-        String username = input.nextLine();
+    public void modifyRole(String role, String username) {
         int index = UserSystem.getIndexOf(username);
 
         if (username.equals(this.getUsername())) {
@@ -217,7 +216,7 @@ public class GovOfficial extends Citizen {
             }
         } else if (!role.equals("citizen")) {  // if not terminating account to citizen
             if(Menu.YorN("This user does not exist. Create account") == 'Y') {
-//                UserSystem.register(username);
+                Driver.register(username, 1);
                 UserSystem.setRoleOf(UserSystem.getNumUsers() - 1, role);
             }
         } else {
