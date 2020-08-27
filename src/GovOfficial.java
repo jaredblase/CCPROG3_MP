@@ -89,9 +89,13 @@ public class GovOfficial extends Citizen {
         }
     }
 
+
     /**
-     * Asks the user what filter will be used when displaying the cases, can be:
-     * within a date range, within a city (case insensitive), or both.
+     * Filters the cases given the criteria (parameter) and returns the count.
+     * @param dates the date range.
+     * @param city the name of the city.
+     * @return the number of cases that fit the criteria.
+     * @throws Exception if an invalid city was received.
      */
     public int showAnalytics(Calendar[] dates, String city) throws Exception {
         final String CITY = city.toUpperCase();
@@ -114,6 +118,11 @@ public class GovOfficial extends Citizen {
         return countCases(filter);
     }
 
+    /**
+     * Filters the cases given the criteria (parameter) and returns the count.
+     * @param dates the date range.
+     * @return the number of cases that fit the criteria.
+     */
     public int showAnalytics(Calendar[] dates) {
         Predicate<Case> filter = (case1) -> case1.getReportDate().compareTo(dates[0]) >= 0 &&
                     case1.getReportDate().before(dates[1]);
@@ -121,6 +130,12 @@ public class GovOfficial extends Citizen {
         return countCases(filter);
     }
 
+    /**
+     * Filters the cases given the criteria (parameter) and returns the count.
+     * @param city the name of the city.
+     * @return the number of cases that fit the criteria.
+     * @throws Exception if an invalid city was received.
+     */
     public int showAnalytics(String city) throws Exception {
         final String CITY = city.toUpperCase();
         if (!isValidCity(CITY)) {
