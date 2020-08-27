@@ -58,7 +58,7 @@ public class Name {
      * @return the full name separated by commas.
      * @since 1.2
      */
-    public String displayName() {
+    public String getFullName() {
         return first + " " + (middle.isEmpty()? "" : (middle + " ")) + last;
     }
 

@@ -209,7 +209,7 @@ public class UserSystem {
         cases = new ArrayList<>();
         nTracers = 0;
 
-        usernames.add("Admin2020");
+        usernames.add("ADMIN2020");
         roles.add("official");
         users.add(new GovOfficial(new Citizen(new Name("Admin", "A", "Gov"), "Malacañang",
                 "City Hall", "09328287114", "admin@gov.ph", "Admin2020",

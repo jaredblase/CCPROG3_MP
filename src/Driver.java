@@ -119,7 +119,7 @@ public class Driver {
         Scanner input = new Scanner(System.in);
 
         System.out.print("Username: ");
-        String username = input.nextLine();
+        String username = input.nextLine().toUpperCase();   // username is case insensitive
         System.out.print("Password: ");
         String password = input.nextLine();
 
@@ -289,7 +289,7 @@ public class Driver {
             try {
                 user.getName().setName(opt, input.nextLine());
                 System.out.println("New name:");
-                user.getName().displayName();
+                System.out.println(user.getName().getFullName());
             } catch (Exception e) {
                 System.out.println(e.toString());
             }
