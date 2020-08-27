@@ -188,7 +188,6 @@ public class Citizen {
     public void reportPositive(Calendar date) {
         isPositive = true;
         UserSystem.addCase(this.USERNAME, date);
-        System.out.println("Case reported. Thank you.\n");
     }
 
     /**
