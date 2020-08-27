@@ -4,16 +4,17 @@ import java.util.Scanner;
 
 public class Driver {
     public static void main(String[] args) {
+        Driver driver = new Driver();
         UserSystem.loadSystem();
         Menu mainMenu = new Menu("Main", "Register", "Login", "Exit");
         int opt;
 
         do {
             mainMenu.display();
-            opt = getMenuAnswer(mainMenu.length());
+            opt = driver.getMenuAnswer(mainMenu.length());
             switch (opt) {
-                case 1 -> register();
-                case 2 -> login();
+                case 1 -> driver.register();
+                case 2 -> driver.login();
             }
             System.out.println();
         } while (opt != 3);
@@ -28,7 +29,7 @@ public class Driver {
      * @param max indicates the number of menu options available.
      * @return a number representing the chosen option of the user.
      */
-    private static int getMenuAnswer(int max) {
+    private int getMenuAnswer(int max) {
         int opt;
         Scanner input = new Scanner(System.in);
 
@@ -52,7 +53,7 @@ public class Driver {
      * Registers a new account into the system by asking the username of the new account
      * and calling another method that would ask for personal information and password.
      */
-    private static void register() {
+    private void register() {
         Scanner input = new Scanner(System.in);
 
         System.out.print("Username: ");
@@ -75,7 +76,7 @@ public class Driver {
      * @param status the status whether a password is asked as user input (0) or generated
      *               by the machine (1).
      */
-    public static void register(String username, int status) {
+    public void register(String username, int status) {
         Scanner input = new Scanner(System.in);
         String password;
 
@@ -115,7 +116,7 @@ public class Driver {
     /**
      * Handles the login session of the user.
      */
-    private static void login() {
+    private void login() {
         Scanner input = new Scanner(System.in);
 
         System.out.print("Username: ");
@@ -153,7 +154,7 @@ public class Driver {
      * @param question the question to be printed
      * @return a non empty String
      */
-    private static String getValidString(String question) {
+    private String getValidString(String question) {
         Scanner input = new Scanner(System.in);
         question += ": ";
 
@@ -173,7 +174,7 @@ public class Driver {
      * from it.
      * @return a valid date.
      */
-    private static Calendar getDate() {
+    private Calendar getDate() {
         Scanner input = new Scanner(System.in);
         Calendar date = null;
         Calendar.Builder builder = new Calendar.Builder();
@@ -207,7 +208,7 @@ public class Driver {
      * @param opt integer representing the chosen menu option.
      * @param user the user that is currently logged in.
      */
-    private static void citizenActions(int opt, Citizen user) {
+    private  void citizenActions(int opt, Citizen user) {
         Scanner input = new Scanner(System.in);
 
         switch (opt) {
@@ -233,7 +234,7 @@ public class Driver {
      * The facility that handles the updating of personal information.
      * @param user the user that is editing his personal information.
      */
-    private static void updateInfo(Citizen user) {
+    private void updateInfo(Citizen user) {
         Scanner input = new Scanner(System.in);
         Menu menu = Citizen.UPDATE_OPTIONS;
         int opt, max = menu.length();
@@ -277,7 +278,7 @@ public class Driver {
      * Handles the name change of the user.
      * @param user the user logged in.
      */
-    private static void changeName(Citizen user) {
+    private void changeName(Citizen user) {
         Scanner input = new Scanner(System.in);
         Menu menu = Name.CHANGE_NAME_MENU;
         int max = menu.length(), opt;
@@ -303,7 +304,7 @@ public class Driver {
      * @param opt integer representing the chosen menu option.
      * @param user the user that is currently logged in.
      */
-    private static void governmentActions(int opt, GovOfficial user) {
+    private void governmentActions(int opt, GovOfficial user) {
         switch (opt) {
             case 4 -> {
                 System.out.println("Unassigned Cases:");
@@ -335,7 +336,7 @@ public class Driver {
      * @param caseNums the array of case numbers of unassigned cases.
      * @return the valid case number.
      */
-    private static int getCaseNum(int[] caseNums) {
+    private int getCaseNum(int[] caseNums) {
         Scanner input = new Scanner(System.in);
 
         // get case number
@@ -362,7 +363,7 @@ public class Driver {
      * @param user the government official assigning the case.
      * @param caseNum the case number corresponding to the case to be assigned.
      */
-    private static void assignCase(GovOfficial user, int caseNum) {
+    private void assignCase(GovOfficial user, int caseNum) {
         Scanner input = new Scanner(System.in);
         boolean status = false;
 
@@ -389,7 +390,7 @@ public class Driver {
      * returned Calendar array is the starting date while the second is the end date.
      * @return the start and end date by means of a Calendar array.
      */
-    private static Calendar[] obtainDateRange() {
+    private Calendar[] obtainDateRange() {
         Calendar start, end;
 
         System.out.println("Starting date:");
@@ -411,7 +412,7 @@ public class Driver {
      * The facility that handles the showing of Analytics.
      * @param user the government official logged in
      */
-    private static void showAnalytics(GovOfficial user) {
+    private void showAnalytics(GovOfficial user) {
         Scanner input = new Scanner(System.in);
         Menu menu = GovOfficial.ANALYTICS_MENU;
         int opt, max = menu.length(), ctr = 0;
@@ -455,7 +456,7 @@ public class Driver {
      * @param user the government official that is modifying the role of another account.
      * @param role the role that an account is to be changed to.
      */
-    private static void modifyRole(GovOfficial user, String role) {
+    private void modifyRole(GovOfficial user, String role) {
         Scanner input = new Scanner(System.in);
         System.out.print("Account username to be modified: ");
         String username = input.nextLine().toUpperCase();
@@ -476,7 +477,7 @@ public class Driver {
      * @param opt integer representing the chosen menu option.
      * @param user the user that is currently logged in.
      */
-    private static void tracerActions(int opt, Tracer user) {
+    private void tracerActions(int opt, Tracer user) {
         Scanner input = new Scanner(System.in);
 
         switch (opt) {
