@@ -15,7 +15,7 @@ public class Menu {
         this.options = options;
     }
 
-    public int getLength() {
+    public int length() {
         return options.length;
     }
 
