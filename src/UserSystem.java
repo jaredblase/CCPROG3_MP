@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.Calendar;
 
 /**
@@ -97,20 +96,13 @@ public class UserSystem {
         return nTracers;
     }
 
-    // Checks if the username is already taken.
+    /**
+     * Checks if the username has not been taken.
+     * @param username the username.
+     * @return true if the username is still available, false otherwise.
+     */
     public static boolean isValidNewUsername(String username) {
         return getIndexOf(username) == -1 && !username.isBlank();
-    }
-
-    /**
-     * Obtains the input username then calls register(username) to handle
-     * the rest of the registration process.
-     */
-    public static void register() {
-        Scanner input = new Scanner(System.in);
-
-        System.out.println("ACCOUNT CREATION\n");
-        System.out.print("Username: ");
     }
 
     /**
