@@ -178,6 +178,7 @@ public class Driver {
     /**
      * Calls the appropriate function based on the user's input.
      * @param opt integer representing the chosen menu option.
+     * @param user the user that is currently logged in.
      */
     private static void citizenActions(int opt, Citizen user) {
         Scanner input = new Scanner(System.in);
@@ -269,8 +270,6 @@ public class Driver {
     }
 
     private static void governmentActions(int opt, GovOfficial user) {
-        Scanner input = new Scanner(System.in);
-
         switch (opt) {
             case 4 -> {
                 int[] caseNums = user.showUnassigned();
@@ -375,7 +374,7 @@ public class Driver {
     private static void showAnalytics(GovOfficial user) {
         Scanner input = new Scanner(System.in);
         Menu menu = GovOfficial.ANALYTICS_MENU;
-        int opt, max = menu.getLength();
+        int opt, max = menu.length();
 
         //unfinished
     }
