@@ -22,7 +22,6 @@ public class Menu {
     /**
      * Displays the header of the menu before showing all the options
      * in a numbered order.
-     * @return the option number chosen.
      * @since 1.0
      */
     public void display() {
@@ -62,5 +61,13 @@ public class Menu {
         } while (opt == null);
 
         return opt.charAt(0);
+    }
+
+    public String getOption(int index) {
+        try {
+            return options[index];
+        } catch (Exception e) {
+            return e.toString();
+        }
     }
 }
