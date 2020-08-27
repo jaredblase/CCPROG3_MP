@@ -1,4 +1,4 @@
-import java.util.Scanner;
+
 
 /**
  * The Name class holds all the information of a name
@@ -15,7 +15,7 @@ public class Name {
     /** The last name. */
     private String last;
     /** Menu options for changing names. */
-    public static final Menu CHANGE_NAME_OPTIONS = new Menu ("First Name", "Middle Name",
+    public static final Menu CHANGE_NAME_MENU = new Menu ("First Name", "Middle Name",
             "Last Name", "Back");
 
     /**
@@ -40,33 +40,22 @@ public class Name {
      * @since 1.0
      * @see Menu
      */
-    public boolean changeName() {
-        Scanner input = new Scanner(System.in);
-        boolean isChanged = false;
-        int opt;
+    public void setName(int opt, String str) throws Exception {
+        str = str.trim();   // removes excess whitespace before and after the String
 
-        do {
-            CHANGE_NAME_OPTIONS.display();
-            if(opt != 4) {
-                System.out.print("New " + CHANGE_NAME_OPTIONS[opt - 1].toLowerCase() + ": ");
-                String str = input.nextLine().trim();   // removes excess whitespace before and after the String
-
-                if (!str.isEmpty() || opt == 2) {       // allows middle name to be empty
-                    switch (opt) {
-                        case 1 -> this.first = str;
-                        case 2 -> this.middle = str;
-                        case 3 -> this.last = str;
-                    }
-                    System.out.println("New name:");
-                    System.out.println((first + " " + (middle.isEmpty()? "" : (middle + " ")) + last));
-                    isChanged = true;
-                } else {
-                    System.out.println(CHANGE_NAME_OPTIONS[opt - 1] + " cannot be left blank!");
-                }
+        if (!str.isEmpty() || opt == 2) {       // allows middle name to be empty
+            switch (opt) {
+                case 1 -> this.first = str;
+                case 2 -> this.middle = str;
+                case 3 -> this.last = str;
             }
-        } while (opt != 4);
+        } else {
+            throw new Exception(CHANGE_NAME_MENU.getOption(opt - 1) + " cannot be left blank!");
+        }
+    }
 
-        return isChanged;
+    public String displayName() {
+        return first + " " + (middle.isEmpty()? "" : (middle + " ")) + last;
     }
 
     /**

@@ -78,6 +78,14 @@ public class Citizen {
     }
 
     /**
+     * Returns the Name object containing the name of the user.
+     * @return the Name object of the user.
+     */
+    public Name getName() {
+        return name;
+    }
+
+    /**
      * Returns the home address of the user.
      * @return the home address of the user.
      */
