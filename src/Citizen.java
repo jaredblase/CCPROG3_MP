@@ -34,11 +34,12 @@ public class Citizen {
     private boolean isPositive;
     /** Records that indicate when and where the user may be infected. */
     private ArrayList<Visit> contactPlaces;
-    /** The String array containing the update details options of the user. */
-    private static final String[] UPDATE_OPTIONS = {"Name", "Home Address", "Office Address", "Phone Number",
-            "E-Mail", "Password", "Back to User Menu"};
-    /** The String array containing the menu options of the user. */
-    protected static String[] menuOptions = {"Check in", "Report positive", "Update profile information", "Logout"};
+    /** The Menu class for the update details options of the user. */
+    private static final Menu UPDATE_OPTIONS = new Menu("Update", "Name", "Home Address",
+            "Office Address", "Phone Number", "E-Mail", "Password", "Back to User Menu");
+    /** The Menu class for the menu options of the user. */
+    protected Menu userMenu = new Menu("User", "Check in", "Report positive",
+            "Update profile information", "Logout");
 
     /**
      * Receives the personal information of the user, along with the username and password
@@ -109,32 +110,20 @@ public class Citizen {
         return visitRec;
     }
 
-    /**
-     * Main entry point of the user after logging in.
-     */
-    public void showMenu() {
-        int opt;
+    public Menu getUserMenu() {
+        return userMenu;
+    }
 
-        do {
-            prompt();
-            opt = Menu.display("User", menuOptions);
-            chooseMenu(opt);
-        } while (opt != 4);
-
-        UserSystem.updateUser(this);
+    public boolean getIsPositive() {
+        return isPositive;
     }
 
     /**
      * Retrieves the visitation information from the user such as the establishment
      * code and date and adds this to his visit records.
      */
-    private void checkIn() {
-        Scanner input = new Scanner(System.in);
-
-        System.out.print("Establishment Code: ");
-        String estCode = input.nextLine();
-
-        Calendar date = getDate();
+    public void checkIn(String estCode, Calendar date) {
+        // get machine time
         Calendar time = Calendar.getInstance();
         date.set(Calendar.HOUR_OF_DAY, time.get(Calendar.HOUR_OF_DAY));
         date.set(Calendar.MINUTE, time.get(Calendar.MINUTE));
@@ -149,21 +138,18 @@ public class Citizen {
      * this record to the list of cases in the system only if the user
      * has not reported positive before.
      */
-    private void reportPositive() {
-        if (!isPositive) {
-            isPositive = true;
-            UserSystem.addCase(this.USERNAME, getDate());
-            System.out.println("Case reported. Thank you.\n");
-        } else {
-            System.out.println("You are already reported positive!");
-        }
+    public void reportPositive(Calendar date) {
+        isPositive = true;
+        UserSystem.addCase(this.USERNAME, date);
+        System.out.println("Case reported. Thank you.\n");
+
     }
 
     /**
      * The facility that handles the updating of personal information.
      */
     private void updateInfo() {
-        int opt, max = UPDATE_OPTIONS.length;
+        int opt, max = UPDATE_OPTIONS.getLength();
 
         do {
             boolean isChanged = false;
@@ -255,37 +241,5 @@ public class Citizen {
         }
     }
 
-    /**
-     * Retrieves a date input from the user and attempts to build a Calendar object
-     * from it.
-     * @return a valid date.
-     */
-    protected Calendar getDate() {
-        Scanner input = new Scanner(System.in);
-        Calendar date = null;
-        Calendar.Builder builder = new Calendar.Builder();
-        builder.setLenient(false);
-        int year, month, day;
 
-        do {
-            try {
-                System.out.println("-DATE-");
-                System.out.print("Year: ");
-                year = Integer.parseInt(input.nextLine());
-
-                System.out.print("Month: ");
-                month = Integer.parseInt(input.nextLine());
-
-                System.out.print("Day: ");
-                day = Integer.parseInt(input.nextLine());
-
-                builder.setDate(year, month - 1, day);
-                date = builder.build();
-            } catch (Exception e) {
-                System.out.println("Invalid date input!\n");
-            }
-        } while (date == null);
-
-        return date;
-    }
 }

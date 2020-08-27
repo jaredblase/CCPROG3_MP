@@ -8,6 +8,16 @@ import java.util.Scanner;
  * @version 1.1
  */
 public class Name {
+    /** The first name. */
+    private String first;
+    /** The middle name. */
+    private String middle;
+    /** The last name. */
+    private String last;
+    /** Menu options for changing names. */
+    private static final Menu CHANGE_NAME_OPTIONS = new Menu ("First Name", "Middle Name",
+            "Last Name", "Back");
+
     /**
      * Initializes a Name object and sets the fields with the given parameters:
      * first, middle, and last name.<br>
@@ -36,9 +46,9 @@ public class Name {
         int opt;
 
         do {
-            opt = Menu.display("Name Change", MENU_OPTIONS);
+            opt = CHANGE_NAME_OPTIONS.display();
             if(opt != 4) {
-                System.out.print("New " + MENU_OPTIONS[opt - 1].toLowerCase() + ": ");
+                System.out.print("New " + CHANGE_NAME_OPTIONS[opt - 1].toLowerCase() + ": ");
                 String str = input.nextLine().trim();   // removes excess whitespace before and after the String
 
                 if (!str.isEmpty() || opt == 2) {       // allows middle name to be empty
@@ -51,7 +61,7 @@ public class Name {
                     System.out.println((first + " " + (middle.isEmpty()? "" : (middle + " ")) + last));
                     isChanged = true;
                 } else {
-                    System.out.println(MENU_OPTIONS[opt - 1] + " cannot be left blank!");
+                    System.out.println(CHANGE_NAME_OPTIONS[opt - 1] + " cannot be left blank!");
                 }
             }
         } while (opt != 4);
@@ -68,13 +78,4 @@ public class Name {
     public String toString() {
         return first + "," + middle + "," + last;
     }
-
-    /** The first name. */
-    private String first;
-    /** The middle name. */
-    private String middle;
-    /** The last name. */
-    private String last;
-    /** Menu options for changing names. */
-    private static final String[] MENU_OPTIONS = {"First Name", "Middle Name", "Last Name", "Back"};
 }

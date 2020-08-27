@@ -7,26 +7,34 @@ import java.util.Scanner;
  * @version 1.1
  */
 public class Menu {
+    private final String header;
+    private final String[] options;
+
+    public Menu(String header, String...options) {
+        this.header = header + " Menu";
+        this.options = options;
+    }
+
+    public int getLength() {
+        return options.length;
+    }
+
     /**
-     * Displays the header of the menu before showing all the menu options passed
-     * to the method in a numbered order.
-     * @param header the header of the menu to be printed i.e. Main Menu.
-     * @param options a variable argument to store the menu options in an array.
+     * Displays the header of the menu before showing all the options
+     * in a numbered order.
      * @return the option number chosen.
      * @since 1.0
      */
-    public static int display(String header, String...options) {
+    public void display() {
         int ctr = 1;
 
         //display menu
         System.out.println();
-        System.out.println(header + " Menu");
+        System.out.println(header);
         for (String i: options) {
             System.out.println(ctr++ + " - " + i);
         }
         System.out.println();
-
-        return getAnswer(options.length); //return option input
     }
 
     /**
@@ -54,33 +62,5 @@ public class Menu {
         } while (opt == null);
 
         return opt.charAt(0);
-    }
-
-    /**
-     * Obtains an integer by means of the Scanner and Integer class. Also performs
-     * exception handling in case an invalid option is input by the user.
-     * @param max indicates the number of menu options available.
-     * @return a number representing the chosen option of the user.
-     * @since 1.0
-     */
-    private static int getAnswer(int max) {
-        Scanner input = new Scanner(System.in);
-        int opt;
-
-        do {
-            System.out.print("Option: ");
-            try {
-                opt = Integer.parseInt(input.nextLine()); // get input
-                if (opt < 1 || opt > max) {//invalid option input
-                    throw new Exception();
-                }
-            } catch (Exception e) {
-                System.out.println("Invalid option!\n");
-                opt = max + 1; //set opt to loop again
-            }
-        } while (opt > max);
-
-       // input.close();
-        return opt;
     }
 }
