@@ -98,7 +98,7 @@ public class GovOfficial extends Citizen {
      */
     public int showAnalytics(Calendar[] dates, String city) throws Exception {
         final String CITY = city.toUpperCase();
-        if (!isValidCity(CITY)) {
+        if (isInvalidCity(CITY)) {
             throw new Exception("Invalid City!");
         }
 
@@ -137,7 +137,7 @@ public class GovOfficial extends Citizen {
      */
     public int showAnalytics(String city) throws Exception {
         final String CITY = city.toUpperCase();
-        if (!isValidCity(CITY)) {
+        if (isInvalidCity(CITY)) {
             throw new Exception("Invalid city!");
         }
 
@@ -177,11 +177,11 @@ public class GovOfficial extends Citizen {
      * apostrophes, periods, hyphens, and accented characters.
      * @return the valid String representing the chosen city in uppercase form.
      */
-    private static boolean isValidCity(String city) {
+    private static boolean isInvalidCity(String city) {
         // checks if the input is valid, loops if not
         // first, it replaces all invalid characters with "1" before checking for no numbers
-        return !city.isEmpty() &&
-                city.replaceAll("[^-.'\\s\\w\\u00C0-\\u00FF]+", "1").matches("\\D+");
+        return city.isEmpty() ||
+                !city.replaceAll("[^-.'\\s\\w\\u00C0-\\u00FF]+", "1").matches("\\D+");
 
     }
 
