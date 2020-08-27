@@ -1,5 +1,4 @@
 import java.util.Calendar;
-import java.util.Scanner;
 import java.util.function.Predicate;
 
 /**
@@ -91,67 +90,61 @@ public class GovOfficial extends Citizen {
         }
     }
 
-//    /**
-//     * Asks the user what filter will be used when displaying the cases, can be:
-//     * within a date range, within a city (case insensitive), or both.
-//     */
-//    private void showAnalytics() {
-//        int opt;
-//        Predicate<Case> filter = null;
-//
-//        do {
-//            ANALYTICS_MENU.display();
-//
-//            switch (opt) {
-//                case 1 -> {
-//                    Calendar[] dates = obtainDateRange();
-//                    String city = obtainValidCity();
-//
-//                    filter = (case1) -> {
-//                        Citizen temp = UserSystem.getUser(case1.getUsername());
-//
-//                        if (temp != null) {
-//                            return case1.getReportDate().compareTo(dates[0]) >= 0
-//                                    && case1.getReportDate().before(dates[1])
-//                                    && temp.getHomeAddress().toUpperCase().contains(city);
-//                        } else {
-//                            return false;
-//                        }
-//                    };
-//                }
-//                case 2 -> {
-//                    Calendar[] dates = obtainDateRange();
-//
-//                    filter = (case1) -> case1.getReportDate().compareTo(dates[0]) >= 0 &&
-//                            case1.getReportDate().before(dates[1]);
-//                }
-//                case 3 -> {
-//                    String city = obtainValidCity();
-//
-//                    filter = (case1) -> {
-//                        Citizen temp = UserSystem.getUser(case1.getUsername());
-//
-//                        if (temp != null) {
-//                            return temp.getHomeAddress().toUpperCase().contains(city);
-//                        } else {
-//                            return false;
-//                        }
-//                    };
-//                }
-//            }
-//
-//            if (opt != 4) {
-//                countCases(filter);
-//            }
-//        } while (opt != ANALYTICS_MENU.length);
-//    }
+    /**
+     * Asks the user what filter will be used when displaying the cases, can be:
+     * within a date range, within a city (case insensitive), or both.
+     */
+    public int showAnalytics(Calendar[] dates, String city) throws Exception {
+        if (!isValidCity(city)) {
+            throw new Exception("Invalid City!");
+        }
+
+        Predicate<Case> filter = (case1) -> {
+            Citizen temp = UserSystem.getUser(case1.getUsername());
+
+            if (temp != null) {
+                return case1.getReportDate().compareTo(dates[0]) >= 0
+                        && case1.getReportDate().before(dates[1])
+                        && temp.getHomeAddress().toUpperCase().contains(city);
+            } else {
+                return false;
+            }
+        };
+
+        return countCases(filter);
+    }
+
+    public int showAnalytics(Calendar[] dates) {
+        Predicate<Case> filter = (case1) -> case1.getReportDate().compareTo(dates[0]) >= 0 &&
+                    case1.getReportDate().before(dates[1]);
+
+        return countCases(filter);
+    }
+
+    public int showAnalytics(String city) throws Exception {
+        if (!isValidCity(city)) {
+            throw new Exception("Invalid city!");
+        }
+
+        Predicate<Case> filter = (case1) -> {
+            Citizen temp = UserSystem.getUser(case1.getUsername());
+
+            if (temp != null) {
+                return temp.getHomeAddress().toUpperCase().contains(city);
+            } else {
+                return false;
+            }
+        };
+
+        return countCases(filter);
+    }
 
     /**
      * Iterates through all the cases and counts the cases that pass
      * the test (filter). Displays the final count.
      * @param filter the test to be performed on each entry.
      */
-    private void countCases(Predicate<Case> filter) {
+    private int countCases(Predicate<Case> filter) {
         int ctr = 0;
 
         System.out.println();
@@ -160,14 +153,7 @@ public class GovOfficial extends Citizen {
                 ctr++;
             }
         }
-
-        if (ctr != 0) {
-            System.out.println("Number of cases that match the criteria:");
-            System.out.println(ctr);
-        } else {
-            System.out.println("No cases match the criteria specified.");
-        }
-        System.out.println();
+        return ctr;
     }
 
     /**
@@ -177,20 +163,12 @@ public class GovOfficial extends Citizen {
      * apostrophes, periods, hyphens, and accented characters.
      * @return the valid String representing the chosen city in uppercase form.
      */
-    private static String obtainValidCity() {
-        Scanner input = new Scanner(System.in);
-        System.out.print("Input city: ");
-        String city = input.nextLine();
-
+    private static boolean isValidCity(String city) {
         // checks if the input is valid, loops if not
         // first, it replaces all invalid characters with "1" before checking for no numbers
-        while (city.isEmpty() ||
-                !city.replaceAll("[^-.'\\s\\w\\u00C0-\\u00FF]+", "1").matches("\\D+")) {
-            System.out.println("Invalid input for city!\n");
-            System.out.print("Input city: ");
-            city = input.nextLine();
-        }
-        return city.toUpperCase();
+        return !city.isEmpty() &&
+                city.replaceAll("[^-.'\\s\\w\\u00C0-\\u00FF]+", "1").matches("\\D+");
+
     }
 
     /**

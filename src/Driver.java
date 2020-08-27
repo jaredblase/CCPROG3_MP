@@ -55,7 +55,7 @@ public class Driver {
     private static void register() {
         Scanner input = new Scanner(System.in);
 
-        System.out.println("Username: ");
+        System.out.print("Username: ");
         String username = input.nextLine().toUpperCase();
         while (!UserSystem.isValidNewUsername(username)) {
             System.out.println("Taken/Invalid username.\n");
@@ -309,7 +309,7 @@ public class Driver {
                 }
             }
             case 5 -> user.showUpdates(obtainDateRange());
-//            case 6 -> showAnalytics(user);
+            case 6 -> showAnalytics(user);
             case 7 -> modifyRole(user, "official");
             case 8 -> modifyRole(user, "tracer");
             case 9 -> modifyRole(user, "citizen");
@@ -398,9 +398,36 @@ public class Driver {
     private static void showAnalytics(GovOfficial user) {
         Scanner input = new Scanner(System.in);
         Menu menu = GovOfficial.ANALYTICS_MENU;
-        int opt, max = menu.length();
+        int opt, max = menu.length(), ctr = 0;
 
-        //unfinished
+        do {
+            opt = getMenuAnswer(max);
+            try {
+                switch (opt) {
+                    case 1 -> {
+                        Calendar[] dates = obtainDateRange();
+                        System.out.print("Input city: ");
+                        ctr = user.showAnalytics(dates, input.nextLine());
+                    }
+                    case 2 -> {
+                        Calendar[] dates = obtainDateRange();
+                        ctr = user.showAnalytics(dates);
+                    }
+                    case 3 -> {
+                        System.out.print("Input city: ");
+                        ctr = user.showAnalytics(input.nextLine());
+                    }
+                }
+
+                if (ctr == 0) {
+                    System.out.println("No cases match the criteria specified");
+                } else {
+                    System.out.println("Number of cases that match the criteria specified:" + ctr);
+                }
+            } catch (Exception e) {
+                System.out.println(e.toString());
+            }
+        } while (opt != max);
     }
 
     /**
