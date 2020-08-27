@@ -441,7 +441,11 @@ public class Driver {
         System.out.print("Account username to be modified: ");
         String username = input.nextLine().toUpperCase();
 
-        user.modifyRole(role, username);
+        try {
+            user.modifyRole(role, username);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
     }
 
     /**

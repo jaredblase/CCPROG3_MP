@@ -176,18 +176,19 @@ public class GovOfficial extends Citizen {
      * of a new account.
      * @param role the new role to be assigned to an account.
      * @param username the username of the account to be modified or the account to be made.
+     * @throws Exception if invalid operations are performed.
      */
-    public void modifyRole(String role, String username) {
+    public void modifyRole(String role, String username) throws Exception {
         int index = UserSystem.getIndexOf(username);
 
         if (username.equals(this.getUsername())) {
-            System.out.println("You cannot modify your own role!");
+            throw new Exception("You cannot modify your own role!");
         } else if (index != -1) {
             if (UserSystem.getRoleOf(index).equals(role)) {
                 switch (role) {
-                    case "official" -> System.out.println("Account is already a government official!");
-                    case "tracer" -> System.out.println("Account is already a contact tracer!");
-                    default -> System.out.println("Cannot terminate citizen account!");
+                    case "official" -> throw new Exception("Account is already a government official!");
+                    case "tracer" -> throw new Exception("Account is already a contact tracer!");
+                    default -> throw new Exception("Cannot terminate citizen account!");
                 }
             } else {
                 UserSystem.setRoleOf(index, role);
@@ -198,7 +199,7 @@ public class GovOfficial extends Citizen {
                 UserSystem.setRoleOf(UserSystem.getNumUsers() - 1, role);
             }
         } else {
-            System.out.println("Account does not exist!");
+            throw new Exception("Account does not exist!");
         }
     }
 }
