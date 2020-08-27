@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
 
@@ -5,15 +6,14 @@ public class Driver {
     public static void main(String[] args) {
         UserSystem.loadUsers();
         Menu mainMenu = new Menu("Main", "Register", "Login", "Exit");
-        Scanner input = new Scanner(System.in);
         int opt;
 
         do {
             mainMenu.display();
             opt = getMenuAnswer(mainMenu.getLength());
             switch (opt) {
-                case 1 -> register(input);
-                case 2 -> login(input);
+                case 1 -> register();
+                case 2 -> login();
             }
             System.out.println();
         } while (opt != 3);
@@ -48,7 +48,9 @@ public class Driver {
         return opt;
     }
 
-    private static void register(Scanner input) {
+    private static void register() {
+        Scanner input = new Scanner(System.in);
+
         System.out.println("Username: ");
         String username = input.nextLine().toUpperCase();
         while (!UserSystem.isValidNewUsername(username)) {
@@ -86,7 +88,9 @@ public class Driver {
         System.out.println("----YOU MAY NOW LOGIN WITH YOUR NEW ACCOUNT----");
     }
 
-    private static void login(Scanner input) {
+    private static void login() {
+        Scanner input = new Scanner(System.in);
+
         System.out.print("Username: ");
         String username = input.nextLine();
         System.out.print("Password: ");
@@ -96,6 +100,7 @@ public class Driver {
         if (user != null) {
             int opt, max = user.getUserMenu().getLength();
             do {
+                user.prompt();
                 user.getUserMenu().display();
                 opt = getMenuAnswer(max);
 
@@ -248,6 +253,41 @@ public class Driver {
     }
 
     private static void tracerActions(int opt, Tracer user) {
+        Scanner input = new Scanner(System.in);
 
+        switch (opt) {
+            case 4 -> user.showCases();
+            case 5 -> {
+                ArrayList<Case> assigned = user.getAssigned();
+                if (assigned.size() == 0) { // no cases assigned
+                    System.out.println("No assigned cases");
+                } else { // at least 1 assigned case
+                    int caseNum = -1;
+                    boolean status = false;
+
+                    // get case number
+                    try {
+                        System.out.print("Enter case number to be traced: ");
+                        caseNum = Integer.parseInt(input.nextLine());
+
+                        for (Case i: assigned) {
+                            if (i.getCaseNum() == caseNum) { // case number is assigned
+                                status = true;
+                                break;
+                            }
+                        }
+
+                        if (!status) // case number is not among assigned cases
+                            throw new Exception();
+                    } catch (Exception e) {
+                        System.out.println("Invalid input. Use the show cases option to view your assigned cases.\n");
+                    }
+
+                    if (status) // valid case number input
+                        user.trace(caseNum);
+                }
+            }
+            case 6 -> user.broadcast();
+        }
     }
 }

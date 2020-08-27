@@ -37,7 +37,7 @@ public class Citizen {
     public static final Menu UPDATE_OPTIONS = new Menu("Update", "Name", "Home Address",
             "Office Address", "Phone Number", "E-Mail", "Password", "Back to User Menu");
     /** The Menu class for the menu options of the user. */
-    protected Menu userMenu = new Menu("User", "Check in", "Report positive",
+    protected static Menu userMenu = new Menu("User", "Check in", "Report positive",
             "Update profile information", "Logout");
 
     /**
@@ -109,10 +109,18 @@ public class Citizen {
         return visitRec;
     }
 
+    /**
+     * Returns the Menu object for the Citizen class.
+     * @return the Menu object for the Citizen class.
+     */
     public Menu getUserMenu() {
         return userMenu;
     }
 
+    /**
+     * Returns the status whether the user is reported positive or not.
+     * @return the status whether the user is reported positive or not.
+     */
     public boolean getIsPositive() {
         return isPositive;
     }
@@ -163,8 +171,10 @@ public class Citizen {
     }
 
     /**
-     * Retrieves the visitation information from the user such as the establishment
-     * code and date and adds this to his visit records.
+     * Adds a new visit records to the list of visit records based on the given
+     * visitation information such as the establishment code and date.
+     * @param estCode the establishment code of the visit record.
+     * @param date the date when the visit was made.
      */
     public void checkIn(String estCode, Calendar date) {
         // get machine time
@@ -211,7 +221,7 @@ public class Citizen {
      * Displays a message if the user has possibly came in contact
      * with a positive case.
      */
-    protected void prompt() {
+    public void prompt() {
         if (!isPositive) {
             SimpleDateFormat format = new SimpleDateFormat("MM,dd,yyyy");
             Calendar temp = Calendar.getInstance();

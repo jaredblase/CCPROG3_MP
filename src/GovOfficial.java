@@ -12,13 +12,16 @@ import java.util.function.Predicate;
  */
 public class GovOfficial extends Citizen {
     /** The String array containing the menu options of the user. */
-    protected static String[] menuOptions = {"Check in", "Report positive", "Update profile information",
-            "Show Unassigned Cases", "Show Contact Tracing Updates", "Analytics",
-            "Create Government Official Account", "Create Contact Tracer Account", "Terminate Account", "Logout"};
+    protected static Menu userMenu = new Menu("User","Check in", "Report positive",
+            "Update profile information", "Show Unassigned Cases", "Show Contact Tracing Updates",
+            "Analytics", "Create Government Official Account", "Create Contact Tracer Account",
+            "Terminate Account", "Logout");
 
     /** The String array containing the analytics menu options of the user. */
-    private static final String[] ANALYTICS_MENU = {"Number of positive cases in a city within a duration",
-            "Number of positive cases within a duration", "Number of positive cases in a city", "Back"};
+    private static final Menu ANALYTICS_MENU = new Menu("Analytics",
+            "Number of positive cases in a city within a duration",
+            "Number of positive cases within a duration",
+            "Number of positive cases in a city", "Back");
 
     /**
      * Receives a Citizen class and makes an exact copy of its attributes.
@@ -29,19 +32,12 @@ public class GovOfficial extends Citizen {
     }
 
     /**
-     * Main entry point of the user after logging in.
+     * Returns the Menu object for the Citizen class.
+     * @return the Menu object for the Citizen class.
      */
     @Override
-    public void showMenu() {
-        int opt;
-
-        do {
-            super.prompt();
-            opt = Menu.display("User", menuOptions);
-            chooseMenu(opt);
-        } while (opt != menuOptions.length);
-
-        UserSystem.updateUser(this);
+    public Menu getUserMenu() {
+        return userMenu;
     }
 
     /**
@@ -157,7 +153,7 @@ public class GovOfficial extends Citizen {
         Predicate<Case> filter = null;
 
         do {
-            opt = Menu.display("Analytics", ANALYTICS_MENU);
+            ANALYTICS_MENU.display();
 
             switch (opt) {
                 case 1 -> {
