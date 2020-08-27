@@ -10,7 +10,7 @@ public class Driver {
 
         do {
             mainMenu.display();
-            opt = getMenuAnswer(input, mainMenu.getLength());
+            opt = getMenuAnswer(mainMenu.getLength());
             switch (opt) {
                 case 1 -> register(input);
                 case 2 -> login(input);
@@ -28,8 +28,9 @@ public class Driver {
      * @param max indicates the number of menu options available.
      * @return a number representing the chosen option of the user.
      */
-    private static int getMenuAnswer(Scanner input, int max) {
+    private static int getMenuAnswer(int max) {
         int opt;
+        Scanner input = new Scanner(System.in);
 
         do {
             System.out.print("Option: ");
@@ -91,13 +92,12 @@ public class Driver {
         System.out.print("Password: ");
         String password = input.nextLine();
 
-
         Citizen user = UserSystem.login(username, password);
         if (user != null) {
             int opt, max = user.getUserMenu().getLength();
             do {
                 user.getUserMenu().display();
-                opt = getMenuAnswer(input, max);
+                opt = getMenuAnswer(max);
 
                 if (opt <= 3) {         // citizen account options
                     citizenActions(opt, user);
@@ -169,6 +169,10 @@ public class Driver {
         return date;
     }
 
+    /**
+     * Calls the appropriate function based on the user's input.
+     * @param opt integer representing the chosen menu option.
+     */
     private static void citizenActions(int opt, Citizen user) {
         Scanner input = new Scanner(System.in);
 
@@ -187,10 +191,56 @@ public class Driver {
                     System.out.println("You are already reported positive!");
                 }
             }
-            case 3 -> {     // Update profile info
-
-            }
+            case 3 -> updateInfo(user); // Update profile info
         }
+    }
+
+    /**
+     * The facility that handles the updating of personal information.
+     */
+    private static void updateInfo(Citizen user) {
+        Scanner input = new Scanner(System.in);
+        Menu menu = Citizen.UPDATE_OPTIONS;
+        int opt, max = menu.getLength();
+
+        do {
+            boolean isChanged = false;
+            menu.display();
+            opt = getMenuAnswer(max);
+            if (opt != max) {
+                if (opt == 1) {
+                    //isChanged = name.changeName();
+                } else if (opt == max - 1) {
+                    try {
+                        System.out.print("New Password: ");
+                        user.setPassword(input.nextLine());
+                        isChanged = true;
+                    } catch (Exception e) {
+                        System.out.println(e.toString());
+                    }
+                } else {
+                    System.out.print("New " + menu.getOption(opt - 1) + ": ");
+                    String str = input.nextLine();
+
+                    try {
+                        switch (opt) {
+                            case 2 -> user.setHomeAddress(str);
+                            case 3 -> user.setOfficeAddress(str);
+                            case 4 -> user.setPhoneNumber(str);
+                            case 5 -> user.setEmail(str);
+                        }
+                        isChanged = true;
+                    } catch (Exception e) {
+                        System.out.println(e.toString());
+                    }
+                }
+
+                if (isChanged) {
+                    UserSystem.updateUser(user);
+                    System.out.println(menu.getOption(opt - 1) + " has been updated!\n");
+                }
+            }
+        } while (opt != max);
     }
 
     private static void governmentActions(int opt, GovOfficial user) {
