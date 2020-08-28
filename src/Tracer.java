@@ -22,6 +22,23 @@ public class Tracer extends Citizen {
     /** The list of visit records when and where the contacts may have been exposed. */
     private ArrayList<ArrayList<Visit>> contactPlaces;
 
+    public Tracer(Citizen other) {
+        super(other);
+
+        assigned = new ArrayList<>();
+        contacts = new ArrayList<>();
+        contactPlaces = new ArrayList<>();
+
+        for (Case i: UserSystem.getCases()) {
+            // tracer is assigned to case and status is pending and case not yet in list of assigned cases
+            if (i.getTracer().equals(getUsername()) && i.getStatus() == 'P' && !assigned.contains(i)) {
+                assigned.add(i);
+                contacts.add(new ArrayList<>());
+                contactPlaces.add(new ArrayList<>());
+            }
+        }
+    }
+
     /**
      * Receives a Citizen class and makes an exact copy of its attributes. The list
      * of all cases in the system is also checked. If a case is assigned to the
@@ -31,15 +48,9 @@ public class Tracer extends Citizen {
     public Tracer(Tracer other) {
         super(other);
 
-        if (assigned.isEmpty()) {
-            assigned = new ArrayList<>();
-            contacts = new ArrayList<>();
-            contactPlaces = new ArrayList<>();
-        } else {
-            this.assigned = other.assigned;
-            this.contacts = other.contacts;
-            this.contactPlaces = other.contactPlaces;
-        }
+        this.assigned = other.assigned;
+        this.contacts = other.contacts;
+        this.contactPlaces = other.contactPlaces;
 
         for (Case i: UserSystem.getCases()) {
             // tracer is assigned to case and status is pending and case not yet in list of assigned cases
