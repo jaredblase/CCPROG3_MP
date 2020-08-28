@@ -485,6 +485,8 @@ public class Driver {
             case 4 -> {
                 System.out.println("Cases Assigned:");
                 user.showCases();
+                if (user.getAssigned().isEmpty()) // no cases assigned
+                    System.out.println("None");
             }
             case 5 -> {
                 ArrayList<Case> assigned = user.getAssigned();
