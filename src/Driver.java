@@ -491,7 +491,7 @@ public class Driver {
             case 5 -> {
                 ArrayList<Case> assigned = user.getAssigned();
                 if (assigned.isEmpty()) { // no cases assigned
-                    System.out.println("No assigned cases");
+                    System.out.println("No assigned cases.");
                 } else { // at least 1 assigned case
                     int caseNum = -1;
                     boolean status = false;
