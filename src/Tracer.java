@@ -179,8 +179,11 @@ public class Tracer extends Citizen {
     }
 
     /**
-     * Determines if there is an intersection between two time intervals.
-     * Returns true if there is an intersection and false otherwise.
+     * Determines if there is an intersection between two time intervals of the same
+     * day. Both end times are assumed to be after the start times. If the end time
+     * and the start time are not on the same day or the end time is null, the end time
+     * is by default set to 11:59PM of the same day as the start time. Returns true
+     * if there is an intersection and false otherwise.
      * @param startA the starting time of the first interval.
      * @param endA the ending time of the first interval.
      * @param startB the starting time of the second interval.
