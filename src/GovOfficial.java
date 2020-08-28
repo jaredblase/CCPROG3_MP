@@ -207,7 +207,7 @@ public class GovOfficial extends Citizen {
                 UserSystem.setRoleOf(index, role);
             }
         } else if (!role.equals("citizen")) {  // if not terminating account to citizen
-            throw new AccountCreationNeededException();
+            throw new AccountCreationNeededException(role);
         } else {
             throw new Exception("Account does not exist!");
         }
@@ -215,5 +215,13 @@ public class GovOfficial extends Citizen {
 }
 
 class AccountCreationNeededException extends Exception {
+    private final String ROLE;
 
+    public AccountCreationNeededException(String role) {
+        this.ROLE = role;
+    }
+
+    public String getRole() {
+        return ROLE;
+    }
 }

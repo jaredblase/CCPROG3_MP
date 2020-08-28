@@ -468,6 +468,7 @@ public class Driver {
         } catch (AccountCreationNeededException e) {
             register(username, 1);
             UserSystem.setRoleOf(UserSystem.getNumUsers() - 1, role);
+            System.out.println("New " + e.getRole() + " created.");
         } catch (Exception e) {
             System.out.println(e.toString());
         }
