@@ -154,7 +154,7 @@ public class UserSystem {
     public static boolean isValidPassword(String pass) {
         String regex = "[\\w\\s]*[\\W\\d][\\w\\s]*"; // looks for at least one special character
 
-        return pass.length() > 6 && pass.replaceAll("\\s+", "").matches(regex);
+        return pass.length() >= 6 && pass.replaceAll("\\s+", "").matches(regex);
     }
 
     /**

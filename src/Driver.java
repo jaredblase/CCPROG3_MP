@@ -60,7 +60,7 @@ public class Driver {
         String username = input.nextLine().toUpperCase();
         while (!UserSystem.isValidNewUsername(username)) {
             System.out.println("Taken/Invalid username.\n");
-            System.out.println("Username: ");
+            System.out.print("Username: ");
             username = input.nextLine().toUpperCase();
         }
 
@@ -250,6 +250,7 @@ public class Driver {
                     try {
                         System.out.print("New Password: ");
                         user.setPassword(input.nextLine());
+                        System.out.println("Password change successful.");
                         isChanged = true;
                     } catch (Exception e) {
                         System.out.println(e.toString());

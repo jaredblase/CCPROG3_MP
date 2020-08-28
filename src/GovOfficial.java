@@ -175,10 +175,9 @@ public class GovOfficial extends Citizen {
      * or not (empty or contains a number and other special characters).<br>
      * Precondition: There are no cities which names have numbers and special symbols in them except
      * apostrophes, periods, hyphens, and accented characters.
-     * @return the valid String representing the chosen city in uppercase form.
+     * @return true if the input is invalid, false otherwise.
      */
     private static boolean isInvalidCity(String city) {
-        // checks if the input is valid, loops if not
         // first, it replaces all invalid characters with "1" before checking for no numbers
         return city.isEmpty() ||
                 !city.replaceAll("[^-.'\\s\\w\\u00C0-\\u00FF]+", "1").matches("\\D+");
