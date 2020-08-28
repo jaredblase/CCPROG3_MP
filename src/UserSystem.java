@@ -169,6 +169,7 @@ public class UserSystem {
             nTracers--;
         } else if (role.equals("tracer")) { // new role is tracer
             nTracers++;
+            updateUser(new Tracer(users.get(index)));
         }
 
         roles.set(index, role);
