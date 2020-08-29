@@ -353,7 +353,7 @@ public class Driver {
 
                 throw new Exception();
             } catch (Exception e) {
-                System.out.println("Invalid input!\n");
+                System.out.println("ss\n");
             }
         } while (true);
     }
@@ -371,7 +371,7 @@ public class Driver {
         // get tracer username
         do {
             System.out.print("Enter username of tracer: ");
-            String tracer = input.nextLine();
+            String tracer = input.nextLine().toUpperCase();
 
             int index = UserSystem.getIndexOf(tracer);
             if (index == -1) { // user not found
