@@ -253,7 +253,7 @@ public class Driver {
                         System.out.println("Password change successful.");
                         isChanged = true;
                     } catch (Exception e) {
-                        System.out.println(e.toString());
+                        System.out.println(e.getMessage());
                     }
                 } else {
                     System.out.print("New " + menu.getOption(opt - 1) + ": ");
@@ -263,7 +263,7 @@ public class Driver {
                         user.setPersonalDetails(opt, str);
                         isChanged = true;
                     } catch (Exception e) {
-                        System.out.println(e.toString());
+                        System.out.println(e.getMessage());
                     }
                 }
 
@@ -293,7 +293,7 @@ public class Driver {
                 System.out.println("New " + Name.CHANGE_NAME_MENU.getOption(opt - 1) + ": ");
                 System.out.println(user.getName().getFullName());
             } catch (Exception e) {
-                System.out.println(e.toString());
+                System.out.println(e.getMessage());
             }
             menu.display();
             opt = getMenuAnswer(max);
@@ -308,7 +308,7 @@ public class Driver {
     private void governmentActions(int opt, GovOfficial user) {
         switch (opt) {
             case 4 -> {
-                System.out.println("Unassigned Cases:");
+                System.out.println("\nUnassigned Cases:");
                 int[] caseNums = user.showUnassigned();
 
                 if (caseNums != null) {
@@ -439,12 +439,12 @@ public class Driver {
                 }
                 System.out.println();
                 if (ctr == 0) {
-                    System.out.println("No cases match the criteria specified");
+                    System.out.println("No cases match the criteria specified.");
                 } else {
                     System.out.println("Number of cases that match the criteria specified: " + ctr);
                 }
             } catch (Exception e) {
-                System.out.println(e.toString());
+                System.out.println(e.getMessage());
             }
             menu.display();
             opt = getMenuAnswer(max);
@@ -470,7 +470,7 @@ public class Driver {
             UserSystem.setRoleOf(UserSystem.getNumUsers() - 1, role);
             System.out.println("New " + e.getRole() + " created.");
         } catch (Exception e) {
-            System.out.println(e.toString());
+            System.out.println(e.getMessage());
         }
     }
 

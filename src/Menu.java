@@ -56,7 +56,8 @@ public class Menu {
         try {
             return OPTIONS[index];
         } catch (Exception e) {
-            return e.toString();
+            e.printStackTrace();
+            throw e;
         }
     }
 }
