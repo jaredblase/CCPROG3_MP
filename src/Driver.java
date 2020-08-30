@@ -105,6 +105,10 @@ public class Driver {
         String homeAdd = getValidString("Home address");
         String officeAdd = getValidString("Office address");
         String phoneNumber = getValidString("Phone number");
+        while (!phoneNumber.matches("\\d+")) {
+            System.out.println("Phone number must only contain digits!\n");
+            phoneNumber = getValidString("Phone number");
+        }
         String email = getValidString("Email address");
 
         UserSystem.register(new Citizen(new Name(firstName, secondName, lastName), homeAdd, officeAdd, phoneNumber,
@@ -342,19 +346,15 @@ public class Driver {
 
         // get case number
         do {
-            try {
-                System.out.print("Assign case number: ");
-                int caseNum = Integer.parseInt(input.nextLine());
+            System.out.print("Assign case number: ");
+            int caseNum = Integer.parseInt(input.nextLine());
 
-                for (int i: caseNums)
-                    if (caseNum == i) {
-                        return caseNum;
-                    }
+            for (int i: caseNums)
+                if (caseNum == i) {
+                    return caseNum;
+                }
 
-                throw new Exception();
-            } catch (Exception e) {
-                System.out.println("ss\n");
-            }
+            System.out.println("Invalid input!\n");
         } while (true);
     }
 
