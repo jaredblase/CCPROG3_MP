@@ -97,7 +97,7 @@ public class Citizen {
      * Returns the username of the user.
      * @return the username of the user.
      */
-    protected String getUsername() {
+    public String getUsername() {
         return USERNAME;
     }
 
