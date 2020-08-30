@@ -1,7 +1,6 @@
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Scanner;
-import java.text.SimpleDateFormat;
 
 /**
  * This Citizen class holds the information of a citizen and methods
@@ -34,11 +33,12 @@ public class Citizen {
     private boolean isPositive;
     /** Records that indicate when and where the user may be infected. */
     private ArrayList<Visit> contactPlaces;
-    /** The String array containing the update details options of the user. */
-    private static final String[] UPDATE_OPTIONS = {"Name", "Home Address", "Office Address", "Phone Number",
-            "E-Mail", "Password", "Back to User Menu"};
-    /** The String array containing the menu options of the user. */
-    protected static String[] menuOptions = {"Check in", "Report positive", "Update profile information", "Logout"};
+    /** The Menu class for the update details options of the user. */
+    public static final Menu UPDATE_OPTIONS = new Menu("Update", "Name", "Home Address",
+            "Office Address", "Phone Number", "E-Mail", "Password", "Back to User Menu");
+    /** The Menu class for the menu options of the user. */
+    protected static Menu userMenu = new Menu("User", "Check in", "Report positive",
+            "Update profile information", "Logout");
 
     /**
      * Receives the personal information of the user, along with the username and password
@@ -78,6 +78,14 @@ public class Citizen {
     }
 
     /**
+     * Returns the Name object containing the name of the user.
+     * @return the Name object of the user.
+     */
+    public Name getName() {
+        return name;
+    }
+
+    /**
      * Returns the home address of the user.
      * @return the home address of the user.
      */
@@ -89,7 +97,7 @@ public class Citizen {
      * Returns the username of the user.
      * @return the username of the user.
      */
-    protected String getUsername() {
+    public String getUsername() {
         return USERNAME;
     }
 
@@ -110,31 +118,71 @@ public class Citizen {
     }
 
     /**
-     * Main entry point of the user after logging in.
+     * Returns the Menu object for the Citizen class.
+     * @return the Menu object for the Citizen class.
      */
-    public void showMenu() {
-        int opt;
-
-        do {
-            prompt();
-            opt = Menu.display("User", menuOptions);
-            chooseMenu(opt);
-        } while (opt != 4);
-
-        UserSystem.updateUser(this);
+    public Menu getUserMenu() {
+        return userMenu;
     }
 
     /**
-     * Retrieves the visitation information from the user such as the establishment
-     * code and date and adds this to his visit records.
+     * Returns the status whether the user is reported positive or not.
+     * @return the status whether the user is reported positive or not.
      */
-    private void checkIn() {
-        Scanner input = new Scanner(System.in);
+    public boolean getIsPositive() {
+        return isPositive;
+    }
 
-        System.out.print("Establishment Code: ");
-        String estCode = input.nextLine();
+    /**
+     * Sets the personal details fields of the object (indicated by opt) with updated information.
+     * @param opt indicates which field to replace.
+     * @param info the new String to replace the current personal details.
+     * @throws Exception if the String received is empty or not comprised of digits when replacing
+     *                      the phone number information.
+     */
+    public void setPersonalDetails(int opt, String info) throws Exception {
+        info = info.trim();
 
-        Calendar date = getDate();
+        if (!info.isBlank()) {
+            switch (opt) {
+                case 2 -> homeAddress = info;
+                case 3 -> officeAddress = info;
+                case 4 -> {
+                    if (info.matches("\\d+")) {
+                        phoneNumber = info;
+                    } else {
+                        throw new Exception("Phone number must only contain digits!");
+                    }
+                }
+                case 5 -> email = info;
+            }
+        } else {
+            throw new Exception(UPDATE_OPTIONS.getOption(opt - 1) + " cannot be left blank!");
+        }
+    }
+
+    /**
+     * Sets the password of the user.
+     * @param password the new password to replace the old one.
+     * @throws Exception if the new password is invalid.
+     */
+    public void setPassword(String password) throws Exception {
+        if (UserSystem.isValidPassword(password)) {
+            this.password = password;
+        } else {
+            throw new Exception("Password must contain at least 6 characters including 1 digit or special " +
+                    "character that is not a space!\n");
+        }
+    }
+
+    /**
+     * Adds a new visit records to the list of visit records based on the given
+     * visitation information such as the establishment code and date.
+     * @param estCode the establishment code of the visit record.
+     * @param date the date when the visit was made.
+     */
+    public void checkIn(String estCode, Calendar date) {
+        // get machine time
         Calendar time = Calendar.getInstance();
         date.set(Calendar.HOUR_OF_DAY, time.get(Calendar.HOUR_OF_DAY));
         date.set(Calendar.MINUTE, time.get(Calendar.MINUTE));
@@ -148,68 +196,11 @@ public class Citizen {
      * Changes the isPositive field to true and automatically adds
      * this record to the list of cases in the system only if the user
      * has not reported positive before.
+     * @param date the date when user reported positive.
      */
-    private void reportPositive() {
-        if (!isPositive) {
-            isPositive = true;
-            UserSystem.addCase(this.USERNAME, getDate());
-            System.out.println("Case reported. Thank you.\n");
-        } else {
-            System.out.println("You are already reported positive!");
-        }
-    }
-
-    /**
-     * The facility that handles the updating of personal information.
-     */
-    private void updateInfo() {
-        int opt, max = UPDATE_OPTIONS.length;
-
-        do {
-            boolean isChanged = false;
-            opt = Menu.display("Update Information", UPDATE_OPTIONS);
-            if (opt != max) {
-                if (opt == 1) {
-                    isChanged = name.changeName();
-                } else if (opt == max - 1) {
-                    this.password = UserSystem.checkPassword();
-                    isChanged = true;
-                } else {
-                    Scanner input = new Scanner(System.in);
-                    System.out.print("New " + UPDATE_OPTIONS[opt - 1] + ": ");
-                    String str = input.nextLine();
-
-                    if (!str.isBlank()) {           // will not allow blank inputs
-                        switch (opt) {
-                            case 2 -> this.homeAddress = str;
-                            case 3 -> this.officeAddress = str;
-                            case 4 -> this.phoneNumber = str;
-                            case 5 -> this.email = str;
-                        }
-                        isChanged = true;
-                    } else {
-                        System.out.println("Invalid input!");
-                    }
-                }
-
-                if (isChanged) {
-                    UserSystem.updateUser(this);
-                    System.out.println(UPDATE_OPTIONS[opt - 1] + " has been updated!\n");
-                }
-            }
-        } while (opt != max);
-    }
-
-    /**
-     * Calls the appropriate function based on the user's input.
-     * @param opt integer representing the chosen menu option.
-     */
-    protected void chooseMenu(int opt) {
-        switch (opt) {
-            case 1 -> checkIn();
-            case 2 -> reportPositive();
-            case 3 -> updateInfo();
-        }
+    public void reportPositive(Calendar date) {
+        isPositive = true;
+        UserSystem.addCase(this.USERNAME, date);
     }
 
     /**
@@ -234,7 +225,7 @@ public class Citizen {
      * Displays a message if the user has possibly came in contact
      * with a positive case.
      */
-    protected void prompt() {
+    public void prompt() {
         if (!isPositive) {
             SimpleDateFormat format = new SimpleDateFormat("MM,dd,yyyy");
             Calendar temp = Calendar.getInstance();
@@ -245,47 +236,14 @@ public class Citizen {
                 }
             }
 
-            if (contactPlaces.size() != 0) { // there are still possible contact times after removing
+            if (!contactPlaces.isEmpty()) { // there are still possible contact times after removing
                 System.out.println("You may have been in contact with a positive patient on: ");
                 for (Visit contactPlace : contactPlaces)
                     System.out.println(format.format(contactPlace.getCheckIn()) + " in " +
                             contactPlace.getEstCode());
-                System.out.println("You are advised to get tested and report via the app should the result be positive.\n");
+                System.out.println("You are advised to get tested and report via the " +
+                        "app should the result be positive.\n");
             }
         }
-    }
-
-    /**
-     * Retrieves a date input from the user and attempts to build a Calendar object
-     * from it.
-     * @return a valid date.
-     */
-    protected Calendar getDate() {
-        Scanner input = new Scanner(System.in);
-        Calendar date = null;
-        Calendar.Builder builder = new Calendar.Builder();
-        builder.setLenient(false);
-        int year, month, day;
-
-        do {
-            try {
-                System.out.println("-DATE-");
-                System.out.print("Year: ");
-                year = Integer.parseInt(input.nextLine());
-
-                System.out.print("Month: ");
-                month = Integer.parseInt(input.nextLine());
-
-                System.out.print("Day: ");
-                day = Integer.parseInt(input.nextLine());
-
-                builder.setDate(year, month - 1, day);
-                date = builder.build();
-            } catch (Exception e) {
-                System.out.println("Invalid date input!\n");
-            }
-        } while (date == null);
-
-        return date;
     }
 }

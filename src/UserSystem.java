@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.Calendar;
 
 /**
@@ -98,90 +97,36 @@ public class UserSystem {
     }
 
     /**
-     * Obtains the input username then calls register(username) to handle
-     * the rest of the registration process.
+     * Checks if the username has not been taken.
+     * @param username the username.
+     * @return true if the username is still available, false otherwise.
      */
-    public static void register() {
-        Scanner input = new Scanner(System.in);
-
-        System.out.println("ACCOUNT CREATION\n");
-        System.out.print("Username: ");
-        register(input.nextLine());
+    public static boolean isValidNewUsername(String username) {
+        return getIndexOf(username) == -1 && !username.isBlank();
     }
 
     /**
-     * Handles the registration of a new user given a username.
-     * @param username the chosen username of the account to created.
+     * Adds the citizen object to the database.
+     * @param citizen the new user to add to the database.
      */
-    public static void register(String username) {
-        Scanner input = new Scanner(System.in);
-
-        // Checks if the username is already taken.
-        // If it is, this block loops and asks for a new input.
-        while (getIndexOf(username) != -1 || username.isBlank()) {
-            if (getIndexOf(username) != -1) // taken username
-                System.out.println("Username has already been taken!\n");
-            else // username is blank
-                System.out.println("Invalid username!\n");
-            System.out.print("Username: ");
-            username = input.nextLine();
-        }
-        String password = checkPassword();
-        System.out.println("\nPersonal Information:");
-
-        // get name
-        String firstName = getValidString("First name");
-        System.out.print("Middle name: ");
-        String secondName = input.nextLine().trim();
-        String lastName = getValidString("Last name");
-
-        // other information
-        String homeAdd = getValidString("Home address");
-        String officeAdd = getValidString("Office address");
-        String phoneNumber = getValidString("Phone number");
-        String email = getValidString("Email address");
-
+    public static void register(Citizen citizen) {
         // add username, role, and information to ArrayList and add new ArrayList for visit records
-        usernames.add(username);
+        usernames.add(citizen.getUsername());
         roles.add("citizen");
-        users.add(new Citizen(new Name(firstName, secondName, lastName), homeAdd, officeAdd, phoneNumber,
-                email, username, password));
+        users.add(citizen);
         records.add(new ArrayList<>());
-        System.out.println("----YOU MAY NOW LOGIN WITH YOUR NEW ACCOUNT----");
     }
 
     /**
-     * Prints the question and receives a String input. If the input is invalid, it loops.
-     * @param question the question to be printed
-     * @return a non empty String
-     */
-    private static String getValidString(String question) {
-        Scanner input = new Scanner(System.in);
-        question += ": ";
-
-        System.out.print(question);
-        String str = input.nextLine().trim();
-        while (str.isEmpty()) {
-            System.out.println("Invalid input!\n");
-            System.out.print(question);
-            str = input.nextLine();
-        }
-
-        return str;
-    }
-
-    /**
-     * Handles the logging in of an existing user. It asks the user to input his username
-     * and password. Once valid, loads everything from the user's information in the system.
+     * Handles the logging in of an existing user. Based on the username and password,
+     * determines if they are valid. Once valid, loads everything from the user's
+     * information in the system.
+     * @param username the username of the user logging in.
+     * @param password the password of the user logging in.
      * @return a constructed Citizen object with the user's details.
      */
-    public static Citizen login() {
-        Scanner input = new Scanner(System.in);
-
-        System.out.print("Username: ");
-        int index = getIndexOf(input.nextLine());
-        System.out.print("Password: ");
-        String password = input.nextLine();
+    public static Citizen login(String username, String password) {
+        int index = getIndexOf(username);
 
         if (index != -1 && users.get(index).getPassword().equals(password)) {
             String role = getRoleOf(index);
@@ -195,8 +140,6 @@ public class UserSystem {
                 case "tracer":
                     return new Tracer((Tracer) users.get(index));
             }
-        } else {
-            System.out.println("Invalid username/password!");
         }
 
         return null;
@@ -205,23 +148,13 @@ public class UserSystem {
     /**
      * Asks the user to enter a new password and check it for validity.<br>
      * Once valid, returns the chosen password.
-     * @return valid password entered by the user.
+     * @param pass the String to be checked.
+     * @return true if it valid, false otherwise.
      */
-    public static String checkPassword() {
-        Scanner input = new Scanner(System.in);
+    public static boolean isValidPassword(String pass) {
         String regex = "[\\w\\s]*[\\W\\d][\\w\\s]*"; // looks for at least one special character
 
-        System.out.print("New Password: ");
-        String pass = input.nextLine();
-        // Loops and asks for another password while the password is invalid.
-        while(pass.length() < 6 || !pass.replaceAll("\\s+", "").matches(regex)) {
-            System.out.println("Password must contain at least 6 characters including 1 digit or special " +
-                    "character that is not a space!\n");
-            System.out.print("New Password: ");
-            pass = input.nextLine();
-        }
-
-        return pass;
+        return pass.length() >= 6 && pass.replaceAll("\\s+", "").matches(regex);
     }
 
     /**
@@ -236,10 +169,10 @@ public class UserSystem {
             nTracers--;
         } else if (role.equals("tracer")) { // new role is tracer
             nTracers++;
+            updateUser(new Tracer(users.get(index)));
         }
 
         roles.set(index, role);
-        System.out.println("Modification success!");
     }
 
     /**
@@ -271,7 +204,7 @@ public class UserSystem {
     /**
      * Initializes all the ArrayLists and creates the admin account.
      */
-    public static void loadUsers() {
+    public static void loadSystem() {
         usernames = new ArrayList<>();
         roles = new ArrayList<>();
         users = new ArrayList<>();
@@ -279,10 +212,10 @@ public class UserSystem {
         cases = new ArrayList<>();
         nTracers = 0;
 
-        usernames.add("Admin2020");
+        usernames.add("ADMIN2020");
         roles.add("official");
         users.add(new GovOfficial(new Citizen(new Name("Admin", "A", "Gov"), "Malacañang",
-                "City Hall", "09328287114", "admin@gov.ph", "Admin2020",
+                "City Hall", "09328287114", "admin@gov.ph", "ADMIN2020",
                 "@Dm1n0202")));
         records.add(new ArrayList<>());
     }

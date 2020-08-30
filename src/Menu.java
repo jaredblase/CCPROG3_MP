@@ -1,4 +1,4 @@
-import java.util.Scanner;
+
 
 /**
  * The Menu class is used for generating menus and retrieving an answer from the user.
@@ -7,80 +7,57 @@ import java.util.Scanner;
  * @version 1.1
  */
 public class Menu {
+    /** The header of the menu. */
+    private final String HEADER;
+    /** The options that may be selected in the menu. */
+    private final String[] OPTIONS;
+
     /**
-     * Displays the header of the menu before showing all the menu options passed
-     * to the method in a numbered order.
-     * @param header the header of the menu to be printed i.e. Main Menu.
-     * @param options a variable argument to store the menu options in an array.
-     * @return the option number chosen.
+     * Constructs a Menu object and assigns the header and the list of options.
+     * @param header the header of the menu.
+     * @param options the options that may be selected in the menu.
+     */
+    public Menu(String header, String...options) {
+        this.HEADER = header + " Menu";
+        this.OPTIONS = options;
+    }
+
+    /**
+     * Returns the number of options of the menu.
+     * @return the number of options of the menu.
+     */
+    public int length() {
+        return OPTIONS.length;
+    }
+
+    /**
+     * Displays the header of the menu before showing all the options
+     * in a numbered order.
      * @since 1.0
      */
-    public static int display(String header, String...options) {
+    public void display() {
         int ctr = 1;
 
         //display menu
         System.out.println();
-        System.out.println(header + " Menu");
-        for (String i: options) {
+        System.out.println(HEADER);
+        for (String i: OPTIONS) {
             System.out.println(ctr++ + " - " + i);
         }
         System.out.println();
-
-        return getAnswer(options.length); //return option input
     }
 
     /**
-     * Displays yes or no question and returns a validated answer.
-     * @param question the question to be displayed.
-     * @return Y for yes, N for no.
-     * @since 1.1
+     * Returns the option that is located in the given index of the list of options.
+     * @param index the index of the option in the list of options.
+     * @return the option that is located in the given index of the list of options.
      */
-    public static char YorN(String question) {
-        String opt;
-        Scanner input = new Scanner(System.in);
-
-        do {
-            System.out.print(question + "? (Y/N) ");
-            try {
-                opt = input.nextLine(); // get input
-                opt = opt.toUpperCase(); // capitalize
-                if (!opt.equals("Y") && !opt.equals("N")) { //invalid option input
-                    throw new Exception();
-                }
-            } catch (Exception e) {
-                System.out.println("Invalid option!\n");
-                opt = null;
-            }
-        } while (opt == null);
-
-        return opt.charAt(0);
-    }
-
-    /**
-     * Obtains an integer by means of the Scanner and Integer class. Also performs
-     * exception handling in case an invalid option is input by the user.
-     * @param max indicates the number of menu options available.
-     * @return a number representing the chosen option of the user.
-     * @since 1.0
-     */
-    private static int getAnswer(int max) {
-        Scanner input = new Scanner(System.in);
-        int opt;
-
-        do {
-            System.out.print("Option: ");
-            try {
-                opt = Integer.parseInt(input.nextLine()); // get input
-                if (opt < 1 || opt > max) {//invalid option input
-                    throw new Exception();
-                }
-            } catch (Exception e) {
-                System.out.println("Invalid option!\n");
-                opt = max + 1; //set opt to loop again
-            }
-        } while (opt > max);
-
-       // input.close();
-        return opt;
+    public String getOption(int index) {
+        try {
+            return OPTIONS[index];
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 }

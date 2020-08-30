@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Scanner;
 
 /**
  * This Tracer class extends the Citizen class and includes contact tracer
@@ -8,13 +7,14 @@ import java.util.Scanner;
  * and informing contacts of their possible exposure.
  * @author Gabriel Pua
  * @author Jared Sy
- * @version 0.1
+ * @version 1
  * @see Citizen
  */
 public class Tracer extends Citizen {
     /** The String array containing the menu options of the user. */
-    protected static String[] menuOptions = {"Check in", "Report positive", "Update profile information",
-            "Show Cases", "Trace Specific Case", "Inform Citizens Possibly Exposed", "Logout"};
+    protected static Menu userMenu = new Menu("User","Check in", "Report positive",
+            "Update profile information", "Show Cases", "Trace Specific Case",
+            "Inform Citizens Possibly Exposed", "Logout");
     /** The list of cases assigned to the contact tracer. */
     private ArrayList<Case> assigned;
     /** The list of contacts of all cases. */
@@ -22,22 +22,35 @@ public class Tracer extends Citizen {
     /** The list of visit records when and where the contacts may have been exposed. */
     private ArrayList<ArrayList<Visit>> contactPlaces;
 
+    public Tracer(Citizen other) {
+        super(other);
+
+        assigned = new ArrayList<>();
+        contacts = new ArrayList<>();
+        contactPlaces = new ArrayList<>();
+
+        for (Case i: UserSystem.getCases()) {
+            // tracer is assigned to case and status is pending
+            if (i.getTracer().equals(getUsername()) && i.getStatus() == 'P') {
+                assigned.add(i);
+                contacts.add(new ArrayList<>());
+                contactPlaces.add(new ArrayList<>());
+            }
+        }
+    }
+
     /**
-     * Receives a Citizen class and makes an exact copy of its attributes.
+     * Receives a Citizen class and makes an exact copy of its attributes. The list
+     * of all cases in the system is also checked. If a case is assigned to the
+     * contact tracer, the case is added to the list of assigned cases.
      * @param other the object used to construct the new object.
      */
     public Tracer(Tracer other) {
         super(other);
 
-        if (assigned.isEmpty()) {
-            assigned = new ArrayList<>();
-            contacts = new ArrayList<>();
-            contactPlaces = new ArrayList<>();
-        } else {
-            this.assigned = other.assigned;
-            this.contacts = other.contacts;
-            this.contactPlaces = other.contactPlaces;
-        }
+        this.assigned = other.assigned;
+        this.contacts = other.contacts;
+        this.contactPlaces = other.contactPlaces;
 
         for (Case i: UserSystem.getCases()) {
             // tracer is assigned to case and status is pending and case not yet in list of assigned cases
@@ -50,88 +63,36 @@ public class Tracer extends Citizen {
     }
 
     /**
-     * Main entry point of the user after logging in.
+     * Returns the Menu object for the Citizen class.
+     * @return the Menu object for the Citizen class.
      */
     @Override
-    public void showMenu() {
-        int opt;
-
-        do {
-            super.prompt();
-            opt = Menu.display("User", menuOptions);
-            chooseMenu(opt);
-        } while (opt != 7);
-
-        UserSystem.updateUser(this);
-    }
-
-    /**
-     * Calls the appropriate function based on the user's input.
-     * @param opt integer representing the chosen menu option.
-     */
-    @Override
-    protected void chooseMenu(int opt) {
-        if (opt < 4) {
-            super.chooseMenu(opt);
-        } else {
-            switch (opt) {
-                case 4 -> showCases();
-                case 5 -> trace();
-                case 6 -> broadcast();
-            }
-        }
+    public Menu getUserMenu() {
+        return userMenu;
     }
 
     /**
      * Displays the case numbers of the assigned cases to the contact tracer.
      */
-    private void showCases() {
-        System.out.println("Cases Assigned:");
+    public void showCases() {
         for (Case i: assigned) {
             System.out.println(i.getCaseNum());
         }
     }
 
     /**
-     * Gets a case number from the user and traces and displays the contacts
-     * of the corresponding case.
+     * Returns the list of cases assigned to the contact tracer.
+     * @return the list of cases assigned to the contact tracer.
      */
-    private void trace() {
-        if (assigned.size() == 0) { // no cases assigned
-            System.out.println("No assigned cases");
-        } else { // at least 1 assigned case
-            Scanner input = new Scanner(System.in);
-            int caseNum = -1;
-            boolean status = false;
-
-            // get case number
-            try {
-                System.out.print("Enter case number to be traced: ");
-                caseNum = Integer.parseInt(input.nextLine());
-
-                for (Case i: assigned) {
-                    if (i.getCaseNum() == caseNum) { // case number is assigned
-                        status = true;
-                        break;
-                    }
-                }
-
-                if (!status) // case number is not among assigned cases
-                    throw new Exception();
-            } catch (Exception e) {
-                System.out.println("Invalid input. Use the show cases option to view your assigned cases.\n");
-            }
-
-            if (status) // valid case number input
-                trace(caseNum);
-        }
+    public ArrayList<Case> getAssigned() {
+        return assigned;
     }
 
     /**
      * Traces the contacts of a case given the case number and displays them.
      * @param caseNum the case number of a case.
      */
-    private void trace(int caseNum) {
+    public void trace(int caseNum) {
         Case positive = null;
         for (Case i: assigned) {
             if (i.getCaseNum() == caseNum) { // case number is assigned
@@ -218,8 +179,11 @@ public class Tracer extends Citizen {
     }
 
     /**
-     * Determines if there is an intersection between two time intervals.
-     * Returns true if there is an intersection and false otherwise.
+     * Determines if there is an intersection between two time intervals of the same
+     * day. Both end times are assumed to be after the start times. If the end time
+     * and the start time are not on the same day or the end time is null, the end time
+     * is by default set to 11:59PM of the same day as the start time. Returns true
+     * if there is an intersection and false otherwise.
      * @param startA the starting time of the first interval.
      * @param endA the ending time of the first interval.
      * @param startB the starting time of the second interval.
@@ -268,7 +232,7 @@ public class Tracer extends Citizen {
      * Informs the contacts that they may possibly be exposed. Contacts
      * are also informed when and where they may possibly be exposed.
      */
-    private void broadcast() {
+    public void broadcast() {
         for (int i = 0; i < contacts.size(); i++) {
             if (contacts.get(i) == null)
                 continue;
