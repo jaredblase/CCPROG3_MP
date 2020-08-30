@@ -30,8 +30,8 @@ public class Tracer extends Citizen {
         contactPlaces = new ArrayList<>();
 
         for (Case i: UserSystem.getCases()) {
-            // tracer is assigned to case and status is pending and case not yet in list of assigned cases
-            if (i.getTracer().equals(getUsername()) && i.getStatus() == 'P' && !assigned.contains(i)) {
+            // tracer is assigned to case and status is pending
+            if (i.getTracer().equals(getUsername()) && i.getStatus() == 'P') {
                 assigned.add(i);
                 contacts.add(new ArrayList<>());
                 contactPlaces.add(new ArrayList<>());
