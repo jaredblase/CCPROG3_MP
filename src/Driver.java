@@ -208,7 +208,7 @@ public class Driver {
      * @param opt integer representing the chosen menu option.
      * @param user the user that is currently logged in.
      */
-    private  void citizenActions(int opt, Citizen user) {
+    private void citizenActions(int opt, Citizen user) {
         Scanner input = new Scanner(System.in);
 
         switch (opt) {
