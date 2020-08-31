@@ -346,15 +346,18 @@ public class Driver {
 
         // get case number
         do {
-            System.out.print("Assign case number: ");
-            int caseNum = Integer.parseInt(input.nextLine());
+            try {
+                System.out.print("Assign case number: ");
+                int caseNum = Integer.parseInt(input.nextLine());
 
-            for (int i: caseNums)
-                if (caseNum == i) {
-                    return caseNum;
-                }
-
-            System.out.println("Invalid input!\n");
+                for (int i : caseNums)
+                    if (caseNum == i) {
+                        return caseNum;
+                    }
+                throw new Exception();
+            } catch (Exception e) {
+                System.out.println("Invalid input!\n");
+            }
         } while (true);
     }
 
