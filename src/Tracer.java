@@ -110,7 +110,7 @@ public class Tracer extends Citizen {
         if (positive != null) { // valid input
             int posIndex = assigned.indexOf(positive);
 
-            if (contacts.get(posIndex) == null) { // never traced before
+            if (contacts.get(posIndex).isEmpty()) { // never traced before
                 checkContacts(positive, posIndex);
             }
             displayContacts(contacts.get(posIndex));
@@ -239,6 +239,9 @@ public class Tracer extends Citizen {
      * are also informed when and where they may possibly be exposed.
      */
     public void broadcast() {
+        int[] caseNums = new int[assigned.size()];
+        int ctr = 0;
+
         for (int i = 0; i < contacts.size(); i++) {
             if (contacts.get(i) == null)
                 continue;
@@ -255,9 +258,15 @@ public class Tracer extends Citizen {
             // tracing is complete
             Case remove = assigned.remove(i);
             remove.setStatus('T');
+            caseNums[ctr++] = remove.getCaseNum();
             contacts.remove(i);
             contactPlaces.remove(i);
         }
+
+        System.out.print("Tracing completed for the following cases: ");
+        for (int i = 0; i < ctr; i++)
+            System.out.print(caseNums[i] + " ");
+        System.out.println();
     }
 
     /**
