@@ -44,17 +44,4 @@ public class Visit {
     public String getEstCode() {
         return EST_CODE;
     }
-
-    /**
-     * Return the string formatted as follows:<br>
-     * &lt;establishment code&gt;&lt;space&gt;&lt;month&gt;,&lt;day&gt;,&lt;year&gt;&lt;space&gt;&lt;24-hour
-     * format&gt;
-     * @return the formatted String.
-     * @since 1.0
-     */
-    @Override
-    public String toString() {
-        SimpleDateFormat format = new SimpleDateFormat("MM,dd,yyyy HHmm");
-        return EST_CODE + " " + format.format(CHECK_IN.getTime());
-    }
 }

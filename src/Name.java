@@ -12,7 +12,7 @@ public class Name {
     private String middle;
     /** The last name. */
     private String last;
-    /** Menu options for changing names. */
+    /** The Menu object for the options of changing names. */
     public static final Menu CHANGE_NAME_MENU = new Menu ("Change Name","First Name",
             "Middle Name", "Last Name", "Back");
 
@@ -32,7 +32,7 @@ public class Name {
     }
 
     /**
-     * Sets the first, middle, or last name (indicated by opt), and replace it
+     * Sets the first, middle, or last name (indicated by opt), and replaces it
      * with str.
      * @param opt indicates which part of the name to change.
      * @param str the String to replace the name.

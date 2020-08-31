@@ -5,7 +5,7 @@ import java.util.Calendar;
  * The Case class holds all the information for a positive case. It also
  * provides methods to retrieve data from it, and set some of the other data.
  * @author Gabriel Pua
- * @author Jared
+ * @author Jared Sy
  * @version 1.1
  */
 public class Case {

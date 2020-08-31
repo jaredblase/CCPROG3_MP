@@ -7,11 +7,11 @@ import java.util.Calendar;
  * and informing contacts of their possible exposure.
  * @author Gabriel Pua
  * @author Jared Sy
- * @version 1
+ * @version 1.1
  * @see Citizen
  */
 public class Tracer extends Citizen {
-    /** The Menu class containing the menu options of the user. */
+    /** The Menu object for the menu options of the user. */
     protected static Menu userMenu = new Menu("User","Check in", "Report positive",
             "Update profile information", "Show Cases", "Trace Specific Case",
             "Inform Citizens Possibly Exposed", "Logout");
@@ -69,8 +69,8 @@ public class Tracer extends Citizen {
     }
 
     /**
-     * Returns the Menu object for the Citizen class.
-     * @return the Menu object for the Citizen class.
+     * Returns the Menu object for the Tracer class.
+     * @return the Menu object for the Tracer class.
      */
     @Override
     public Menu getUserMenu() {
@@ -271,8 +271,8 @@ public class Tracer extends Citizen {
     }
 
     /**
-     * Called when a contact tracer is demoted to a citizen. Sets
-     * all assigned cases to become unassigned.
+     * Called when a contact tracer is demoted to a citizen. Sets all attributes unique
+     * to the Tracer class to null.
      */
     public void demote() {
         assigned = null;

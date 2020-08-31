@@ -10,13 +10,13 @@ import java.util.function.Predicate;
  * @see Citizen
  */
 public class GovOfficial extends Citizen {
-    /** The String array containing the menu options of the user. */
+    /** The Menu object for the menu options of the user. */
     protected static Menu userMenu = new Menu("User","Check in", "Report positive",
             "Update profile information", "Show Unassigned Cases", "Show Contact Tracing Updates",
             "Analytics", "Create Government Official Account", "Create Contact Tracer Account",
             "Terminate Account", "Logout");
 
-    /** The String array containing the analytics menu options of the user. */
+    /** The Menu object for the analytics menu options of the user. */
     public static final Menu ANALYTICS_MENU = new Menu("Analytics",
             "Number of positive cases in a city within a duration",
             "Number of positive cases within a duration",
@@ -31,8 +31,8 @@ public class GovOfficial extends Citizen {
     }
 
     /**
-     * Returns the Menu object for the Citizen class.
-     * @return the Menu object for the Citizen class.
+     * Returns the Menu object for the GovOfficial class.
+     * @return the Menu object for the GovOfficial class.
      */
     @Override
     public Menu getUserMenu() {
@@ -40,7 +40,7 @@ public class GovOfficial extends Citizen {
     }
 
     /**
-     * Displays all the case number of unassigned cases and returns the array
+     * Displays all the case numbers of unassigned cases and returns the array
      * of those case numbers.
      * @return the array of case numbers of unassigned cases.
      */
@@ -156,7 +156,7 @@ public class GovOfficial extends Citizen {
 
     /**
      * Iterates through all the cases and counts the cases that pass
-     * the test (filter). Displays the final count.
+     * the test (filter). Returns the final count.
      * @param filter the test to be performed on each entry.
      * @return the number of cases that fit the criteria.
      */
@@ -172,8 +172,8 @@ public class GovOfficial extends Citizen {
     }
 
     /**
-     * Obtains an input from the user and check if it is a valid input for a city
-     * or not (empty or contains a number and other special characters).<br>
+     * Obtains an input from the user and checks if it is a invalid input (empty or contains a number
+     * and other special characters) for a city or not.<br>
      * Precondition: There are no cities which names have numbers and special symbols in them except
      * apostrophes, periods, hyphens, and accented characters.
      * @param city the name to be checked for validity.

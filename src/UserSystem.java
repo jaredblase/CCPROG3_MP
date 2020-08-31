@@ -3,30 +3,29 @@ import java.util.Calendar;
 
 /**
  * This class handles everything that deals with any actions of a user outside of his account
- * such as registering, login, loading and saving of users to the master list, and changing of
- * passwords since they are not loaded into the memory during the session.
+ * such as registering, login, and loading and saving of users to the master list.
  * @author Gabriel Pua
  * @author Jared Sy
  * @version 1.1
  */
 public class UserSystem {
-    /** All the registered usernames */
+    /** All the registered usernames. */
     private static ArrayList<String> usernames;
-    /** The roles of the registered users */
+    /** The roles of the registered users. */
     private static ArrayList<String> roles;
-    /** The data of each user */
+    /** The data of each user. */
     private static ArrayList<Citizen> users;
-    /** The visit records of each user */
+    /** The visit records of each user. */
     private static ArrayList<ArrayList<Visit>> records;
-    /** The list of positive cases */
+    /** The list of positive cases. */
     private static ArrayList<Case> cases;
-    /** The number of registered tracers */
+    /** The number of registered tracers. */
     private static int nTracers;
 
     /**
      * Checks if the username received is in the master list.
      * @param username the name to be checked in the master list.
-     * @return -1 if not found, greater than or equal to 0 otherwise.
+     * @return the index of the username in the list, and -1 if it is not in the list.
      */
     public static int getIndexOf(String username) {
         return usernames.indexOf(username);
@@ -146,10 +145,10 @@ public class UserSystem {
     }
 
     /**
-     * Asks the user to enter a new password and check it for validity.<br>
-     * Once valid, returns the chosen password.
+     * Asks the user to enter a new password and checks it for validity. Returns true if valid
+     * and false otherwise.
      * @param pass the String to be checked.
-     * @return true if it valid, false otherwise.
+     * @return true if it is valid, false otherwise.
      */
     public static boolean isValidPassword(String pass) {
         String regex = "[\\w\\s]*[\\W\\d][\\w\\s]*"; // looks for at least one special character
@@ -180,7 +179,7 @@ public class UserSystem {
     }
 
     /**
-     * Replaces the object in the system with the new and update one.
+     * Replaces the object in the system with the new and updated one.
      * @param citizen the object to replace the one in the system.
      */
     public static void updateUser(Citizen citizen) {

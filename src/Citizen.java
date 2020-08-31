@@ -33,10 +33,10 @@ public class Citizen {
     private boolean isPositive;
     /** Records that indicate when and where the user may be infected. */
     private ArrayList<Visit> contactPlaces;
-    /** The Menu class for the update details options of the user. */
+    /** The Menu object for the update details options of the user. */
     public static final Menu UPDATE_OPTIONS = new Menu("Update", "Name", "Home Address",
             "Office Address", "Phone Number", "E-Mail", "Password", "Back to User Menu");
-    /** The Menu class for the menu options of the user. */
+    /** The Menu object for the menu options of the user. */
     protected static Menu userMenu = new Menu("User", "Check in", "Report positive",
             "Update profile information", "Logout");
 
@@ -176,7 +176,7 @@ public class Citizen {
     }
 
     /**
-     * Adds a new visit records to the list of visit records based on the given
+     * Adds a new visit record to the list of visit records based on the given
      * visitation information such as the establishment code and date.
      * @param estCode the establishment code of the visit record.
      * @param date the date when the visit was made.
@@ -196,7 +196,7 @@ public class Citizen {
      * Changes the isPositive field to true and automatically adds
      * this record to the list of cases in the system only if the user
      * has not reported positive before.
-     * @param date the date when user reported positive.
+     * @param date the date when the user reported positive.
      */
     public void reportPositive(Calendar date) {
         isPositive = true;
@@ -204,7 +204,7 @@ public class Citizen {
     }
 
     /**
-     * Adds where and when a user may be infected.
+     * Adds when and where a user may be infected.
      * @param contactPlace the record that indicates when and where the user may be infected.
      */
     public void addContactInfo(Visit contactPlace) {
@@ -222,7 +222,7 @@ public class Citizen {
     }
 
     /**
-     * Displays a message if the user has possibly came in contact
+     * Displays a message if the user has possibly come in contact
      * with a positive case.
      */
     public void prompt() {
