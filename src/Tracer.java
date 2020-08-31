@@ -261,6 +261,7 @@ public class Tracer extends Citizen {
             caseNums[ctr++] = remove.getCaseNum();
             contacts.remove(i);
             contactPlaces.remove(i);
+            i--;
         }
 
         System.out.print("Tracing completed for the following cases: ");

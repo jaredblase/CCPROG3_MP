@@ -237,9 +237,10 @@ public class Citizen {
             }
 
             if (!contactPlaces.isEmpty()) { // there are still possible contact times after removing
+                System.out.println();
                 System.out.println("You may have been in contact with a positive patient on: ");
                 for (Visit contactPlace : contactPlaces)
-                    System.out.println(format.format(contactPlace.getCheckIn()) + " in " +
+                    System.out.println(format.format(contactPlace.getCheckIn().getTime()) + " in " +
                             contactPlace.getEstCode());
                 System.out.println("You are advised to get tested and report via the " +
                         "app should the result be positive.\n");

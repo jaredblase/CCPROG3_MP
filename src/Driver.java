@@ -213,12 +213,9 @@ public class Driver {
      * @param user the user that is currently logged in.
      */
     private void citizenActions(int opt, Citizen user) {
-        Scanner input = new Scanner(System.in);
-
         switch (opt) {
             case 1 -> {     // Check In
-                System.out.print("Establishment Code: ");
-                String estCode = input.nextLine();
+                String estCode = getValidString("Establishment Code");
                 Calendar date = getDate();
                 user.checkIn(estCode, date);
             }
