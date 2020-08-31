@@ -6,7 +6,7 @@ import java.util.function.Predicate;
  * facilities such as viewing analytics, assigning cases, and promoting or terminating accounts.
  * @author Gabriel Pua
  * @author Jared Sy
- * @version 0.1
+ * @version 1.1
  * @see Citizen
  */
 public class GovOfficial extends Citizen {
@@ -158,6 +158,7 @@ public class GovOfficial extends Citizen {
      * Iterates through all the cases and counts the cases that pass
      * the test (filter). Displays the final count.
      * @param filter the test to be performed on each entry.
+     * @return the number of cases that fit the criteria.
      */
     private int countCases(Predicate<Case> filter) {
         int ctr = 0;
@@ -175,6 +176,7 @@ public class GovOfficial extends Citizen {
      * or not (empty or contains a number and other special characters).<br>
      * Precondition: There are no cities which names have numbers and special symbols in them except
      * apostrophes, periods, hyphens, and accented characters.
+     * @param city the name to be checked for validity.
      * @return true if the input is invalid, false otherwise.
      */
     private static boolean isInvalidCity(String city) {

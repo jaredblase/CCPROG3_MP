@@ -6,7 +6,7 @@ import java.util.Calendar;
  * to a an establishment. It also provides methods to retrieve data from it,
  * but once constructed, the fields cannot be reset.
  * @author Gabriel Pua
- * @author Jared
+ * @author Jared Sy
  * @version 1.1
  */
 public class Visit {

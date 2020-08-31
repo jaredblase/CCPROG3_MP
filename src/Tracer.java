@@ -11,7 +11,7 @@ import java.util.Calendar;
  * @see Citizen
  */
 public class Tracer extends Citizen {
-    /** The String array containing the menu options of the user. */
+    /** The Menu class containing the menu options of the user. */
     protected static Menu userMenu = new Menu("User","Check in", "Report positive",
             "Update profile information", "Show Cases", "Trace Specific Case",
             "Inform Citizens Possibly Exposed", "Logout");
@@ -22,6 +22,12 @@ public class Tracer extends Citizen {
     /** The list of visit records when and where the contacts may have been exposed. */
     private ArrayList<ArrayList<Visit>> contactPlaces;
 
+    /**
+     * Receives a Citizen class object and makes an exact copy of its attributes, and
+     * initializes the Tracer attributes. Checks for any assigned cases to the user and
+     * adds it to its attributes.
+     * @param other the object used to construct the new object.
+     */
     public Tracer(Citizen other) {
         super(other);
 
@@ -40,9 +46,9 @@ public class Tracer extends Citizen {
     }
 
     /**
-     * Receives a Citizen class and makes an exact copy of its attributes. The list
+     * Receives a Tracer class object and makes an exact copy of its attributes. The list
      * of all cases in the system is also checked. If a case is assigned to the
-     * contact tracer, the case is added to the list of assigned cases.
+     * contact tracer, the case is added to the list of assigned cases if it was not added before.
      * @param other the object used to construct the new object.
      */
     public Tracer(Tracer other) {
