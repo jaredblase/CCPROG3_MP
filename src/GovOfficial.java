@@ -6,7 +6,7 @@ import java.util.function.Predicate;
  * facilities such as viewing analytics, assigning cases, and promoting or terminating accounts.
  * @author Gabriel Pua
  * @author Jared Sy
- * @version 0.1
+ * @version 1.1
  * @see Citizen
  */
 public class GovOfficial extends Citizen {
