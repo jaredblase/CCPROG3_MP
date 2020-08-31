@@ -274,8 +274,6 @@ public class Tracer extends Citizen {
      * all assigned cases to become unassigned.
      */
     public void demote() {
-        for (Case i: assigned)
-            i.setTracer("000");
         assigned = null;
         contacts = null;
         contactPlaces = null;

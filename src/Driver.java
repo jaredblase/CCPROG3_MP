@@ -294,7 +294,7 @@ public class Driver {
             System.out.print("New " + menu.getOption(opt - 1).toLowerCase() + ": ");
             try {
                 user.getName().setName(opt, input.nextLine());
-                System.out.println("New " + Name.CHANGE_NAME_MENU.getOption(opt - 1) + ": ");
+                System.out.println("\nNew " + Name.CHANGE_NAME_MENU.getOption(opt - 1) + ": ");
                 System.out.println(user.getName().getFullName());
             } catch (Exception e) {
                 System.out.println(e.getMessage());

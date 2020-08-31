@@ -165,6 +165,10 @@ public class UserSystem {
     public static void setRoleOf(int index, String role) {
         if (roles.get(index).equals("tracer")) { // previous role is tracer
             Tracer temp = (Tracer) users.get(index);
+            for (Case i: cases) {
+                if (i.getTracer().equals(users.get(index).getUsername()))
+                    i.setTracer("000");
+            }
             temp.demote();
             nTracers--;
         } else if (role.equals("tracer")) { // new role is tracer
