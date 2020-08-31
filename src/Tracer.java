@@ -243,7 +243,7 @@ public class Tracer extends Citizen {
         int ctr = 0;
 
         for (int i = 0; i < contacts.size(); i++) {
-            if (contacts.get(i) == null)
+            if (contacts.get(i).isEmpty())
                 continue;
             if (!contacts.get(i).get(0).isEmpty()) { // there are people possibly exposed
                 for (int j = 0; j < contacts.get(i).size(); j++) {
