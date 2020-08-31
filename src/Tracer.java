@@ -11,7 +11,7 @@ import java.util.Calendar;
  * @see Citizen
  */
 public class Tracer extends Citizen {
-    /** The String array containing the menu options of the user. */
+    /** The Menu class containing the menu options of the user. */
     protected static Menu userMenu = new Menu("User","Check in", "Report positive",
             "Update profile information", "Show Cases", "Trace Specific Case",
             "Inform Citizens Possibly Exposed", "Logout");
