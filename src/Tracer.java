@@ -68,6 +68,12 @@ public class Tracer extends Citizen {
         }
     }
 
+    public Tracer(Name name, String homeAddress, String officeAddress, String phoneNumber,
+                  String email, String username, String password) {
+        super(name, homeAddress, officeAddress, phoneNumber, email, username, password);
+        // Needs some other stuff, I think
+    }
+
     /**
      * Returns the Menu object for the Tracer class.
      * @return the Menu object for the Tracer class.
