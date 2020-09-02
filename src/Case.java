@@ -43,6 +43,7 @@ public class Case {
         this.REPORT_DATE = REPORT_DATE;
         this.tracer = tracer;
         this.status = status;
+        ctr++;
     }
 
     /**

@@ -219,12 +219,6 @@ public class UserSystem {
         cases = new ArrayList<>();
         nTracers = 0;
 
-        usernames.add("ADMIN2020");
-        roles.add("official");
-        users.add(new GovOfficial(new Citizen(new Name("Admin", "A", "Gov"), "Malacañang",
-                "City Hall", "09328287114", "admin@gov.ph", "ADMIN2020",
-                "@Dm1n0202")));
-        records.add(new ArrayList<>());
         String[] info;
 
         // load master list along with citizen accounts
@@ -241,19 +235,21 @@ public class UserSystem {
                     String phoneNumber = reader.nextLine().substring(6);
                     String email = reader.nextLine().substring(6);
 
-                    switch (info[1]) {
-                        case "citizen":
+                    users.add(switch (info[1]) {
+                        case "citizen" ->
                             new Citizen(new Name(name[0], name[1], name[2]), homeAdd,
                                     officeAdd, phoneNumber, email, info[0], password);
 
-                        case "official":
+                        case "official" ->
                             new GovOfficial(new Name(name[0], name[1], name[2]), homeAdd,
                                     officeAdd, phoneNumber, email, info[0], password);
 
-                        case "tracer":
+                        case "tracer" ->
                             new Tracer(new Name(name[0], name[1], name[2]), homeAdd,
                                     officeAdd, phoneNumber, email, info[0], password);
-                    }
+
+                        default -> throw new IllegalStateException("Unexpected value: " + info[1]);
+                    });
                 } catch (Exception e) {
                     System.out.println("User file not found!");
                     e.printStackTrace();
@@ -271,11 +267,18 @@ public class UserSystem {
         try (Scanner input = new Scanner(new File("Establishment_Records.txt"))) {
             String temp;
             int i = 0, time;
-            while(input.hasNextLine()) {
+
+            input.nextLine(); // read username ADMIN2020
+            while (input.hasNextLine()) {
                 temp = input.nextLine();
-                if(temp.isEmpty() && input.hasNextLine()) {
-                    records.add(new ArrayList<>());
-                    i++;
+                if (temp.isEmpty()) {
+                    if(input.hasNextLine()) {
+                        records.add(new ArrayList<>());
+                        i++;
+                        input.nextLine(); // read username
+                    } else {
+                        break;
+                    }
                 } else {
                     info = temp.split(" ");
                     date = info[1].split(",");
@@ -285,6 +288,11 @@ public class UserSystem {
 
                     records.get(i).add(new Visit(info[0], builder.build()));
                 }
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("Establishment_Records.txt not found. No data to load.");
+            for(int i = 0; i < usernames.size(); i++) {
+                records.add(new ArrayList<>());
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -299,6 +307,8 @@ public class UserSystem {
 
                 cases.add(new Case(Integer.parseInt(info[0]), info[1], builder.build(), info[3], info[4].charAt(0)));
             }
+        } catch (FileNotFoundException e) {
+            System.out.println("Positive_Cases.txt not found. No data to load.");
         } catch (Exception e) {
             e.printStackTrace();
         }
