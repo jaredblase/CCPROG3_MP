@@ -61,4 +61,14 @@ public class Name {
     public String getFullName() {
         return first + " " + (middle.isEmpty()? "" : (middle + " ")) + last;
     }
+
+    /**
+     * Returns the full name of a Name object in String format.
+     * @return the full name separated by commas.
+     * @since 1.2
+     */
+    @Override
+    public String toString() {
+        return first + "," + middle + "," + last;
+    }
 }
