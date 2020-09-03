@@ -34,15 +34,6 @@ public class Tracer extends Citizen {
         assigned = new ArrayList<>();
         contacts = new ArrayList<>();
         contactPlaces = new ArrayList<>();
-
-        for (Case i: UserSystem.getCases()) {
-            // tracer is assigned to case and status is pending
-            if (i.getTracer().equals(getUsername()) && i.getStatus() == 'P') {
-                assigned.add(i);
-                contacts.add(new ArrayList<>());
-                contactPlaces.add(new ArrayList<>());
-            }
-        }
     }
 
     /**
@@ -66,12 +57,6 @@ public class Tracer extends Citizen {
                 contactPlaces.add(new ArrayList<>());
             }
         }
-    }
-
-    public Tracer(Name name, String homeAddress, String officeAddress, String phoneNumber,
-                  String email, String username, String password) {
-        super(name, homeAddress, officeAddress, phoneNumber, email, username, password);
-        // Needs some other stuff, I think
     }
 
     /**

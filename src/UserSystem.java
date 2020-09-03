@@ -118,6 +118,8 @@ public class UserSystem {
         roles.add("citizen");
         users.add(citizen);
         records.add(new ArrayList<>());
+
+        // create file here
     }
 
     /**
@@ -235,26 +237,20 @@ public class UserSystem {
                     String phoneNumber = reader.nextLine().substring(6);
                     String email = reader.nextLine().substring(6);
 
-                    users.add(switch (info[1]) {
-                        case "citizen" ->
-                            new Citizen(new Name(name[0], name[1], name[2]), homeAdd,
-                                    officeAdd, phoneNumber, email, info[0], password);
-
-                        case "official" ->
-                            new GovOfficial(new Name(name[0], name[1], name[2]), homeAdd,
-                                    officeAdd, phoneNumber, email, info[0], password);
-
-                        case "tracer" ->
-                            new Tracer(new Name(name[0], name[1], name[2]), homeAdd,
-                                    officeAdd, phoneNumber, email, info[0], password);
-
-                        default -> throw new IllegalStateException("Unexpected value: " + info[1]);
-                    });
+                    users.add(new Citizen(new Name(name[0], name[1], name[2]), homeAdd,
+                                    officeAdd, phoneNumber, email, info[0], password));
                 } catch (Exception e) {
                     System.out.println("User file not found!");
                     e.printStackTrace();
                 }
             } while (input.hasNextLine());
+
+            for (int i = 0; i < roles.size(); i++) {
+                // update user in list of users if role is tracer
+                if (!roles.get(i).equals("tracer")) {
+                    setRoleOf(i, roles.get(i));
+                }
+            }
         } catch (FileNotFoundException e) {
             System.out.println("Error! Master list not found.\nNo admin currently.");
         } catch (Exception e) {

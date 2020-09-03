@@ -31,21 +31,6 @@ public class GovOfficial extends Citizen {
     }
 
     /**
-     *
-     * @param name the Name object containing the name of the user.
-     * @param homeAddress the home address of the user.
-     * @param officeAddress the office address of the user.
-     * @param phoneNumber the phone number of the user.
-     * @param email the email address of the user.
-     * @param username the username of the user.
-     * @param password the password of the user.
-     */
-    public GovOfficial(Name name, String homeAddress, String officeAddress, String phoneNumber,
-                       String email, String username, String password) {
-        super(name, homeAddress, officeAddress, phoneNumber, email, username, password);
-    }
-
-    /**
      * Returns the Menu object for the GovOfficial class.
      * @return the Menu object for the GovOfficial class.
      */
