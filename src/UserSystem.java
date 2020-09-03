@@ -1,5 +1,9 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Scanner;
 
 /**
  * This class handles everything that deals with any actions of a user outside of his account
@@ -215,18 +219,149 @@ public class UserSystem {
         cases = new ArrayList<>();
         nTracers = 0;
 
-        usernames.add("ADMIN2020");
-        roles.add("official");
-        users.add(new GovOfficial(new Citizen(new Name("Admin", "A", "Gov"), "Malacañang",
-                "City Hall", "09328287114", "admin@gov.ph", "ADMIN2020",
-                "@Dm1n0202")));
-        records.add(new ArrayList<>());
+        String[] info;
+
+        // load master list along with citizen accounts
+        try (Scanner input = new Scanner(new File("Master_List.txt"))) {
+            do {
+                info = input.nextLine().split(" ");
+                usernames.add(info[0]);
+                roles.add(info[1]);
+                try (Scanner reader = new Scanner(new File(info[0]+ ".act"))) {
+                    String password = reader.nextLine();
+                    String[] name = reader.nextLine().split(",");
+                    String homeAdd = reader.nextLine().substring(5);
+                    String officeAdd = reader.nextLine().substring(7);
+                    String phoneNumber = reader.nextLine().substring(6);
+                    String email = reader.nextLine().substring(6);
+
+                    users.add(switch (info[1]) {
+                        case "citizen" ->
+                            new Citizen(new Name(name[0], name[1], name[2]), homeAdd,
+                                    officeAdd, phoneNumber, email, info[0], password);
+
+                        case "official" ->
+                            new GovOfficial(new Name(name[0], name[1], name[2]), homeAdd,
+                                    officeAdd, phoneNumber, email, info[0], password);
+
+                        case "tracer" ->
+                            new Tracer(new Name(name[0], name[1], name[2]), homeAdd,
+                                    officeAdd, phoneNumber, email, info[0], password);
+
+                        default -> throw new IllegalStateException("Unexpected value: " + info[1]);
+                    });
+                } catch (Exception e) {
+                    System.out.println("User file not found!");
+                    e.printStackTrace();
+                }
+            } while (input.hasNextLine());
+        } catch (FileNotFoundException e) {
+            System.out.println("Error! Master list not found.\nNo admin currently.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Calendar.Builder builder = new Calendar.Builder();
+        String[] date;
+        // load establishment records
+        try (Scanner input = new Scanner(new File("Establishment_Records.txt"))) {
+            String temp;
+            int i = 0, time;
+
+            input.nextLine(); // read username ADMIN2020
+            while (input.hasNextLine()) {
+                temp = input.nextLine();
+                if (temp.isEmpty()) {
+                    if(input.hasNextLine()) {
+                        records.add(new ArrayList<>());
+                        i++;
+                        input.nextLine(); // read username
+                    } else {
+                        break;
+                    }
+                } else {
+                    info = temp.split(" ");
+                    date = info[1].split(",");
+                    time = Integer.parseInt(info[2]);
+                    builder.setDate(Integer.parseInt(date[2]), Integer.parseInt(date[1]), Integer.parseInt(date[0]));
+                    builder.setTimeOfDay(time / 100, time % 100, 0);
+
+                    records.get(i).add(new Visit(info[0], builder.build()));
+                }
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("Establishment_Records.txt not found. No data to load.");
+            for(int i = 0; i < usernames.size(); i++) {
+                records.add(new ArrayList<>());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // load positive cases
+        try (Scanner input = new Scanner(new File("Positive_Cases.txt"))) {
+            while(input.hasNextLine()) {
+                info = input.nextLine().split(" ");
+                date = info[2].split(",");
+                builder.setDate(Integer.parseInt(date[2]), Integer.parseInt(date[1]), Integer.parseInt(date[0]));
+
+                cases.add(new Case(Integer.parseInt(info[0]), info[1], builder.build(), info[3], info[4].charAt(0)));
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("Positive_Cases.txt not found. No data to load.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     /**
      * Called when terminating the program to free all the memory used.
      */
     public static void exitSystem() {
+        // Update Master List
+        try (FileWriter masterList = new FileWriter("Master_List.txt", false)) {
+            for (int i = 0; i < usernames.size(); i++) {
+                masterList.write(usernames.get(i) + " " + roles.get(i) + "\n");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Update Account information
+        for (Citizen citizen : users) {
+            // if isChanged?
+            try (FileWriter accFile = new FileWriter(citizen.getUsername().concat(".act"), false)) {
+                accFile.write(citizen.toString());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        // Update Establishment Records
+        try (FileWriter recFile = new FileWriter("Establishment_Records.txt", false)) {
+            int i = 0;
+            for (ArrayList<Visit> user : records) {
+                recFile.write(usernames.get(i++) + "\n");
+                for (Visit visit : user) {
+                    recFile.write(visit.toString() + "\n");
+                }
+                recFile.write("\n");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Update Positive Cases
+        try (FileWriter posFile = new FileWriter("Positive_Cases.txt", false)) {
+            for (Case i : cases) {
+                posFile.write(i.toString());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         usernames = null;
         roles = null;
         users = null;

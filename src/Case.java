@@ -37,6 +37,15 @@ public class Case {
         this.status = 'P';
     }
 
+    public Case(int CASE_NUM, String USERNAME, Calendar REPORT_DATE, String tracer, char status) {
+        this.CASE_NUM = CASE_NUM;
+        this.USERNAME = USERNAME;
+        this.REPORT_DATE = REPORT_DATE;
+        this.tracer = tracer;
+        this.status = status;
+        ctr++;
+    }
+
     /**
      * Returns the case number.
      * @return the case number.

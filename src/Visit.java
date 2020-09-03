@@ -1,3 +1,4 @@
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
@@ -42,5 +43,11 @@ public class Visit {
      */
     public String getEstCode() {
         return EST_CODE;
+    }
+
+    @Override
+    public String toString() {
+        SimpleDateFormat format = new SimpleDateFormat("MM,dd,yyyy HHmm");
+        return  EST_CODE + format.format(CHECK_IN.getTime());
     }
 }

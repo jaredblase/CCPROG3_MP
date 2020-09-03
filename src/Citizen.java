@@ -247,4 +247,13 @@ public class Citizen {
             }
         }
     }
+
+    @Override
+    public String toString() {
+        return password + '\n' + name.toString() +
+                "\nHOME:" + homeAddress +
+                "\nOFFICE:" + officeAddress +
+                "\nPHONE:" + phoneNumber +
+                "\nEMAIL:" + email + "\n";
+    }
 }
