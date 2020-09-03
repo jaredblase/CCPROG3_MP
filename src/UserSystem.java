@@ -272,7 +272,7 @@ public class UserSystem {
             while (input.hasNextLine()) {
                 temp = input.nextLine();
                 if (temp.isEmpty()) {
-                    if(input.hasNextLine()) {
+                    if (input.hasNextLine()) {
                         records.add(new ArrayList<>());
                         i++;
                         input.nextLine(); // read username
@@ -300,12 +300,22 @@ public class UserSystem {
 
         // load positive cases
         try (Scanner input = new Scanner(new File("Positive_Cases.txt"))) {
-            while(input.hasNextLine()) {
+            while (input.hasNextLine()) {
                 info = input.nextLine().split(" ");
                 date = info[2].split(",");
                 builder.setDate(Integer.parseInt(date[2]), Integer.parseInt(date[1]), Integer.parseInt(date[0]));
 
-                cases.add(new Case(Integer.parseInt(info[0]), info[1], builder.build(), info[3], info[4].charAt(0)));
+                Citizen temp = getUser(info[1]);
+                if (temp != null) {
+                    temp.reportPositive(builder.build());
+                    int index = Integer.parseInt(info[0]) - 1;
+                    cases.get(index).setTracer(info[3]);
+                    cases.get(index).setStatus(info[4].charAt(0));
+
+//                    if (info[4].charAt(0) == 'P') {
+//                        // perform tracing i.e. trace + broadcast
+//                    }
+                }
             }
         } catch (FileNotFoundException e) {
             System.out.println("Positive_Cases.txt not found. No data to load.");
@@ -356,7 +366,7 @@ public class UserSystem {
         // Update Positive Cases
         try (FileWriter posFile = new FileWriter("Positive_Cases.txt", false)) {
             for (Case i : cases) {
-                posFile.write(i.toString());
+                posFile.write(i.toString() + "\n");
             }
         } catch (Exception e) {
             e.printStackTrace();
