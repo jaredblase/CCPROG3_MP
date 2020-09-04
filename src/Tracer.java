@@ -34,21 +34,10 @@ public class Tracer extends Citizen {
         assigned = new ArrayList<>();
         contacts = new ArrayList<>();
         contactPlaces = new ArrayList<>();
-
-        for (Case i: UserSystem.getCases()) {
-            // tracer is assigned to case and status is pending
-            if (i.getTracer().equals(getUsername()) && i.getStatus() == 'P') {
-                assigned.add(i);
-                contacts.add(new ArrayList<>());
-                contactPlaces.add(new ArrayList<>());
-            }
-        }
     }
 
     /**
-     * Receives a Tracer class object and makes an exact copy of its attributes. The list
-     * of all cases in the system is also checked. If a case is assigned to the
-     * contact tracer, the case is added to the list of assigned cases if it was not added before.
+     * Receives a Tracer class object and makes an exact copy of its attributes.
      * @param other the object used to construct the new object.
      */
     public Tracer(Tracer other) {
@@ -57,21 +46,6 @@ public class Tracer extends Citizen {
         this.assigned = other.assigned;
         this.contacts = other.contacts;
         this.contactPlaces = other.contactPlaces;
-
-        for (Case i: UserSystem.getCases()) {
-            // tracer is assigned to case and status is pending and case not yet in list of assigned cases
-            if (i.getTracer().equals(getUsername()) && i.getStatus() == 'P' && !assigned.contains(i)) {
-                assigned.add(i);
-                contacts.add(new ArrayList<>());
-                contactPlaces.add(new ArrayList<>());
-            }
-        }
-    }
-
-    public Tracer(Name name, String homeAddress, String officeAddress, String phoneNumber,
-                  String email, String username, String password) {
-        super(name, homeAddress, officeAddress, phoneNumber, email, username, password);
-        // Needs some other stuff, I think
     }
 
     /**
@@ -81,6 +55,16 @@ public class Tracer extends Citizen {
     @Override
     public Menu getUserMenu() {
         return userMenu;
+    }
+
+    /**
+     * Adds a case to the list of assigned cases of the contact tracer.
+     * @param positive the case to be added.
+     */
+    public void addCase(Case positive) {
+        assigned.add(positive);
+        contacts.add(new ArrayList<>());
+        contactPlaces.add(new ArrayList<>());
     }
 
     /**
@@ -101,10 +85,12 @@ public class Tracer extends Citizen {
     }
 
     /**
-     * Traces the contacts of a case given the case number and displays them.
+     * Traces the contacts of a case given the case number and displays them
+     * depending on the status input.
      * @param caseNum the case number of a case.
+     * @param status the status whether the contacts are displayed (1) or not (0)
      */
-    public void trace(int caseNum) {
+    public void trace(int caseNum, int status) {
         Case positive = null;
         for (Case i: assigned) {
             if (i.getCaseNum() == caseNum) { // case number is assigned
@@ -119,7 +105,8 @@ public class Tracer extends Citizen {
             if (contacts.get(posIndex).isEmpty()) { // never traced before
                 checkContacts(positive, posIndex);
             }
-            displayContacts(contacts.get(posIndex));
+            if (status == 1)
+                displayContacts(contacts.get(posIndex));
         }
     }
 
@@ -242,9 +229,11 @@ public class Tracer extends Citizen {
 
     /**
      * Informs the contacts that they may possibly be exposed. Contacts
-     * are also informed when and where they may possibly be exposed.
+     * are also informed when and where they may possibly be exposed. The contact
+     * tracer is also informed of which cases are completed depending on the status.
+     * @param status the status whether the completed cases are displayed (1) or not (0)
      */
-    public void broadcast() {
+    public void broadcast(int status) {
         int[] caseNums = new int[assigned.size()];
         int ctr = 0;
 
@@ -270,10 +259,12 @@ public class Tracer extends Citizen {
             i--;
         }
 
-        System.out.print("Tracing completed for the following cases: ");
-        for (int i = 0; i < ctr; i++)
-            System.out.print(caseNums[i] + " ");
-        System.out.println();
+        if (status == 1) {
+            System.out.print("Tracing completed for the following cases: ");
+            for (int i = 0; i < ctr; i++)
+                System.out.print(caseNums[i] + " ");
+            System.out.println();
+        }
     }
 
     /**

@@ -118,6 +118,8 @@ public class UserSystem {
         roles.add("citizen");
         users.add(citizen);
         records.add(new ArrayList<>());
+
+        // create file here
     }
 
     /**
@@ -235,26 +237,20 @@ public class UserSystem {
                     String phoneNumber = reader.nextLine().substring(6);
                     String email = reader.nextLine().substring(6);
 
-                    users.add(switch (info[1]) {
-                        case "citizen" ->
-                            new Citizen(new Name(name[0], name[1], name[2]), homeAdd,
-                                    officeAdd, phoneNumber, email, info[0], password);
-
-                        case "official" ->
-                            new GovOfficial(new Name(name[0], name[1], name[2]), homeAdd,
-                                    officeAdd, phoneNumber, email, info[0], password);
-
-                        case "tracer" ->
-                            new Tracer(new Name(name[0], name[1], name[2]), homeAdd,
-                                    officeAdd, phoneNumber, email, info[0], password);
-
-                        default -> throw new IllegalStateException("Unexpected value: " + info[1]);
-                    });
+                    users.add(new Citizen(new Name(name[0], name[1], name[2]), homeAdd,
+                                    officeAdd, phoneNumber, email, info[0], password));
                 } catch (Exception e) {
                     System.out.println("User file not found!");
                     e.printStackTrace();
                 }
             } while (input.hasNextLine());
+
+            for (int i = 0; i < roles.size(); i++) {
+                // update user in list of users if role is tracer
+                if (!roles.get(i).equals("tracer")) {
+                    setRoleOf(i, roles.get(i));
+                }
+            }
         } catch (FileNotFoundException e) {
             System.out.println("Error! Master list not found.\nNo admin currently.");
         } catch (Exception e) {
@@ -272,7 +268,7 @@ public class UserSystem {
             while (input.hasNextLine()) {
                 temp = input.nextLine();
                 if (temp.isEmpty()) {
-                    if(input.hasNextLine()) {
+                    if (input.hasNextLine()) {
                         records.add(new ArrayList<>());
                         i++;
                         input.nextLine(); // read username
@@ -300,12 +296,31 @@ public class UserSystem {
 
         // load positive cases
         try (Scanner input = new Scanner(new File("Positive_Cases.txt"))) {
-            while(input.hasNextLine()) {
+            while (input.hasNextLine()) {
                 info = input.nextLine().split(" ");
                 date = info[2].split(",");
                 builder.setDate(Integer.parseInt(date[2]), Integer.parseInt(date[1]), Integer.parseInt(date[0]));
 
-                cases.add(new Case(Integer.parseInt(info[0]), info[1], builder.build(), info[3], info[4].charAt(0)));
+                Citizen temp = getUser(info[1]); // get the positive user
+                if (temp != null) {
+                    temp.reportPositive(builder.build()); // set isPositive to true
+                    int index = Integer.parseInt(info[0]) - 1;
+                    cases.get(index).setTracer(info[3]);
+                    cases.get(index).setStatus(info[4].charAt(0));
+
+                    // case is assigned to a tracer and status is pending
+                    if (!info[3].equals("000") && info[4].charAt(0) == 'P') {
+                        Tracer tracer = (Tracer) getUser(info[3]);
+                        if (tracer != null)
+                            tracer.addCase(cases.get(index));
+                    } else if (!info[3].equals("000") && info[4].charAt(0) == 'T') {
+                        Tracer tracer = new Tracer(users.get(0)); // create new Tracer object
+                        // finish tracing for the case
+                        tracer.addCase(cases.get(index));
+                        tracer.trace(index + 1, 0);
+                        tracer.broadcast(0);
+                    }
+                }
             }
         } catch (FileNotFoundException e) {
             System.out.println("Positive_Cases.txt not found. No data to load.");
@@ -356,7 +371,7 @@ public class UserSystem {
         // Update Positive Cases
         try (FileWriter posFile = new FileWriter("Positive_Cases.txt", false)) {
             for (Case i : cases) {
-                posFile.write(i.toString());
+                posFile.write(i.toString() + "\n");
             }
         } catch (Exception e) {
             e.printStackTrace();

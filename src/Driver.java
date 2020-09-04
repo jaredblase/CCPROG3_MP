@@ -516,10 +516,10 @@ public class Driver {
                     }
 
                     if (status) // valid case number input
-                        user.trace(caseNum);
+                        user.trace(caseNum, 1);
                 }
             }
-            case 6 -> user.broadcast();
+            case 6 -> user.broadcast(1);
         }
     }
 }
