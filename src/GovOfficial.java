@@ -72,6 +72,9 @@ public class GovOfficial extends Citizen {
         for (Case i: UserSystem.getCases()) {
             if (i.getCaseNum() == caseNum) {
                 i.setTracer(tracer);
+                Tracer temp = (Tracer) UserSystem.getUser(tracer);
+                if (temp != null)
+                    temp.addCase(i);
                 break;
             }
         }

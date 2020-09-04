@@ -301,16 +301,25 @@ public class UserSystem {
                 date = info[2].split(",");
                 builder.setDate(Integer.parseInt(date[2]), Integer.parseInt(date[1]), Integer.parseInt(date[0]));
 
-                Citizen temp = getUser(info[1]);
+                Citizen temp = getUser(info[1]); // get the positive user
                 if (temp != null) {
-                    temp.reportPositive(builder.build());
+                    temp.reportPositive(builder.build()); // set isPositive to true
                     int index = Integer.parseInt(info[0]) - 1;
                     cases.get(index).setTracer(info[3]);
                     cases.get(index).setStatus(info[4].charAt(0));
 
-//                    if (info[4].charAt(0) == 'P') {
-//                        // perform tracing i.e. trace + broadcast
-//                    }
+                    // case is assigned to a tracer and status is pending
+                    if (!info[3].equals("000") && info[4].charAt(0) == 'P') {
+                        Tracer tracer = (Tracer) getUser(info[3]);
+                        if (tracer != null)
+                            tracer.addCase(cases.get(index));
+                    } else if (!info[3].equals("000") && info[4].charAt(0) == 'T') {
+                        Tracer tracer = new Tracer(users.get(0)); // create new Tracer object
+                        // finish tracing for the case
+                        tracer.addCase(cases.get(index));
+                        tracer.trace(index + 1, 0);
+                        tracer.broadcast(0);
+                    }
                 }
             }
         } catch (FileNotFoundException e) {
