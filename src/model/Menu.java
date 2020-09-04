@@ -1,4 +1,4 @@
-
+package model;
 
 /**
  * The Menu class is used for generating menus and retrieving an answer from the user.
