@@ -1,3 +1,5 @@
+package model;
+
 /**
  * The Name class holds all the information of a name
  * and methods available for changing them.
