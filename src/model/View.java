@@ -1,6 +1,7 @@
 package model;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -22,5 +23,9 @@ public class View extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void handleLoginButtonAction(ActionEvent event) {
+        System.out.println("FUCK ME, DADDY");
     }
 }
