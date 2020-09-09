@@ -37,7 +37,7 @@
             <Insets />
          </VBox.margin>
       </PasswordField>
-      <Button id="login-button" mnemonicParsing="false" onAction="#handleLoginButtonAction" styleClass="buttons, green_buttons" text="LOGIN">
+      <Button id="login-button" fx:id="loginButton" mnemonicParsing="false" onAction="#handleLoginButtonAction" styleClass="buttons, green_buttons" text="LOGIN">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
