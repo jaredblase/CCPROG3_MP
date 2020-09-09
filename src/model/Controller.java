@@ -27,7 +27,7 @@ public class Controller {
     }
 
     @FXML
-    public void handleRegisterButtonAction(ActionEvent e) {
+    public void handleCreateNewAccountAction(ActionEvent e) {
         new View().changeScene((Node) e.getSource(), "Registration Form Part 1.fxml");
     }
 
@@ -44,6 +44,12 @@ public class Controller {
 
     @FXML
     public void handleGoFillDetailsAction(ActionEvent e) {
-        new View().changeScene((Node) e.getSource(), "Registration Form Part 2");
+        new View().changeScene((Node) e.getSource(), "Registration Form Part 2.fxml");
+    }
+
+    @FXML
+    public void handleRegisterButtonAction(ActionEvent e) {
+        // show a popup here maybe?
+        new View().changeScene((Node) e.getSource(), "Login Screen.fxml");
     }
 }

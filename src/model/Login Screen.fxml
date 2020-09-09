@@ -19,7 +19,7 @@
    <ImageView fitHeight="262.0" fitWidth="256.0" layoutX="-142.0" layoutY="-128.0" pickOnBounds="true" preserveRatio="true" x="450.0" y="200.0">
       <Image url="@../resources/DOH Logo.png" />
    </ImageView>
-   <Button id="login__create-account-button" layoutX="93.0" layoutY="318.0" mnemonicParsing="false" onAction="#handleRegisterButtonAction" styleClass="buttons" text="Create your account">
+   <Button id="login__create-account-button" layoutX="93.0" layoutY="318.0" mnemonicParsing="false" onAction="#handleCreateNewAccountAction" styleClass="buttons" text="Create your account">
       <cursor>
          <Cursor fx:constant="HAND" />
       </cursor>

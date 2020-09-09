@@ -67,12 +67,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                <Button mnemonicParsing="false" onAction="#handleGoFillDetailsAction" styleClass="green-button" text="Continue">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                  <Button mnemonicParsing="false" onAction="#handleBackToLoginAction" styleClass="inverted-green-button" text="Cancel" GridPane.columnIndex="1">
+                <Button mnemonicParsing="false" onAction="#handleGoFillDetailsAction" styleClass="green-button" text="Continue" GridPane.columnIndex="1" GridPane.columnSpan="2147483647">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>

@@ -82,7 +82,7 @@
                   <Insets top="10.0" />
                </padding>
             </GridPane>
-            <Button mnemonicParsing="false" styleClass="green-button" text="REGISTER">
+            <Button mnemonicParsing="false" onAction="#handleRegisterButtonAction" styleClass="green-button" text="REGISTER">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>

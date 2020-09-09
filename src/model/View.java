@@ -12,8 +12,8 @@ import javafx.stage.StageStyle;
 import java.io.IOException;
 
 public class View extends Application {
-    private double xOffset = 0;
-    private double yOffset = 0;
+//    private double xOffset = 0;
+//    private double yOffset = 0;
 
     public static void main(String[] args) {
         launch(args);
@@ -37,8 +37,6 @@ public class View extends Application {
     public void changeScene(Node node, String file) {
         try {
             Stage stage = (Stage) node.getScene().getWindow();
-//            Parent root = FXMLLoader.load(getClass().getResource(file));
-//            stage.setScene(new Scene(root, Color.TRANSPARENT));
             stage.getScene().setRoot(FXMLLoader.load(getClass().getResource(file)));
             stage.getScene().setFill(Color.TRANSPARENT);
         } catch (IOException e) {
