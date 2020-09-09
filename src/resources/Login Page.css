@@ -1,55 +1,31 @@
-.stage {
-	-fx-background-color: linear-gradient(to right, #57cc99, #80ed99);
-}
-
-.headers {
-	-fx-font-weight: bold;
-	-fx-font-size: 20px;
+.text-field {
+	-fx-background-radius: 25px;
+	-fx-pref-height: 30px;
 }
 
 #login__header {
 	-fx-translate-y: -10px;
 }
 
-.login__v-box {
-	-fx-spacing: 10px;
-	-fx-background-color: white;
-	-fx-background-radius: 10px;
-	-fx-padding: 15px
-}
-
-.login__text-field {
-	-fx-background-radius: 25px;
-	-fx-pref-height: 30px;
-}
-
 #login__username-text-field {
 	-fx-background-image: url("user.png");
 	-fx-background-repeat: no-repeat;
-	-fx-background-position: 170px;
+	-fx-background-position: 10px;
 }
 
 #login__password-text-field {
 	-fx-background-image: url("lock.png");
 	-fx-background-repeat: no-repeat;
-	-fx-background-position: 170px;
+	-fx-background-position: 10px;
 }
 
-.buttons {
-	-fx-background-radius: 25px;
-}
-
-.green_buttons {
-	-fx-background-color: green;
-	-fx-text-fill: white;
-}
 
 #login-button {
-	-fx-font-weight: bold;
 	-fx-pref-width: 220px;
 	-fx-pref-height: 30px;
 	-fx-translate-y: 10px;
 }
+
 
 #login__create-account-button {
 	-fx-text-fill: #05668d;

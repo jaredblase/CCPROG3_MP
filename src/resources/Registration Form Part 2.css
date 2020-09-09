@@ -1,0 +1,10 @@
+TextField {
+	-fx-min-height: 35px;
+	-fx-font-weight: bold;
+}
+
+Button {
+	-fx-pref-width: 500px;
+	-fx-pref-height: 35px;
+	-fx-translate-y: 20px;
+}

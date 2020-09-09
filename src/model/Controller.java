@@ -1,8 +1,11 @@
 package model;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 public class Controller {
@@ -15,16 +18,32 @@ public class Controller {
     @FXML
     private TextField passwordTextField;
 
-    public void handleLoginButtonAction() {
+    @FXML
+    public void handleLoginButtonAction(ActionEvent e) {
         System.out.println(usernameTextField.getText());
         System.out.println(passwordTextField.getText());
 
-//        Stage stage = (Stage) loginButton.getScene().getWindow();
-//        View view = new View();
-//        view.changeScene(stage, "login.fxml");
+//        new View().changeScene((Node) e.getSource(), "Main Menu.fxml");
     }
 
-    public void handleRegisterButtonAction() {
-        System.out.println("Creating new account...");
+    @FXML
+    public void handleRegisterButtonAction(ActionEvent e) {
+        new View().changeScene((Node) e.getSource(), "Registration Form Part 1.fxml");
+    }
+
+    @FXML
+    public void handleExitButtonAction(ActionEvent e) {
+        Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+        stage.close();
+    }
+
+    @FXML
+    public void handleBackToLoginAction(MouseEvent e) {
+        new View().changeScene((Node) e.getSource(), "Login Screen.fxml");
+    }
+
+    @FXML
+    public void handleGoFillDetailsAction(ActionEvent e) {
+        new View().changeScene((Node) e.getSource(), "Registration Form Part 2");
     }
 }

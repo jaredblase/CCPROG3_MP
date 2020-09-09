@@ -1,0 +1,62 @@
+Button {
+	-fx-background-radius: 25px;
+	-fx-border-radius: 25px;
+}
+
+VBox {
+	-fx-background-color: white;
+	-fx-background-radius: 10px;
+	-fx-padding: 15px
+}
+
+.stage {
+	-fx-background-color: linear-gradient(to right, #57cc99, #80ed99);
+	-fx-background-radius: 25px;
+	-fx-border-radius: 25px;
+	-fx-border-width: 10px;
+}
+
+.headers {
+	-fx-alignment: center;
+	-fx-font-weight: bold;
+	-fx-font-size: 20px;
+}
+
+.text-field-with-icon {
+	-fx-background-color: #EEEEEE;
+}
+
+.exit-button {
+	-fx-font-weight: 900;
+	-fx-font-size: 18px;
+	-fx-background-color: transparent;
+}
+
+.green-button {
+	-fx-background-color: green;
+	-fx-text-fill: white;
+	-fx-font-weight: bold;
+}
+
+.inverted-green-button {
+	-fx-background-color: transparent;
+	-fx-text-fill: green;
+	-fx-border-color: green;
+}
+
+.invalid-message {
+	-fx-text-fill: red;
+	-fx-font-style: italic;
+	-fx-translate-x: 10px;
+ 	-fx-wrap-text: true;
+	-fx-font-size: 10px;
+	-fx-line-spacing: -3px;
+	
+	// work-around bottom margin
+	-fx-translate-y: -2px;
+	-fx-padding: 1px;
+	-fx-border-insets: 1px;
+	-fx-background-insets: 1px;
+
+	// visibility: hidden;
+}
