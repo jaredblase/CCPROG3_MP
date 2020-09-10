@@ -3,6 +3,10 @@ Button {
 	-fx-border-radius: 25px;
 }
 
+Button: hover {
+	-fx-cursor: HAND;
+}
+
 VBox {
 	-fx-background-color: white;
 	-fx-background-radius: 10px;
@@ -59,4 +63,38 @@ VBox {
 	-fx-background-insets: 1px;
 
 	// visibility: hidden;
+}
+
+.VBox-menu {
+	-fx-background-radius: 25px;
+	-fx-spacing: 10px;
+}
+
+.menu-button {
+	-fx-background-color: transparent;
+	-fx-cursor: DEFAULT;
+}
+
+.menu-button: hover {
+	-fx-background-color: red;
+}
+
+.VBox-menu Label {
+	-fx-font-size: 20px;
+	/* -fx-font-weight: bold; */
+	-fx-font-decoration: underline;
+}
+
+.profile-picture {
+	-fx-border-radius: 50%;
+	-fx-background-color: #AAAAAA;
+	-fx-translate-x: 35px;
+}
+
+.name-display {
+	-fx-wrap-text: true;
+	-fx-font-size: 15px;
+	-fx-alignment: center;
+	-fx-translate-x: -7.5px;
+	-fx-font-weight: bold;
 }

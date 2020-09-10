@@ -19,13 +19,11 @@
 	-fx-background-position: 10px;
 }
 
-
 #login-button {
 	-fx-pref-width: 220px;
 	-fx-pref-height: 30px;
 	-fx-translate-y: 10px;
 }
-
 
 #login__create-account-button {
 	-fx-text-fill: #05668d;
