@@ -13,6 +13,10 @@ VBox {
 	-fx-padding: 15px
 }
 
+.pressable-image: hover {
+	-fx-cursor: HAND;
+}
+
 .stage {
 	-fx-background-color: linear-gradient(to right, #57cc99, #80ed99);
 	-fx-background-radius: 25px;

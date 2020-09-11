@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="stage" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="model.Controller">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="stage" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <ImageView fitHeight="262.0" fitWidth="256.0" layoutX="-142.0" layoutY="-128.0" pickOnBounds="true" preserveRatio="true" x="450.0" y="200.0">
       <Image url="@../resources/DOH Logo.png" />
    </ImageView>
@@ -44,9 +44,9 @@
             <PasswordField fx:id="passwordTextField" promptText="Password" styleClass="text-field-with-icon" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
       </GridPane>
-      <Button id="login-button" mnemonicParsing="false" onAction="#handleLoginButtonAction" styleClass="green-button" text="LOGIN" />
+      <Button id="login-button" defaultButton="true" mnemonicParsing="false" onAction="#handleLoginButtonAction" styleClass="green-button" text="LOGIN" />
    </VBox>
-   <Button layoutX="550.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleExitButtonAction" prefHeight="25.0" prefWidth="12.0" styleClass="exit-button" text="X" />
+   <Button cancelButton="true" layoutX="550.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleExitButtonAction" prefHeight="25.0" prefWidth="12.0" styleClass="exit-button" text="X" />
    <stylesheets>
       <URL value="@../resources/Login%20Page.css" />
       <URL value="@../resources/Master.css" />
