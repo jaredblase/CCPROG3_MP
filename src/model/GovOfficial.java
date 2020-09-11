@@ -199,6 +199,10 @@ public class GovOfficial extends Citizen {
      * @throws Exception if invalid operations are performed.
      */
     public void modifyRole(String role, String username) throws Exception {
+        if (username.isBlank()) {
+            throw new Exception("Invalid username!");
+        }
+
         int index = UserSystem.getIndexOf(username);
 
         if (username.equals(this.getUsername())) {

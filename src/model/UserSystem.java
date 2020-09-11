@@ -135,7 +135,7 @@ public class UserSystem {
      * @return a constructed Citizen object with the user's details.
      */
     public static Citizen login(String username, String password) {
-        int index = getIndexOf(username);
+        int index = getIndexOf(username.toUpperCase());
 
         if (index != -1 && users.get(index).getPassword().equals(password)) {
             String role = getRoleOf(index);
