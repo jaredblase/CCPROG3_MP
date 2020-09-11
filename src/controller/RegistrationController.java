@@ -4,15 +4,16 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 
-public class RegistrationController {
+public class RegistrationController extends Controller {
     private MainController mainController;
 
     public RegistrationController() {
 
     }
 
-    public RegistrationController(MainController mainController) {
-        this.mainController = mainController;
+    @Override
+    public void update() {
+
     }
 
     @FXML

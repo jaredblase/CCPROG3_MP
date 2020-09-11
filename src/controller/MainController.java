@@ -16,11 +16,11 @@ public class MainController {
     public static final int REGISTER_2_VIEW = 3;
     public static final int MAIN_MENU_VIEW = 4;
 
-    /** These are the controllers */
-    private LoginController loginController;
-    private RegistrationController registrationController;
-    private Registration2Controller registration2Controller;
-    private MainMenuController mainMenuController;
+//    /** These are the controllers */
+//    private LoginController loginController;
+//    private RegistrationController registrationController;
+//    private Registration2Controller registration2Controller;
+//    private MainMenuController mainMenuController;
 
     /** This is the user logged in */
     private Citizen userModel;
@@ -35,42 +35,28 @@ public class MainController {
         primaryStage.setTitle("Tracing App");
         primaryStage.setResizable(false);
         primaryStage.initStyle(StageStyle.TRANSPARENT);
-        initControllers();
+//        initControllers();
 
         changeScene(LOGIN_VIEW);
     }
-
-    private void initControllers() {
-        loginController = new LoginController(this);
-        registrationController = new RegistrationController(this);
-        registration2Controller = new Registration2Controller(this);
-        mainMenuController = new MainMenuController(this);
-    }
+//
+//    private void initControllers() {
+//        loginController = new LoginController(this);
+//        registrationController = new RegistrationController(this);
+//        registration2Controller = new Registration2Controller(this);
+//        mainMenuController = new MainMenuController(this);
+//    }
 
     public void changeScene(int view) {
         FXMLLoader loader = new FXMLLoader();
 
         switch (view) {
-            case 1 -> {
-                loader.setLocation(getClass().getResource("/view/Login Screen.fxml"));
-                loader.setController(loginController);
-            }
-
-            case 2 -> {
-                loader.setLocation(getClass().getResource("/view/Registration Form Part 1.fxml"));
-                loader.setController(registrationController);
-            }
-
-            case 3 -> {
-                loader.setLocation(getClass().getResource("/view/Registration Form Part 2.fxml"));
-                loader.setController(registration2Controller);
-            }
-
-            case 4 -> {
-                loader.setLocation(getClass().getResource("/view/Main Menu.fxml"));
-                loader.setController(mainMenuController);
-            }
+            case 1 -> loader.setLocation(getClass().getResource("/view/Login Screen.fxml"));
+            case 2 -> loader.setLocation(getClass().getResource("/view/Registration Form Part 1.fxml"));
+            case 3 -> loader.setLocation(getClass().getResource("/view/Registration Form Part 2.fxml"));
+            case 4 -> loader.setLocation(getClass().getResource("/view/Main Menu.fxml"));
         }
+
 
         try {
             primaryStage.setScene(new Scene(loader.load(), Color.TRANSPARENT));
@@ -79,6 +65,10 @@ public class MainController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        Controller controller = loader.getController();
+        controller.setMainController(this);
+        controller.update();
     }
 
     public void setUserModel(Citizen userModel) {

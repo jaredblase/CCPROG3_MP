@@ -9,21 +9,21 @@ import javafx.stage.Stage;
 import model.Citizen;
 import model.UserSystem;
 
-public class LoginController {
+public class LoginController extends Controller {
     @FXML
     private TextField usernameTextField;
     @FXML
     private TextField passwordTextField;
     @FXML
     private Label invalidLoginMessage;
-    private MainController mainController;
 
     public LoginController() {
 
     }
 
-    public LoginController(MainController mainController) {
-        this.mainController = mainController;
+    @Override
+    public void update() {
+
     }
 
     @FXML
