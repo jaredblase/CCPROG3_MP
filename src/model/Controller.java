@@ -3,27 +3,36 @@ package model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 public class Controller {
     @FXML
-    private Button loginButton;
-
-    @FXML
     private TextField usernameTextField;
-
     @FXML
     private TextField passwordTextField;
+    @FXML
+    private Label username;
+    @FXML
+    private Label invalidLoginMessage;
+
+    private Citizen user;
 
     @FXML
     public void handleLoginButtonAction(ActionEvent e) {
         System.out.println(usernameTextField.getText());
         System.out.println(passwordTextField.getText());
-
-//        new View().changeScene((Node) e.getSource(), "Main Menu.fxml");
+        user = UserSystem.login(usernameTextField.getText(), passwordTextField.getText());
+        if (user == null) {
+            invalidLoginMessage.setVisible(true);
+            usernameTextField.setText("");
+            passwordTextField.setText("");
+        } else {
+            new View().changeScene((Node) e.getSource(), "Main Menu.fxml");
+            username.setText("Gabriel Pua");
+        }
     }
 
     @FXML

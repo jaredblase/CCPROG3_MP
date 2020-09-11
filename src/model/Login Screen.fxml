@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.net.URL?>
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
@@ -19,11 +18,7 @@
    <ImageView fitHeight="262.0" fitWidth="256.0" layoutX="-142.0" layoutY="-128.0" pickOnBounds="true" preserveRatio="true" x="450.0" y="200.0">
       <Image url="@../resources/DOH Logo.png" />
    </ImageView>
-   <Button id="login__create-account-button" layoutX="93.0" layoutY="318.0" mnemonicParsing="false" onAction="#handleCreateNewAccountAction" styleClass="buttons" text="Create your account">
-      <cursor>
-         <Cursor fx:constant="HAND" />
-      </cursor>
-   </Button>
+   <Button id="login__create-account-button" layoutX="93.0" layoutY="318.0" mnemonicParsing="false" onAction="#handleCreateNewAccountAction" styleClass="buttons" text="Create your account" />
    <VBox alignment="CENTER" layoutX="41.0" layoutY="96.0" prefHeight="208.0" prefWidth="227.0" styleClass="login__v-box">
       <Label id="login__header" styleClass="headers" text="Member Login">
          <font>
@@ -43,24 +38,15 @@
          </rowConstraints>
          <children>
             <TextField id="login__username-text-field" accessibleRole="TEXT" mouseTransparent="true" styleClass="text-field-with-icon" GridPane.columnSpan="2" />
-            <TextField promptText="Username" styleClass="text-field-with-icon" GridPane.columnIndex="1" />
-            <TextField id="login__password-text-field" accessibleRole="TEXT" mouseTransparent="true" styleClass="text-field-with-icon" GridPane.columnSpan="2" GridPane.rowIndex="2" />
-            <Label styleClass="invalid-message" text="Invalid username" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-            <Label prefHeight="32.0" prefWidth="234.0" styleClass="invalid-message" text="Invalid username/password" GridPane.columnSpan="2" GridPane.rowIndex="3" />
-            <PasswordField promptText="Password" styleClass="text-field-with-icon" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="usernameTextField" promptText="Username" styleClass="text-field-with-icon" GridPane.columnIndex="1" />
+            <TextField id="login__password-text-field" accessibleRole="TEXT" editable="false" mouseTransparent="true" styleClass="text-field-with-icon" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+            <Label fx:id="invalidLoginMessage" prefHeight="32.0" prefWidth="234.0" styleClass="invalid-message" text="Invalid username/password" visible="false" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+            <PasswordField fx:id="passwordTextField" promptText="Password" styleClass="text-field-with-icon" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
       </GridPane>
-      <Button id="login-button" fx:id="loginButton" mnemonicParsing="false" onAction="#handleLoginButtonAction" styleClass="green-button" text="LOGIN">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
+      <Button id="login-button" mnemonicParsing="false" onAction="#handleLoginButtonAction" styleClass="green-button" text="LOGIN" />
    </VBox>
-   <Button layoutX="550.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleExitButtonAction" prefHeight="25.0" prefWidth="12.0" styleClass="exit-button" text="X">
-      <cursor>
-         <Cursor fx:constant="HAND" />
-      </cursor>
-   </Button>
+   <Button layoutX="550.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleExitButtonAction" prefHeight="25.0" prefWidth="12.0" styleClass="exit-button" text="X" />
    <stylesheets>
       <URL value="@../resources/Login%20Page.css" />
       <URL value="@../resources/Master.css" />
