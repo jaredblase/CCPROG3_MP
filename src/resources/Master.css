@@ -13,6 +13,11 @@ VBox {
 	-fx-padding: 15px
 }
 
+.menu__stage {
+	-fx-pref-height: 540px;
+	-fx-pref-width: 720px;
+}
+
 .pressable-image: hover {
 	-fx-cursor: HAND;
 }
@@ -69,39 +74,58 @@ VBox {
 	visibility: hidden;
 }
 
-.VBox-menu {
+
+/* Menu class design starts here */
+
+.AnchorPane-menu {
 	-fx-background-radius: 0px;
+	-fx-padding: 0px;
 	-fx-pref-width: 250px;
+	-fx-pref-height: 540px;
+	-fx-background-color: white;
 }
 
-.menu-button {
+.menu Button {
 	-fx-background-color: transparent;
 	-fx-cursor: DEFAULT;
-	-fx-pref-width: 200px;
+	-fx-pref-width: 300px;
+	-fx-background-radius: 0px;
 	-fx-alignment: center-left;
 }
 
-.menu-button: hover {
-	-fx-background-color: gray;
+.menu VBox {
+	-fx-padding: 0px;
 }
 
-.VBox-menu Label {
+.menu Button: hover {
+	-fx-background-color: #CCCCCC;
+	-fx-cursor: HAND;
+	-fx-text-fill: white;
+	-fx-font-weight: bold;
+}
+
+.menu Label {
 	-fx-font-size: 20px;
-	/* -fx-font-weight: bold; */
-	-fx-font-decoration: underline;
+}
+
+.menu .red-button {
+	-fx-background-color: #CC444B;
+	-fx-text-fill: white;
+	-fx-font-weight: bold;
+	-fx-pref-width: 62px;
+	-fx-background-radius: 5px;
 }
 
 .profile-picture {
 	-fx-border-radius: 50%;
 	-fx-background-color: #AAAAAA;
-	-fx-translate-x: 70px;
 }
 
 .name-display {
 	-fx-wrap-text: true;
 	-fx-pref-width: 250px;
 	-fx-pref-height: 30px;
-	-fx-font-size: 15px;
+	-fx-font-size: 17px;
 	-fx-alignment: center;
 	-fx-font-weight: bold;
 }

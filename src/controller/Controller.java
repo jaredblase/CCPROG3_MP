@@ -5,6 +5,7 @@ public abstract class Controller {
 
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
+        update();
     }
 
     public abstract void update();

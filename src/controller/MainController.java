@@ -14,7 +14,7 @@ public class MainController {
     public static final int LOGIN_VIEW = 1;
     public static final int REGISTER_VIEW = 2;
     public static final int REGISTER_2_VIEW = 3;
-    public static final int MAIN_MENU_VIEW = 4;
+    public static final int PROFILE_VIEW = 4;
 
     /** This is the user logged in */
     private Citizen userModel;
@@ -41,21 +41,19 @@ public class MainController {
             case 1 -> loader.setLocation(getClass().getResource("/view/Login Screen.fxml"));
             case 2 -> loader.setLocation(getClass().getResource("/view/Registration Form Part 1.fxml"));
             case 3 -> loader.setLocation(getClass().getResource("/view/Registration Form Part 2.fxml"));
-            case 4 -> loader.setLocation(getClass().getResource("/view/Main Menu.fxml"));
+            case 4 -> loader.setLocation(getClass().getResource("/view/Profile.fxml"));
         }
-
 
         try {
             primaryStage.setScene(new Scene(loader.load(), Color.TRANSPARENT));
             primaryStage.centerOnScreen();
-            primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         Controller controller = loader.getController();
         controller.setMainController(this);
-        controller.update();
+        primaryStage.show();
     }
 
     public void setUserModel(Citizen userModel) {

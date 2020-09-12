@@ -37,7 +37,7 @@ public class LoginController extends Controller {
             passwordTextField.clear();
         } else {
             mainController.setUserModel(citizen);
-            mainController.changeScene(MainController.MAIN_MENU_VIEW);
+            mainController.changeScene(MainController.PROFILE_VIEW);
         }
     }
 

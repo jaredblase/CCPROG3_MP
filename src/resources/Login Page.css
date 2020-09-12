@@ -11,12 +11,14 @@
 	-fx-background-image: url("user.png");
 	-fx-background-repeat: no-repeat;
 	-fx-background-position: 10px;
+	-fx-opacity: 1.0;
 }
 
 #login__password-text-field {
 	-fx-background-image: url("lock.png");
 	-fx-background-repeat: no-repeat;
 	-fx-background-position: 10px;
+	-fx-opacity: 1.0;
 }
 
 #login-button {
