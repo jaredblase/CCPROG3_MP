@@ -109,7 +109,7 @@ public class UserSystem {
      * @return true if the username is still available, false otherwise.
      */
     public static boolean isValidNewUsername(String username) {
-        return getIndexOf(username) == -1 && !username.isBlank();
+        return getIndexOf(username.toUpperCase()) == -1 && !username.isBlank();
     }
 
     /**

@@ -1,14 +1,32 @@
 package controller;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import model.UserSystem;
 
 public class RegistrationController extends Controller {
-    private MainController mainController;
+    @FXML
+    private TextField usernameTextField;
+    @FXML
+    private TextField passwordTextField;
+    @FXML
+    private Label invalidUsername;
+    @FXML
+    private Label invalidPassword;
 
     public RegistrationController() {
 
+    }
+
+    public void initialize() {
+        usernameTextField.setOnKeyPressed(e -> {
+            invalidUsername.setVisible(false);
+        });
+
+        passwordTextField.setOnKeyPressed(e -> {
+            invalidPassword.setVisible(false);
+        });
     }
 
     @Override
@@ -17,13 +35,26 @@ public class RegistrationController extends Controller {
     }
 
     @FXML
-    public void handleBackToLoginAction(MouseEvent e) {
+    public void handleBackToLoginAction() {
         mainController.changeScene(MainController.LOGIN_VIEW);
     }
 
     @FXML
-    public void handleGoFillDetailsAction(ActionEvent e) {
-//        if (usernameTextField)
-        mainController.changeScene(MainController.REGISTER_VIEW);
+    public void handleGoFillDetailsAction() {
+        boolean isValid = true;
+
+        if (!UserSystem.isValidNewUsername(usernameTextField.getText())) {
+            invalidUsername.setVisible(true);
+            isValid = false;
+        }
+
+        if (!UserSystem.isValidPassword(passwordTextField.getText())) {
+            invalidPassword.setVisible(true);
+            isValid = false;
+        }
+
+        if (isValid) {
+            mainController.changeScene(MainController.REGISTER_2_VIEW);
+        }
     }
 }

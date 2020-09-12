@@ -16,36 +16,23 @@ public class MainController {
     public static final int REGISTER_2_VIEW = 3;
     public static final int MAIN_MENU_VIEW = 4;
 
-//    /** These are the controllers */
-//    private LoginController loginController;
-//    private RegistrationController registrationController;
-//    private Registration2Controller registration2Controller;
-//    private MainMenuController mainMenuController;
-
     /** This is the user logged in */
     private Citizen userModel;
 
     /** These are the view components */
-    private Stage primaryStage;
-    private Scene scene;
+    private final Stage primaryStage;
 
     public MainController(Stage stage) {
+        // setup model
         UserSystem.loadSystem();
+
+        // setup view
         primaryStage = stage;
         primaryStage.setTitle("Tracing App");
         primaryStage.setResizable(false);
         primaryStage.initStyle(StageStyle.TRANSPARENT);
-//        initControllers();
-
         changeScene(LOGIN_VIEW);
     }
-//
-//    private void initControllers() {
-//        loginController = new LoginController(this);
-//        registrationController = new RegistrationController(this);
-//        registration2Controller = new Registration2Controller(this);
-//        mainMenuController = new MainMenuController(this);
-//    }
 
     public void changeScene(int view) {
         FXMLLoader loader = new FXMLLoader();
