@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="522.0" prefWidth="266.0" stylesheets="@../resources/Master.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MenuController">
+   <children>
+      <ImageView fitHeight="74.0" fitWidth="72.0" layoutX="89.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true" styleClass="profile-picture">
+         <image>
+            <Image url="@../resources/user_bigger.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="username" layoutY="109.0" prefWidth="246.0" styleClass="name-display" text="&lt;Full Name&gt;" />
+      <VBox layoutX="33.0" layoutY="163.0" prefHeight="135.0" prefWidth="217.0">
+         <children>
+            <Label styleClass="menu__label" text="User Actions" />
+            <Button mnemonicParsing="false" onAction="#goToProfileAction" text="Profile" />
+            <Button mnemonicParsing="false" onAction="#reportPositiveAction" text="Report Positive" />
+            <Button mnemonicParsing="false" onAction="#checkInAction" text="Check In" />
+         </children>
+      </VBox>
+      <VBox fx:id="govActions" layoutX="33.0" layoutY="286.0" prefHeight="130.0" prefWidth="217.0" visible="false">
+         <children>
+            <Label styleClass="menu__label" text="Gov Actions" />
+            <Button mnemonicParsing="false" text="Analytics" />
+            <Button mnemonicParsing="false" text="Show Updates" />
+            <Button mnemonicParsing="false" text="Assign Case" />
+            <Button mnemonicParsing="false" text="Modify Roles" />
+         </children>
+         <opaqueInsets>
+            <Insets top="-4.0" />
+         </opaqueInsets>
+      </VBox>
+      <VBox id="tracer-menu" fx:id="tracerActions" layoutX="33.0" layoutY="288.0" prefHeight="135.0" prefWidth="217.0" visible="false">
+         <children>
+            <Label styleClass="menu__label" text="Tracer Actions" />
+            <Button mnemonicParsing="false" text="Show Cases" />
+            <Button mnemonicParsing="false" text="Trace Specific Case" />
+            <Button mnemonicParsing="false" text="Inform Citizens" />
+         </children>
+      </VBox>
+      <ImageView fitHeight="23.0" fitWidth="23.0" layoutX="13.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/hamburger%20icon.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="33.0" layoutY="471.0" mnemonicParsing="false" onAction="#handleLogoutAction" styleClass="red-button" text="Log Out" />
+   </children>
+   <styleClass>
+      <String fx:value="AnchorPane-menu" />
+      <String fx:value="menu" />
+   </styleClass>
+</AnchorPane>
