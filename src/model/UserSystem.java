@@ -6,6 +6,8 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * This class handles everything that deals with any actions of a user outside of his account
@@ -107,7 +109,7 @@ public class UserSystem {
      * @return true if the username is still available, false otherwise.
      */
     public static boolean isValidNewUsername(String username) {
-        return getIndexOf(username) == -1 && !username.isBlank();
+        return getIndexOf(username.toUpperCase()) == -1 && !username.isBlank();
     }
 
     /**
@@ -133,7 +135,7 @@ public class UserSystem {
      * @return a constructed Citizen object with the user's details.
      */
     public static Citizen login(String username, String password) {
-        int index = getIndexOf(username);
+        int index = getIndexOf(username.toUpperCase());
 
         if (index != -1 && users.get(index).getPassword().equals(password)) {
             String role = getRoleOf(index);
@@ -159,9 +161,9 @@ public class UserSystem {
      * @return true if it is valid, false otherwise.
      */
     public static boolean isValidPassword(String pass) {
-        String regex = "[\\w\\s]*[\\W\\d][\\w\\s]*"; // looks for at least one special character
+        Matcher matcher = Pattern.compile("[\\W\\d]").matcher(pass.replaceAll("\\s+", ""));
 
-        return pass.length() >= 6 && pass.replaceAll("\\s+", "").matches(regex);
+        return pass.length() >= 6 && matcher.find();
     }
 
     /**

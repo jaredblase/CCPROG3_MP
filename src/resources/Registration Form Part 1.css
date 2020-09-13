@@ -1,0 +1,41 @@
+ImageView {
+	-fx-translate-y: 5px;
+}
+
+AnchorPane {
+	-fx-background-color: transparent;
+}
+
+
+Button {
+	-fx-pref-width: 120px;
+	-fx-pref-height: 30px;
+}
+
+GridPane {
+	-fx-border-insets: 20px;
+	-fx-background-insets: 20px;
+}
+
+.headers {
+	-fx-font-size: 23px;
+	-fx-translate-x: 7px;
+}
+
+.text-field {
+	-fx-background-radius: 20px;
+	-fx-pref-height: 40px;
+	-fx-font-weight: bold;
+}
+
+#register__username-text-field {
+	-fx-background-image: url("user.png");
+	-fx-background-repeat: no-repeat;
+	-fx-background-position: 10px;
+}
+
+#register__password-text-field {
+	-fx-background-image: url("lock.png");
+	-fx-background-repeat: no-repeat;
+	-fx-background-position: 10px;
+}

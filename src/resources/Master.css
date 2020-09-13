@@ -1,0 +1,131 @@
+Button {
+	-fx-background-radius: 25px;
+	-fx-border-radius: 25px;
+}
+
+Button: hover {
+	-fx-cursor: HAND;
+}
+
+VBox {
+	-fx-background-color: white;
+	-fx-background-radius: 10px;
+	-fx-padding: 15px
+}
+
+.menu__stage {
+	-fx-pref-height: 540px;
+	-fx-pref-width: 720px;
+}
+
+.pressable-image: hover {
+	-fx-cursor: HAND;
+}
+
+.stage {
+	-fx-background-color: linear-gradient(to right, #57cc99, #80ed99);
+	-fx-background-radius: 25px;
+	-fx-border-radius: 25px;
+	-fx-border-width: 10px;
+}
+
+.headers {
+	-fx-alignment: center;
+	-fx-font-weight: bold;
+	-fx-font-size: 20px;
+}
+
+.text-field-with-icon {
+	-fx-background-color: #EEEEEE;
+}
+
+.exit-button {
+	-fx-font-weight: 900;
+	-fx-font-size: 18px;
+	-fx-background-color: transparent;
+}
+
+.green-button {
+	-fx-background-color: green;
+	-fx-text-fill: white;
+	-fx-font-weight: bold;
+}
+
+.inverted-green-button {
+	-fx-background-color: transparent;
+	-fx-text-fill: green;
+	-fx-border-color: green;
+}
+
+.invalid-message {
+	-fx-text-fill: red;
+	-fx-font-style: italic;
+	-fx-translate-x: 10px;
+ 	-fx-wrap-text: true;
+	-fx-font-size: 10px;
+	-fx-line-spacing: -3px;
+	
+	// work-around bottom margin
+	-fx-translate-y: -2px;
+	-fx-padding: 1px;
+	-fx-border-insets: 1px;
+	-fx-background-insets: 1px;
+
+	visibility: hidden;
+}
+
+
+/* Menu class design starts here */
+
+.AnchorPane-menu {
+	-fx-background-radius: 0px;
+	-fx-padding: 0px;
+	-fx-pref-width: 250px;
+	-fx-pref-height: 540px;
+	-fx-background-color: white;
+}
+
+.menu Button {
+	-fx-background-color: transparent;
+	-fx-cursor: DEFAULT;
+	-fx-pref-width: 300px;
+	-fx-background-radius: 0px;
+	-fx-alignment: center-left;
+}
+
+.menu VBox {
+	-fx-padding: 0px;
+}
+
+.menu Button: hover {
+	-fx-background-color: #CCCCCC;
+	-fx-cursor: HAND;
+	-fx-text-fill: white;
+	-fx-font-weight: bold;
+}
+
+.menu Label {
+	-fx-font-size: 20px;
+}
+
+.menu .red-button {
+	-fx-background-color: #CC444B;
+	-fx-text-fill: white;
+	-fx-font-weight: bold;
+	-fx-pref-width: 62px;
+	-fx-background-radius: 5px;
+}
+
+.profile-picture {
+	-fx-border-radius: 50%;
+	-fx-background-color: #AAAAAA;
+}
+
+.name-display {
+	-fx-wrap-text: true;
+	-fx-pref-width: 250px;
+	-fx-pref-height: 30px;
+	-fx-font-size: 17px;
+	-fx-alignment: center;
+	-fx-font-weight: bold;
+}
