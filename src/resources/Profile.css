@@ -1,0 +1,33 @@
+.profile Label {
+	-fx-font-size: 12px;
+	-fx-font-weight: bold;
+}
+
+.profile {
+	-fx-spacing: 10px;
+}
+
+.profile VBox {
+	-fx-padding: 0px;
+	-fx-spacing: 2px;
+}
+
+.profile TextField: disabled {
+	-fx-border-color: white;
+	-fx-background-color: white;
+	-fx-font-size: 13px;
+	-fx-opacity: 1.0;
+}
+
+.profile TextField {
+	-fx-font-size: 13px;
+}
+
+.profile GridPane {
+	-fx-pref-height: 50px;
+	-fx-pref-h-gap: 5px;
+}
+
+#profile__edit-button {
+	-fx-font-size: 13px;
+}
