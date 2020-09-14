@@ -43,7 +43,7 @@
             <DatePicker fx:id="startFilter" GridPane.columnIndex="3" GridPane.rowIndex="1" />
             <Label nodeOrientation="RIGHT_TO_LEFT" prefHeight="17.0" prefWidth="64.0" text="Start Date:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
             <TextField fx:id="cityFilter" prefHeight="25.0" prefWidth="207.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label nodeOrientation="RIGHT_TO_LEFT" prefHeight="17.0" prefWidth="37.0" style="-fx-alignment: right;" text="City: " GridPane.rowIndex="1" />
+            <Label nodeOrientation="RIGHT_TO_LEFT" prefHeight="17.0" prefWidth="37.0" text="City: " GridPane.rowIndex="1" />
             <Label layoutX="280.0" layoutY="47.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="17.0" prefWidth="63.0" text="End Date:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
             <DatePicker fx:id="endFilter" layoutX="350.0" layoutY="43.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
          </children>
