@@ -56,6 +56,30 @@ public class Name {
     }
 
     /**
+     * Returns the first name.
+     * @return the first name.
+     */
+    public String getFirst() {
+        return first;
+    }
+
+    /**
+     * Returns the middle name.
+     * @return the middle name.
+     */
+    public String getMiddle() {
+        return middle;
+    }
+
+    /**
+     * Returns the last name.
+     * @return the last name.
+     */
+    public String getLast() {
+        return last;
+    }
+
+    /**
      * Returns the full name of a Name object in String format.
      * @return the full name separated by spaces.
      * @since 1.2

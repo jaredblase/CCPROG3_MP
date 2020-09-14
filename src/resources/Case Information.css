@@ -1,0 +1,11 @@
+#case-information-stage {
+	-fx-pref-width: 900px;
+}
+
+.filter {
+	-fx-hgap: 10px;
+}
+
+.filter Label {
+	
+}

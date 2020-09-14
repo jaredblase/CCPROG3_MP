@@ -56,6 +56,11 @@ public class MenuController extends Controller {
     }
 
     @FXML
+    public void showCaseInformationAction() {
+        mainController.changeScene(MainController.CASE_INFO_VIEW);
+    }
+
+    @FXML
     public void handleLogoutAction() {
         mainController.changeScene(MainController.LOGIN_VIEW);
     }

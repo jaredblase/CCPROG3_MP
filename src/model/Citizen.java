@@ -96,6 +96,30 @@ public class Citizen {
     }
 
     /**
+     * Returns the office address of the user.
+     * @return the office address of the user.
+     */
+    public String getOfficeAddress() {
+        return officeAddress;
+    }
+
+    /**
+     * Returns the phone number of the user.
+     * @return the phone number of the user.
+     */
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    /**
+     * Returns the email of the user.
+     * @return the email of the user.
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
      * Returns the username of the user.
      * @return the username of the user.
      */

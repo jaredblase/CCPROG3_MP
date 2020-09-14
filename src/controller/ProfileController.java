@@ -3,6 +3,7 @@ package controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import model.Citizen;
 
 public class ProfileController extends Controller {
     @FXML
@@ -27,7 +28,16 @@ public class ProfileController extends Controller {
 
     @FXML
     public void update() {
+        Citizen user = mainController.getUserModel();
+
         menuController.setMainController(super.mainController);
+        firstName.setText(user.getName().getFirst());
+        middleName.setText(user.getName().getMiddle());
+        lastName.setText(user.getName().getLast());
+        homeAddress.setText(user.getHomeAddress());
+        officeAddress.setText(user.getOfficeAddress());
+        phoneNumber.setText(user.getPhoneNumber());
+        email.setText(user.getEmail());
         isEditing = false;
     }
 
