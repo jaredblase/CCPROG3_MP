@@ -75,7 +75,7 @@
             </GridPane>
             <HBox nodeOrientation="RIGHT_TO_LEFT">
                <children>
-                  <Button id="profile__edit-button" fx:id="actionButton" mnemonicParsing="false" onAction="#onEditAction" text="Edit" />
+                  <Button id="profile__edit-button" fx:id="actionButton" defaultButton="true" mnemonicParsing="false" onAction="#onEditAction" text="Edit" />
                </children>
             </HBox>
          </children>

@@ -110,10 +110,12 @@ public class ProfileController extends Controller {
                 isValid = false;
             }
 
-            if (isValid)
+            if (isValid) {
+                update();   // to also update changes in the menuController (Update display name at the right side)
                 actionButton.setText("Edit");
-            else
+            } else {
                 isEditing = !isEditing;
+            }
         } else {
             actionButton.setText("Update Profile");
         }
