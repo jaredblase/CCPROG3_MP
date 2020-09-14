@@ -1,5 +1,8 @@
 package model;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * The Name class holds all the information of a name
  * and methods available for changing them.
@@ -38,21 +41,24 @@ public class Name {
      * with str.
      * @param opt indicates which part of the name to change.
      * @param str the String to replace the name.
-     * @throws Exception if an empty String is received to replace the first or last name.
+     * @return status whether the String input is valid and accepted.
      * @since 1.0
      */
-    public void setName(int opt, String str) throws Exception {
+    public boolean setName(int opt, String str) {
         str = str.trim();   // removes excess whitespace before and after the String
+        Matcher matcher = Pattern.compile("\\d").matcher(str);
 
-        if (!str.isEmpty() || opt == 2) {       // allows middle name to be empty
+        // prevents names with numbers and allows middle name to be empty
+        if ((!str.isEmpty() || opt == 2) && !matcher.find()) {
             switch (opt) {
                 case 1 -> this.first = str;
                 case 2 -> this.middle = str;
                 case 3 -> this.last = str;
             }
-        } else {
-            throw new Exception(CHANGE_NAME_MENU.getOption(opt - 1) + " cannot be left blank!");
+            return true;
         }
+
+        return false;
     }
 
     /**
