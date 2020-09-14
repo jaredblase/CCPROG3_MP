@@ -36,7 +36,7 @@ public class UserSystem {
      * @return the index of the username in the list, and -1 if it is not in the list.
      */
     public static int getIndexOf(String username) {
-        return usernames.indexOf(username);
+        return usernames.indexOf(username.toUpperCase());
     }
 
     /**
