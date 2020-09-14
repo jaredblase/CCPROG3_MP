@@ -19,10 +19,6 @@ public class Tracer extends Citizen {
             "Inform Citizens Possibly Exposed", "Logout");
     /** The list of cases assigned to the contact tracer. */
     private ArrayList<Case> assigned;
-    /** The list of contacts of all cases. */
-    private ArrayList<ArrayList<String>> contacts;
-    /** The list of visit records when and where the contacts may have been exposed. */
-    private ArrayList<ArrayList<Visit>> contactPlaces;
 
     /**
      * Receives a Citizen class object and makes an exact copy of its attributes, and
@@ -34,20 +30,6 @@ public class Tracer extends Citizen {
         super(other);
 
         assigned = new ArrayList<>();
-        contacts = new ArrayList<>();
-        contactPlaces = new ArrayList<>();
-    }
-
-    /**
-     * Receives a Tracer class object and makes an exact copy of its attributes.
-     * @param other the object used to construct the new object.
-     */
-    public Tracer(Tracer other) {
-        super(other);
-
-        this.assigned = other.assigned;
-        this.contacts = other.contacts;
-        this.contactPlaces = other.contactPlaces;
     }
 
     /**
@@ -65,8 +47,6 @@ public class Tracer extends Citizen {
      */
     public void addCase(Case positive) {
         assigned.add(positive);
-        contacts.add(new ArrayList<>());
-        contactPlaces.add(new ArrayList<>());
     }
 
     /**
@@ -100,15 +80,27 @@ public class Tracer extends Citizen {
                 break;
             }
         }
+        ArrayList<String> contacts = new ArrayList<>();
+        ArrayList<Visit> contactPlaces = new ArrayList<>();
 
         if (positive != null) { // valid input
-            int posIndex = assigned.indexOf(positive);
+            int posIndex = assigned.indexOf(positive); //no need
 
             if (contacts.get(posIndex).isEmpty()) { // never traced before
-                checkContacts(positive, posIndex);
+                checkContacts(positive, contacts, contactPlaces);
             }
             if (status == 1)
-                displayContacts(contacts.get(posIndex));
+                displayContacts(contacts);
+
+            for (int i = 0; i < contacts.size(); i++) {
+                // add info to prompt user that he may be infected
+                Citizen user = UserSystem.getUser(contacts.get(i));
+                if (user != null)
+                    user.addContactInfo(contactPlaces.get(i));
+            }
+
+            positive.setStatus('T');
+            assigned.remove(positive);
         }
     }
 
@@ -118,9 +110,10 @@ public class Tracer extends Citizen {
      * when and where the contacts were exposed. An empty string is added to the
      * list of contacts if no contacts for the case is found.
      * @param positive the positive case.
-     * @param posIndex the index of the case being traced in the list of assigned cases.
+     * @param contacts the list of contacts of the positive case.
+     * @param contactPlaces the list of visit records when and where the contacts may have been exposed.
      */
-    private void checkContacts(Case positive, int posIndex) {
+    private void checkContacts(Case positive, ArrayList<String> contacts, ArrayList<Visit> contactPlaces) {
         Citizen patient = UserSystem.getUser(positive.getUsername());
         if (patient != null) {
             ArrayList<Visit> posRecords = new ArrayList<>(); // visit records of positive case on report date
@@ -164,8 +157,8 @@ public class Tracer extends Citizen {
                                     }
 
                                     if (hasIntersection(startA, endA, startB, endB)) {
-                                        contacts.get(posIndex).add(UserSystem.getUsername(i));
-                                        contactPlaces.get(posIndex).add(posRec);
+                                        contacts.add(UserSystem.getUsername(i));
+                                        contactPlaces.add(userVisit);
                                     }
                                 }
                             }
@@ -173,9 +166,6 @@ public class Tracer extends Citizen {
                     }
                 }
             }
-
-            if (contacts.get(posIndex).isEmpty()) // no contacts
-                contacts.get(posIndex).add(""); // add empty string to mark done checking but no contacts
         }
     }
 
@@ -220,7 +210,7 @@ public class Tracer extends Citizen {
      * @param contacts the contacts of a case.
      */
     private void displayContacts(ArrayList<String> contacts) {
-        if (contacts.get(0).isEmpty()) { // no contacts
+        if (contacts.isEmpty()) { // no contacts
             System.out.println("Positive case did not come into contact with anyone.");
         } else {
             System.out.println("Persons at risk of possible exposure:");
@@ -230,53 +220,13 @@ public class Tracer extends Citizen {
     }
 
     /**
-     * Informs the contacts that they may possibly be exposed. Contacts
-     * are also informed when and where they may possibly be exposed. The contact
-     * tracer is also informed of which cases are completed depending on the status.
-     * @param status the status whether the completed cases are displayed (1) or not (0)
-     */
-    public void broadcast(int status) {
-        int[] caseNums = new int[assigned.size()];
-        int ctr = 0;
-
-        for (int i = 0; i < contacts.size(); i++) {
-            if (contacts.get(i).isEmpty())
-                continue;
-            if (!contacts.get(i).get(0).isEmpty()) { // there are people possibly exposed
-                for (int j = 0; j < contacts.get(i).size(); j++) {
-                    Citizen user = UserSystem.getUser(contacts.get(i).get(j));
-                    if (user != null) {
-                        // add info to prompt user that he may be infected
-                        user.addContactInfo(contactPlaces.get(i).get(j));
-                    }
-                }
-            }
-
-            // tracing is complete
-            Case remove = assigned.remove(i);
-            remove.setStatus('T');
-            caseNums[ctr++] = remove.getCaseNum();
-            contacts.remove(i);
-            contactPlaces.remove(i);
-            i--;
-        }
-
-        if (status == 1) {
-            System.out.print("Tracing completed for the following cases: ");
-            for (int i = 0; i < ctr; i++)
-                System.out.print(caseNums[i] + " ");
-            System.out.println();
-        }
-    }
-
-    /**
-     * Called when a contact tracer is demoted to a citizen. Sets all attributes unique
-     * to the Tracer class to null.
+     * Called when a contact tracer is demoted to a citizen. Sets the tracer username of all
+     * assigned cases to default.
      */
     public void demote() {
+        for (Case i: assigned)
+            i.setTracer("000"); // set tracer username of all assigned cases to default
         assigned = null;
-        contacts = null;
-        contactPlaces = null;
         System.gc();
     }
 }
