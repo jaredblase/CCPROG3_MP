@@ -16,6 +16,7 @@ public class MainController {
     public static final int REGISTER_2_VIEW = 3;
     public static final int PROFILE_VIEW = 4;
     public static final int CASE_INFO_VIEW = 5;
+    public static final int MODIFY_ROLE_VIEW = 6;
 
     /** This is the user logged in */
     private Citizen userModel;
@@ -44,6 +45,7 @@ public class MainController {
             case 3 -> loader.setLocation(getClass().getResource("/view/Registration Form Part 2.fxml"));
             case 4 -> loader.setLocation(getClass().getResource("/view/Profile.fxml"));
             case 5 -> loader.setLocation(getClass().getResource("/view/Case Information.fxml"));
+            case 6 -> loader.setLocation(getClass().getResource("/view/Modify Role.fxml"));
         }
 
         try {

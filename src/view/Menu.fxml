@@ -31,7 +31,7 @@
             <Button mnemonicParsing="false" onAction="#showCaseInformationAction" text="Analytics" />
             <Button mnemonicParsing="false" text="Show Updates" />
             <Button mnemonicParsing="false" text="Assign Case" />
-            <Button mnemonicParsing="false" text="Modify Roles" />
+            <Button mnemonicParsing="false" onAction="#showModifyRoleAction" text="Modify Roles" />
          </children>
          <opaqueInsets>
             <Insets top="-4.0" />

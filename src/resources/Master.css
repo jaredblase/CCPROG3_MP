@@ -129,3 +129,27 @@ VBox {
 	-fx-alignment: center;
 	-fx-font-weight: bold;
 }
+
+/* For Modify Role.fxml */
+
+#modify-role-vbox {
+	-fx-padding: 40 15 0 15;
+	-fx-spacing: 20px;
+}
+
+#modify-role-vbox Button {
+	-fx-background-radius: 5px;
+	-fx-pref-width: 105px;
+}
+
+#modify-feedback {
+	-fx-text-fill: green;
+	-fx-translate-x: 0px;
+	-fx-font-size: 12px;
+	-fx-translate-y: -15px;
+}
+
+
+
+
+
