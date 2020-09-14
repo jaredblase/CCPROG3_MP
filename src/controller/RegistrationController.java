@@ -3,6 +3,8 @@ package controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import model.Citizen;
+import model.Name;
 import model.UserSystem;
 
 public class RegistrationController extends Controller {
@@ -20,13 +22,8 @@ public class RegistrationController extends Controller {
     }
 
     public void initialize() {
-        usernameTextField.setOnKeyPressed(e -> {
-            invalidUsername.setVisible(false);
-        });
-
-        passwordTextField.setOnKeyPressed(e -> {
-            invalidPassword.setVisible(false);
-        });
+        usernameTextField.setOnKeyPressed(e -> invalidUsername.setVisible(false));
+        passwordTextField.setOnKeyPressed(e -> invalidPassword.setVisible(false));
     }
 
     @Override
@@ -54,6 +51,8 @@ public class RegistrationController extends Controller {
         }
 
         if (isValid) {
+            UserSystem.register(new Citizen(new Name("", "", ""), "", "", "", "",
+                            usernameTextField.getText().toUpperCase(), passwordTextField.getText()));
             mainController.changeScene(MainController.REGISTER_2_VIEW);
         }
     }

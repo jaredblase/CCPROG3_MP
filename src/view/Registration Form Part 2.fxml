@@ -39,7 +39,7 @@
                      </GridPane.margin></TextField>
                   <Label fx:id="invalidFirstName" styleClass="invalid-message" text="Invalid first name" GridPane.rowIndex="1" />
                   <Label fx:id="invalidMiddleName" layoutX="10.0" layoutY="55.0" styleClass="invalid-message" text="Invalid middle name" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Label layoutX="10.0" layoutY="55.0" styleClass="invalid-message" text="Invaild last name" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Label fx:id="invalidLastName" layoutX="10.0" layoutY="55.0" styleClass="invalid-message" text="Invalid last name" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                </children>
                <padding>
                   <Insets top="10.0" />

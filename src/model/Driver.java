@@ -504,7 +504,7 @@ public class Driver {
                         System.out.print("Enter case number to be traced: ");
                         caseNum = Integer.parseInt(input.nextLine());
 
-                        for (Case i: assigned) {
+                        for (Case i : assigned) {
                             if (i.getCaseNum() == caseNum) { // case number is assigned
                                 status = true;
                                 break;
@@ -521,7 +521,6 @@ public class Driver {
                         user.trace(caseNum, 1);
                 }
             }
-            case 6 -> user.broadcast(1);
         }
     }
 }

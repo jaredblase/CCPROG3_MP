@@ -104,12 +104,12 @@ public class UserSystem {
     }
 
     /**
-     * Checks if the username has not been taken.
+     * Checks if the username has not been taken, is not empty, and does not have a space.
      * @param username the username.
-     * @return true if the username is still available, false otherwise.
+     * @return true if the username is valid, false otherwise.
      */
     public static boolean isValidNewUsername(String username) {
-        return getIndexOf(username.toUpperCase()) == -1 && !username.isBlank();
+        return getIndexOf(username.toUpperCase()) == -1 && !username.isBlank() && !username.contains(" ");
     }
 
     /**
@@ -147,7 +147,7 @@ public class UserSystem {
                     return new GovOfficial(users.get(index));
 
                 case "tracer":
-                    return new Tracer((Tracer) users.get(index));
+                    return new Tracer(users.get(index));
             }
         }
 
@@ -174,15 +174,10 @@ public class UserSystem {
     public static void setRoleOf(int index, String role) {
         if (roles.get(index).equals("tracer")) { // previous role is tracer
             Tracer temp = (Tracer) users.get(index);
-            for (Case i: cases) {
-                if (i.getTracer().equals(users.get(index).getUsername()))
-                    i.setTracer("000");
-            }
             temp.demote();
             nTracers--;
         } else if (role.equals("tracer")) { // new role is tracer
             nTracers++;
-            updateUser(new Tracer(users.get(index)));
         }
 
         roles.set(index, role);
@@ -194,6 +189,16 @@ public class UserSystem {
      */
     public static void updateUser(Citizen citizen) {
         users.set(usernames.indexOf(citizen.getUsername()), citizen);
+    }
+
+    /**
+     * Removes the last user in the system as well as the corresponding role and username.
+     */
+    public static void removeUser() {
+        int index = usernames.size() - 1;
+        usernames.remove(index);
+        users.remove(index);
+        roles.remove(index);
     }
 
     /**
@@ -322,7 +327,6 @@ public class UserSystem {
                         // finish tracing for the case
                         tracer.addCase(cases.get(index));
                         tracer.trace(index + 1, 0);
-                        tracer.broadcast(0);
                     }
                 }
             }
@@ -331,8 +335,6 @@ public class UserSystem {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 
     /**
