@@ -192,6 +192,16 @@ public class UserSystem {
     }
 
     /**
+     * Removes the last user in the system as well as the corresponding role and username.
+     */
+    public static void removeUser() {
+        int index = usernames.size() - 1;
+        usernames.remove(index);
+        users.remove(index);
+        roles.remove(index);
+    }
+
+    /**
      * Adds a visit record to the list of visit records in the system.
      * @param record the visit record to be added.
      * @param username the name to be checked in the master list.

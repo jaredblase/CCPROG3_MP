@@ -163,28 +163,28 @@ public class Citizen {
      * Sets the personal details fields of the object (indicated by opt) with updated information.
      * @param opt indicates which field to replace.
      * @param info the new String to replace the current personal details.
-     * @throws Exception if the String received is empty or not comprised of digits when replacing
-     *                      the phone number information.
+     * @return the status whether the String input is valid and accepted.
      */
-    public void setPersonalDetails(int opt, String info) throws Exception {
+    public boolean setPersonalDetails(int opt, String info) {
         info = info.trim();
 
         if (!info.isBlank()) {
             switch (opt) {
-                case 2 -> homeAddress = info;
-                case 3 -> officeAddress = info;
-                case 4 -> {
+                case 1 -> homeAddress = info;
+                case 2 -> officeAddress = info;
+                case 3 -> {
                     if (info.matches("\\d+")) {
                         phoneNumber = info;
                     } else {
-                        throw new Exception("Phone number must only contain digits!");
+                        return false;
                     }
                 }
-                case 5 -> email = info;
+                case 4 -> email = info;
             }
-        } else {
-            throw new Exception(UPDATE_OPTIONS.getOption(opt - 1) + " cannot be left blank!");
+            return true;
         }
+
+        return false;
     }
 
     /**
