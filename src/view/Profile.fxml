@@ -12,11 +12,10 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-
 <AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ProfileController">
    <children>
-        <fx:include source="Menu.fxml" fx:id="menu"/>
-      <VBox layoutX="269.0" layoutY="116.0" prefHeight="308.0" prefWidth="431.0" styleClass="profile">
+        <fx:include fx:id="menu" source="Menu.fxml" />
+      <VBox layoutX="269.0" layoutY="100.0" prefWidth="431.0" styleClass="profile">
          <children>
             <GridPane hgap="5.0">
               <columnConstraints>
@@ -25,28 +24,34 @@
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <TextField fx:id="lastName" disable="true" prefHeight="27.0" prefWidth="421.0" text="Sy" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                  <TextField fx:id="middleName" disable="true" text="Del Castillo" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <TextField fx:id="firstName" disable="true" prefHeight="27.0" prefWidth="169.0" text="Jared Blase" GridPane.rowIndex="1" />
                   <Label text="First Name" />
                   <Label text="Middle Name" GridPane.columnIndex="1" />
                   <Label text="Last Name" GridPane.columnIndex="2" />
+                  <TextField fx:id="firstName" disable="true" text="Jared Blase" GridPane.rowIndex="1" />
+                  <TextField fx:id="middleName" disable="true" text="Del Castillo" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="lastName" disable="true" text="Sy" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Label fx:id="invalidFirstName" layoutX="10.0" layoutY="10.0" styleClass="invalid-message" text="Invalid first name" GridPane.rowIndex="2" />
+                  <Label fx:id="invalidMiddleName" layoutX="10.0" layoutY="42.0" styleClass="invalid-message" text="Invalid middle name" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label fx:id="invalidLastName" layoutX="146.0" layoutY="42.0" styleClass="invalid-message" text="Invalid last name" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                </children>
             </GridPane>
             <VBox>
                <children>
                   <Label text="Home Address" />
                   <TextField fx:id="homeAddress" disable="true" text="1015 Alvarado Street, Binondo, Manila" />
+                  <Label fx:id="invalidHomeAddress" styleClass="invalid-message" text="Invalid home address" />
                </children>
             </VBox>
             <VBox>
                <children>
                   <Label text="Office Address" />
-                  <TextField fx:id="officeAddress" disable="true" prefHeight="27.0" prefWidth="421.0" text="2449-8 Del Carmen Street, Malate, Manila" />
+                  <TextField fx:id="officeAddress" disable="true" text="2449-8 Del Carmen Street, Malate, Manila" />
+                  <Label fx:id="invalidOfficeAddress" styleClass="invalid-message" text="Invalid office address" />
                </children>
             </VBox>
             <GridPane hgap="20.0">
@@ -55,19 +60,22 @@
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <TextField fx:id="phoneNumber" disable="true" text="09328587114" GridPane.rowIndex="1" />
-                  <TextField fx:id="email" disable="true" prefHeight="27.0" prefWidth="199.0" text="jaredblase@gmail.com" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Label text="Phone Number" />
                   <Label text="E-Mail" GridPane.columnIndex="1" />
+                  <TextField fx:id="phoneNumber" disable="true" text="09328587114" GridPane.rowIndex="1" />
+                  <TextField fx:id="email" disable="true" prefHeight="27.0" prefWidth="199.0" text="jaredblase@gmail.com" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label fx:id="invalidPhoneNumber" styleClass="invalid-message" text="Invalid phone number" GridPane.rowIndex="2" />
+                  <Label fx:id="invalidEmail" layoutX="10.0" layoutY="29.0" styleClass="invalid-message" text="Invalid e-mail" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                </children>
             </GridPane>
             <HBox nodeOrientation="RIGHT_TO_LEFT">
                <children>
-                  <Button id="profile__edit-button" fx:id="editButton" mnemonicParsing="false" onAction="#onEditAction" text="Edit" />
+                  <Button id="profile__edit-button" fx:id="actionButton" mnemonicParsing="false" onAction="#onEditAction" text="Edit" />
                </children>
             </HBox>
          </children>

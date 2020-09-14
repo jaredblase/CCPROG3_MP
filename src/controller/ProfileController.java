@@ -2,6 +2,7 @@ package controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import model.Citizen;
 
@@ -21,7 +22,22 @@ public class ProfileController extends Controller {
     @FXML
     private TextField email;
     @FXML
-    private Button editButton;
+    private Button actionButton;
+    @FXML
+    private Label invalidFirstName;
+    @FXML
+    private Label invalidMiddleName;
+    @FXML
+    private Label invalidLastName;
+    @FXML
+    private Label invalidHomeAddress;
+    @FXML
+    private Label invalidOfficeAddress;
+    @FXML
+    private Label invalidPhoneNumber;
+    @FXML
+    private Label invalidEmail;
+
     @FXML
     private MenuController menuController;
     private boolean isEditing;
@@ -46,9 +62,9 @@ public class ProfileController extends Controller {
         isEditing = !isEditing;
 
         if (isEditing) {
-            editButton.setText("Update Profile");
+            actionButton.setText("Update Profile");
         } else {
-            editButton.setText("Edit");
+            actionButton.setText("Edit");
         }
 
         firstName.setDisable(!isEditing);

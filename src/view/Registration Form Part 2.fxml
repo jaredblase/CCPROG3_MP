@@ -14,7 +14,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="stage" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Registration2Controller">
    <children>
-      <VBox layoutX="50.0" layoutY="50.0" prefHeight="300.0" prefWidth="500.0" styleClass="login__v-box">
+      <VBox layoutX="51.0" layoutY="38.0" prefHeight="324.0" prefWidth="500.0">
          <children>
             <Label prefWidth="500.0" styleClass="headers" text="Personal Information">
                <VBox.margin>
@@ -28,43 +28,48 @@
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints vgrow="SOMETIMES" />
+                  <RowConstraints vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <TextField promptText="First Name" />
-                  <TextField promptText="Middle Name" GridPane.columnIndex="1" />
-                  <TextField promptText="Last Name" GridPane.columnIndex="2">
+                  <TextField fx:id="firstName" promptText="First Name" />
+                  <TextField fx:id="middleName" promptText="Middle Name" GridPane.columnIndex="1" />
+                  <TextField fx:id="lastName" promptText="Last Name" GridPane.columnIndex="2">
                      <GridPane.margin>
                         <Insets />
                      </GridPane.margin></TextField>
+                  <Label fx:id="invalidFirstName" styleClass="invalid-message" text="Invalid first name" GridPane.rowIndex="1" />
+                  <Label fx:id="invalidMiddleName" layoutX="10.0" layoutY="55.0" styleClass="invalid-message" text="Invalid middle name" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label layoutX="10.0" layoutY="55.0" styleClass="invalid-message" text="Invaild last name" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                </children>
                <padding>
                   <Insets top="10.0" />
                </padding>
                <VBox.margin>
-                  <Insets top="10.0" />
+                  <Insets />
                </VBox.margin>
             </GridPane>
-            <GridPane hgap="10.0" vgap="10.0">
+            <GridPane>
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                   <RowConstraints vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <TextField promptText="Home Address" GridPane.columnSpan="2147483647">
+                  <TextField fx:id="homeAddress" promptText="Home Address" GridPane.columnSpan="2147483647">
                      <GridPane.margin>
                         <Insets />
                      </GridPane.margin></TextField>
-                  <TextField promptText="Office Address" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" />
+                  <Label fx:id="invalidHomeAddress" styleClass="invalid-message" text="Invalid home address" GridPane.rowIndex="1" />
+                  <TextField fx:id="officeAddress" promptText="Office Address" GridPane.columnSpan="2147483647" GridPane.rowIndex="2" />
+                  <Label fx:id="invalidOfficeAddress" layoutX="10.0" layoutY="58.0" styleClass="invalid-message" text="Invalid office address" GridPane.rowIndex="3" />
                </children>
                <VBox.margin>
                   <Insets />
                </VBox.margin>
-               <padding>
-                  <Insets top="10.0" />
-               </padding>
             </GridPane>
             <GridPane hgap="10.0">
               <columnConstraints>
@@ -73,14 +78,14 @@
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <TextField promptText="E-Mail" />
-                  <TextField promptText="Phone Number" GridPane.columnIndex="1" />
+                  <TextField fx:id="email" promptText="E-Mail" />
+                  <TextField fx:id="phoneNumber" promptText="Phone Number" GridPane.columnIndex="1" />
+                  <Label fx:id="invalidEmail" styleClass="invalid-message" text="Invalid e-mail address" GridPane.rowIndex="1" />
+                  <Label fx:id="invalidPhoneNumber" layoutX="10.0" layoutY="50.0" styleClass="invalid-message" text="Invalid phone number" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
-               <padding>
-                  <Insets top="10.0" />
-               </padding>
             </GridPane>
             <Button defaultButton="true" mnemonicParsing="false" onAction="#handleRegisterButtonAction" styleClass="green-button" text="REGISTER">
                <cursor>

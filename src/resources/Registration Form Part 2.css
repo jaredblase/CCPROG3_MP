@@ -3,8 +3,12 @@ TextField {
 	-fx-font-weight: bold;
 }
 
+.headers {
+	-fx-pref-height: 40px;
+}
+
 Button {
 	-fx-pref-width: 500px;
 	-fx-pref-height: 35px;
-	-fx-translate-y: 20px;
+	-fx-translate-y: 5px;
 }
