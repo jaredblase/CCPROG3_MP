@@ -104,12 +104,12 @@ public class UserSystem {
     }
 
     /**
-     * Checks if the username has not been taken.
+     * Checks if the username has not been taken, is not empty, and does not have a space.
      * @param username the username.
-     * @return true if the username is still available, false otherwise.
+     * @return true if the username is valid, false otherwise.
      */
     public static boolean isValidNewUsername(String username) {
-        return getIndexOf(username.toUpperCase()) == -1 && !username.isBlank();
+        return getIndexOf(username.toUpperCase()) == -1 && !username.isBlank() && !username.contains(" ");
     }
 
     /**

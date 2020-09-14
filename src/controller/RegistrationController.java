@@ -20,13 +20,9 @@ public class RegistrationController extends Controller {
     }
 
     public void initialize() {
-        usernameTextField.setOnKeyPressed(e -> {
-            invalidUsername.setVisible(false);
-        });
+        usernameTextField.setOnKeyPressed(e -> invalidUsername.setVisible(false));
 
-        passwordTextField.setOnKeyPressed(e -> {
-            invalidPassword.setVisible(false);
-        });
+        passwordTextField.setOnKeyPressed(e -> invalidPassword.setVisible(false));
     }
 
     @Override

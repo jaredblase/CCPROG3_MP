@@ -27,7 +27,7 @@ public class LoginController extends Controller {
     }
 
     @FXML
-    public void handleLoginButtonAction(ActionEvent e) {
+    public void handleLoginButtonAction() {
         System.out.println(usernameTextField.getText());
         System.out.println(passwordTextField.getText());
         Citizen citizen = UserSystem.login(usernameTextField.getText(), passwordTextField.getText());
@@ -42,7 +42,7 @@ public class LoginController extends Controller {
     }
 
     @FXML
-    public void handleCreateNewAccountAction(ActionEvent e) {
+    public void handleCreateNewAccountAction() {
         mainController.changeScene(MainController.REGISTER_VIEW);
     }
 

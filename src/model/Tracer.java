@@ -118,7 +118,7 @@ public class Tracer extends Citizen {
         if (patient != null) {
             ArrayList<Visit> posRecords = new ArrayList<>(); // visit records of positive case on report date
             Calendar temp = (Calendar) positive.getReportDate().clone();
-            temp.add(Calendar.DAY_OF_YEAR, -14); // get date 14 days before positive report
+            temp.add(Calendar.DAY_OF_YEAR, -8); // get date 8 days before positive report
 
             for (Visit i: patient.getVisitRec()) { // set records
                 if (i.getCheckIn().compareTo(temp) >= 0) { // visit is within tracing range
