@@ -5,6 +5,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import model.Citizen;
+import model.UserSystem;
+import view.ChangePasswordView;
+
+import java.util.Optional;
 
 public class ProfileController extends Controller {
     /** This is the user logged in */
@@ -40,6 +44,8 @@ public class ProfileController extends Controller {
     private Label invalidPhoneNumber;
     @FXML
     private Label invalidEmail;
+    @FXML
+    private Label feedback;
 
     @FXML
     private MenuController menuController;
@@ -75,6 +81,7 @@ public class ProfileController extends Controller {
 
         if (!isEditing) {
             boolean isValid = true;
+
             if (!user.getName().setName(1, firstName.getText())) {
                 invalidFirstName.setVisible(true);
                 isValid = false;
@@ -113,10 +120,12 @@ public class ProfileController extends Controller {
             if (isValid) {
                 update();   // to also update changes in the menuController (Update display name at the right side)
                 actionButton.setText("Edit");
+                feedback.setVisible(true);
             } else {
                 isEditing = !isEditing;
             }
         } else {
+            feedback.setVisible(false);
             actionButton.setText("Update Profile");
         }
 
@@ -127,5 +136,20 @@ public class ProfileController extends Controller {
         officeAddress.setDisable(!isEditing);
         phoneNumber.setDisable(!isEditing);
         email.setDisable(!isEditing);
+    }
+
+    @FXML
+    public void changePasswordAction() {
+        feedback.setVisible(false);
+        ChangePasswordView dialog = new ChangePasswordView(mainController.getUserModel().getPassword());
+
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresentOrElse(e -> {
+            try {
+                UserSystem.getUser(mainController.getUserModel().getUsername()).setPassword(e);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        }, () -> feedback.setVisible(true));
     }
 }
