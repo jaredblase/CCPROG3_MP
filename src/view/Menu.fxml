@@ -28,9 +28,7 @@
       <VBox fx:id="govActions" layoutX="33.0" layoutY="286.0" prefHeight="130.0" prefWidth="217.0" visible="false">
          <children>
             <Label styleClass="menu__label" text="Gov Actions" />
-            <Button mnemonicParsing="false" onAction="#showCaseInformationAction" text="Analytics" />
-            <Button mnemonicParsing="false" text="Show Updates" />
-            <Button mnemonicParsing="false" text="Assign Case" />
+            <Button mnemonicParsing="false" onAction="#showCaseInformationAction" text="Case Information" />
             <Button mnemonicParsing="false" onAction="#showModifyRoleAction" text="Modify Roles" />
          </children>
          <opaqueInsets>
