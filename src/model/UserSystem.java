@@ -36,7 +36,7 @@ public class UserSystem {
      * @return the index of the username in the list, and -1 if it is not in the list.
      */
     public static int getIndexOf(String username) {
-        return usernames.indexOf(username);
+        return usernames.indexOf(username.toUpperCase());
     }
 
     /**
@@ -256,8 +256,8 @@ public class UserSystem {
 
             for (int i = 0; i < roles.size(); i++) {
                 // update user in list of users if role is tracer
-                if (!roles.get(i).equals("tracer")) {
-                    setRoleOf(i, roles.get(i));
+                if (roles.get(i).equals("tracer")) {
+                    users.set(i, new Tracer(users.get(i)));
                 }
             }
         } catch (FileNotFoundException e) {
@@ -308,7 +308,7 @@ public class UserSystem {
             while (input.hasNextLine()) {
                 info = input.nextLine().split(" ");
                 date = info[2].split(",");
-                builder.setDate(Integer.parseInt(date[2]), Integer.parseInt(date[1]), Integer.parseInt(date[0]));
+                builder.setDate(Integer.parseInt(date[2]), Integer.parseInt(date[0]) - 1, Integer.parseInt(date[1]));
 
                 Citizen temp = getUser(info[1]); // get the positive user
                 if (temp != null) {

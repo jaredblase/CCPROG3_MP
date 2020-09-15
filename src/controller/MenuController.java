@@ -61,6 +61,11 @@ public class MenuController extends Controller {
     }
 
     @FXML
+    public void showModifyRoleAction() {
+        mainController.changeScene(MainController.MODIFY_ROLE_VIEW);
+    }
+
+    @FXML
     public void handleLogoutAction() {
         mainController.changeScene(MainController.LOGIN_VIEW);
     }
