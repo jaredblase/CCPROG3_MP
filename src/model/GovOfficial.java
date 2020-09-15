@@ -1,5 +1,6 @@
 package model;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.function.Predicate;
 
@@ -159,26 +160,42 @@ public class GovOfficial extends Citizen {
         return countCases(filter);
     }
 
-    public boolean filter(Case c, String city, Calendar start, Calendar end, char status) {
+    public boolean filter(Case c, String city, char status, LocalDate start, LocalDate end) {
         if (city == null) {
-            return filter(c, start, end, status);
+            return filter(c, status, start, end);
         }
 
         Citizen temp = UserSystem.getUser(c.getUsername());
-        if (temp != null) {
-            return temp.getHomeAddress().toUpperCase().contains(city) && filter(c, start, end, status);
-        } else {
-            return false;
+        return temp != null && temp.getHomeAddress().toUpperCase().contains(city.toUpperCase()) && filter(c, status, start, end);
+    }
+
+    public boolean filter(Case c, char status, LocalDate start, LocalDate end) {
+        return (status == '\0')? filter(c, start, end) : filter(c, start, end) &&status == c.getStatus();
+    }
+
+    public boolean filter(Case c, LocalDate start, LocalDate end) {
+        Calendar dateStart, dateEnd;
+        dateStart = Calendar.getInstance();
+        dateEnd = Calendar.getInstance();
+
+        // to remove time values
+        dateStart.clear();
+        dateEnd.clear();
+
+        if (start == null && end == null) {
+            return true;
+        } else if (start != null && end != null) {
+            dateStart.set(start.getYear(), start.getMonthValue() - 1, start.getDayOfMonth());
+            dateEnd.set(end.getYear(), end.getMonthValue() - 1, end.getDayOfMonth());
+
+            return c.getReportDate().compareTo(dateStart) >= 0 && c.getReportDate().before(dateEnd);
+        } else if (end != null) {
+            dateEnd.set(end.getYear(), end.getMonthValue() - 1, end.getDayOfMonth());
+            return c.getReportDate().before(dateEnd);
         }
-    }
 
-    public boolean filter(Case c, Calendar start, Calendar end, char status) {
-        return (start == null)? filter(c, status) : filter(c, status) &&
-                c.getReportDate().compareTo(start) >= 0 && c.getReportDate().before(end);
-    }
-
-    public boolean filter(Case c, char status) {
-        return status == '\0' || c.getStatus() == status;
+        dateStart.set(start.getYear(), start.getMonthValue() - 1, start.getDayOfMonth());
+        return c.getReportDate().compareTo(dateStart) >= 0;
     }
 
     /**
