@@ -48,7 +48,7 @@
                   <TextField id="register__password-text-field" accessibleRole="TEXT" disable="true" editable="false" mouseTransparent="true" styleClass="text-field-with-icon" GridPane.columnSpan="2" GridPane.rowIndex="2" />
                   <TextField fx:id="passwordTextField" promptText="Password" styleClass="text-field-with-icon" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <Label fx:id="invalidUsername" styleClass="invalid-message" text="Invalid username" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-                  <Label fx:id="invalidPassword" prefHeight="32.0" prefWidth="234.0" styleClass="invalid-message" text="Password must be at least 6 characters long and contains at least 1 digit or special symbol that is not a space" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+                  <Label fx:id="invalidPassword" prefHeight="32.0" prefWidth="234.0" styleClass="invalid-message" text="Password must be at least 6 characters long including 1 digit or special character that is not a space" GridPane.columnSpan="2" GridPane.rowIndex="3" />
                </children>
                <VBox.margin>
                   <Insets bottom="6.0" top="20.0" />

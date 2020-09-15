@@ -33,6 +33,8 @@ public class Citizen {
     private ArrayList<Visit> visitRec;
     /** Indicator if the user is infected. */
     private boolean isPositive;
+    /** Indicator if the information of the user is changed. */
+    private boolean isChanged;
     /** Records that indicate when and where the user may be infected. */
     private ArrayList<Visit> contactPlaces;
     /** The Menu object for the update details options of the user. */
@@ -52,9 +54,10 @@ public class Citizen {
      * @param email the email address of the user.
      * @param username the username of the user.
      * @param password the password of the user.
+     * @param isChanged the indicator if the information of the user is changed.
      */
     public Citizen(Name name, String homeAddress, String officeAddress, String phoneNumber,
-                   String email, String username, String password) {
+                   String email, String username, String password, boolean isChanged) {
         this.name = name;
         this.homeAddress = homeAddress;
         this.officeAddress = officeAddress;
@@ -62,6 +65,7 @@ public class Citizen {
         this.email = email;
         this.USERNAME = username;
         this.password = password;
+        this.isChanged = isChanged;
         visitRec = new ArrayList<>();
         isPositive = false;
         contactPlaces = new ArrayList<>();
@@ -73,7 +77,7 @@ public class Citizen {
      */
     public Citizen(Citizen other) {
         this(other.name, other.homeAddress, other.officeAddress, other.phoneNumber, other.email,
-                other.USERNAME, other.password);
+                other.USERNAME, other.password, other.isChanged);
         this.visitRec = other.visitRec;
         this.isPositive = other.isPositive;
         this.contactPlaces = other.contactPlaces;
@@ -152,11 +156,27 @@ public class Citizen {
     }
 
     /**
+     * Returns the status whether the information of the user is changed.
+     * @return the status whether the information of the user is changed.
+     */
+    public boolean getIsChanged() {
+        return isChanged;
+    }
+
+    /**
      * Returns the status whether the user is reported positive or not.
      * @return the status whether the user is reported positive or not.
      */
     public boolean getIsPositive() {
         return isPositive;
+    }
+
+    /**
+     * Sets the status whether the information of the user is changed.
+     * @param status the status whether the information of the user is changed.
+     */
+    public void setIsChanged(boolean status) {
+        isChanged = status;
     }
 
     /**

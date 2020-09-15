@@ -122,8 +122,6 @@ public class UserSystem {
         roles.add("citizen");
         users.add(citizen);
         records.add(new ArrayList<>());
-
-        // create file here
     }
 
     /**
@@ -199,6 +197,7 @@ public class UserSystem {
         usernames.remove(index);
         users.remove(index);
         roles.remove(index);
+        records.remove(index);
     }
 
     /**
@@ -247,7 +246,7 @@ public class UserSystem {
                     String email = reader.nextLine().substring(6);
 
                     users.add(new Citizen(new Name(name[0], name[1], name[2]), homeAdd,
-                                    officeAdd, phoneNumber, email, info[0], password));
+                                    officeAdd, phoneNumber, email, info[0], password, false));
                 } catch (Exception e) {
                     System.out.println("User file not found!");
                     e.printStackTrace();
@@ -272,7 +271,7 @@ public class UserSystem {
         try (Scanner input = new Scanner(new File("Establishment_Records.txt"))) {
             String temp;
             int i = 0, time;
-
+            records.add(new ArrayList<>());
             input.nextLine(); // read username ADMIN2020
             while (input.hasNextLine()) {
                 temp = input.nextLine();
@@ -296,7 +295,7 @@ public class UserSystem {
             }
         } catch (FileNotFoundException e) {
             System.out.println("Establishment_Records.txt not found. No data to load.");
-            for(int i = 0; i < usernames.size(); i++) {
+            for (int i = 0; i < usernames.size(); i++) {
                 records.add(new ArrayList<>());
             }
         } catch (Exception e) {
@@ -352,21 +351,27 @@ public class UserSystem {
 
         // Update Account information
         for (Citizen citizen : users) {
-            // if isChanged?
-            try (FileWriter accFile = new FileWriter(citizen.getUsername().concat(".act"), false)) {
-                accFile.write(citizen.toString());
-            } catch (Exception e) {
-                e.printStackTrace();
+            if (citizen.getIsChanged()) {
+                try (FileWriter accFile = new FileWriter(citizen.getUsername().concat(".act"), false)) {
+                    accFile.write(citizen.toString());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
 
         // Update Establishment Records
         try (FileWriter recFile = new FileWriter("Establishment_Records.txt", false)) {
             int i = 0;
+            // get date 30 days ago
+            Calendar temp = Calendar.getInstance();
+            temp.add(Calendar.DAY_OF_YEAR, -30);
+
             for (ArrayList<Visit> user : records) {
                 recFile.write(usernames.get(i++) + "\n");
                 for (Visit visit : user) {
-                    recFile.write(visit.toString() + "\n");
+                    if (!visit.getCheckIn().before(temp))
+                        recFile.write(visit.toString() + "\n");
                 }
                 recFile.write("\n");
             }

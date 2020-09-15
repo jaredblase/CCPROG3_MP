@@ -1,5 +1,6 @@
 package view;
 
+import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
@@ -20,7 +21,7 @@ public class CheckInView extends Dialog<Pair<String, Calendar>> {
         estCodeTextField = new TextField();
         datePicker = new DatePicker();
         textFieldLabel = new Label("Establishment code: ");
-        datePickerLabel = new Label("Date check in: ");
+        datePickerLabel = new Label("Date check in: \n(DD/MM/YYYY)");
         init();
     }
 
@@ -41,6 +42,20 @@ public class CheckInView extends Dialog<Pair<String, Calendar>> {
 
         getDialogPane().setContent(gridPane);
         getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+
+        Button okButton = (Button) getDialogPane().lookupButton(ButtonType.OK);
+        okButton.addEventFilter(ActionEvent.ACTION, e -> {
+            LocalDate date = datePicker.getValue();
+            Calendar.Builder builder = new Calendar.Builder();
+            builder.setLenient(false);
+            try {
+                builder.setDate(date.getYear(), date.getMonthValue() - 1, date.getDayOfMonth());
+                if (estCodeTextField.getText().isBlank())
+                    throw new Exception();
+            } catch (Exception exception) {
+                e.consume();
+            }
+        });
 
         setResultConverter(dialogButton -> {
             if (dialogButton == ButtonType.OK) {
