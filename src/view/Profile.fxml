@@ -76,8 +76,8 @@
             <HBox nodeOrientation="RIGHT_TO_LEFT">
                <children>
                   <Button id="profile__edit-button" fx:id="actionButton" defaultButton="true" mnemonicParsing="false" onAction="#onEditAction" text="Edit" />
-                  <Button mnemonicParsing="false" onAction="#changePasswordAction" text="Change Password" />
-                  <Label id="feedback" fx:id="feedback" styleClass="invalid-message" text="Details have been updated successfully" />
+                  <Button id="change-password-button" fx:id="changePassButton" mnemonicParsing="false" onAction="#changePasswordAction" text="Change Password" />
+                  <Label id="feedback" fx:id="feedback" styleClass="invalid-message" text="Profile updated" />
                </children>
             </HBox>
          </children>
