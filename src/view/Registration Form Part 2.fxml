@@ -6,9 +6,12 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
@@ -16,10 +19,16 @@
    <children>
       <VBox layoutX="51.0" layoutY="38.0" prefHeight="324.0" prefWidth="500.0">
          <children>
-            <Label prefWidth="500.0" styleClass="headers" text="Personal Information">
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin></Label>
+            <HBox prefWidth="470.0">
+               <children>
+                  <ImageView fitHeight="36.0" fitWidth="25.0" onMouseClicked="#handleBackToForm1Action" pickOnBounds="true" preserveRatio="true" styleClass="pressable-image">
+                     <image>
+                        <Image url="@../resources/arrow.png" />
+                     </image>
+                  </ImageView>
+                  <Label styleClass="headers" text="Personal Information" />
+               </children>
+            </HBox>
             <GridPane hgap="10.0">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" />
@@ -89,7 +98,7 @@
             </GridPane>
             <Button defaultButton="true" mnemonicParsing="false" onAction="#handleRegisterButtonAction" styleClass="green-button" text="REGISTER">
                <cursor>
-                  <Cursor fx:constant="HAND" />
+                  <Cursor fx:constant="DEFAULT" />
                </cursor>
             </Button>
          </children>
