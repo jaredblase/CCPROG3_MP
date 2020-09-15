@@ -52,6 +52,12 @@ public class Registration2Controller extends Controller {
     }
 
     @FXML
+    public void handleBackToForm1Action() {
+        UserSystem.removeUser();
+        mainController.changeScene(MainController.REGISTER_VIEW);
+    }
+
+    @FXML
     public void handleRegisterButtonAction() {
         boolean isValid = true;
         Citizen citizen = UserSystem.getUser(UserSystem.getUsername(UserSystem.getNumUsers() - 1));
