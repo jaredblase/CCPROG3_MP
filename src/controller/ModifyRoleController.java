@@ -33,6 +33,7 @@ public class ModifyRoleController extends Controller {
         username.setOnKeyPressed(e -> {
             invalidUsername.setVisible(false);
             modifyButton.setDisable(true);
+            choiceBox.getItems().clear();
         });
 
         username.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
