@@ -122,8 +122,6 @@ public class UserSystem {
         roles.add("citizen");
         users.add(citizen);
         records.add(new ArrayList<>());
-
-        // create file here
     }
 
     /**
@@ -199,6 +197,7 @@ public class UserSystem {
         usernames.remove(index);
         users.remove(index);
         roles.remove(index);
+        records.remove(index);
     }
 
     /**
@@ -272,7 +271,7 @@ public class UserSystem {
         try (Scanner input = new Scanner(new File("Establishment_Records.txt"))) {
             String temp;
             int i = 0, time;
-
+            records.add(new ArrayList<>());
             input.nextLine(); // read username ADMIN2020
             while (input.hasNextLine()) {
                 temp = input.nextLine();
@@ -296,7 +295,7 @@ public class UserSystem {
             }
         } catch (FileNotFoundException e) {
             System.out.println("Establishment_Records.txt not found. No data to load.");
-            for(int i = 0; i < usernames.size(); i++) {
+            for (int i = 0; i < usernames.size(); i++) {
                 records.add(new ArrayList<>());
             }
         } catch (Exception e) {

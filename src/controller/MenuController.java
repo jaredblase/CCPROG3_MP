@@ -6,6 +6,7 @@ import javafx.scene.layout.VBox;
 import javafx.util.Pair;
 import model.GovOfficial;
 import model.Tracer;
+import model.UserSystem;
 import view.CheckInView;
 import view.ReportView;
 
@@ -67,6 +68,7 @@ public class MenuController extends Controller {
 
     @FXML
     public void handleLogoutAction() {
+        UserSystem.updateUser(mainController.getUserModel());
         mainController.changeScene(MainController.LOGIN_VIEW);
     }
 }
