@@ -7,6 +7,10 @@ import javafx.scene.control.TextField;
 import model.Citizen;
 import model.UserSystem;
 
+import view.ChangePasswordView;
+
+import java.util.Optional;
+
 public class ProfileController extends Controller {
     /** This is the user logged in */
     private Citizen user;
@@ -41,6 +45,8 @@ public class ProfileController extends Controller {
     private Label invalidPhoneNumber;
     @FXML
     private Label invalidEmail;
+    @FXML
+    private Label feedback;
 
     @FXML
     private MenuController menuController;
@@ -140,10 +146,12 @@ public class ProfileController extends Controller {
             if (isValid) {
                 update();   // to also update changes in the menuController (Update display name at the right side)
                 actionButton.setText("Edit");
+                feedback.setVisible(true);
             } else {
                 isEditing = !isEditing;
             }
         } else {
+            feedback.setVisible(false);
             actionButton.setText("Update Profile");
         }
 
@@ -154,5 +162,20 @@ public class ProfileController extends Controller {
         officeAddress.setDisable(!isEditing);
         phoneNumber.setDisable(!isEditing);
         email.setDisable(!isEditing);
+    }
+
+    @FXML
+    public void changePasswordAction() {
+        feedback.setVisible(false);
+        ChangePasswordView dialog = new ChangePasswordView(user.getPassword());
+
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresentOrElse(e -> {
+            try {
+                user.setPassword(e);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        }, () -> feedback.setVisible(true));
     }
 }
