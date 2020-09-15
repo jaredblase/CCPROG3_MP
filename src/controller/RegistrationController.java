@@ -52,7 +52,7 @@ public class RegistrationController extends Controller {
 
         if (isValid) {
             UserSystem.register(new Citizen(new Name("", "", ""), "", "", "", "",
-                            usernameTextField.getText().toUpperCase(), passwordTextField.getText()));
+                            usernameTextField.getText().toUpperCase(), passwordTextField.getText(), true));
             mainController.changeScene(MainController.REGISTER_2_VIEW);
         }
     }

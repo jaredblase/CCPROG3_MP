@@ -247,7 +247,7 @@ public class UserSystem {
                     String email = reader.nextLine().substring(6);
 
                     users.add(new Citizen(new Name(name[0], name[1], name[2]), homeAdd,
-                                    officeAdd, phoneNumber, email, info[0], password));
+                                    officeAdd, phoneNumber, email, info[0], password, false));
                 } catch (Exception e) {
                     System.out.println("User file not found!");
                     e.printStackTrace();
@@ -352,11 +352,12 @@ public class UserSystem {
 
         // Update Account information
         for (Citizen citizen : users) {
-            // if isChanged?
-            try (FileWriter accFile = new FileWriter(citizen.getUsername().concat(".act"), false)) {
-                accFile.write(citizen.toString());
-            } catch (Exception e) {
-                e.printStackTrace();
+            if (citizen.getIsChanged()) {
+                try (FileWriter accFile = new FileWriter(citizen.getUsername().concat(".act"), false)) {
+                    accFile.write(citizen.toString());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
 

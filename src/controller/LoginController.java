@@ -46,5 +46,7 @@ public class LoginController extends Controller {
     public void handleExitButtonAction(ActionEvent e) {
         Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
         stage.close();
+
+        UserSystem.exitSystem();
     }
 }

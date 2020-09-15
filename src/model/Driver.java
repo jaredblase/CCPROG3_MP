@@ -114,7 +114,7 @@ public class Driver {
         String email = getValidString("Email address");
 
         UserSystem.register(new Citizen(new Name(firstName, secondName, lastName), homeAdd, officeAdd, phoneNumber,
-                email, username, password));
+                email, username, password, true));
 
         System.out.println("----YOU MAY NOW LOGIN WITH YOUR NEW ACCOUNT----");
     }

@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import model.Citizen;
+import model.UserSystem;
 
 public class ProfileController extends Controller {
     /** This is the user logged in */
@@ -74,40 +75,66 @@ public class ProfileController extends Controller {
         isEditing = !isEditing;
 
         if (!isEditing) {
+            Citizen temp = UserSystem.getUser(user.getUsername());
             boolean isValid = true;
-            if (!user.getName().setName(1, firstName.getText())) {
-                invalidFirstName.setVisible(true);
-                isValid = false;
+            assert temp != null;
+            /* check if there are changes in personal information and if there are changes,
+            check if they are valid */
+            if (!temp.getName().getFirst().equals(firstName.getText())) {
+                if (!user.getName().setName(1, firstName.getText())) {
+                    invalidFirstName.setVisible(true);
+                    isValid = false;
+                } else if (!user.getIsChanged()) {
+                    user.setIsChanged(true);
+                }
             }
-
-            if (!user.getName().setName(2, middleName.getText())) {
-                invalidMiddleName.setVisible(true);
-                isValid = false;
+            if (!temp.getName().getMiddle().equals(middleName.getText())) {
+                if (!user.getName().setName(2, middleName.getText())) {
+                    invalidMiddleName.setVisible(true);
+                    isValid = false;
+                } else if (!user.getIsChanged()) {
+                    user.setIsChanged(true);
+                }
             }
-
-            if (!user.getName().setName(3, lastName.getText())) {
-                invalidLastName.setVisible(true);
-                isValid = false;
+            if (!temp.getName().getLast().equals(lastName.getText())) {
+                if (!user.getName().setName(3, lastName.getText())) {
+                    invalidLastName.setVisible(true);
+                    isValid = false;
+                } else if (!user.getIsChanged()) {
+                    user.setIsChanged(true);
+                }
             }
-
-            if (!user.setPersonalDetails(1, homeAddress.getText())){
-                invalidHomeAddress.setVisible(true);
-                isValid = false;
+            if (!temp.getHomeAddress().equals(homeAddress.getText())) {
+                if (!user.setPersonalDetails(1, homeAddress.getText())) {
+                    invalidHomeAddress.setVisible(true);
+                    isValid = false;
+                } else if (!user.getIsChanged()) {
+                    user.setIsChanged(true);
+                }
             }
-
-            if (!user.setPersonalDetails(2, officeAddress.getText())) {
-                invalidOfficeAddress.setVisible(true);
-                isValid = false;
+            if (!temp.getOfficeAddress().equals(officeAddress.getText())) {
+                if (!user.setPersonalDetails(2, homeAddress.getText())) {
+                    invalidOfficeAddress.setVisible(true);
+                    isValid = false;
+                } else if (!user.getIsChanged()) {
+                    user.setIsChanged(true);
+                }
             }
-
-            if (!user.setPersonalDetails(3, phoneNumber.getText())) {
-                invalidPhoneNumber.setVisible(true);
-                isValid = false;
+            if (!temp.getPhoneNumber().equals(phoneNumber.getText())) {
+                if (!user.setPersonalDetails(3, phoneNumber.getText())) {
+                    invalidPhoneNumber.setVisible(true);
+                    isValid = false;
+                } else if (!user.getIsChanged()) {
+                    user.setIsChanged(true);
+                }
             }
-
-            if (!user.setPersonalDetails(4, email.getText())) {
-                invalidEmail.setVisible(true);
-                isValid = false;
+            if (!temp.getEmail().equals(email.getText())) {
+                if (!user.setPersonalDetails(4, email.getText())) {
+                    invalidEmail.setVisible(true);
+                    isValid = false;
+                } else if (!user.getIsChanged()) {
+                    user.setIsChanged(true);
+                }
             }
 
             if (isValid) {
