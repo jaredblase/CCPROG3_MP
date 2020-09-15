@@ -159,6 +159,28 @@ public class GovOfficial extends Citizen {
         return countCases(filter);
     }
 
+    public boolean filter(Case c, String city, Calendar start, Calendar end, char status) {
+        if (city == null) {
+            return filter(c, start, end, status);
+        }
+
+        Citizen temp = UserSystem.getUser(c.getUsername());
+        if (temp != null) {
+            return temp.getHomeAddress().toUpperCase().contains(city) && filter(c, start, end, status);
+        } else {
+            return false;
+        }
+    }
+
+    public boolean filter(Case c, Calendar start, Calendar end, char status) {
+        return (start == null)? filter(c, status) : filter(c, status) &&
+                c.getReportDate().compareTo(start) >= 0 && c.getReportDate().before(end);
+    }
+
+    public boolean filter(Case c, char status) {
+        return status == '\0' || c.getStatus() == status;
+    }
+
     /**
      * Iterates through all the cases and counts the cases that pass
      * the test (filter). Returns the final count.
