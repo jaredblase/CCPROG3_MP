@@ -163,7 +163,7 @@ public class UserSystem {
     public static boolean isValidPassword(String pass) {
         Matcher matcher = Pattern.compile("[\\W\\d]").matcher(pass.replaceAll("\\s+", ""));
 
-        return pass.length() >= 6 && matcher.find();
+        return pass.length() >= 6 && matcher.find() && !pass.contains(" ");
     }
 
     /**
