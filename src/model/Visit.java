@@ -49,7 +49,7 @@ public class Visit {
 
     @Override
     public String toString() {
-        SimpleDateFormat format = new SimpleDateFormat("MM,dd,yyyy HHmm");
+        SimpleDateFormat format = new SimpleDateFormat(" MM,dd,yyyy HHmm");
         return  EST_CODE + format.format(CHECK_IN.getTime());
     }
 }

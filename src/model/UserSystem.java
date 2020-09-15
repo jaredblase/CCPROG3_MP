@@ -363,10 +363,15 @@ public class UserSystem {
         // Update Establishment Records
         try (FileWriter recFile = new FileWriter("Establishment_Records.txt", false)) {
             int i = 0;
+            // get date 30 days ago
+            Calendar temp = Calendar.getInstance();
+            temp.add(Calendar.DAY_OF_YEAR, -30);
+
             for (ArrayList<Visit> user : records) {
                 recFile.write(usernames.get(i++) + "\n");
                 for (Visit visit : user) {
-                    recFile.write(visit.toString() + "\n");
+                    if (!visit.getCheckIn().before(temp))
+                        recFile.write(visit.toString() + "\n");
                 }
                 recFile.write("\n");
             }

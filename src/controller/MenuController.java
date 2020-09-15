@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.util.Pair;
+import model.Citizen;
 import model.GovOfficial;
 import model.Tracer;
 import model.UserSystem;
@@ -14,6 +15,9 @@ import java.util.Calendar;
 import java.util.Optional;
 
 public class MenuController extends Controller {
+    /** This is the user logged in */
+    private Citizen user;
+
     @FXML
     private Label username;
     @FXML
@@ -26,13 +30,14 @@ public class MenuController extends Controller {
 
     @Override
     public void update() {
-        if (mainController.getUserModel() instanceof GovOfficial) {
+        user = mainController.getUserModel();
+        if (user instanceof GovOfficial) {
             govActions.setVisible(true);
-        } else if (mainController.getUserModel() instanceof Tracer) {
+        } else if (user instanceof Tracer) {
             tracerActions.setVisible(true);
         }
 
-        username.setText(mainController.getUserModel().getName().getFullName());
+        username.setText(user.getName().getFullName());
     }
 
     @FXML
@@ -42,10 +47,15 @@ public class MenuController extends Controller {
 
     @FXML
     public void reportPositiveAction() {
-        ReportView dialog = new ReportView();
+        if (!user.getIsPositive()) {
+            ReportView dialog = new ReportView();
 
-        Optional<Calendar> result = dialog.showAndWait();
-        result.ifPresent(e -> System.out.println(e.getTime()));
+            Optional<Calendar> result = dialog.showAndWait();
+            if (result.isPresent()) {
+                System.out.println(result.get().getTime());
+                user.reportPositive(result.get());
+            }
+        } //else already positive dialog box?
     }
 
     @FXML
@@ -53,7 +63,10 @@ public class MenuController extends Controller {
         CheckInView dialog = new CheckInView();
 
         Optional<Pair<String, Calendar>> result = dialog.showAndWait();
-        result.ifPresent(e -> System.out.println(e.getKey() + "\n" + e.getValue().getTime()));
+        if (result.isPresent()) {
+            System.out.println(result.get().getKey() + "\n" + result.get().getValue().getTime());
+            user.checkIn(result.get().getKey(), result.get().getValue());
+        }
     }
 
     @FXML
@@ -68,7 +81,7 @@ public class MenuController extends Controller {
 
     @FXML
     public void handleLogoutAction() {
-        UserSystem.updateUser(mainController.getUserModel());
+        UserSystem.updateUser(user);
         mainController.changeScene(MainController.LOGIN_VIEW);
     }
 }
