@@ -12,7 +12,6 @@ import model.GovOfficial;
 import model.UserSystem;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Calendar;
 
 public class CaseInformationController extends Controller {
@@ -78,18 +77,10 @@ public class CaseInformationController extends Controller {
         cases = FXCollections.observableArrayList();
         FilteredList<Case> filteredList = new FilteredList<>(cases, p -> true);
 
-        actionButton.setOnAction(e -> filteredList.setPredicate(c -> {
-            LocalDate ld = startFilter.getValue();
-            Calendar start, end;
-            start = end = Calendar.getInstance();
-            start.set(ld.getYear(), ld.getMonthValue() - 1, ld.getDayOfMonth());
-
-            ld = endFilter.getValue();
-            end.set(ld.getYear(), ld.getMonthValue() - 1, ld.getDayOfMonth());
-
-            return ((GovOfficial) this.mainController.getUserModel())
-                    .filter(c, cityFilter.getText(), start, end, statusFilter.getValue());
-        }));
+        actionButton.setOnAction(e -> filteredList.setPredicate(c -> ((GovOfficial) this.mainController.getUserModel())
+                    .filter(c, cityFilter.getText(), statusFilter.getValue() == null? '\0' : statusFilter.getValue(),
+                            startFilter.getValue(), endFilter.getValue()))
+        );
 
         SortedList<Case> sortedList = new SortedList<>(filteredList);
 
