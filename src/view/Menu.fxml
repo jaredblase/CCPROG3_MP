@@ -16,8 +16,8 @@
             <Image url="@../resources/user_bigger.png" />
          </image>
       </ImageView>
-      <Label fx:id="username" layoutY="109.0" prefWidth="246.0" styleClass="name-display" text="&lt;Full Name&gt;" />
-      <VBox layoutX="33.0" layoutY="163.0" prefHeight="135.0" prefWidth="217.0">
+      <Label fx:id="fullName" layoutX="5.0" layoutY="109.0" prefWidth="258.0" styleClass="name-display" text="&lt;Full Name&gt;" />
+      <VBox layoutX="33.0" layoutY="174.0" prefHeight="135.0" prefWidth="217.0">
          <children>
             <Label styleClass="menu__label" text="User Actions" />
             <Button mnemonicParsing="false" onAction="#goToProfileAction" text="Profile" />
@@ -25,7 +25,7 @@
             <Button mnemonicParsing="false" onAction="#checkInAction" text="Check In" />
          </children>
       </VBox>
-      <VBox fx:id="govActions" layoutX="33.0" layoutY="286.0" prefHeight="130.0" prefWidth="217.0" visible="false">
+      <VBox fx:id="govActions" layoutX="33.0" layoutY="299.0" prefHeight="130.0" prefWidth="217.0" visible="false">
          <children>
             <Label styleClass="menu__label" text="Gov Actions" />
             <Button mnemonicParsing="false" onAction="#showCaseInformationAction" text="Case Information" />
@@ -35,7 +35,7 @@
             <Insets top="-4.0" />
          </opaqueInsets>
       </VBox>
-      <VBox id="tracer-menu" fx:id="tracerActions" layoutX="33.0" layoutY="288.0" prefHeight="135.0" prefWidth="217.0" visible="false">
+      <VBox id="tracer-menu" fx:id="tracerActions" layoutX="33.0" layoutY="299.0" prefHeight="135.0" prefWidth="217.0" visible="false">
          <children>
             <Label styleClass="menu__label" text="Tracer Actions" />
             <Button mnemonicParsing="false" text="Show Cases" />
@@ -49,6 +49,7 @@
          </image>
       </ImageView>
       <Button layoutX="33.0" layoutY="471.0" mnemonicParsing="false" onAction="#handleLogoutAction" styleClass="red-button" text="Log Out" />
+      <Label id="username-display" fx:id="username" layoutX="5.0" layoutY="139.0" prefHeight="21.0" prefWidth="259.0" styleClass="name-display" text="&lt;Username&gt;" />
    </children>
    <styleClass>
       <String fx:value="AnchorPane-menu" />

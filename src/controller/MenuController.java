@@ -19,6 +19,8 @@ public class MenuController extends Controller {
     private Citizen user;
 
     @FXML
+    private Label fullName;
+    @FXML
     private Label username;
     @FXML
     private VBox govActions;
@@ -37,7 +39,8 @@ public class MenuController extends Controller {
             tracerActions.setVisible(true);
         }
 
-        username.setText(user.getName().getFullName());
+        fullName.setText(user.getName().getFullName());
+        username.setText(user.getUsername());
     }
 
     @FXML
