@@ -314,16 +314,16 @@ public class Driver {
                 System.out.println("\nUnassigned Cases:");
                 int[] caseNums = user.showUnassigned();
 
-                if (caseNums != null) {
-                    if (UserSystem.getNumTracers() == 0) // no tracers
-                        System.out.println("Create contact tracer accounts to assign cases.\n");
-                    else {
-                        int caseNum = getCaseNum(caseNums); // get case
-                        assignCase(user, caseNum); // get tracer and assign case to tracer
-                    }
-                } else {
-                    System.out.println("No cases to display.");
-                }
+//                if (caseNums != null) {
+//                    if (UserSystem.getNumTracers() == 0) // no tracers
+//                        System.out.println("Create contact tracer accounts to assign cases.\n");
+//                    else {
+//                        int caseNum = getCaseNum(caseNums); // get case
+//                        assignCase(user, caseNum); // get tracer and assign case to tracer
+//                    }
+//                } else {
+//                    System.out.println("No cases to display.");
+//                }
             }
             case 5 -> user.showUpdates(obtainDateRange());
             case 6 -> showAnalytics(user);
