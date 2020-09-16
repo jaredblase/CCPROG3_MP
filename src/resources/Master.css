@@ -123,11 +123,17 @@ VBox {
 
 .name-display {
 	-fx-wrap-text: true;
-	-fx-pref-width: 250px;
+	-fx-pref-width: 240px;
 	-fx-pref-height: 30px;
 	-fx-font-size: 17px;
 	-fx-alignment: center;
 	-fx-font-weight: bold;
+}
+
+#username-display {
+	-fx-translate-y: -10px;
+	-fx-font-size: 14px;
+	-fx-font-weight: normal;
 }
 
 /* For Modify Role.fxml */

@@ -46,6 +46,8 @@ public class ProfileController extends Controller {
     @FXML
     private Label invalidEmail;
     @FXML
+    private Button changePassButton;
+    @FXML
     private Label feedback;
 
     @FXML
@@ -73,7 +75,6 @@ public class ProfileController extends Controller {
         officeAddress.setText(user.getOfficeAddress());
         phoneNumber.setText(user.getPhoneNumber());
         email.setText(user.getEmail());
-        isEditing = false;
     }
 
     @FXML
@@ -82,74 +83,86 @@ public class ProfileController extends Controller {
 
         if (!isEditing) {
             Citizen temp = UserSystem.getUser(user.getUsername());
-            boolean isValid = true;
-            assert temp != null;
+            boolean isValid = true, isChangedNow = false;
+
             /* check if there are changes in personal information and if there are changes,
             check if they are valid */
+            assert temp != null;
             if (!temp.getName().getFirst().equals(firstName.getText())) {
                 if (!user.getName().setName(1, firstName.getText())) {
                     invalidFirstName.setVisible(true);
                     isValid = false;
-                } else if (!user.getIsChanged()) {
+                } else {
                     user.setIsChanged(true);
+                    isChangedNow = true;
                 }
             }
             if (!temp.getName().getMiddle().equals(middleName.getText())) {
                 if (!user.getName().setName(2, middleName.getText())) {
                     invalidMiddleName.setVisible(true);
                     isValid = false;
-                } else if (!user.getIsChanged()) {
+                } else {
                     user.setIsChanged(true);
+                    isChangedNow = true;
                 }
             }
             if (!temp.getName().getLast().equals(lastName.getText())) {
                 if (!user.getName().setName(3, lastName.getText())) {
                     invalidLastName.setVisible(true);
                     isValid = false;
-                } else if (!user.getIsChanged()) {
+                } else {
                     user.setIsChanged(true);
+                    isChangedNow = true;
                 }
             }
             if (!temp.getHomeAddress().equals(homeAddress.getText())) {
                 if (!user.setPersonalDetails(1, homeAddress.getText())) {
                     invalidHomeAddress.setVisible(true);
                     isValid = false;
-                } else if (!user.getIsChanged()) {
+                } else {
                     user.setIsChanged(true);
+                    isChangedNow = true;
                 }
             }
             if (!temp.getOfficeAddress().equals(officeAddress.getText())) {
                 if (!user.setPersonalDetails(2, homeAddress.getText())) {
                     invalidOfficeAddress.setVisible(true);
                     isValid = false;
-                } else if (!user.getIsChanged()) {
+                } else {
                     user.setIsChanged(true);
+                    isChangedNow = true;
                 }
             }
             if (!temp.getPhoneNumber().equals(phoneNumber.getText())) {
                 if (!user.setPersonalDetails(3, phoneNumber.getText())) {
                     invalidPhoneNumber.setVisible(true);
                     isValid = false;
-                } else if (!user.getIsChanged()) {
+                } else {
                     user.setIsChanged(true);
+                    isChangedNow = true;
                 }
             }
             if (!temp.getEmail().equals(email.getText())) {
                 if (!user.setPersonalDetails(4, email.getText())) {
                     invalidEmail.setVisible(true);
                     isValid = false;
-                } else if (!user.getIsChanged()) {
+                } else {
                     user.setIsChanged(true);
+                    isChangedNow = true;
                 }
             }
 
             if (isValid) {
-                update();   // to also update changes in the menuController (Update display name at the right side)
+                if (isChangedNow) {
+                    update();   // to also update changes in the menuController (Update display name at the right side)
+                    feedback.setVisible(true);
+                }
                 actionButton.setText("Edit");
-                feedback.setVisible(true);
+                isEditing = false;
             } else {
-                isEditing = !isEditing;
+                isEditing = true;
             }
+
         } else {
             feedback.setVisible(false);
             actionButton.setText("Update Profile");
@@ -162,6 +175,7 @@ public class ProfileController extends Controller {
         officeAddress.setDisable(!isEditing);
         phoneNumber.setDisable(!isEditing);
         email.setDisable(!isEditing);
+        changePassButton.setVisible(!isEditing);
     }
 
     @FXML
@@ -173,9 +187,11 @@ public class ProfileController extends Controller {
         result.ifPresentOrElse(e -> {
             try {
                 user.setPassword(e);
+                feedback.setVisible(true);
+                user.setIsChanged(true);
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
-        }, () -> feedback.setVisible(true));
+        }, () -> feedback.setVisible(false));
     }
 }

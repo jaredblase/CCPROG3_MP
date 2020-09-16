@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane id="case-information-stage" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CaseTableViewController">
+   <children>
+      <fx:include fx:id="menu" source="Menu.fxml" />
+      <TableView fx:id="tableView" layoutX="267.0" layoutY="98.0" prefHeight="428.0" prefWidth="512.0">
+        <columns>
+          <TableColumn fx:id="caseNumCol" editable="false" prefWidth="54.0" text="Case #" />
+          <TableColumn fx:id="dateCol" editable="false" prefWidth="121.0" text="Report Date" />
+            <TableColumn fx:id="usernameCol" editable="false" prefWidth="140.0" text="Username" />
+            <TableColumn fx:id="tracerCol" editable="false" prefWidth="149.0" text="Tracer" />
+            <TableColumn fx:id="statusCol" editable="false" prefWidth="47.0" text="Status" />
+        </columns>
+      </TableView>
+      <GridPane layoutX="266.0" layoutY="5.0" prefHeight="90.0" prefWidth="513.0" styleClass="filter">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="93.33331298828125" minWidth="10.0" prefWidth="37.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="256.0" minWidth="10.0" prefWidth="215.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="229.66665649414062" minWidth="10.0" prefWidth="60.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="288.0000305175781" minWidth="10.0" prefWidth="173.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Filters" GridPane.columnIndex="1" />
+            <DatePicker fx:id="startFilter" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <Label nodeOrientation="RIGHT_TO_LEFT" prefHeight="17.0" prefWidth="64.0" text="Start Date:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <TextField fx:id="cityFilter" prefHeight="25.0" prefWidth="207.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label nodeOrientation="RIGHT_TO_LEFT" prefHeight="17.0" prefWidth="37.0" text="City: " GridPane.rowIndex="1" />
+            <Label layoutX="280.0" layoutY="47.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="17.0" prefWidth="63.0" text="End Date:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <DatePicker fx:id="endFilter" layoutX="350.0" layoutY="43.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <Label layoutX="10.0" layoutY="47.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="17.0" prefWidth="37.0" text="Status:" GridPane.rowIndex="2" />
+            <ChoiceBox fx:id="statusFilter" prefHeight="25.0" prefWidth="82.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+         </children>
+      </GridPane>
+      <Button fx:id="actionButton" defaultButton="true" layoutX="800.0" layoutY="482.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="69.0" text="OKAY" />
+   </children>
+   <stylesheets>
+      <URL value="@../resources/Master.css" />
+      <URL value="@../resources/Case Table View.css" />
+   </stylesheets>
+   <styleClass>
+      <String fx:value="menu__stage" />
+      <String fx:value="stage" />
+   </styleClass>
+</AnchorPane>

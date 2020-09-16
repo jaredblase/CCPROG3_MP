@@ -1,7 +1,7 @@
-#case-information-stage {
-	-fx-pref-width: 900px;
+.information {
+	-fx-wrap-text: true;
 }
 
-.filter {
-	-fx-hgap: 10px;
+.white-background {
+	-fx-background-color: white;
 }

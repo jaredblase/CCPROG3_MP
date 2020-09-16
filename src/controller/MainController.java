@@ -44,7 +44,7 @@ public class MainController {
             case 2 -> loader.setLocation(getClass().getResource("/view/Registration Form Part 1.fxml"));
             case 3 -> loader.setLocation(getClass().getResource("/view/Registration Form Part 2.fxml"));
             case 4 -> loader.setLocation(getClass().getResource("/view/Profile.fxml"));
-            case 5 -> loader.setLocation(getClass().getResource("/view/Case Information.fxml"));
+            case 5 -> loader.setLocation(getClass().getResource("/view/Case Table View.fxml"));
             case 6 -> loader.setLocation(getClass().getResource("/view/Modify Role.fxml"));
         }
 

@@ -19,7 +19,7 @@
 }
 
 .profile TextField {
-	-fx-font-size: 13px;
+	-fx-font-size: 15px;
 }
 
 .profile GridPane {
@@ -27,8 +27,9 @@
 	-fx-pref-h-gap: 5px;
 }
 
-#profile__edit-button {
+.profile Button {
 	-fx-font-size: 13px;
+	-fx-pref-height: 30px;
 }
 
 .profile .invalid-message {
@@ -42,6 +43,6 @@
 
 #feedback {
 	-fx-text-fill: green;
-	-fx-translate-y: 3px;
+	-fx-translate-y: 6px;
 	-fx-translate-x: 3px;
 }
