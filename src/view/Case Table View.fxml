@@ -54,7 +54,7 @@
    </children>
    <stylesheets>
       <URL value="@../resources/Master.css" />
-      <URL value="@../resources/Case%20Information.css" />
+      <URL value="@../resources/Case Table View.css" />
    </stylesheets>
    <styleClass>
       <String fx:value="menu__stage" />
