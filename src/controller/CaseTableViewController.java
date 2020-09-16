@@ -14,7 +14,7 @@ import model.UserSystem;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class CaseInformationController extends Controller {
+public class CaseTableViewController extends Controller {
     @FXML
     private TableView<model.Case> tableView;
     @FXML
@@ -73,7 +73,7 @@ public class CaseInformationController extends Controller {
             return row;
         });
 
-        // format display with Calendar column
+        // format display for the Report Date column
         dateCol.setCellFactory(column -> new TableCell<>() {
             private final SimpleDateFormat format = new SimpleDateFormat(" MM/dd/yyyy ");
 
@@ -91,6 +91,7 @@ public class CaseInformationController extends Controller {
         cases = FXCollections.observableArrayList();
         FilteredList<model.Case> filteredList = new FilteredList<>(cases, p -> true);
 
+        // when filter button is pressed
         actionButton.setOnAction(e -> filteredList.setPredicate(c -> ((GovOfficial) this.mainController.getUserModel())
                     .filter(c, cityFilter.getText(), statusFilter.getValue() == null? '\0' : statusFilter.getValue(),
                             startFilter.getValue(), endFilter.getValue()))

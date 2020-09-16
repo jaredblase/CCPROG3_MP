@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane id="case-information-stage" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CaseInformationController">
+<AnchorPane id="case-information-stage" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CaseTableViewController">
    <children>
       <fx:include fx:id="menu" source="Menu.fxml" />
       <TableView fx:id="tableView" layoutX="267.0" layoutY="98.0" prefHeight="428.0" prefWidth="512.0">
