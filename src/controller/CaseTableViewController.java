@@ -66,6 +66,7 @@ public class CaseTableViewController extends Controller {
             row.setOnMouseClicked(e -> {
                 if (e.getClickCount() == 2 && !row.isEmpty()) {
                     Case c = row.getItem();
+                    // Note: Load CaseInformation here with FXML Loader
                     System.out.println(c.toString());
                 }
             });
