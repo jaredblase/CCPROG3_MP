@@ -15,7 +15,7 @@ public class MainController {
     public static final int REGISTER_VIEW = 2;
     public static final int REGISTER_2_VIEW = 3;
     public static final int PROFILE_VIEW = 4;
-    public static final int CASE_INFO_VIEW = 5;
+    public static final int CASE_TABLE_VIEW = 5;
     public static final int MODIFY_ROLE_VIEW = 6;
 
     /** This is the user logged in */

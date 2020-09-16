@@ -30,6 +30,9 @@ public class Tracer extends Citizen {
         super(other);
 
         assigned = new ArrayList<>();
+        for (Case i: UserSystem.getCases())
+            if (i.getTracer().equals(getUsername()) && i.getStatus() == 'P')
+                assigned.add(i);
     }
 
     /**

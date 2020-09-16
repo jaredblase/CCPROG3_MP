@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="588.0" prefWidth="394.0" styleClass="stage" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.CaseInformation">
+<AnchorPane prefHeight="588.0" prefWidth="394.0" styleClass="stage" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CaseInformationController">
    <children>
       <VBox layoutX="23.0" layoutY="280.0" prefWidth="348.0">
          <children>
@@ -33,11 +33,11 @@
                   <Label text="Email: " GridPane.rowIndex="4" />
                   <Label text="Phone Number: " GridPane.rowIndex="3" />
                   <Label text="Home Address: " translateY="7.0" GridPane.rowIndex="1" />
-                  <Label styleClass="information" text="Sy, Jared Blase Del Castillo" GridPane.columnIndex="1" />
-                  <Label layoutX="101.0" layoutY="17.0" styleClass="information" text="2449-8 Del Carmen Street, Malate, Manila" translateY="7.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Label styleClass="information" text="La Salle, Malate, Manila" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Label styleClass="information" text="09328587114" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <Label styleClass="information" text="jaredblase@gmail.com" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <Label fx:id="fullName" styleClass="information" text="Jared Blase Del Castillo Sy" GridPane.columnIndex="1" />
+                  <Label fx:id="homeAddress" layoutX="101.0" layoutY="17.0" styleClass="information" text="2449-8 Del Carmen Street, Malate, Manila" translateY="7.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label fx:id="officeAddress" styleClass="information" text="La Salle, Malate, Manila" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label fx:id="phoneNumber" styleClass="information" text="09328587114" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Label fx:id="email" styleClass="information" text="jaredblase@gmail.com" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                </children>
             </GridPane>
          </children>
@@ -63,18 +63,18 @@
                   <Label text="Case Status: " GridPane.rowIndex="4" />
                   <Label text="Tracer Assigned: " GridPane.rowIndex="3" />
                   <Label text="Username: " GridPane.rowIndex="1" />
-                  <Label styleClass="information" text="1" GridPane.columnIndex="1" />
-                  <Label styleClass="information" text="JARED" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Label styleClass="information" text="12/17/2001" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Label styleClass="information" text="GAB" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <Label styleClass="information" text="P" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <Label fx:id="caseNumber" styleClass="information" text="1" GridPane.columnIndex="1" />
+                  <Label fx:id="username" styleClass="information" text="JARED" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label fx:id="reportDate" styleClass="information" text="12/17/2001" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label fx:id="tracer" styleClass="information" text="GAB" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Label fx:id="status" styleClass="information" text="P" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                </children>
             </GridPane>
          </children>
       </VBox>
-      <Button layoutX="227.0" layoutY="529.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" text="Assign" />
-      <ComboBox layoutX="23.0" layoutY="529.0" prefHeight="25.0" prefWidth="183.0" />
-      <Button layoutX="299.0" layoutY="529.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" text="Back" />
+      <Button fx:id="assignButton" layoutX="227.0" layoutY="529.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" onAction="#onAssignAction" text="Assign" />
+      <ComboBox fx:id="tracers" layoutX="23.0" layoutY="529.0" prefHeight="25.0" prefWidth="183.0" />
+      <Button fx:id="backButton" layoutX="299.0" layoutY="529.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" onAction="#onBackAction" text="Back" />
       <Label alignment="CENTER" layoutX="23.0" layoutY="506.0" prefHeight="17.0" prefWidth="140.0" styleClass="white-background" text="Contact Tracer to assign:" />
    </children>
    <stylesheets>

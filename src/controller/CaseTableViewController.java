@@ -5,12 +5,18 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
+
+import javafx.stage.StageStyle;
 import model.Case;
 import model.GovOfficial;
 import model.UserSystem;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -66,7 +72,22 @@ public class CaseTableViewController extends Controller {
             row.setOnMouseClicked(e -> {
                 if (e.getClickCount() == 2 && !row.isEmpty()) {
                     Case c = row.getItem();
-                    // Note: Load CaseInformation here with FXML Loader
+                    // load case information
+                    FXMLLoader loader = new FXMLLoader();
+                    loader.setLocation(getClass().getResource("/view/Case Information.fxml"));
+                    Stage stage = new Stage();
+                    stage.setTitle("Case " + c.getCaseNum() + " Information");
+                    stage.setResizable(false);
+                    stage.initStyle(StageStyle.TRANSPARENT);
+                    try {
+                        stage.setScene(new Scene(loader.load()));
+                        stage.centerOnScreen();
+                        ((CaseInformationController) loader.getController()).setCase(c);
+                        ((CaseInformationController) loader.getController()).init();
+                        stage.showAndWait();
+                    } catch (IOException exception) {
+                        exception.printStackTrace();
+                    }
                     System.out.println(c.toString());
                 }
             });
