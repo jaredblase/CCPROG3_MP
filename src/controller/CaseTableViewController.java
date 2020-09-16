@@ -88,7 +88,6 @@ public class CaseTableViewController extends Controller {
                     } catch (IOException exception) {
                         exception.printStackTrace();
                     }
-                    System.out.println(c.toString());
                 }
             });
 
