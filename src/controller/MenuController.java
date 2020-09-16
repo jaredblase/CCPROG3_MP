@@ -27,9 +27,12 @@ public class MenuController extends Controller {
     private VBox govActions;
     @FXML
     private VBox tracerActions;
-
-    public MenuController() {
-    }
+    @FXML
+    private VBox inContact;
+    @FXML
+    private Label estCode;
+    @FXML
+    private Label date;
 
     @Override
     public void update() {
@@ -42,6 +45,13 @@ public class MenuController extends Controller {
 
         fullName.setText(user.getName().getFullName());
         username.setText(user.getUsername());
+
+        // prompt
+        if (!user.getIsPositive() /* && getContactPlaces()? */) {
+            inContact.setVisible(true);
+            estCode.setText("McDo");
+            date.setText("11/11/11");
+        }
     }
 
     @FXML
@@ -87,6 +97,11 @@ public class MenuController extends Controller {
     @FXML
     public void showModifyRoleAction() {
         mainController.changeScene(MainController.MODIFY_ROLE_VIEW);
+    }
+
+    @FXML
+    public void showTraceAction() {
+        mainController.changeScene(MainController.TRACE_VIEW);
     }
 
     @FXML
