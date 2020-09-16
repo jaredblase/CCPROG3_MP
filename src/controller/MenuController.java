@@ -74,7 +74,7 @@ public class MenuController extends Controller {
 
     @FXML
     public void showCaseInformationAction() {
-        mainController.changeScene(MainController.CASE_INFO_VIEW);
+        mainController.changeScene(MainController.CASE_TABLE_VIEW);
     }
 
     @FXML

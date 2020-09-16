@@ -27,8 +27,6 @@ public class UserSystem {
     private static ArrayList<ArrayList<Visit>> records;
     /** The list of positive cases. */
     private static ArrayList<Case> cases;
-    /** The number of registered tracers. */
-    private static int nTracers;
 
     /**
      * Checks if the username received is in the master list.
@@ -96,11 +94,15 @@ public class UserSystem {
     }
 
     /**
-     * Returns the number of registered tracers.
-     * @return the number of registered tracers in the system.
+     * Returns an ArrayList of the usernames of all registered contact tracers.
+     * @return an ArrayList of the usernames of all registered contact tracers in the system.
      */
-    public static int getNumTracers() {
-        return nTracers;
+    public static ArrayList<String> getTracers() {
+        ArrayList<String> tracers = new ArrayList<>();
+        for (Citizen i: users)
+            if (i instanceof Tracer)
+                tracers.add(i.getUsername());
+        return tracers;
     }
 
     /**
@@ -173,9 +175,6 @@ public class UserSystem {
         if (roles.get(index).equals("tracer")) { // previous role is tracer
             Tracer temp = (Tracer) users.get(index);
             temp.demote();
-            nTracers--;
-        } else if (role.equals("tracer")) { // new role is tracer
-            nTracers++;
         }
 
         roles.set(index, role);
@@ -227,7 +226,6 @@ public class UserSystem {
         users = new ArrayList<>();
         records= new ArrayList<>();
         cases = new ArrayList<>();
-        nTracers = 0;
 
         String[] info;
 
@@ -317,12 +315,8 @@ public class UserSystem {
                     cases.get(index).setTracer(info[3]);
                     cases.get(index).setStatus(info[4].charAt(0));
 
-                    // case is assigned to a tracer and status is pending
-                    if (!info[3].equals("000") && info[4].charAt(0) == 'P') {
-                        Tracer tracer = (Tracer) getUser(info[3]);
-                        if (tracer != null)
-                            tracer.addCase(cases.get(index));
-                    } else if (!info[3].equals("000") && info[4].charAt(0) == 'T') {
+                    // case is assigned to a tracer and status is traced
+                    if (!info[3].equals("000") && info[4].charAt(0) == 'T') {
                         Tracer tracer = new Tracer(users.get(0)); // create new Tracer object
                         // finish tracing for the case
                         tracer.addCase(cases.get(index));
