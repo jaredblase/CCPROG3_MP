@@ -131,8 +131,8 @@ VBox {
 }
 
 #username-display {
-	-fx-pref-height: DEFAULT;
-	-fx-font-size: 15px;
+	-fx-translate-y: -10px;
+	-fx-font-size: 14px;
 	-fx-font-weight: normal;
 }
 
