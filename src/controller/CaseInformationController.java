@@ -16,17 +16,17 @@ import java.util.Calendar;
 
 public class CaseInformationController extends Controller {
     @FXML
-    private TableView<Case> tableView;
+    private TableView<model.Case> tableView;
     @FXML
-    private TableColumn<Case, Integer> caseNumCol;
+    private TableColumn<model.Case, Integer> caseNumCol;
     @FXML
-    private TableColumn<Case, Calendar> dateCol;
+    private TableColumn<model.Case, Calendar> dateCol;
     @FXML
-    private TableColumn<Case, String> usernameCol;
+    private TableColumn<model.Case, String> usernameCol;
     @FXML
-    private TableColumn<Case, String> tracerCol;
+    private TableColumn<model.Case, String> tracerCol;
     @FXML
-    private TableColumn<Case, Character> statusCol;
+    private TableColumn<model.Case, Character> statusCol;
     @FXML
     private TextField cityFilter;
     @FXML
@@ -39,7 +39,7 @@ public class CaseInformationController extends Controller {
     private Button actionButton;
     @FXML
     private MenuController menuController;
-    private ObservableList<Case> cases;
+    private ObservableList<model.Case> cases;
 
     @Override
     public void update() {
@@ -59,6 +59,20 @@ public class CaseInformationController extends Controller {
         tracerCol.setCellValueFactory(new PropertyValueFactory<>("tracer"));
         statusCol.setCellValueFactory(new PropertyValueFactory<>("status"));
 
+        // set rows to be clickable
+        tableView.setRowFactory(tv -> {
+            TableRow<Case> row = new TableRow<>();
+
+            row.setOnMouseClicked(e -> {
+                if (e.getClickCount() == 2 && !row.isEmpty()) {
+                    Case c = row.getItem();
+                    System.out.println(c.toString());
+                }
+            });
+
+            return row;
+        });
+
         // format display with Calendar column
         dateCol.setCellFactory(column -> new TableCell<>() {
             private final SimpleDateFormat format = new SimpleDateFormat(" MM/dd/yyyy ");
@@ -75,14 +89,14 @@ public class CaseInformationController extends Controller {
         });
 
         cases = FXCollections.observableArrayList();
-        FilteredList<Case> filteredList = new FilteredList<>(cases, p -> true);
+        FilteredList<model.Case> filteredList = new FilteredList<>(cases, p -> true);
 
         actionButton.setOnAction(e -> filteredList.setPredicate(c -> ((GovOfficial) this.mainController.getUserModel())
                     .filter(c, cityFilter.getText(), statusFilter.getValue() == null? '\0' : statusFilter.getValue(),
                             startFilter.getValue(), endFilter.getValue()))
         );
 
-        SortedList<Case> sortedList = new SortedList<>(filteredList);
+        SortedList<model.Case> sortedList = new SortedList<>(filteredList);
 
         sortedList.comparatorProperty().bind(tableView.comparatorProperty());
         tableView.setItems(sortedList);
