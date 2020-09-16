@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.util.Pair;
@@ -58,7 +59,13 @@ public class MenuController extends Controller {
                 System.out.println(result.get().getTime());
                 user.reportPositive(result.get());
             }
-        } //else already positive dialog box?
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Report Positive");
+            alert.setHeaderText("Report Error");
+            alert.setContentText("You have already reported positive!");
+            alert.showAndWait();
+        }
     }
 
     @FXML
