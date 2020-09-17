@@ -44,15 +44,6 @@ public class CaseInformationController{
     @FXML
     private Button assignButton;
 
-    public void initialize() {
-        tracerBox.setOnAction(e -> {
-            if (tracerBox.getItems().contains("No tracers in the system"))
-                assignButton.setDisable(true);
-            else
-                assignButton.setDisable(tracerBox.getValue() == null || tracerBox.getValue().isEmpty());
-        });
-    }
-
     public void init() {
         SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
         Citizen temp = UserSystem.getUser(positive.getUsername());
@@ -69,6 +60,16 @@ public class CaseInformationController{
         status.setText(String.valueOf(positive.getStatus()));
         tracerBox.getItems().addAll(UserSystem.getTracers());
         tracerBox.getItems().add("No tracers in the system");
+    }
+
+    @FXML
+    public void initialize() {
+        tracerBox.setOnAction(e -> {
+            if (tracerBox.getItems().contains("No tracers in the system"))
+                assignButton.setDisable(true);
+            else
+                assignButton.setDisable(tracerBox.getValue() == null || tracerBox.getValue().isEmpty());
+        });
     }
 
     public void setCase(Case positive) {

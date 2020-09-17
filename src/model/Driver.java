@@ -144,9 +144,9 @@ public class Driver {
                     break;
                 } else if (user instanceof GovOfficial) {
                     governmentActions(opt, (GovOfficial) user);
-                } else {
-                    tracerActions(opt, (Tracer) user);
-                }
+                } //else {
+//                    tracerActions(opt, (Tracer) user);
+//                }
             } while (true);
             UserSystem.updateUser(user);
             System.out.println("Logged out.");
@@ -476,51 +476,51 @@ public class Driver {
         }
     }
 
-    /**
-     * Performs the appropriate contact tracer action based on the user's input.
-     * @param opt integer representing the chosen menu option.
-     * @param user the user that is currently logged in.
-     */
-    private void tracerActions(int opt, Tracer user) {
-        Scanner input = new Scanner(System.in);
-
-        switch (opt) {
-            case 4 -> {
-                System.out.println("Cases Assigned:");
-                user.showCases();
-                if (user.getAssigned().isEmpty()) // no cases assigned
-                    System.out.println("None");
-            }
-            case 5 -> {
-                ArrayList<Case> assigned = user.getAssigned();
-                if (assigned.isEmpty()) { // no cases assigned
-                    System.out.println("No assigned cases.");
-                } else { // at least 1 assigned case
-                    int caseNum = -1;
-                    boolean status = false;
-
-                    // get case number
-                    try {
-                        System.out.print("Enter case number to be traced: ");
-                        caseNum = Integer.parseInt(input.nextLine());
-
-                        for (Case i : assigned) {
-                            if (i.getCaseNum() == caseNum) { // case number is assigned
-                                status = true;
-                                break;
-                            }
-                        }
-
-                        if (!status) // case number is not among assigned cases
-                            throw new Exception();
-                    } catch (Exception e) {
-                        System.out.println("Invalid input. Use the show cases option to view your assigned cases.\n");
-                    }
-
-                    if (status) // valid case number input
-                        user.trace(caseNum, 1);
-                }
-            }
-        }
-    }
+//    /**
+//     * Performs the appropriate contact tracer action based on the user's input.
+//     * @param opt integer representing the chosen menu option.
+//     * @param user the user that is currently logged in.
+//     */
+//    private void tracerActions(int opt, Tracer user) {
+//        Scanner input = new Scanner(System.in);
+//
+//        switch (opt) {
+//            case 4 -> {
+//                System.out.println("Cases Assigned:");
+//                user.showCases();
+//                if (user.getAssigned().isEmpty()) // no cases assigned
+//                    System.out.println("None");
+//            }
+//            case 5 -> {
+//                ArrayList<Case> assigned = user.getAssigned();
+//                if (assigned.isEmpty()) { // no cases assigned
+//                    System.out.println("No assigned cases.");
+//                } else { // at least 1 assigned case
+//                    int caseNum = -1;
+//                    boolean status = false;
+//
+//                    // get case number
+//                    try {
+//                        System.out.print("Enter case number to be traced: ");
+//                        caseNum = Integer.parseInt(input.nextLine());
+//
+//                        for (Case i : assigned) {
+//                            if (i.getCaseNum() == caseNum) { // case number is assigned
+//                                status = true;
+//                                break;
+//                            }
+//                        }
+//
+//                        if (!status) // case number is not among assigned cases
+//                            throw new Exception();
+//                    } catch (Exception e) {
+//                        System.out.println("Invalid input. Use the show cases option to view your assigned cases.\n");
+//                    }
+//
+//                    if (status) // valid case number input
+//                        user.trace(caseNum);
+//                }
+//            }
+//        }
+//    }
 }

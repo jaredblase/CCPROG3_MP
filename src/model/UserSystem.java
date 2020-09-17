@@ -319,7 +319,7 @@ public class UserSystem {
                         Tracer tracer = new Tracer(users.get(0)); // create new Tracer object
                         // finish tracing for the case
                         tracer.addCase(cases.get(index));
-                        tracer.trace(index + 1, 0);
+                        tracer.trace(index + 1);
                     }
                 }
             }
