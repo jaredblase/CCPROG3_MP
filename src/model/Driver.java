@@ -360,33 +360,33 @@ public class Driver {
         } while (true);
     }
 
-    /**
-     * Gets a username input from the user that corresponds to the contact tracer that
-     * the case referenced by the given case number is being assigned to.
-     * @param user the government official assigning the case.
-     * @param caseNum the case number corresponding to the case to be assigned.
-     */
-    private void assignCase(GovOfficial user, int caseNum) {
-        Scanner input = new Scanner(System.in);
-        boolean status = false;
-
-        // get tracer username
-        do {
-            System.out.print("Enter username of tracer: ");
-            String tracer = input.nextLine().toUpperCase();
-
-            int index = UserSystem.getIndexOf(tracer);
-            if (index == -1) { // user not found
-                System.out.println("No user with username \"" + tracer + "\" found.\n");
-            } else if (UserSystem.getRoleOf(index).equals("tracer")) {
-                status = true;
-
-                // assign case to tracer
-                user.assignCase(caseNum, tracer);
-            } else // user is found but is not a tracer
-                System.out.println("User " + tracer + " is not a contact tracer.\n");
-        } while (!status);
-    }
+//    /**
+//     * Gets a username input from the user that corresponds to the contact tracer that
+//     * the case referenced by the given case number is being assigned to.
+//     * @param user the government official assigning the case.
+//     * @param caseNum the case number corresponding to the case to be assigned.
+//     */
+//    private void assignCase(GovOfficial user, int caseNum) {
+//        Scanner input = new Scanner(System.in);
+//        boolean status = false;
+//
+//        // get tracer username
+//        do {
+//            System.out.print("Enter username of tracer: ");
+//            String tracer = input.nextLine().toUpperCase();
+//
+//            int index = UserSystem.getIndexOf(tracer);
+//            if (index == -1) { // user not found
+//                System.out.println("No user with username \"" + tracer + "\" found.\n");
+//            } else if (UserSystem.getRoleOf(index).equals("tracer")) {
+//                status = true;
+//
+//                // assign case to tracer
+//                user.assignCase(caseNum, tracer);
+//            } else // user is found but is not a tracer
+//                System.out.println("User " + tracer + " is not a contact tracer.\n");
+//        } while (!status);
+//    }
 
     /**
      * Obtains the start and end date from the user. The first element in the

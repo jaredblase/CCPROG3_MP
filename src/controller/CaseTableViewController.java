@@ -83,6 +83,7 @@ public class CaseTableViewController extends Controller {
                         stage.setScene(new Scene(loader.load()));
                         stage.centerOnScreen();
                         ((CaseInformationController) loader.getController()).setCase(c);
+                        ((CaseInformationController) loader.getController()).setUser((GovOfficial) mainController.getUserModel());
                         ((CaseInformationController) loader.getController()).init();
                         stage.showAndWait();
                         update();

@@ -16,7 +16,7 @@ import java.util.Calendar;
 import java.util.Optional;
 
 public class MenuController extends Controller {
-    /** This is the user logged in */
+    /** This is the user logged in. */
     private Citizen user;
 
     @FXML

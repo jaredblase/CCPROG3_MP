@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.Case;
 import model.Citizen;
+import model.GovOfficial;
 import model.UserSystem;
 
 import java.text.SimpleDateFormat;
@@ -15,6 +16,8 @@ import java.text.SimpleDateFormat;
 public class CaseInformationController{
     /** This is the case being displayed. */
     private Case positive;
+    /** This is the government official logged in. */
+    private GovOfficial user;
 
     @FXML
     private Label fullName;
@@ -72,9 +75,13 @@ public class CaseInformationController{
         this.positive = positive;
     }
 
+    public void setUser(GovOfficial user) {
+        this.user = user;
+    }
+
     public void onAssignAction(ActionEvent e) {
         if (positive.getTracer().equals("000")) {
-            positive.setTracer(tracerBox.getValue());
+            user.assignCase(positive, tracerBox.getValue());
             onBackAction(e);
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);

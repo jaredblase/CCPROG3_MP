@@ -66,18 +66,13 @@ public class GovOfficial extends Citizen {
     }
 
     /**
-     * Assigns a case to a contact tracer based on the given case number and the given
-     * username of the contact tracer.
-     * @param caseNum the case number of the case to be assigned.
+     * Assigns the given case to a contact tracer based on the given username
+     * of the contact tracer.
+     * @param positive the case number of the case to be assigned.
      * @param tracer the username of the contact tracer the case is to be assigned to.
      */
-    public void assignCase(int caseNum, String tracer) {
-        for (Case i: UserSystem.getCases()) {
-            if (i.getCaseNum() == caseNum) {
-                i.setTracer(tracer);
-                break;
-            }
-        }
+    public void assignCase(Case positive, String tracer) {
+        positive.setTracer(tracer);
     }
 
     /**
