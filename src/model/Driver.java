@@ -1,6 +1,5 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
 
@@ -310,9 +309,9 @@ public class Driver {
      */
     private void governmentActions(int opt, GovOfficial user) {
         switch (opt) {
-            case 4 -> {
-                System.out.println("\nUnassigned Cases:");
-                int[] caseNums = user.showUnassigned();
+//            case 4 -> {
+//                System.out.println("\nUnassigned Cases:");
+//                int[] caseNums = user.showUnassigned();
 
 //                if (caseNums != null) {
 //                    if (UserSystem.getNumTracers() == 0) // no tracers
@@ -324,41 +323,41 @@ public class Driver {
 //                } else {
 //                    System.out.println("No cases to display.");
 //                }
-            }
+//            }
             case 5 -> user.showUpdates(obtainDateRange());
-            case 6 -> showAnalytics(user);
+//            case 6 -> showAnalytics(user);
             case 7 -> modifyRole(user, "official");
             case 8 -> modifyRole(user, "tracer");
             case 9 -> modifyRole(user, "citizen");
         }
     }
 
-    /**
-     * Gets a case number input from the user that corresponds to the case to be assigned.
-     * If the case number input is found in the given array of case numbers, it is
-     * valid. Once valid, the case number is returned.
-     * @param caseNums the array of case numbers of unassigned cases.
-     * @return the valid case number.
-     */
-    private int getCaseNum(int[] caseNums) {
-        Scanner input = new Scanner(System.in);
-
-        // get case number
-        do {
-            try {
-                System.out.print("Assign case number: ");
-                int caseNum = Integer.parseInt(input.nextLine());
-
-                for (int i : caseNums)
-                    if (caseNum == i) {
-                        return caseNum;
-                    }
-                throw new Exception();
-            } catch (Exception e) {
-                System.out.println("Invalid input!\n");
-            }
-        } while (true);
-    }
+//    /**
+//     * Gets a case number input from the user that corresponds to the case to be assigned.
+//     * If the case number input is found in the given array of case numbers, it is
+//     * valid. Once valid, the case number is returned.
+//     * @param caseNums the array of case numbers of unassigned cases.
+//     * @return the valid case number.
+//     */
+//    private int getCaseNum(int[] caseNums) {
+//        Scanner input = new Scanner(System.in);
+//
+//        // get case number
+//        do {
+//            try {
+//                System.out.print("Assign case number: ");
+//                int caseNum = Integer.parseInt(input.nextLine());
+//
+//                for (int i : caseNums)
+//                    if (caseNum == i) {
+//                        return caseNum;
+//                    }
+//                throw new Exception();
+//            } catch (Exception e) {
+//                System.out.println("Invalid input!\n");
+//            }
+//        } while (true);
+//    }
 
 //    /**
 //     * Gets a username input from the user that corresponds to the contact tracer that
@@ -411,47 +410,47 @@ public class Driver {
         return new Calendar[] {start, end};
     }
 
-    /**
-     * The facility that handles the showing of Analytics.
-     * @param user the government official logged in
-     */
-    private void showAnalytics(GovOfficial user) {
-        Scanner input = new Scanner(System.in);
-        Menu menu = GovOfficial.ANALYTICS_MENU;
-        int opt, max = menu.length(), ctr = 0;
-
-        menu.display();
-        opt = getMenuAnswer(max);
-        while (opt != max) {
-            try {
-                switch (opt) {
-                    case 1 -> {
-                        Calendar[] dates = obtainDateRange();
-                        System.out.print("Input city: ");
-                        ctr = user.showAnalytics(dates, input.nextLine());
-                    }
-                    case 2 -> {
-                        Calendar[] dates = obtainDateRange();
-                        ctr = user.showAnalytics(dates);
-                    }
-                    case 3 -> {
-                        System.out.print("Input city: ");
-                        ctr = user.showAnalytics(input.nextLine());
-                    }
-                }
-                System.out.println();
-                if (ctr == 0) {
-                    System.out.println("No cases match the criteria specified.");
-                } else {
-                    System.out.println("Number of cases that match the criteria specified: " + ctr);
-                }
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
-            menu.display();
-            opt = getMenuAnswer(max);
-        }
-    }
+//    /**
+//     * The facility that handles the showing of Analytics.
+//     * @param user the government official logged in
+//     */
+//    private void showAnalytics(GovOfficial user) {
+//        Scanner input = new Scanner(System.in);
+//        Menu menu = GovOfficial.ANALYTICS_MENU;
+//        int opt, max = menu.length(), ctr = 0;
+//
+//        menu.display();
+//        opt = getMenuAnswer(max);
+//        while (opt != max) {
+//            try {
+//                switch (opt) {
+//                    case 1 -> {
+//                        Calendar[] dates = obtainDateRange();
+//                        System.out.print("Input city: ");
+//                        ctr = user.showAnalytics(dates, input.nextLine());
+//                    }
+//                    case 2 -> {
+//                        Calendar[] dates = obtainDateRange();
+//                        ctr = user.showAnalytics(dates);
+//                    }
+//                    case 3 -> {
+//                        System.out.print("Input city: ");
+//                        ctr = user.showAnalytics(input.nextLine());
+//                    }
+//                }
+//                System.out.println();
+//                if (ctr == 0) {
+//                    System.out.println("No cases match the criteria specified.");
+//                } else {
+//                    System.out.println("Number of cases that match the criteria specified: " + ctr);
+//                }
+//            } catch (Exception e) {
+//                System.out.println(e.getMessage());
+//            }
+//            menu.display();
+//            opt = getMenuAnswer(max);
+//        }
+//    }
 
     /**
      * Asks the username of the account to be modified and switches the role of
