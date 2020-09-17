@@ -2,6 +2,14 @@
 	-fx-wrap-text: true;
 }
 
+.stage {
+	-fx-background-radius: 0px;
+}
+
 .white-background {
 	-fx-background-color: white;
+}
+
+Button {
+	-fx-pref-width: 70px;
 }

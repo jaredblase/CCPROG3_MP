@@ -14,6 +14,7 @@ VBox {
 }
 
 .menu__stage {
+	-fx-background-radius: 0px !important;
 	-fx-pref-height: 540px;
 	-fx-pref-width: 720px;
 }
@@ -134,6 +135,24 @@ VBox {
 	-fx-translate-y: -10px;
 	-fx-font-size: 14px;
 	-fx-font-weight: normal;
+}
+
+#infected {
+	-fx-background-radius: 0px;
+	-fx-alignment: center;
+	-fx-pref-width: 255px;
+	-fx-background-color: #CC444B;
+	visibility: false;
+}
+
+#infected Label {
+	-fx-font-weight: bold;
+	-fx-text-fill: white;
+	-fx-font-size: 10px;
+}
+
+#infected #reminder {
+	-fx-font-size: 12px;
 }
 
 /* For Modify Role.fxml */

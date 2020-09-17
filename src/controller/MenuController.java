@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.util.Pair;
@@ -26,9 +27,12 @@ public class MenuController extends Controller {
     private VBox govActions;
     @FXML
     private VBox tracerActions;
-
-    public MenuController() {
-    }
+    @FXML
+    private VBox inContact;
+    @FXML
+    private Label estCode;
+    @FXML
+    private Label date;
 
     @Override
     public void update() {
@@ -41,6 +45,13 @@ public class MenuController extends Controller {
 
         fullName.setText(user.getName().getFullName());
         username.setText(user.getUsername());
+
+        // prompt
+        if (!user.getIsPositive() /* && getContactPlaces()? */) {
+            inContact.setVisible(true);
+            estCode.setText("McDo");
+            date.setText("11/11/11");
+        }
     }
 
     @FXML
@@ -58,7 +69,13 @@ public class MenuController extends Controller {
                 System.out.println(result.get().getTime());
                 user.reportPositive(result.get());
             }
-        } //else already positive dialog box?
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Report Positive");
+            alert.setHeaderText("Report Error");
+            alert.setContentText("You have already reported positive!");
+            alert.showAndWait();
+        }
     }
 
     @FXML
@@ -80,6 +97,11 @@ public class MenuController extends Controller {
     @FXML
     public void showModifyRoleAction() {
         mainController.changeScene(MainController.MODIFY_ROLE_VIEW);
+    }
+
+    @FXML
+    public void showTraceAction() {
+        mainController.changeScene(MainController.TRACE_VIEW);
     }
 
     @FXML

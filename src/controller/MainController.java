@@ -17,6 +17,7 @@ public class MainController {
     public static final int PROFILE_VIEW = 4;
     public static final int CASE_TABLE_VIEW = 5;
     public static final int MODIFY_ROLE_VIEW = 6;
+    public static final int TRACE_VIEW = 7;
 
     /** This is the user logged in */
     private Citizen userModel;
@@ -46,6 +47,7 @@ public class MainController {
             case 4 -> loader.setLocation(getClass().getResource("/view/Profile.fxml"));
             case 5 -> loader.setLocation(getClass().getResource("/view/Case Table View.fxml"));
             case 6 -> loader.setLocation(getClass().getResource("/view/Modify Role.fxml"));
+            case 7 -> loader.setLocation(getClass().getResource("/view/Trace.fxml"));
         }
 
         try {

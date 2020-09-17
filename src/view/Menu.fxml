@@ -16,7 +16,7 @@
             <Image url="@../resources/user_bigger.png" />
          </image>
       </ImageView>
-      <Label fx:id="fullName" layoutX="5.0" layoutY="109.0" prefWidth="258.0" styleClass="name-display" text="&lt;Full Name&gt;" />
+      <Label fx:id="fullName" layoutX="5.0" layoutY="109.0" styleClass="name-display" text="&lt;Full Name&gt;" />
       <VBox layoutX="33.0" layoutY="174.0" prefHeight="135.0" prefWidth="217.0">
          <children>
             <Label styleClass="menu__label" text="User Actions" />
@@ -25,7 +25,7 @@
             <Button mnemonicParsing="false" onAction="#checkInAction" text="Check In" />
          </children>
       </VBox>
-      <VBox fx:id="govActions" layoutX="33.0" layoutY="299.0" prefHeight="130.0" prefWidth="217.0" visible="false">
+      <VBox fx:id="govActions" disable="true" layoutX="33.0" layoutY="299.0" prefWidth="217.0" visible="false">
          <children>
             <Label styleClass="menu__label" text="Gov Actions" />
             <Button mnemonicParsing="false" onAction="#showCaseInformationAction" text="Case Information" />
@@ -35,12 +35,10 @@
             <Insets top="-4.0" />
          </opaqueInsets>
       </VBox>
-      <VBox id="tracer-menu" fx:id="tracerActions" layoutX="33.0" layoutY="299.0" prefHeight="135.0" prefWidth="217.0" visible="false">
+      <VBox id="tracer-menu" fx:id="tracerActions" layoutX="33.0" layoutY="299.0" prefWidth="217.0" visible="false">
          <children>
             <Label styleClass="menu__label" text="Tracer Actions" />
-            <Button mnemonicParsing="false" text="Show Cases" />
-            <Button mnemonicParsing="false" text="Trace Specific Case" />
-            <Button mnemonicParsing="false" text="Inform Citizens" />
+            <Button mnemonicParsing="false" onAction="#showTraceAction" text="Show Cases" />
          </children>
       </VBox>
       <ImageView fitHeight="23.0" fitWidth="23.0" layoutX="13.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
@@ -49,7 +47,15 @@
          </image>
       </ImageView>
       <Button layoutX="33.0" layoutY="471.0" mnemonicParsing="false" onAction="#handleLogoutAction" styleClass="red-button" text="Log Out" />
-      <Label id="username-display" fx:id="username" layoutX="5.0" layoutY="139.0" prefHeight="21.0" prefWidth="259.0" styleClass="name-display" text="&lt;Username&gt;" />
+      <Label id="username-display" fx:id="username" layoutX="5.0" layoutY="139.0" styleClass="name-display" text="&lt;Username&gt;" />
+      <VBox id="infected" fx:id="inContact" layoutX="-5.0" layoutY="382.0" prefHeight="80.0" prefWidth="256.0">
+         <children>
+            <Label id="reminder" text="URGENT" />
+            <Label text="You may have been infected at:" />
+            <Label fx:id="estCode" text="&lt;Establishment Code&gt;" />
+            <Label fx:id="date" text="&lt;Date&gt;" />
+         </children>
+      </VBox>
    </children>
    <styleClass>
       <String fx:value="AnchorPane-menu" />
