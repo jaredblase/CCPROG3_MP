@@ -85,6 +85,7 @@ public class CaseTableViewController extends Controller {
                         ((CaseInformationController) loader.getController()).setCase(c);
                         ((CaseInformationController) loader.getController()).init();
                         stage.showAndWait();
+                        update();
                     } catch (IOException exception) {
                         exception.printStackTrace();
                     }

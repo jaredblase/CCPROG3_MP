@@ -300,7 +300,6 @@ public class UserSystem {
             e.printStackTrace();
         }
 
-        builder.setTimeOfDay(0, 0, 0);
         // load positive cases
         try (Scanner input = new Scanner(new File("Positive_Cases.txt"))) {
             while (input.hasNextLine()) {

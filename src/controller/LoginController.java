@@ -22,6 +22,11 @@ public class LoginController extends Controller {
 
     }
 
+    public void initialize() {
+        usernameTextField.setOnKeyPressed(e -> invalidLoginMessage.setVisible(false));
+        passwordTextField.setOnKeyPressed(e -> invalidLoginMessage.setVisible(false));
+    }
+
     @FXML
     public void handleLoginButtonAction() {
         System.out.println(usernameTextField.getText());
