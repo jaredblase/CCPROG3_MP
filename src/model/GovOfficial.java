@@ -2,7 +2,6 @@ package model;
 
 import java.time.LocalDate;
 import java.util.Calendar;
-import java.util.function.Predicate;
 
 /**
  * This GovOfficial class extends the Citizen class and includes administrator
@@ -87,71 +86,97 @@ public class GovOfficial extends Citizen {
         }
     }
 
+//    /**
+//     * Filters the cases given the criteria (parameter) and returns the count.
+//     * @param dates the date range.
+//     * @param city the name of the city.
+//     * @return the number of cases that fit the criteria.
+//     * @throws Exception if an invalid city was received.
+//     */
+//    public int showAnalytics(Calendar[] dates, String city) throws Exception {
+//        final String CITY = city.toUpperCase();
+//        if (isInvalidCity(CITY)) {
+//            throw new Exception("Invalid City!");
+//        }
+//
+//        Predicate<Case> filter = (case1) -> {
+//            Citizen temp = UserSystem.getUser(case1.getUsername());
+//
+//            if (temp != null) {
+//                return case1.getReportDate().compareTo(dates[0]) >= 0
+//                        && case1.getReportDate().before(dates[1])
+//                        && temp.getHomeAddress().toUpperCase().contains(CITY);
+//            } else {
+//                return false;
+//            }
+//        };
+//
+//        return countCases(filter);
+//    }
+//
+//    /**
+//     * Filters the cases given the criteria (parameter) and returns the count.
+//     * @param dates the date range.
+//     * @return the number of cases that fit the criteria.
+//     */
+//    public int showAnalytics(Calendar[] dates) {
+//        Predicate<Case> filter = (case1) -> case1.getReportDate().compareTo(dates[0]) >= 0 &&
+//                    case1.getReportDate().before(dates[1]);
+//
+//        return countCases(filter);
+//    }
+//
+//    /**
+//     * Filters the cases given the criteria (parameter) and returns the count.
+//     * @param city the name of the city.
+//     * @return the number of cases that fit the criteria.
+//     * @throws Exception if an invalid city was received.
+//     */
+//    public int showAnalytics(String city) throws Exception {
+//        final String CITY = city.toUpperCase();
+//        if (isInvalidCity(CITY)) {
+//            throw new Exception("Invalid city!");
+//        }
+//
+//        Predicate<Case> filter = (case1) -> {
+//            Citizen temp = UserSystem.getUser(case1.getUsername());
+//
+//            if (temp != null) {
+//                return temp.getHomeAddress().toUpperCase().contains(CITY);
+//            } else {
+//                return false;
+//            }
+//        };
+//
+//        return countCases(filter);
+//    }
+
+//    /**
+//     * Iterates through all the cases and counts the cases that pass
+//     * the test (filter). Returns the final count.
+//     * @param filter the test to be performed on each entry.
+//     * @return the number of cases that fit the criteria.
+//     */
+//    private int countCases(Predicate<Case> filter) {
+//        int ctr = 0;
+//
+//        for (Case i: UserSystem.getCases()) {
+//            if (filter.test(i)) {
+//                ctr++;
+//            }
+//        }
+//        return ctr;
+//    }
+
     /**
-     * Filters the cases given the criteria (parameter) and returns the count.
-     * @param dates the date range.
+     * Checks whether the given case fits the criteria (parameter).
+     * @param c the specific case to check.
      * @param city the name of the city.
-     * @return the number of cases that fit the criteria.
-     * @throws Exception if an invalid city was received.
+     * @param status the status of the case.
+     * @param start the start of date date.
+     * @param end the end of date range.
+     * @return true if the case fits the criteria, false otherwise.
      */
-    public int showAnalytics(Calendar[] dates, String city) throws Exception {
-        final String CITY = city.toUpperCase();
-        if (isInvalidCity(CITY)) {
-            throw new Exception("Invalid City!");
-        }
-
-        Predicate<Case> filter = (case1) -> {
-            Citizen temp = UserSystem.getUser(case1.getUsername());
-
-            if (temp != null) {
-                return case1.getReportDate().compareTo(dates[0]) >= 0
-                        && case1.getReportDate().before(dates[1])
-                        && temp.getHomeAddress().toUpperCase().contains(CITY);
-            } else {
-                return false;
-            }
-        };
-
-        return countCases(filter);
-    }
-
-    /**
-     * Filters the cases given the criteria (parameter) and returns the count.
-     * @param dates the date range.
-     * @return the number of cases that fit the criteria.
-     */
-    public int showAnalytics(Calendar[] dates) {
-        Predicate<Case> filter = (case1) -> case1.getReportDate().compareTo(dates[0]) >= 0 &&
-                    case1.getReportDate().before(dates[1]);
-
-        return countCases(filter);
-    }
-
-    /**
-     * Filters the cases given the criteria (parameter) and returns the count.
-     * @param city the name of the city.
-     * @return the number of cases that fit the criteria.
-     * @throws Exception if an invalid city was received.
-     */
-    public int showAnalytics(String city) throws Exception {
-        final String CITY = city.toUpperCase();
-        if (isInvalidCity(CITY)) {
-            throw new Exception("Invalid city!");
-        }
-
-        Predicate<Case> filter = (case1) -> {
-            Citizen temp = UserSystem.getUser(case1.getUsername());
-
-            if (temp != null) {
-                return temp.getHomeAddress().toUpperCase().contains(CITY);
-            } else {
-                return false;
-            }
-        };
-
-        return countCases(filter);
-    }
-
     public boolean filter(Case c, String city, char status, LocalDate start, LocalDate end) {
         if (city == null) {
             return filter(c, status, start, end);
@@ -161,16 +186,31 @@ public class GovOfficial extends Citizen {
         return temp != null && temp.getHomeAddress().toUpperCase().contains(city.toUpperCase()) && filter(c, status, start, end);
     }
 
+    /**
+     * Checks whether the given case fits the criteria (parameter).
+     * @param c the specific case to check.
+     * @param status the status of the case.
+     * @param start the start of date date.
+     * @param end the end of date range.
+     * @return true if the case fits the criteria, false otherwise.
+     */
     public boolean filter(Case c, char status, LocalDate start, LocalDate end) {
         return (status == '\0')? filter(c, start, end) : filter(c, start, end) && status == c.getStatus();
     }
 
+    /**
+     * Checks whether the given case fits the criteria (parameter).
+     * @param c the specific case to check.
+     * @param start the start of date date.
+     * @param end the end of date range.
+     * @return true if the case fits the criteria, false otherwise.
+     */
     public boolean filter(Case c, LocalDate start, LocalDate end) {
         Calendar dateStart, dateEnd;
         dateStart = Calendar.getInstance();
         dateEnd = Calendar.getInstance();
 
-        // to remove time values
+        // remove time values
         dateStart.clear();
         dateEnd.clear();
 
@@ -178,33 +218,16 @@ public class GovOfficial extends Citizen {
             return true;
         } else if (start != null && end != null) {
             dateStart.set(start.getYear(), start.getMonthValue() - 1, start.getDayOfMonth());
-            dateEnd.set(end.getYear(), end.getMonthValue() - 1, end.getDayOfMonth());
+            dateEnd.set(end.getYear(), end.getMonthValue() - 1, end.getDayOfMonth() + 1);
 
             return c.getReportDate().compareTo(dateStart) >= 0 && c.getReportDate().before(dateEnd);
         } else if (end != null) {
-            dateEnd.set(end.getYear(), end.getMonthValue() - 1, end.getDayOfMonth());
+            dateEnd.set(end.getYear(), end.getMonthValue() - 1, end.getDayOfMonth() + 1);
             return c.getReportDate().before(dateEnd);
         }
 
         dateStart.set(start.getYear(), start.getMonthValue() - 1, start.getDayOfMonth());
         return c.getReportDate().compareTo(dateStart) >= 0;
-    }
-
-    /**
-     * Iterates through all the cases and counts the cases that pass
-     * the test (filter). Returns the final count.
-     * @param filter the test to be performed on each entry.
-     * @return the number of cases that fit the criteria.
-     */
-    private int countCases(Predicate<Case> filter) {
-        int ctr = 0;
-
-        for (Case i: UserSystem.getCases()) {
-            if (filter.test(i)) {
-                ctr++;
-            }
-        }
-        return ctr;
     }
 
     /**
