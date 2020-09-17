@@ -300,7 +300,6 @@ public class UserSystem {
             e.printStackTrace();
         }
 
-        builder.setTimeOfDay(0, 0, 0);
         // load positive cases
         try (Scanner input = new Scanner(new File("Positive_Cases.txt"))) {
             while (input.hasNextLine()) {
@@ -320,7 +319,7 @@ public class UserSystem {
                         Tracer tracer = new Tracer(users.get(0)); // create new Tracer object
                         // finish tracing for the case
                         tracer.addCase(cases.get(index));
-                        tracer.trace(index + 1, 0);
+                        tracer.trace(index + 1);
                     }
                 }
             }

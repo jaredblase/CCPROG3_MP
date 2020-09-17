@@ -22,17 +22,17 @@ import java.util.Calendar;
 
 public class CaseTableViewController extends Controller {
     @FXML
-    private TableView<model.Case> tableView;
+    private TableView<Case> tableView;
     @FXML
-    private TableColumn<model.Case, Integer> caseNumCol;
+    private TableColumn<Case, Integer> caseNumCol;
     @FXML
-    private TableColumn<model.Case, Calendar> dateCol;
+    private TableColumn<Case, Calendar> dateCol;
     @FXML
-    private TableColumn<model.Case, String> usernameCol;
+    private TableColumn<Case, String> usernameCol;
     @FXML
-    private TableColumn<model.Case, String> tracerCol;
+    private TableColumn<Case, String> tracerCol;
     @FXML
-    private TableColumn<model.Case, Character> statusCol;
+    private TableColumn<Case, Character> statusCol;
     @FXML
     private TextField cityFilter;
     @FXML
@@ -45,7 +45,7 @@ public class CaseTableViewController extends Controller {
     private Button actionButton;
     @FXML
     private MenuController menuController;
-    private ObservableList<model.Case> cases;
+    private ObservableList<Case> cases;
 
     @Override
     public void update() {
@@ -83,8 +83,10 @@ public class CaseTableViewController extends Controller {
                         stage.setScene(new Scene(loader.load()));
                         stage.centerOnScreen();
                         ((CaseInformationController) loader.getController()).setCase(c);
+                        ((CaseInformationController) loader.getController()).setUser((GovOfficial) mainController.getUserModel());
                         ((CaseInformationController) loader.getController()).init();
                         stage.showAndWait();
+                        update();
                     } catch (IOException exception) {
                         exception.printStackTrace();
                     }
@@ -110,7 +112,7 @@ public class CaseTableViewController extends Controller {
         });
 
         cases = FXCollections.observableArrayList();
-        FilteredList<model.Case> filteredList = new FilteredList<>(cases, p -> true);
+        FilteredList<Case> filteredList = new FilteredList<>(cases, p -> true);
 
         // when filter button is pressed
         actionButton.setOnAction(e -> filteredList.setPredicate(c -> ((GovOfficial) this.mainController.getUserModel())
@@ -118,7 +120,7 @@ public class CaseTableViewController extends Controller {
                             startFilter.getValue(), endFilter.getValue()))
         );
 
-        SortedList<model.Case> sortedList = new SortedList<>(filteredList);
+        SortedList<Case> sortedList = new SortedList<>(filteredList);
 
         sortedList.comparatorProperty().bind(tableView.comparatorProperty());
         tableView.setItems(sortedList);

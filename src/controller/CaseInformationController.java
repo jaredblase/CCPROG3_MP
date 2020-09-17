@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.Case;
 import model.Citizen;
+import model.GovOfficial;
 import model.UserSystem;
 
 import java.text.SimpleDateFormat;
@@ -15,6 +16,8 @@ import java.text.SimpleDateFormat;
 public class CaseInformationController{
     /** This is the case being displayed. */
     private Case positive;
+    /** This is the government official logged in. */
+    private GovOfficial user;
 
     @FXML
     private Label fullName;
@@ -37,15 +40,9 @@ public class CaseInformationController{
     @FXML
     private Label status;
     @FXML
-    private ComboBox<String> tracers;
+    private ComboBox<String> tracerBox;
     @FXML
     private Button assignButton;
-    @FXML
-    private Button backButton;
-
-    public CaseInformationController() {
-
-    }
 
     public void init() {
         SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
@@ -61,15 +58,39 @@ public class CaseInformationController{
         reportDate.setText(format.format(positive.getReportDate().getTime()));
         tracer.setText(positive.getTracer());
         status.setText(String.valueOf(positive.getStatus()));
-        tracers.getItems().addAll(UserSystem.getTracers());
+        tracerBox.getItems().addAll(UserSystem.getTracers());
+        tracerBox.getItems().add("No tracers in the system");
+    }
+
+    @FXML
+    public void initialize() {
+        tracerBox.setOnAction(e -> {
+            if (tracerBox.getItems().contains("No tracers in the system"))
+                assignButton.setDisable(true);
+            else
+                assignButton.setDisable(tracerBox.getValue() == null || tracerBox.getValue().isEmpty());
+        });
     }
 
     public void setCase(Case positive) {
         this.positive = positive;
     }
 
-    public void onAssignAction() {
+    public void setUser(GovOfficial user) {
+        this.user = user;
+    }
 
+    public void onAssignAction(ActionEvent e) {
+        if (positive.getTracer().equals("000")) {
+            user.assignCase(positive, tracerBox.getValue());
+            onBackAction(e);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Assign Case");
+            alert.setHeaderText("Assign Error");
+            alert.setContentText("Case already assigned!");
+            alert.showAndWait();
+        }
     }
 
     public void onBackAction(ActionEvent e) {

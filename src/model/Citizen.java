@@ -1,6 +1,5 @@
 package model;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -35,8 +34,8 @@ public class Citizen {
     private boolean isPositive;
     /** Indicator if the information of the user is changed. */
     private boolean isChanged;
-    /** Records that indicate when and where the user may be infected. */
-    private ArrayList<Visit> contactPlaces;
+    /** The latest record when and where the user may be infected. */
+    private Visit contactPlace;
     /** The Menu object for the update details options of the user. */
     public static final Menu UPDATE_OPTIONS = new Menu("Update", "Name", "Home Address",
             "Office Address", "Phone Number", "E-Mail", "Password", "Back to User Menu");
@@ -68,7 +67,7 @@ public class Citizen {
         this.isChanged = isChanged;
         visitRec = new ArrayList<>();
         isPositive = false;
-        contactPlaces = new ArrayList<>();
+        contactPlace = null;
     }
 
     /**
@@ -80,7 +79,7 @@ public class Citizen {
                 other.USERNAME, other.password, other.isChanged);
         this.visitRec = other.visitRec;
         this.isPositive = other.isPositive;
-        this.contactPlaces = other.contactPlaces;
+        this.contactPlace = other.contactPlace;
     }
 
     /**
@@ -172,6 +171,14 @@ public class Citizen {
     }
 
     /**
+     * Returns the latest record when and where the user may be infected.
+     * @return the latest record when and where the user may be infected.
+     */
+    public Visit getContactPlace() {
+        return contactPlace;
+    }
+
+    /**
      * Sets the status whether the information of the user is changed.
      * @param status the status whether the information of the user is changed.
      */
@@ -250,49 +257,43 @@ public class Citizen {
     }
 
     /**
-     * Adds when and where a user may be infected.
+     * Compares the current record when and where the user may be infected with the given record.
+     * If there is no previous record (current record is null) or the current record has an older
+     * date than the given record, the current is replaced with the given record. Otherwise, the
+     * current record is kept.
      * @param contactPlace the record that indicates when and where the user may be infected.
      */
     public void addContactInfo(Visit contactPlace) {
-        int i;
-        for (i = 0; i < contactPlaces.size(); i++) {
-            if (contactPlaces.get(i).getCheckIn().before(contactPlace.getCheckIn()))
-                break;
-        }
-
-        if (i == contactPlaces.size()) {
-            contactPlaces.add(contactPlace);
-        } else {
-            contactPlaces.add(i, contactPlace);
-        }
+        if (this.contactPlace == null || this.contactPlace.getCheckIn().before(contactPlace.getCheckIn()))
+            this.contactPlace = contactPlace;
     }
 
-    /**
-     * Displays a message if the user has possibly come in contact
-     * with a positive case.
-     */
-    public void prompt() {
-        if (!isPositive) {
-            SimpleDateFormat format = new SimpleDateFormat("MM,dd,yyyy");
-            Calendar temp = Calendar.getInstance();
-            temp.add(Calendar.DAY_OF_YEAR, -14);
-            for (int i = 0; i < contactPlaces.size(); i++) {
-                if (contactPlaces.get(i).getCheckIn().before(temp)) { // not within prompting date range
-                    contactPlaces.remove(i);
-                }
-            }
-
-            if (!contactPlaces.isEmpty()) { // there are still possible contact times after removing
-                System.out.println();
-                System.out.println("You may have been in contact with a positive patient on: ");
-                for (Visit contactPlace : contactPlaces)
-                    System.out.println(format.format(contactPlace.getCheckIn().getTime()) + " in " +
-                            contactPlace.getEstCode());
-                System.out.println("You are advised to get tested and report via the " +
-                        "app should the result be positive.\n");
-            }
-        }
-    }
+//    /**
+//     * Displays a message if the user has possibly come in contact
+//     * with a positive case.
+//     */
+//    public void prompt() {
+//        if (!isPositive) {
+//            SimpleDateFormat format = new SimpleDateFormat("MM,dd,yyyy");
+//            Calendar temp = Calendar.getInstance();
+//            temp.add(Calendar.DAY_OF_YEAR, -14);
+//            for (int i = 0; i < contactPlaces.size(); i++) {
+//                if (contactPlaces.get(i).getCheckIn().before(temp)) { // not within prompting date range
+//                    contactPlaces.remove(i);
+//                }
+//            }
+//
+//            if (!contactPlaces.isEmpty()) { // there are still possible contact times after removing
+//                System.out.println();
+//                System.out.println("You may have been in contact with a positive patient on: ");
+//                for (Visit contactPlace : contactPlaces)
+//                    System.out.println(format.format(contactPlace.getCheckIn().getTime()) + " in " +
+//                            contactPlace.getEstCode());
+//                System.out.println("You are advised to get tested and report via the " +
+//                        "app should the result be positive.\n");
+//            }
+//        }
+//    }
 
     @Override
     public String toString() {

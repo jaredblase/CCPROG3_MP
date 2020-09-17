@@ -12,11 +12,12 @@ import model.UserSystem;
 import view.CheckInView;
 import view.ReportView;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Optional;
 
 public class MenuController extends Controller {
-    /** This is the user logged in */
+    /** This is the user logged in. */
     private Citizen user;
 
     @FXML
@@ -47,10 +48,11 @@ public class MenuController extends Controller {
         username.setText(user.getUsername());
 
         // prompt
-        if (!user.getIsPositive() /* && getContactPlaces()? */) {
+        if (!user.getIsPositive() && user.getContactPlace() != null) {
+            SimpleDateFormat format = new SimpleDateFormat("MM,dd,yyyy");
             inContact.setVisible(true);
-            estCode.setText("McDo");
-            date.setText("11/11/11");
+            estCode.setText(user.getContactPlace().getEstCode());
+            date.setText(format.format(user.getContactPlace().getCheckIn().getTime()));
         }
     }
 

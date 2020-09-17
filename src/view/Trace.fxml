@@ -18,7 +18,7 @@
       </HBox>
       <TableView layoutX="271.0" layoutY="87.0" prefHeight="382.0" prefWidth="428.0">
         <columns>
-          <TableColumn prefWidth="100.0" text="Username" />
+          <TableColumn fx:id="usernameCol" prefWidth="100.0" text="Username" />
           <TableColumn prefWidth="107.0" text="Contact Number" />
             <TableColumn prefWidth="125.0" text="Establishment" />
             <TableColumn prefWidth="95.0" text="Date" />

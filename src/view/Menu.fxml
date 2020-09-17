@@ -25,7 +25,7 @@
             <Button mnemonicParsing="false" onAction="#checkInAction" text="Check In" />
          </children>
       </VBox>
-      <VBox fx:id="govActions" disable="true" layoutX="33.0" layoutY="299.0" prefWidth="217.0" visible="false">
+      <VBox fx:id="govActions" layoutX="33.0" layoutY="299.0" prefWidth="217.0" visible="false">
          <children>
             <Label styleClass="menu__label" text="Gov Actions" />
             <Button mnemonicParsing="false" onAction="#showCaseInformationAction" text="Case Information" />
