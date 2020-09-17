@@ -134,7 +134,7 @@ public class Driver {
         if (user != null) {
             int opt, max = user.getUserMenu().length();
             do {
-                user.prompt();
+                // user.prompt();
                 user.getUserMenu().display();
                 opt = getMenuAnswer(max);
 

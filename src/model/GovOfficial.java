@@ -162,7 +162,7 @@ public class GovOfficial extends Citizen {
     }
 
     public boolean filter(Case c, char status, LocalDate start, LocalDate end) {
-        return (status == '\0')? filter(c, start, end) : filter(c, start, end) &&status == c.getStatus();
+        return (status == '\0')? filter(c, start, end) : filter(c, start, end) && status == c.getStatus();
     }
 
     public boolean filter(Case c, LocalDate start, LocalDate end) {
