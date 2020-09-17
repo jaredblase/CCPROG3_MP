@@ -21,10 +21,13 @@ public class MainController {
 
     /** This is the user logged in */
     private Citizen userModel;
-
     /** These are the view components */
     private final Stage primaryStage;
 
+    /**
+     * Constructs the main controller and sets up the view on the stage received.
+     * @param stage the primary stage to be used.
+     */
     public MainController(Stage stage) {
         // setup model
         UserSystem.loadSystem();
@@ -37,9 +40,14 @@ public class MainController {
         changeScene(LOGIN_VIEW);
     }
 
+    /**
+     * Handles the switching of scenes of the main stage.
+     * @param view number representing a specific scene to switch to.
+     */
     public void changeScene(int view) {
         FXMLLoader loader = new FXMLLoader();
 
+        // load the scene from the corresponding fxml file
         switch (view) {
             case 1 -> loader.setLocation(getClass().getResource("/view/Login Screen.fxml"));
             case 2 -> loader.setLocation(getClass().getResource("/view/Registration Form Part 1.fxml"));
@@ -57,15 +65,24 @@ public class MainController {
             e.printStackTrace();
         }
 
+        // set up the controller of the scene
         Controller controller = loader.getController();
         controller.setMainController(this);
         primaryStage.show();
     }
 
+    /**
+     * Sets the user currently logged in.
+     * @param userModel the user that is currently logged in.
+     */
     public void setUserModel(Citizen userModel) {
         this.userModel = userModel;
     }
 
+    /**
+     * Gets the user currently logged in.
+     * @return the user that is currently logged in.
+     */
     public Citizen getUserModel() {
         return userModel;
     }

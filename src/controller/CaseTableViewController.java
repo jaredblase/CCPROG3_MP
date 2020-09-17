@@ -47,12 +47,10 @@ public class CaseTableViewController extends Controller {
     private MenuController menuController;
     private ObservableList<Case> cases;
 
-    @Override
-    public void update() {
-        menuController.setMainController(mainController);
-        cases.setAll(UserSystem.getCases());
-    }
-
+    /**
+     * Automatically called when the corresponding fxml file is loaded by FXML loader.
+     * Sets up the data and behaviour of the table.
+     */
     @FXML
     public void initialize() {
         // initialize statusFilter
@@ -65,28 +63,31 @@ public class CaseTableViewController extends Controller {
         tracerCol.setCellValueFactory(new PropertyValueFactory<>("tracer"));
         statusCol.setCellValueFactory(new PropertyValueFactory<>("status"));
 
-        // set rows to be clickable
+        // set rows to display a dialog when double clicked
         tableView.setRowFactory(tv -> {
             TableRow<Case> row = new TableRow<>();
 
             row.setOnMouseClicked(e -> {
                 if (e.getClickCount() == 2 && !row.isEmpty()) {
                     Case c = row.getItem();
-                    // load case information
-                    FXMLLoader loader = new FXMLLoader();
-                    loader.setLocation(getClass().getResource("/view/Case Information.fxml"));
+
+                    // stage (dialog) setup
                     Stage stage = new Stage();
                     stage.setTitle("Case " + c.getCaseNum() + " Information");
                     stage.setResizable(false);
                     stage.initStyle(StageStyle.TRANSPARENT);
+                    stage.centerOnScreen();
+
+                    // load case information
                     try {
+                        FXMLLoader loader = new FXMLLoader();
+                        loader.setLocation(getClass().getResource("/view/Case Information.fxml"));
                         stage.setScene(new Scene(loader.load()));
-                        stage.centerOnScreen();
-                        ((CaseInformationController) loader.getController()).setCase(c);
-                        ((CaseInformationController) loader.getController()).setUser((GovOfficial) mainController.getUserModel());
-                        ((CaseInformationController) loader.getController()).init();
-                        stage.showAndWait();
-                        update();
+
+                        ((CaseInformationController) loader.getController()).setModel(      // setup controller
+                                (GovOfficial) mainController.getUserModel(), c);
+                        stage.showAndWait();                                                // display dialog
+                        update();                                                           // update table view
                     } catch (IOException exception) {
                         exception.printStackTrace();
                     }
@@ -116,13 +117,22 @@ public class CaseTableViewController extends Controller {
 
         // when filter button is pressed
         actionButton.setOnAction(e -> filteredList.setPredicate(c -> ((GovOfficial) this.mainController.getUserModel())
-                    .filter(c, cityFilter.getText(), statusFilter.getValue() == null? '\0' : statusFilter.getValue(),
-                            startFilter.getValue(), endFilter.getValue()))
+                .filter(c, cityFilter.getText(), statusFilter.getValue() == null? '\0' : statusFilter.getValue(),
+                        startFilter.getValue(), endFilter.getValue()))
         );
 
         SortedList<Case> sortedList = new SortedList<>(filteredList);
-
         sortedList.comparatorProperty().bind(tableView.comparatorProperty());
         tableView.setItems(sortedList);
+    }
+
+    /**
+     * Sets up the main controller to the menu controller and retrieves the cases
+     * from the user system.
+     */
+    @Override
+    protected void update() {
+        menuController.setMainController(mainController);
+        cases.setAll(UserSystem.getCases());
     }
 }
