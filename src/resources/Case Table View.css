@@ -5,3 +5,7 @@
 .filter {
 	-fx-hgap: 10px;
 }
+
+.filter HBox {
+	-fx-spacing: 27px;
+}

@@ -41,28 +41,28 @@ public class GovOfficial extends Citizen {
         return userMenu;
     }
 
-    /**
-     * Displays all the case numbers of unassigned cases and returns the array
-     * of those case numbers.
-     * @return the array of case numbers of unassigned cases.
-     */
-    public int[] showUnassigned() {
-        int[] caseNums = new int[Case.getCount()];
-        int ctr = 0;
-
-        for (Case i : UserSystem.getCases()) {
-            if (i.getTracer().equals("000")) { // no tracer assigned
-                System.out.println(i.getCaseNum()); // display case num
-                caseNums[ctr++] = i.getCaseNum(); // add case num to array of caseNums
-            }
-        }
-
-        if (ctr == 0) { // no cases
-            caseNums = null;
-        }
-
-        return caseNums;
-    }
+//    /**
+//     * Displays all the case numbers of unassigned cases and returns the array
+//     * of those case numbers.
+//     * @return the array of case numbers of unassigned cases.
+//     */
+//    public int[] showUnassigned() {
+//        int[] caseNums = new int[Case.getCount()];
+//        int ctr = 0;
+//
+//        for (Case i : UserSystem.getCases()) {
+//            if (i.getTracer().equals("000")) { // no tracer assigned
+//                System.out.println(i.getCaseNum()); // display case num
+//                caseNums[ctr++] = i.getCaseNum(); // add case num to array of caseNums
+//            }
+//        }
+//
+//        if (ctr == 0) { // no cases
+//            caseNums = null;
+//        }
+//
+//        return caseNums;
+//    }
 
     /**
      * Assigns the given case to a contact tracer based on the given username
@@ -167,6 +167,23 @@ public class GovOfficial extends Citizen {
 //        }
 //        return ctr;
 //    }
+
+    /**
+     * Checks whether the given case fits the criteria (parameter).
+     * @param c the specific case to check.
+     * @param city the name of the city.
+     * @param status the status of the case.
+     * @param start the start of date date.
+     * @param end the end of date range.
+     * @return true if the case fits the criteria, false otherwise.
+     */
+    public boolean filter(Case c, String city, char status, LocalDate start, LocalDate end, boolean mustBeUnassigned) {
+        if (mustBeUnassigned) {
+            return c.getTracer().equals("000") && filter(c, status, start, end);
+        }
+
+        return filter(c, city, status, start, end);
+    }
 
     /**
      * Checks whether the given case fits the criteria (parameter).

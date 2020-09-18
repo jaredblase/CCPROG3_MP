@@ -42,6 +42,8 @@ public class CaseTableViewController extends Controller {
     @FXML
     private DatePicker endFilter;
     @FXML
+    private ToggleButton unassignedOnly;
+    @FXML
     private Button actionButton;
     @FXML
     private MenuController menuController;
@@ -118,8 +120,10 @@ public class CaseTableViewController extends Controller {
         // when filter button is pressed
         actionButton.setOnAction(e -> filteredList.setPredicate(c -> ((GovOfficial) this.mainController.getUserModel())
                 .filter(c, cityFilter.getText(), statusFilter.getValue() == null? '\0' : statusFilter.getValue(),
-                        startFilter.getValue(), endFilter.getValue()))
+                        startFilter.getValue(), endFilter.getValue(), unassignedOnly.isSelected()))
         );
+
+        unassignedOnly.setOnAction(e -> actionButton.fire());
 
         SortedList<Case> sortedList = new SortedList<>(filteredList);
         sortedList.comparatorProperty().bind(tableView.comparatorProperty());
