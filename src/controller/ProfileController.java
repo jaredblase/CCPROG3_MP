@@ -14,6 +14,8 @@ import java.util.Optional;
 public class ProfileController extends Controller {
     /** This is the user logged in */
     private Citizen user;
+    /** Indicates whether the user is currently editing his profile or not */
+    private boolean isEditing;
 
     @FXML
     private TextField firstName;
@@ -52,8 +54,11 @@ public class ProfileController extends Controller {
 
     @FXML
     private MenuController menuController;
-    private boolean isEditing;
 
+    /**
+     * Automatically called when the corresponding fxml file is loaded by FXML loader.
+     * Sets up the behaviour of each invalid message label.
+     */
     public void initialize() {
         firstName.setOnKeyPressed(e -> invalidFirstName.setVisible(false));
         middleName.setOnKeyPressed(e -> invalidMiddleName.setVisible(false));
@@ -64,10 +69,14 @@ public class ProfileController extends Controller {
         email.setOnKeyPressed(e -> invalidEmail.setVisible(false));
     }
 
+    /**
+     * Sets up the information to display from the user logged in.
+     */
     @Override
     public void update() {
         user = mainController.getUserModel();
         menuController.setMainController(super.mainController);
+
         firstName.setText(user.getName().getFirst());
         middleName.setText(user.getName().getMiddle());
         lastName.setText(user.getName().getLast());
@@ -77,6 +86,10 @@ public class ProfileController extends Controller {
         email.setText(user.getEmail());
     }
 
+    /**
+     * Depending on the value of isEditing, this method will either setup the
+     * text boxes to become editable or it saves the edited information.
+     */
     @FXML
     public void onEditAction() {
         isEditing = !isEditing;
@@ -178,6 +191,9 @@ public class ProfileController extends Controller {
         changePassButton.setVisible(!isEditing);
     }
 
+    /**
+     * Display a dialog when the user wants to change his password.
+     */
     @FXML
     public void changePasswordAction() {
         feedback.setVisible(false);

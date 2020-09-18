@@ -22,19 +22,25 @@ public class LoginController extends Controller {
 
     }
 
+    /**
+     * Automatically called when the corresponding fxml file is loaded by FXML loader.
+     * Sets up the behaviour of the text fields.
+     */
+    @FXML
     public void initialize() {
+        // when a key is typed in these fields, the invalid message is hidden
         usernameTextField.setOnKeyPressed(e -> invalidLoginMessage.setVisible(false));
         passwordTextField.setOnKeyPressed(e -> invalidLoginMessage.setVisible(false));
     }
 
+    /**
+     * Handles the action event when the login button is pressed.
+     */
     @FXML
     public void handleLoginButtonAction() {
-        System.out.println(usernameTextField.getText());
-        System.out.println(passwordTextField.getText());
         Citizen citizen = UserSystem.login(usernameTextField.getText(), passwordTextField.getText());
         if (citizen == null) {
             invalidLoginMessage.setVisible(true);
-            usernameTextField.clear();
             passwordTextField.clear();
         } else {
             mainController.setUserModel(citizen);
@@ -42,11 +48,18 @@ public class LoginController extends Controller {
         }
     }
 
+    /**
+     * Handles the event where the create new account link is pressed.
+     */
     @FXML
     public void handleCreateNewAccountAction() {
         mainController.changeScene(MainController.REGISTER_VIEW);
     }
 
+    /**
+     * Handles the event where the 'X' (exit) button was pressed.
+     * @param e the action event.
+     */
     @FXML
     public void handleExitButtonAction(ActionEvent e) {
         Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();

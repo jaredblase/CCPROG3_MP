@@ -9,9 +9,11 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
 <AnchorPane id="case-information-stage" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CaseTableViewController">
@@ -47,10 +49,15 @@
             <Label layoutX="280.0" layoutY="47.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="17.0" prefWidth="63.0" text="End Date:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
             <DatePicker fx:id="endFilter" layoutX="350.0" layoutY="43.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
             <Label layoutX="10.0" layoutY="47.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="17.0" prefWidth="37.0" text="Status:" GridPane.rowIndex="2" />
-            <ChoiceBox fx:id="statusFilter" prefHeight="25.0" prefWidth="82.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Label styleClass="invalid-message" text="Invalid Start Date" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-            <Label styleClass="invalid-message" text="Invalid End Date" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-            <Label styleClass="invalid-message" text="Invalid City" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label fx:id="invalidStartDate" styleClass="invalid-message" text="Invalid Start Date" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <Label fx:id="invalidEndDate" styleClass="invalid-message" text="Invalid End Date" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+            <Label fx:id="invalidCity" styleClass="invalid-message" text="Invalid City" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <HBox GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <children>
+                  <ChoiceBox fx:id="statusFilter" prefHeight="25.0" prefWidth="82.0" />
+                  <ToggleButton fx:id="unassignedOnly" mnemonicParsing="false" text="Unassigned Only" />
+               </children>
+            </HBox>
          </children>
       </GridPane>
       <Button fx:id="actionButton" defaultButton="true" layoutX="800.0" layoutY="482.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="69.0" text="OKAY" />

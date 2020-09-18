@@ -17,10 +17,11 @@ public class RegistrationController extends Controller {
     @FXML
     private Label invalidPassword;
 
-    public RegistrationController() {
-
-    }
-
+    /**
+     * Automatically called when the corresponding fxml file is loaded by FXML loader.
+     * Sets up the behaviour of the text boxes and invalid message labels.
+     */
+    @FXML
     public void initialize() {
         usernameTextField.setOnKeyPressed(e -> invalidUsername.setVisible(false));
         passwordTextField.setOnKeyPressed(e -> invalidPassword.setVisible(false));
@@ -31,11 +32,18 @@ public class RegistrationController extends Controller {
 
     }
 
+    /**
+     * Handles the even where the back arrow image is pressed.
+     * Brings the user back to the login page.
+     */
     @FXML
     public void handleBackToLoginAction() {
         mainController.changeScene(MainController.LOGIN_VIEW);
     }
 
+    /**
+     * Validates the user's input and, when valid, adds the created account to the system.
+     */
     @FXML
     public void handleGoFillDetailsAction() {
         boolean isValid = true;
