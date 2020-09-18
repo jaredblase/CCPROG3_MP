@@ -18,11 +18,11 @@ public class GovOfficial extends Citizen {
             "Analytics", "Create Government Official Account", "Create Contact Tracer Account",
             "Terminate Account", "Logout");
 
-    /** The Menu object for the analytics menu options of the user. */
-    public static final Menu ANALYTICS_MENU = new Menu("Analytics",
-            "Number of positive cases in a city within a duration",
-            "Number of positive cases within a duration",
-            "Number of positive cases in a city", "Back");
+//    /** The Menu object for the analytics menu options of the user. */
+//    public static final Menu ANALYTICS_MENU = new Menu("Analytics",
+//            "Number of positive cases in a city within a duration",
+//            "Number of positive cases within a duration",
+//            "Number of positive cases in a city", "Back");
 
     /**
      * Receives a Citizen class and makes an exact copy of its attributes.
@@ -247,20 +247,20 @@ public class GovOfficial extends Citizen {
         return c.getReportDate().compareTo(dateStart) >= 0;
     }
 
-    /**
-     * Obtains an input from the user and checks if it is a invalid input (empty or contains a number
-     * and other special characters) for a city or not.<br>
-     * Precondition: There are no cities which names have numbers and special symbols in them except
-     * apostrophes, periods, hyphens, and accented characters.
-     * @param city the name to be checked for validity.
-     * @return true if the input is invalid, false otherwise.
-     */
-    private static boolean isInvalidCity(String city) {
-        // first, it replaces all invalid characters with "1" before checking for no numbers
-        return city.isEmpty() ||
-                !city.replaceAll("[^-.'\\s\\w\\u00C0-\\u00FF]+", "1").matches("\\D+");
-
-    }
+//    /**
+//     * Obtains an input from the user and checks if it is a invalid input (empty or contains a number
+//     * and other special characters) for a city or not.<br>
+//     * Precondition: There are no cities which names have numbers and special symbols in them except
+//     * apostrophes, periods, hyphens, and accented characters.
+//     * @param city the name to be checked for validity.
+//     * @return true if the input is invalid, false otherwise.
+//     */
+//    private static boolean isInvalidCity(String city) {
+//        // first, it replaces all invalid characters with "1" before checking for no numbers
+//        return city.isEmpty() ||
+//                !city.replaceAll("[^-.'\\s\\w\\u00C0-\\u00FF]+", "1").matches("\\D+");
+//
+//    }
 
     /**
      * Handles the role modification of an existing account or the creation
