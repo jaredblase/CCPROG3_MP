@@ -274,18 +274,20 @@ public class UserSystem {
             while (input.hasNextLine()) {
                 temp = input.nextLine();
                 if (temp.isEmpty()) {
-                    if (input.hasNextLine()) {
+                    if (input.hasNextLine() && !input.nextLine().isEmpty()) {
                         records.add(new ArrayList<>());
                         i++;
-                        input.nextLine(); // read username
                     } else {
                         break;
                     }
                 } else {
-                    info = temp.split(" ");
+                    info = temp.split("\\s+");
+                    for(String k : info) {
+                        System.out.println(k);
+                    }
                     date = info[1].split(",");
                     time = Integer.parseInt(info[2]);
-                    builder.setDate(Integer.parseInt(date[2]), Integer.parseInt(date[1]), Integer.parseInt(date[0]));
+                    builder.setDate(Integer.parseInt(date[2]), Integer.parseInt(date[0]) - 1, Integer.parseInt(date[1]));
                     builder.setTimeOfDay(time / 100, time % 100, 0);
 
                     records.get(i).add(new Visit(info[0], builder.build()));
