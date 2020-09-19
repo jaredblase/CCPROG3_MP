@@ -56,14 +56,6 @@ public class UserSystem {
     }
 
     /**
-     * Returns the number of registered users.
-     * @return the number of registered users in the system.
-     */
-    public static int getNumUsers() {
-        return usernames.size();
-    }
-
-    /**
      * Returns the user given a specified username. If the username
      * is not found in the master list, it returns null.
      * @param username the name to be checked in the master list.

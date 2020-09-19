@@ -1,9 +1,11 @@
 package controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import model.Citizen;
+import model.GovOfficial;
 import model.UserSystem;
 
 public class Registration2Controller extends Controller {
@@ -80,7 +82,7 @@ public class Registration2Controller extends Controller {
     @FXML
     public void handleRegisterButtonAction() {
         boolean isValid = true;
-        Citizen citizen = UserSystem.getUser(UserSystem.getUsername(UserSystem.getNumUsers() - 1));
+        Citizen citizen = UserSystem.getLastUser();
 
         assert citizen != null;
         if (!citizen.getName().setName(1, firstName.getText())) {
@@ -122,7 +124,14 @@ public class Registration2Controller extends Controller {
             if (fromRegister) {
                 mainController.changeScene(MainController.LOGIN_VIEW);
             } else {
+                citizen.setPassword(((GovOfficial) mainController.getUserModel()).generatePassword());
                 mainController.changeScene(MainController.MODIFY_ROLE_VIEW);
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Create Account");
+                alert.setHeaderText("Account Password");
+                alert.setContentText("Password of newly created account is " + citizen.getPassword());
+                alert.showAndWait();
             }
         }
     }
