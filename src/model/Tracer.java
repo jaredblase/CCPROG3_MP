@@ -16,10 +16,6 @@ import java.util.Calendar;
  * @see Citizen
  */
 public class Tracer extends Citizen {
-    /** The Menu object for the menu options of the user. */
-    protected static Menu userMenu = new Menu("User","Check in", "Report positive",
-            "Update profile information", "Show Cases", "Trace Specific Case",
-            "Inform Citizens Possibly Exposed", "Logout");
     /** The list of cases assigned to the contact tracer. */
     private ArrayList<Case> assigned;
 
@@ -36,15 +32,6 @@ public class Tracer extends Citizen {
         for (Case i: UserSystem.getCases())
             if (i.getTracer().equals(getUsername()) && i.getStatus() == 'P')
                 assigned.add(i);
-    }
-
-    /**
-     * Returns the Menu object for the Tracer class.
-     * @return the Menu object for the Tracer class.
-     */
-    @Override
-    public Menu getUserMenu() {
-        return userMenu;
     }
 
     /**

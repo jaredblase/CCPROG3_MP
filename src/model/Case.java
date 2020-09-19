@@ -80,14 +80,6 @@ public class Case {
     }
 
     /**
-     * Returns the total number of cases.
-     * @return the total number of cases.
-     */
-    public static int getCount() {
-        return ctr;
-    }
-
-    /**
      * Sets the username of the contact tracer assigned to the case.
      * @param tracer the username of the contact tracer assigned to the case.
      */
