@@ -28,13 +28,13 @@
               </rowConstraints>
                <children>
                   <ChoiceBox fx:id="choiceBox" prefHeight="25.0" prefWidth="195.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Label text="New Role: " GridPane.rowIndex="2" />
+                  <Label text="Role: " GridPane.rowIndex="2" />
                   <Label text="Username: " />
                   <TextField fx:id="username" GridPane.columnIndex="1" />
                   <Label fx:id="invalidUsername" styleClass="invalid-message" text="Invalid username" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
             </GridPane>
-            <Button fx:id="modifyButton" defaultButton="true" disable="true" mnemonicParsing="false" onAction="#onModifyAction" text="Modify" />
+            <Button fx:id="actionButton" defaultButton="true" disable="true" mnemonicParsing="false" onAction="#onAction" text="Create" />
             <Label id="modify-feedback" fx:id="modifyFeedback" styleClass="invalid-message" text="Modification Success" />
          </children>
       </VBox>

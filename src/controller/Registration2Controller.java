@@ -1,12 +1,17 @@
 package controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import model.Citizen;
+import model.GovOfficial;
 import model.UserSystem;
 
 public class Registration2Controller extends Controller {
+    /** Indicator whether the previous scene is Registration Form Part 1. */
+    private boolean fromRegister;
+
     @FXML
     private TextField firstName;
     @FXML
@@ -53,7 +58,7 @@ public class Registration2Controller extends Controller {
 
     @Override
     public void update() {
-
+        fromRegister = !UserSystem.getLastUser().getPassword().equals("");
     }
 
     /**
@@ -61,9 +66,13 @@ public class Registration2Controller extends Controller {
      * Brings the user back to the previous scene.
      */
     @FXML
-    public void handleBackToForm1Action() {
+    public void handleBackAction() {
         UserSystem.removeUser();
-        mainController.changeScene(MainController.REGISTER_VIEW);
+        if (fromRegister) {
+            mainController.changeScene(MainController.REGISTER_VIEW);
+        } else {
+            mainController.changeScene(MainController.MODIFY_ROLE_VIEW);
+        }
     }
 
     /**
@@ -73,7 +82,7 @@ public class Registration2Controller extends Controller {
     @FXML
     public void handleRegisterButtonAction() {
         boolean isValid = true;
-        Citizen citizen = UserSystem.getUser(UserSystem.getUsername(UserSystem.getNumUsers() - 1));
+        Citizen citizen = UserSystem.getLastUser();
 
         assert citizen != null;
         if (!citizen.getName().setName(1, firstName.getText())) {
@@ -112,7 +121,18 @@ public class Registration2Controller extends Controller {
         }
 
         if (isValid) {
-            mainController.changeScene(MainController.LOGIN_VIEW);
+            if (fromRegister) {
+                mainController.changeScene(MainController.LOGIN_VIEW);
+            } else {
+                citizen.setPassword(((GovOfficial) mainController.getUserModel()).generatePassword());
+                mainController.changeScene(MainController.MODIFY_ROLE_VIEW);
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Create Account");
+                alert.setHeaderText("Account Password");
+                alert.setContentText("Password of newly created account is " + citizen.getPassword());
+                alert.showAndWait();
+            }
         }
     }
 }

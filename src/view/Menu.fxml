@@ -29,7 +29,7 @@
          <children>
             <Label styleClass="menu__label" text="Gov Actions" />
             <Button mnemonicParsing="false" onAction="#showCaseInformationAction" text="Case Information" />
-            <Button mnemonicParsing="false" onAction="#showModifyRoleAction" text="Modify Roles" />
+            <Button mnemonicParsing="false" onAction="#showModifyRoleAction" text="Create/Modify Roles" />
          </children>
          <opaqueInsets>
             <Insets top="-4.0" />

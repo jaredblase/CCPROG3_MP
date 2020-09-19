@@ -56,14 +56,6 @@ public class UserSystem {
     }
 
     /**
-     * Returns the number of registered users.
-     * @return the number of registered users in the system.
-     */
-    public static int getNumUsers() {
-        return usernames.size();
-    }
-
-    /**
      * Returns the user given a specified username. If the username
      * is not found in the master list, it returns null.
      * @param username the name to be checked in the master list.
@@ -75,6 +67,14 @@ public class UserSystem {
             return users.get(index);
         else
             return null;
+    }
+
+    /**
+     * Returns the last user to be added in the system.
+     * @return the last user to be added in the system.
+     */
+    public static Citizen getLastUser() {
+        return users.get(users.size() - 1);
     }
 
     /**
@@ -201,11 +201,17 @@ public class UserSystem {
 
     /**
      * Adds a visit record to the list of visit records in the system.
-     * @param record the visit record to be added.
+     * @param estCode the establishment code of the visit record.
+     * @param date the date when the visit was made.
      * @param username the name to be checked in the master list.
      */
-    public static void addRecord(Visit record, String username) {
-        records.get(getIndexOf(username)).add(record);
+    public static void addRecord(String estCode, Calendar date, String username) {
+        // get machine time
+        Calendar time = Calendar.getInstance();
+        date.set(Calendar.HOUR_OF_DAY, time.get(Calendar.HOUR_OF_DAY));
+        date.set(Calendar.MINUTE, time.get(Calendar.MINUTE));
+
+        records.get(getIndexOf(username)).add(new Visit(estCode, date));
     }
 
     /**

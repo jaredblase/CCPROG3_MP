@@ -33,7 +33,7 @@ public class RegistrationController extends Controller {
     }
 
     /**
-     * Handles the even where the back arrow image is pressed.
+     * Handles the event where the back arrow image is pressed.
      * Brings the user back to the login page.
      */
     @FXML

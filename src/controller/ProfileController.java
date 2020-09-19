@@ -201,13 +201,9 @@ public class ProfileController extends Controller {
 
         Optional<String> result = dialog.showAndWait();
         result.ifPresentOrElse(e -> {
-            try {
-                user.setPassword(e);
-                feedback.setVisible(true);
-                user.setIsChanged(true);
-            } catch (Exception exception) {
-                exception.printStackTrace();
-            }
+            user.setPassword(e);
+            feedback.setVisible(true);
+            user.setIsChanged(true);
         }, () -> feedback.setVisible(false));
     }
 }

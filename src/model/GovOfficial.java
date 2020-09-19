@@ -295,7 +295,7 @@ public class GovOfficial extends Citizen {
         }
     }
 
-    private String generatePassword() {
+    public String generatePassword() {
         String vowels = "aeiou";
         String consonants = "bcdfghjklmnpqrstvwxyz";
         String special = "!@#$%^&*()_+1234567890";

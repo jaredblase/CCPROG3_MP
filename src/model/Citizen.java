@@ -215,16 +215,17 @@ public class Citizen {
     }
 
     /**
-     * Sets the password of the user.
+     * Sets the password of the user if the given password is valid. Returns
+     * whether the password of the user is accepted.
      * @param password the new password to replace the old one.
-     * @throws Exception if the new password is invalid.
+     * @return whether the password of the user is accepted.
      */
-    public void setPassword(String password) throws Exception {
+    public boolean setPassword(String password){
         if (UserSystem.isValidPassword(password)) {
             this.password = password;
+            return true;
         } else {
-            throw new Exception("Password must contain at least 6 characters including 1 digit or special " +
-                    "character that is not a space!\n");
+            return false;
         }
     }
 
@@ -235,14 +236,9 @@ public class Citizen {
      * @param date the date when the visit was made.
      */
     public void checkIn(String estCode, Calendar date) {
-        // get machine time
-        Calendar time = Calendar.getInstance();
-        date.set(Calendar.HOUR_OF_DAY, time.get(Calendar.HOUR_OF_DAY));
-        date.set(Calendar.MINUTE, time.get(Calendar.MINUTE));
-
         Visit temp = new Visit(estCode, date);
         visitRec.add(temp);
-        UserSystem.addRecord(temp, USERNAME);
+        UserSystem.addRecord(estCode, date, USERNAME);
     }
 
     /**
