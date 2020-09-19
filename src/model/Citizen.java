@@ -235,14 +235,9 @@ public class Citizen {
      * @param date the date when the visit was made.
      */
     public void checkIn(String estCode, Calendar date) {
-        // get machine time
-        Calendar time = Calendar.getInstance();
-        date.set(Calendar.HOUR_OF_DAY, time.get(Calendar.HOUR_OF_DAY));
-        date.set(Calendar.MINUTE, time.get(Calendar.MINUTE));
-
         Visit temp = new Visit(estCode, date);
         visitRec.add(temp);
-        UserSystem.addRecord(temp, USERNAME);
+        UserSystem.addRecord(estCode, date, USERNAME);
     }
 
     /**

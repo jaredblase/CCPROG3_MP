@@ -201,11 +201,17 @@ public class UserSystem {
 
     /**
      * Adds a visit record to the list of visit records in the system.
-     * @param record the visit record to be added.
+     * @param estCode the establishment code of the visit record.
+     * @param date the date when the visit was made.
      * @param username the name to be checked in the master list.
      */
-    public static void addRecord(Visit record, String username) {
-        records.get(getIndexOf(username)).add(record);
+    public static void addRecord(String estCode, Calendar date, String username) {
+        // get machine time
+        Calendar time = Calendar.getInstance();
+        date.set(Calendar.HOUR_OF_DAY, time.get(Calendar.HOUR_OF_DAY));
+        date.set(Calendar.MINUTE, time.get(Calendar.MINUTE));
+
+        records.get(getIndexOf(username)).add(new Visit(estCode, date));
     }
 
     /**
