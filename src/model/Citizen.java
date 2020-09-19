@@ -143,7 +143,7 @@ public class Citizen {
      * @return the records of the user.
      */
     public ArrayList<Visit> getVisitRec() {
-        return visitRec;
+        return UserSystem.getRecords().get(UserSystem.getIndexOf(USERNAME));
     }
 
     /**

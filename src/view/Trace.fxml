@@ -16,15 +16,14 @@
             <ComboBox fx:id="caseNumber" prefHeight="25.0" prefWidth="116.0" promptText="Case Number" />
          </children>
       </HBox>
-      <TableView layoutX="271.0" layoutY="87.0" prefHeight="382.0" prefWidth="428.0">
+      <TableView fx:id="tableView" layoutX="271.0" layoutY="87.0" prefHeight="382.0" prefWidth="428.0">
         <columns>
-          <TableColumn fx:id="usernameCol" prefWidth="100.0" text="Username" />
-          <TableColumn prefWidth="107.0" text="Contact Number" />
-            <TableColumn prefWidth="125.0" text="Establishment" />
-            <TableColumn prefWidth="95.0" text="Date" />
+          <TableColumn fx:id="usernameCol" prefWidth="138.0" text="Username" />
+            <TableColumn fx:id="estCodeCol" prefWidth="156.0" text="Establishment" />
+            <TableColumn fx:id="dateCol" prefWidth="133.0" text="Date" />
         </columns>
       </TableView>
-      <Button layoutX="600.0" layoutY="483.0" mnemonicParsing="false" onAction="#handleInformCitizenAction" prefHeight="25.0" prefWidth="99.0" text="Inform Citizens" />
+      <Button layoutX="622.0" layoutY="483.0" mnemonicParsing="false" onAction="#onTraceAction" prefHeight="25.0" prefWidth="77.0" text="Trace" />
    </children>
    <styleClass>
       <String fx:value="menu__stage" />

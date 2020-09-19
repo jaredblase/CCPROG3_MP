@@ -1,5 +1,8 @@
 package model;
 
+import javafx.collections.ObservableList;
+import javafx.util.Pair;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -68,9 +71,8 @@ public class Tracer extends Citizen {
      * Traces the contacts of a case given the case number and displays them
      * depending on the status input.
      * @param caseNum the case number of a case.
-     * @return the list of usernames of users that may have come into contact with the positive user.
      */
-    public ArrayList<String> trace(int caseNum) {
+    public void trace(int caseNum) {
         Case positive = null;
         for (Case i: assigned) {
             if (i.getCaseNum() == caseNum) { // case number is assigned
@@ -94,8 +96,37 @@ public class Tracer extends Citizen {
             positive.setStatus('T');
             assigned.remove(positive);
         }
+    }
 
-        return contacts;
+    public void trace(int caseNum, ObservableList<Pair<String, Visit>> list) {
+        Case positive = null;
+        for (Case i: assigned) {
+            if (i.getCaseNum() == caseNum) { // case number is assigned
+                positive = i;
+                break;
+            }
+        }
+        ArrayList<String> contacts = new ArrayList<>();
+        ArrayList<Visit> contactPlaces = new ArrayList<>();
+
+        if (positive != null) { // valid input
+            checkContacts(positive, contacts, contactPlaces);
+
+            for (int i = 0; i < contacts.size(); i++) {
+                // add info to prompt user that he may be infected
+                Citizen user = UserSystem.getUser(contacts.get(i));
+                if (user != null)
+                    user.addContactInfo(contactPlaces.get(i));
+
+                System.out.println(contacts.get(i));
+                System.out.println(contactPlaces.get(i).toString());
+                list.add(new Pair<>(contacts.get(i), contactPlaces.get(i)));
+            }
+
+            // finished tracing
+            positive.setStatus('T');
+            assigned.remove(positive);
+        }
     }
 
     /**
