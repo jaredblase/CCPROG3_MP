@@ -294,6 +294,22 @@ public class GovOfficial extends Citizen {
             throw new Exception("Account does not exist!");
         }
     }
+
+    private String generatePassword() {
+        String vowels = "aeiou";
+        String consonants = "bcdfghjklmnpqrstvwxyz";
+        String special = "!@#$%^&*()_+1234567890";
+        StringBuilder password = new StringBuilder();
+
+        // alternating consonant and vowel to make it readable (easier to remember)
+        for (int i = 0; i < 3; i++) {
+            password.append(consonants.charAt((int) (consonants.length() * Math.random())));
+            password.append(vowels.charAt((int) (vowels.length() * Math.random())));
+        }
+        password.append(special.charAt((int) (special.length() * Math.random())));
+
+        return password.toString();
+    }
 }
 
 class AccountCreationNeededException extends Exception {
