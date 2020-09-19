@@ -7,6 +7,9 @@ import model.Citizen;
 import model.UserSystem;
 
 public class Registration2Controller extends Controller {
+    /** Indicator whether the previous scene is Registration Form Part 1. */
+    private boolean fromRegister;
+
     @FXML
     private TextField firstName;
     @FXML
@@ -53,7 +56,7 @@ public class Registration2Controller extends Controller {
 
     @Override
     public void update() {
-
+        fromRegister = !UserSystem.getLastUser().getPassword().equals("");
     }
 
     /**
@@ -61,9 +64,13 @@ public class Registration2Controller extends Controller {
      * Brings the user back to the previous scene.
      */
     @FXML
-    public void handleBackToForm1Action() {
+    public void handleBackAction() {
         UserSystem.removeUser();
-        mainController.changeScene(MainController.REGISTER_VIEW);
+        if (fromRegister) {
+            mainController.changeScene(MainController.REGISTER_VIEW);
+        } else {
+            mainController.changeScene(MainController.MODIFY_ROLE_VIEW);
+        }
     }
 
     /**
@@ -112,7 +119,11 @@ public class Registration2Controller extends Controller {
         }
 
         if (isValid) {
-            mainController.changeScene(MainController.LOGIN_VIEW);
+            if (fromRegister) {
+                mainController.changeScene(MainController.LOGIN_VIEW);
+            } else {
+                mainController.changeScene(MainController.MODIFY_ROLE_VIEW);
+            }
         }
     }
 }

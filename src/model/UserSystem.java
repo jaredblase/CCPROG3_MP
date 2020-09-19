@@ -78,6 +78,14 @@ public class UserSystem {
     }
 
     /**
+     * Returns the last user to be added in the system.
+     * @return the last user to be added in the system.
+     */
+    public static Citizen getLastUser() {
+        return users.get(users.size() - 1);
+    }
+
+    /**
      * Returns the visit records of each user.
      * @return the visit records of each user.
      */

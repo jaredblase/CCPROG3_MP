@@ -21,7 +21,7 @@
          <children>
             <HBox prefWidth="470.0">
                <children>
-                  <ImageView fitHeight="36.0" fitWidth="25.0" onMouseClicked="#handleBackToForm1Action" pickOnBounds="true" preserveRatio="true" styleClass="pressable-image">
+                  <ImageView fitHeight="36.0" fitWidth="25.0" onMouseClicked="#handleBackAction" pickOnBounds="true" preserveRatio="true" styleClass="pressable-image">
                      <image>
                         <Image url="@../resources/arrow.png" />
                      </image>
