@@ -17,6 +17,12 @@ public class ChangePasswordController {
     @FXML
     private Label invalidNewPass;
 
+    @FXML
+    public void initialize() {
+        oldPassTextField.setOnKeyTyped(e -> invalidOldPass.setVisible(false));
+        newPassTextField.setOnKeyTyped(e -> invalidNewPass.setVisible(false));
+    }
+
     public void setOldPass(StringBuffer oldPass) {
         this.oldPass = oldPass;
     }
