@@ -12,12 +12,9 @@ import model.Citizen;
 import model.GovOfficial;
 import model.Tracer;
 import model.UserSystem;
-import view.ReportView;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Optional;
 
 public class MenuController extends Controller {
     /** This is the user logged in. */
@@ -67,12 +64,18 @@ public class MenuController extends Controller {
     @FXML
     public void reportPositiveAction() {
         if (!user.getIsPositive()) {
-            ReportView dialog = new ReportView();
+            Stage dialog = new Stage();
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/view/Report Positive.fxml"));
 
-            Optional<Calendar> result = dialog.showAndWait();
-            if (result.isPresent()) {
-                System.out.println(result.get().getTime());
-                user.reportPositive(result.get());
+            try {
+                dialog.setScene(new Scene(loader.load()));
+                dialog.setTitle("Report Positive");
+                dialog.initModality(Modality.APPLICATION_MODAL);
+                ((ReportPositiveController) loader.getController()).setUser(user);
+                dialog.showAndWait();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -93,7 +96,7 @@ public class MenuController extends Controller {
             dialog.setScene(new Scene(loader.load()));
             dialog.setTitle("Check In");
             dialog.initModality(Modality.APPLICATION_MODAL);
-            ((CheckInController) loader.getController()).setUser(user);
+            ((DialogController) loader.getController()).setUser(user);
             dialog.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
