@@ -1,17 +1,15 @@
 package controller;
 
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
-import model.Citizen;
 
 import java.time.LocalDate;
 import java.util.Calendar;
 
-public class CheckInController {
-    private Citizen user;
+public class CheckInController extends DialogController {
     @FXML
     private TextField estCodeTextField;
     @FXML
@@ -27,12 +25,9 @@ public class CheckInController {
         datePicker.setOnAction(e -> invalidDate.setVisible(false));
     }
 
-    public void setUser(Citizen user) {
-        this.user = user;
-    }
-
+    @Override
     @FXML
-    public void onCheckInAction() {
+    public void onOKAction(Event e) {
         boolean isValid = true;
 
         if (estCodeTextField.getText().isEmpty()) {
@@ -50,12 +45,7 @@ public class CheckInController {
             Calendar date = Calendar.getInstance();
             date.set(ld.getYear(), ld.getMonthValue() - 1, ld.getDayOfMonth());
             user.checkIn(estCodeTextField.getText(), date);
-            onExitAction();
+            onCancelAction(e);
         }
-    }
-
-    @FXML
-    public void onExitAction() {
-        ((Stage) datePicker.getScene().getWindow()).close();
     }
 }

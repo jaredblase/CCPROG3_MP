@@ -209,6 +209,7 @@ public class Citizen {
     public boolean setPassword(String password){
         if (UserSystem.isValidPassword(password)) {
             this.password = password;
+            isChanged = true;
             return true;
         } else {
             return false;

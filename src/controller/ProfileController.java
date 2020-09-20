@@ -199,7 +199,7 @@ public class ProfileController extends Controller {
     @FXML
     public void changePasswordAction() {
         feedback.setVisible(false);
-        StringBuffer temp = new StringBuffer(user.getPassword());
+        String temp = user.getPassword();
         Stage dialog = new Stage();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/view/Change Password.fxml"));
@@ -208,16 +208,14 @@ public class ProfileController extends Controller {
             dialog.setScene(new Scene(loader.load()));
             dialog.setTitle("Change Password");
             dialog.initModality(Modality.APPLICATION_MODAL);
-            ((ChangePasswordController) loader.getController()).setOldPass(temp);
+            ((DialogController) loader.getController()).setUser(user);
             dialog.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        if (!temp.toString().equals(user.getPassword())) {
-            user.setPassword(temp.toString());
+        if (!temp.equals(user.getPassword())) {
             feedback.setVisible(true);
-            user.setIsChanged(true);
         } else {
             feedback.setVisible(false);
         }

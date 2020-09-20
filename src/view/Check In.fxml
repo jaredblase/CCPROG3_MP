@@ -34,8 +34,8 @@
       </GridPane>
       <ButtonBar layoutX="111.0" layoutY="123.0" prefHeight="40.0" prefWidth="200.0">
         <buttons>
-          <Button defaultButton="true" mnemonicParsing="false" onAction="#onCheckInAction" text="Confirm" />
-            <Button cancelButton="true" mnemonicParsing="false" onAction="#onExitAction" text="Cancel" />
+          <Button defaultButton="true" mnemonicParsing="false" onAction="#onOKAction" text="Confirm" />
+            <Button cancelButton="true" mnemonicParsing="false" onAction="#onCancelAction" text="Cancel" />
         </buttons>
       </ButtonBar>
    </children>
