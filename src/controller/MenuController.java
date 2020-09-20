@@ -1,17 +1,20 @@
 package controller;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import javafx.util.Pair;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import model.Citizen;
 import model.GovOfficial;
 import model.Tracer;
 import model.UserSystem;
-import view.CheckInView;
 import view.ReportView;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Optional;
@@ -82,12 +85,18 @@ public class MenuController extends Controller {
 
     @FXML
     public void checkInAction() {
-        CheckInView dialog = new CheckInView();
+        Stage dialog = new Stage();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/view/Check In.fxml"));
 
-        Optional<Pair<String, Calendar>> result = dialog.showAndWait();
-        if (result.isPresent()) {
-            System.out.println(result.get().getKey() + "\n" + result.get().getValue().getTime());
-            user.checkIn(result.get().getKey(), result.get().getValue());
+        try {
+            dialog.setScene(new Scene(loader.load()));
+            dialog.setTitle("Check In");
+            dialog.initModality(Modality.APPLICATION_MODAL);
+            ((CheckInController) loader.getController()).setUser(user);
+            dialog.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
