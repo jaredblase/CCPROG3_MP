@@ -17,9 +17,6 @@ public class Name {
     private String middle;
     /** The last name. */
     private String last;
-    /** The Menu object for the options of changing names. */
-    public static final Menu CHANGE_NAME_MENU = new Menu ("Change Name","First Name",
-            "Middle Name", "Last Name", "Back");
 
     /**
      * Initializes a Name object and sets the fields with the given parameters:

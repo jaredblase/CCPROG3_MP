@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
@@ -15,7 +16,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="stage" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Registration2Controller">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Registration2Controller">
    <children>
       <VBox layoutX="51.0" layoutY="38.0" prefHeight="324.0" prefWidth="500.0">
          <children>
@@ -108,4 +109,8 @@
       <URL value="@../resources/Master.css" />
       <URL value="@../resources/Registration%20Form%20Part%202.css" />
    </stylesheets>
+   <styleClass>
+      <String fx:value="stage" />
+      <String fx:value="rounded" />
+   </styleClass>
 </AnchorPane>

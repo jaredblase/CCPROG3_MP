@@ -25,9 +25,10 @@ VBox {
 
 .stage {
 	-fx-background-color: linear-gradient(to right, #57cc99, #80ed99);
+}
+
+.rounded {
 	-fx-background-radius: 25px;
-	-fx-border-radius: 25px;
-	-fx-border-width: 10px;
 }
 
 .headers {

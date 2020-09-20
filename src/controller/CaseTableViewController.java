@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import javafx.stage.StageStyle;
@@ -78,6 +79,7 @@ public class CaseTableViewController extends Controller {
                     stage.setTitle("Case " + c.getCaseNum() + " Information");
                     stage.setResizable(false);
                     stage.initStyle(StageStyle.TRANSPARENT);
+                    stage.initModality(Modality.APPLICATION_MODAL);
                     stage.centerOnScreen();
 
                     // load case information

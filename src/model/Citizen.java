@@ -36,12 +36,6 @@ public class Citizen {
     private boolean isChanged;
     /** The latest record when and where the user may be infected. */
     private Visit contactPlace;
-    /** The Menu object for the update details options of the user. */
-    public static final Menu UPDATE_OPTIONS = new Menu("Update", "Name", "Home Address",
-            "Office Address", "Phone Number", "E-Mail", "Password", "Back to User Menu");
-    /** The Menu object for the menu options of the user. */
-    protected static Menu userMenu = new Menu("User", "Check in", "Report positive",
-            "Update profile information", "Logout");
 
     /**
      * Receives the personal information of the user, along with the username and password
@@ -147,14 +141,6 @@ public class Citizen {
     }
 
     /**
-     * Returns the Menu object for the Citizen class.
-     * @return the Menu object for the Citizen class.
-     */
-    public Menu getUserMenu() {
-        return userMenu;
-    }
-
-    /**
      * Returns the status whether the information of the user is changed.
      * @return the status whether the information of the user is changed.
      */
@@ -223,6 +209,7 @@ public class Citizen {
     public boolean setPassword(String password){
         if (UserSystem.isValidPassword(password)) {
             this.password = password;
+            isChanged = true;
             return true;
         } else {
             return false;
@@ -263,33 +250,6 @@ public class Citizen {
         if (this.contactPlace == null || this.contactPlace.getCheckIn().before(contactPlace.getCheckIn()))
             this.contactPlace = contactPlace;
     }
-
-//    /**
-//     * Displays a message if the user has possibly come in contact
-//     * with a positive case.
-//     */
-//    public void prompt() {
-//        if (!isPositive) {
-//            SimpleDateFormat format = new SimpleDateFormat("MM,dd,yyyy");
-//            Calendar temp = Calendar.getInstance();
-//            temp.add(Calendar.DAY_OF_YEAR, -14);
-//            for (int i = 0; i < contactPlaces.size(); i++) {
-//                if (contactPlaces.get(i).getCheckIn().before(temp)) { // not within prompting date range
-//                    contactPlaces.remove(i);
-//                }
-//            }
-//
-//            if (!contactPlaces.isEmpty()) { // there are still possible contact times after removing
-//                System.out.println();
-//                System.out.println("You may have been in contact with a positive patient on: ");
-//                for (Visit contactPlace : contactPlaces)
-//                    System.out.println(format.format(contactPlace.getCheckIn().getTime()) + " in " +
-//                            contactPlace.getEstCode());
-//                System.out.println("You are advised to get tested and report via the " +
-//                        "app should the result be positive.\n");
-//            }
-//        }
-//    }
 
     @Override
     public String toString() {
