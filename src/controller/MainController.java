@@ -19,9 +19,9 @@ public class MainController {
     public static final int MODIFY_ROLE_VIEW = 6;
     public static final int TRACE_VIEW = 7;
 
-    /** This is the user logged in */
+    /** This is the user logged in. */
     private Citizen userModel;
-    /** These are the view components */
+    /** These are the view components.   */
     private final Stage primaryStage;
 
     /**

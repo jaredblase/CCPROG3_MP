@@ -61,6 +61,7 @@ public class ProfileController extends Controller {
      * Automatically called when the corresponding fxml file is loaded by FXML loader.
      * Sets up the behaviour of each invalid message label.
      */
+    @FXML
     public void initialize() {
         firstName.setOnKeyPressed(e -> invalidFirstName.setVisible(false));
         middleName.setOnKeyPressed(e -> invalidMiddleName.setVisible(false));

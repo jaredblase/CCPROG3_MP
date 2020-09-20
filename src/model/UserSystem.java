@@ -191,7 +191,7 @@ public class UserSystem {
     /**
      * Removes the last user in the system as well as the corresponding role and username.
      */
-    public static void removeUser() {
+    public static void removeLastUser() {
         int index = usernames.size() - 1;
         usernames.remove(index);
         users.remove(index);

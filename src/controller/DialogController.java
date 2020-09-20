@@ -7,9 +7,8 @@ import javafx.stage.Stage;
 import model.Citizen;
 
 public abstract class DialogController {
+    /** This is the user logged in. */
     protected Citizen user;
-    @FXML
-    private Button cancelButton;
 
     public void setUser(Citizen user) {
         this.user = user;
