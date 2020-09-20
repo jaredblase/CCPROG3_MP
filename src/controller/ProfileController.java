@@ -1,15 +1,17 @@
 package controller;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import model.Citizen;
 import model.UserSystem;
 
-import view.ChangePasswordView;
-
-import java.util.Optional;
+import java.io.IOException;
 
 public class ProfileController extends Controller {
     /** This is the user logged in */
@@ -197,13 +199,27 @@ public class ProfileController extends Controller {
     @FXML
     public void changePasswordAction() {
         feedback.setVisible(false);
-        ChangePasswordView dialog = new ChangePasswordView(user.getPassword());
+        StringBuffer temp = new StringBuffer(user.getPassword());
+        Stage dialog = new Stage();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/view/Change Password.fxml"));
 
-        Optional<String> result = dialog.showAndWait();
-        result.ifPresentOrElse(e -> {
-            user.setPassword(e);
+        try {
+            dialog.setScene(new Scene(loader.load()));
+            dialog.setTitle("Change Password");
+            dialog.initModality(Modality.APPLICATION_MODAL);
+            ((ChangePasswordController) loader.getController()).setOldPass(temp);
+            dialog.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (!temp.toString().equals(user.getPassword())) {
+            user.setPassword(temp.toString());
             feedback.setVisible(true);
             user.setIsChanged(true);
-        }, () -> feedback.setVisible(false));
+        } else {
+            feedback.setVisible(false);
+        }
     }
 }
