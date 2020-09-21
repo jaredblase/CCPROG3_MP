@@ -47,6 +47,10 @@ public class Visit {
         return EST_CODE;
     }
 
+    /**
+     * Returns a String representation of a visit record.
+     * @return a String that represents a visit record.
+     */
     @Override
     public String toString() {
         SimpleDateFormat format = new SimpleDateFormat(" MM,dd,yyyy HHmm");

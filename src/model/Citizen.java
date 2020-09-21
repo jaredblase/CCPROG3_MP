@@ -169,10 +169,11 @@ public class Citizen {
     }
 
     /**
-     * Sets the personal details fields of the object (indicated by opt) with updated information.
+     * Sets the personal details fields of the object (indicated by opt) with updated
+     * information. Returns whether the String input is valid and accepted.
      * @param opt indicates which field to replace.
      * @param info the new String to replace the current personal details.
-     * @return the status whether the String input is valid and accepted.
+     * @return whether the String input is valid and accepted.
      */
     public boolean setPersonalDetails(int opt, String info) {
         info = info.trim();
@@ -213,8 +214,8 @@ public class Citizen {
     }
 
     /**
-     * Adds a new visit record to the list of visit records based on the given
-     * visitation information such as the establishment code and date.
+     * Adds a new visit record to the list of visit records in the system based on
+     * the given visitation information such as the establishment code and date.
      * @param estCode the establishment code of the visit record.
      * @param date the date when the visit was made.
      */
@@ -224,8 +225,7 @@ public class Citizen {
 
     /**
      * Changes the isPositive field to true and automatically adds
-     * this record to the list of cases in the system only if the user
-     * has not reported positive before.
+     * this record to the list of cases in the system.
      * @param date the date when the user reported positive.
      */
     public void reportPositive(Calendar date) {
@@ -248,6 +248,10 @@ public class Citizen {
             this.contactPlace = contactPlace;
     }
 
+    /**
+     * Returns a String representation of a citizen.
+     * @return a String that represents a citizen.
+     */
     @Override
     public String toString() {
         return password + '\n' + name.toString() +
