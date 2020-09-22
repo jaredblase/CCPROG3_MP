@@ -55,8 +55,7 @@ public class Tracer extends Citizen {
     }
 
     /**
-     * Traces the contacts of a case given the case number and displays them
-     * depending on the status input.
+     * Traces the contacts of a case given the case number.
      * @param caseNum the case number of a case.
      */
     public void trace(int caseNum) {
@@ -85,6 +84,11 @@ public class Tracer extends Citizen {
         }
     }
 
+    /**
+     * Traces the contacts of a case given the case number.
+     * @param caseNum the case number of a case.
+     * @param list the list of contacts and contact places of a case.
+     */
     public void trace(int caseNum, ObservableList<Pair<String, Visit>> list) {
         Case positive = null;
         for (Case i: assigned) {
@@ -119,11 +123,11 @@ public class Tracer extends Citizen {
     /**
      * Searches through the visit records of all users to determine the
      * contacts of a given case and updates the list of contacts and list of
-     * when and where the contacts were exposed. An empty string is added to the
-     * list of contacts if no contacts for the case is found.
+     * when and where the contacts were exposed.
      * @param positive the positive case.
      * @param contacts the list of contacts of the positive case.
-     * @param contactPlaces the list of visit records when and where the contacts may have been exposed.
+     * @param contactPlaces the list of visit records when and where the contacts
+     *                      may have been exposed.
      */
     private void checkContacts(Case positive, ArrayList<String> contacts, ArrayList<Visit> contactPlaces) {
         Citizen patient = UserSystem.getUser(positive.getUsername());

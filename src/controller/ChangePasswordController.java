@@ -22,6 +22,7 @@ public class ChangePasswordController extends DialogController {
     }
 
     @Override
+    @FXML
     public void onOKAction(Event e) {
         if (user.getPassword().equals(oldPassTextField.getText())) {
             invalidOldPass.setVisible(true);

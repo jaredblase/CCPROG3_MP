@@ -28,8 +28,6 @@ public class Citizen {
     private final String USERNAME;
     /** The password of the user. */
     private String password;
-    /** The list of visit records. */
-    private ArrayList<Visit> visitRec;
     /** Indicator if the user is infected. */
     private boolean isPositive;
     /** Indicator if the information of the user is changed. */
@@ -59,7 +57,6 @@ public class Citizen {
         this.USERNAME = username;
         this.password = password;
         this.isChanged = isChanged;
-        visitRec = new ArrayList<>();
         isPositive = false;
         contactPlace = null;
     }
@@ -71,7 +68,6 @@ public class Citizen {
     public Citizen(Citizen other) {
         this(other.name, other.homeAddress, other.officeAddress, other.phoneNumber, other.email,
                 other.USERNAME, other.password, other.isChanged);
-        this.visitRec = other.visitRec;
         this.isPositive = other.isPositive;
         this.contactPlace = other.contactPlace;
     }
@@ -141,19 +137,19 @@ public class Citizen {
     }
 
     /**
-     * Returns the status whether the information of the user is changed.
-     * @return the status whether the information of the user is changed.
-     */
-    public boolean getIsChanged() {
-        return isChanged;
-    }
-
-    /**
      * Returns the status whether the user is reported positive or not.
      * @return the status whether the user is reported positive or not.
      */
     public boolean getIsPositive() {
         return isPositive;
+    }
+
+    /**
+     * Returns the status whether the information of the user is changed.
+     * @return the status whether the information of the user is changed.
+     */
+    public boolean getIsChanged() {
+        return isChanged;
     }
 
     /**
@@ -173,10 +169,11 @@ public class Citizen {
     }
 
     /**
-     * Sets the personal details fields of the object (indicated by opt) with updated information.
+     * Sets the personal details fields of the object (indicated by opt) with updated
+     * information. Returns whether the String input is valid and accepted.
      * @param opt indicates which field to replace.
      * @param info the new String to replace the current personal details.
-     * @return the status whether the String input is valid and accepted.
+     * @return whether the String input is valid and accepted.
      */
     public boolean setPersonalDetails(int opt, String info) {
         info = info.trim();
@@ -217,21 +214,18 @@ public class Citizen {
     }
 
     /**
-     * Adds a new visit record to the list of visit records based on the given
-     * visitation information such as the establishment code and date.
+     * Adds a new visit record to the list of visit records in the system based on
+     * the given visitation information such as the establishment code and date.
      * @param estCode the establishment code of the visit record.
      * @param date the date when the visit was made.
      */
     public void checkIn(String estCode, Calendar date) {
-        Visit temp = new Visit(estCode, date);
-        visitRec.add(temp);
         UserSystem.addRecord(estCode, date, USERNAME);
     }
 
     /**
      * Changes the isPositive field to true and automatically adds
-     * this record to the list of cases in the system only if the user
-     * has not reported positive before.
+     * this record to the list of cases in the system.
      * @param date the date when the user reported positive.
      */
     public void reportPositive(Calendar date) {
@@ -242,15 +236,22 @@ public class Citizen {
     /**
      * Compares the current record when and where the user may be infected with the given record.
      * If there is no previous record (current record is null) or the current record has an older
-     * date than the given record, the current is replaced with the given record. Otherwise, the
-     * current record is kept.
+     * date than the given record, the current is replaced with the given record as long as the
+     * given record is within the prompt period. Otherwise, the current record is kept.
      * @param contactPlace the record that indicates when and where the user may be infected.
      */
     public void addContactInfo(Visit contactPlace) {
-        if (this.contactPlace == null || this.contactPlace.getCheckIn().before(contactPlace.getCheckIn()))
+        Calendar temp = Calendar.getInstance();
+        temp.add(Calendar.DAY_OF_YEAR, -14);
+        if (!contactPlace.getCheckIn().before(temp) && (this.contactPlace == null ||
+                this.contactPlace.getCheckIn().before(contactPlace.getCheckIn())))
             this.contactPlace = contactPlace;
     }
 
+    /**
+     * Returns a String representation of a citizen.
+     * @return a String that represents a citizen.
+     */
     @Override
     public String toString() {
         return password + '\n' + name.toString() +

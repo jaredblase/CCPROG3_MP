@@ -32,6 +32,7 @@ public class ModifyRoleController extends Controller {
         menuController.setMainController(mainController);
     }
 
+    @FXML
     public void initialize() {
         username.setOnKeyPressed(e -> {
             invalidUsername.setVisible(false);

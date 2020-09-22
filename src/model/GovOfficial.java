@@ -109,6 +109,12 @@ public class GovOfficial extends Citizen {
         return c.getReportDate().compareTo(dateStart) >= 0;
     }
 
+    /**
+     * Creates a randomly generated valid password with a specific pattern to allow for
+     * readability. The pattern is "cvcvcvs" where c stands for a random consonant, v stands
+     * for a random vowel, and s stands for a randoms special character.
+     * @return a randomly generated valid password.
+     */
     public String generatePassword() {
         String vowels = "aeiou";
         String consonants = "bcdfghjklmnpqrstvwxyz";

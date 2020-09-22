@@ -67,7 +67,7 @@ public class Registration2Controller extends Controller {
      */
     @FXML
     public void handleBackAction() {
-        UserSystem.removeUser();
+        UserSystem.removeLastUser();
         if (fromRegister) {
             mainController.changeScene(MainController.REGISTER_VIEW);
         } else {

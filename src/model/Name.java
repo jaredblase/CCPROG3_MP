@@ -20,8 +20,7 @@ public class Name {
 
     /**
      * Initializes a Name object and sets the fields with the given parameters:
-     * first, middle, and last name.<br>
-     * Preconditions: The parameters are valid names and not empty or blank Strings.
+     * first, middle, and last name.
      * @param first the first name.
      * @param middle the middle name.
      * @param last the last name.
@@ -35,10 +34,10 @@ public class Name {
 
     /**
      * Sets the first, middle, or last name (indicated by opt), and replaces it
-     * with str.
+     * with str. Returns whether the String input is valid and accepted.
      * @param opt indicates which part of the name to change.
      * @param str the String to replace the name.
-     * @return status whether the String input is valid and accepted.
+     * @return whether the String input is valid and accepted.
      * @since 1.0
      */
     public boolean setName(int opt, String str) {

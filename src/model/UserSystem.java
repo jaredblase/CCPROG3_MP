@@ -29,7 +29,8 @@ public class UserSystem {
     private static ArrayList<Case> cases;
 
     /**
-     * Checks if the username received is in the master list.
+     * Returns the index of the given username in the list of registered usernames. If
+     * the username is not found, returns -1.
      * @param username the name to be checked in the master list.
      * @return the index of the username in the list, and -1 if it is not in the list.
      */
@@ -155,7 +156,7 @@ public class UserSystem {
     }
 
     /**
-     * Asks the user to enter a new password and checks it for validity. Returns true if valid
+     * Checks if the String input is a valid password. Returns true if valid
      * and false otherwise.
      * @param pass the String to be checked.
      * @return true if it is valid, false otherwise.
@@ -189,9 +190,10 @@ public class UserSystem {
     }
 
     /**
-     * Removes the last user in the system as well as the corresponding role and username.
+     * Removes the last user in the system as well as the corresponding role, username,
+     * and visit records.
      */
-    public static void removeUser() {
+    public static void removeLastUser() {
         int index = usernames.size() - 1;
         usernames.remove(index);
         users.remove(index);
@@ -224,7 +226,7 @@ public class UserSystem {
     }
 
     /**
-     * Initializes all the ArrayLists and creates the admin account.
+     * Initializes all the ArrayLists from the text files.
      */
     public static void loadSystem() {
         usernames = new ArrayList<>();
@@ -339,7 +341,8 @@ public class UserSystem {
     }
 
     /**
-     * Called when terminating the program to free all the memory used.
+     * Called when terminating the program to free all the memory used and save
+     * the system data in the appropriate text files.
      */
     public static void exitSystem() {
         // Update Master List
