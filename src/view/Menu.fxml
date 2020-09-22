@@ -41,11 +41,6 @@
             <Button mnemonicParsing="false" onAction="#showTraceAction" text="Show Cases" />
          </children>
       </VBox>
-      <ImageView fitHeight="23.0" fitWidth="23.0" layoutX="13.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../resources/hamburger%20icon.png" />
-         </image>
-      </ImageView>
       <Button layoutX="33.0" layoutY="471.0" mnemonicParsing="false" onAction="#handleLogoutAction" styleClass="red-button" text="Log Out" />
       <Label id="username-display" fx:id="username" layoutX="5.0" layoutY="139.0" styleClass="name-display" text="&lt;Username&gt;" />
       <VBox id="infected" fx:id="inContact" layoutX="-5.0" layoutY="382.0" prefHeight="80.0" prefWidth="256.0">

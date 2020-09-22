@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -104,6 +105,9 @@ public class MenuController extends Controller {
             }
         } else { // user is already positive
             Alert alert = new Alert(Alert.AlertType.ERROR);
+            // set upper left corner icon
+            ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(
+                    new Image(getClass().getResource("/resources/Warning.png").toString()));
             alert.setTitle("Report Positive");
             alert.setHeaderText("Report Error");
             alert.setContentText("You have already reported positive!");
@@ -122,6 +126,8 @@ public class MenuController extends Controller {
 
         try {
             dialog.setScene(new Scene(loader.load()));
+            // set upper left corner icon
+            dialog.getIcons().add(new Image(getClass().getResource("/resources/Check In.png").toString()));
             dialog.setTitle("Check In");
             dialog.initModality(Modality.APPLICATION_MODAL);
             ((DialogController) loader.getController()).setUser(mainController.getUserModel());

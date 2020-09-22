@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Citizen;
@@ -232,6 +233,9 @@ public class ProfileController extends Controller {
         loader.setLocation(getClass().getResource("/view/Change Password.fxml"));
 
         try {
+            // set upper left corner icon
+            dialog.getIcons().add(
+                    new Image(getClass().getResource("/resources/lock.png").toString()));
             dialog.setScene(new Scene(loader.load()));
             dialog.setTitle("Change Password");
             dialog.initModality(Modality.APPLICATION_MODAL);
