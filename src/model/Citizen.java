@@ -9,7 +9,7 @@ import java.util.Calendar;
  * visit records for tracing.
  * @author Gabriel Pua
  * @author Jared Sy
- * @version 1.0
+ * @version 2.0
  * @see GovOfficial
  * @see Tracer
  */

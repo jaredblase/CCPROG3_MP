@@ -3,23 +3,36 @@ package controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+
 import model.Citizen;
 import model.Name;
 import model.UserSystem;
 
+/**
+ * The RegistrationController class handles the input of username and password for a new
+ * user to be added to the system.
+ * @author Gabriel Pua
+ * @author Jared Sy
+ * @version 1.0
+ * @see Controller
+ */
 public class RegistrationController extends Controller {
+    /** The username input. */
     @FXML
     private TextField usernameTextField;
+    /** The password input. */
     @FXML
     private TextField passwordTextField;
+    /** The message displayed if the username is invalid. */
     @FXML
     private Label invalidUsername;
+    /** The message displayed if the password is invalid. */
     @FXML
     private Label invalidPassword;
 
     /**
      * Automatically called when the corresponding fxml file is loaded by FXML loader.
-     * Sets up the behaviour of the text boxes and invalid message labels.
+     * Sets up the behaviour of the text fields and invalid message labels.
      */
     @FXML
     public void initialize() {
@@ -48,6 +61,7 @@ public class RegistrationController extends Controller {
     public void handleGoFillDetailsAction() {
         boolean isValid = true;
 
+        // checks if username and password are valid
         if (!UserSystem.isValidNewUsername(usernameTextField.getText())) {
             invalidUsername.setVisible(true);
             isValid = false;
@@ -58,7 +72,7 @@ public class RegistrationController extends Controller {
             isValid = false;
         }
 
-        if (isValid) {
+        if (isValid) { // both are valid
             UserSystem.register(new Citizen(new Name("", "", ""), "", "", "", "",
                             usernameTextField.getText().toUpperCase(), passwordTextField.getText(), true));
             mainController.changeScene(MainController.REGISTER_2_VIEW);

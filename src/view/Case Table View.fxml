@@ -60,9 +60,9 @@
             </HBox>
          </children>
       </GridPane>
-      <Button fx:id="actionButton" defaultButton="true" layoutX="800.0" layoutY="482.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="69.0" text="OKAY" />
-      <Label layoutX="785.0" layoutY="446.0" text="Total Cases: " />
-      <Label layoutX="785.0" layoutY="420.0" text="Current Count: " />
+      <Button fx:id="actionButton" defaultButton="true" layoutX="800.0" layoutY="482.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="69.0" text="Filter" />
+      <Label fx:id="totalCtr" layoutX="785.0" layoutY="446.0" text="Total Cases: " />
+      <Label fx:id="currentCtr" layoutX="785.0" layoutY="420.0" text="Current Count: " />
    </children>
    <stylesheets>
       <URL value="@../resources/Master.css" />

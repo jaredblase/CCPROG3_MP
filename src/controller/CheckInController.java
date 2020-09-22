@@ -9,22 +9,41 @@ import javafx.scene.control.TextField;
 import java.time.LocalDate;
 import java.util.Calendar;
 
+/**
+ * The CheckInController handles the check in to an establishment of the user logged in.
+ * @author Gabriel Pua
+ * @author Jared Sy
+ * @version 1.0
+ * @see DialogController
+ */
 public class CheckInController extends DialogController {
+    /** The establishment code of the user's visit. */
     @FXML
     private TextField estCodeTextField;
+    /** The date of the user's visit to an establishment. */
     @FXML
     private DatePicker datePicker;
+    /** The message displayed if the establishment code is invalid. */
     @FXML
     private Label invalidEstCode;
+    /** The messaged displayed if the date is invalid. */
     @FXML
     private Label invalidDate;
 
+    /**
+     * Automatically called when the corresponding fxml file is loaded by FXML loader.
+     * Sets up the behaviour of the text field, date picker, and invalid message labels.
+     */
     @FXML
     public void initialize() {
         estCodeTextField.setOnKeyTyped(e -> invalidEstCode.setVisible(false));
         datePicker.setOnAction(e -> invalidDate.setVisible(false));
     }
 
+    /**
+     * Handles the event where the user confirms his visit to an establishment.
+     * @param e the event where the "Confirm" button was pressed.
+     */
     @Override
     @FXML
     public void onOKAction(Event e) {

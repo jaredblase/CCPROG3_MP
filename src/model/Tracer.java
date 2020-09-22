@@ -12,7 +12,7 @@ import java.util.Calendar;
  * and informing contacts of their possible exposure.
  * @author Gabriel Pua
  * @author Jared Sy
- * @version 1.1
+ * @version 2.0
  * @see Citizen
  */
 public class Tracer extends Citizen {

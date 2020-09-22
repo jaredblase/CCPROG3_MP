@@ -8,7 +8,7 @@ import java.util.Calendar;
  * facilities such as viewing analytics, assigning cases, and promoting or terminating accounts.
  * @author Gabriel Pua
  * @author Jared Sy
- * @version 1.1
+ * @version 2.0
  * @see Citizen
  */
 public class GovOfficial extends Citizen {
@@ -35,7 +35,7 @@ public class GovOfficial extends Citizen {
      * @param c the specific case to check.
      * @param city the name of the city.
      * @param status the status of the case.
-     * @param start the start of date date.
+     * @param start the start of date range.
      * @param end the end of date range.
      * @return true if the case fits the criteria, false otherwise.
      */
@@ -52,7 +52,7 @@ public class GovOfficial extends Citizen {
      * @param c the specific case to check.
      * @param city the name of the city.
      * @param status the status of the case.
-     * @param start the start of date date.
+     * @param start the start of date range.
      * @param end the end of date range.
      * @return true if the case fits the criteria, false otherwise.
      */
@@ -69,7 +69,7 @@ public class GovOfficial extends Citizen {
      * Checks whether the given case fits the criteria (parameter).
      * @param c the specific case to check.
      * @param status the status of the case.
-     * @param start the start of date date.
+     * @param start the start of date range.
      * @param end the end of date range.
      * @return true if the case fits the criteria, false otherwise.
      */
@@ -80,7 +80,7 @@ public class GovOfficial extends Citizen {
     /**
      * Checks whether the given case fits the criteria (parameter).
      * @param c the specific case to check.
-     * @param start the start of date date.
+     * @param start the start of date range.
      * @param end the end of date range.
      * @return true if the case fits the criteria, false otherwise.
      */

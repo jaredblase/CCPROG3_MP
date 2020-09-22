@@ -4,39 +4,58 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
-import model.Case;
-import model.Citizen;
-import model.GovOfficial;
-import model.UserSystem;
+import model.*;
 
 import java.text.SimpleDateFormat;
 
+/**
+ * The CaseInformationController holds the information of a positive case and sets
+ * the labels to be displayed to the information of both the positive user and the
+ * positive case. This class also handles the assignment of a positive case to a
+ * contact tracer.
+ * @author Gabriel Pua
+ * @author Jared Sy
+ * @version 1.0
+ * @see DialogController
+ */
 public class CaseInformationController extends DialogController{
     /** This is the case being displayed. */
     private Case positive;
 
+    /** The full name of the positive user. */
     @FXML
     private Label fullName;
+    /** The home address of the positive user. */
     @FXML
     private Label homeAddress;
+    /** The office address of the positive user. */
     @FXML
     private Label officeAddress;
+    /** The phone number of the positive user. */
     @FXML
     private Label phoneNumber;
+    /** The email of the positive user. */
     @FXML
     private Label email;
+    /** The case number of the positive case. */
     @FXML
     private Label caseNumber;
+    /** The username of the positive user. */
     @FXML
     private Label username;
+    /** The date the positive case was reported. */
     @FXML
     private Label reportDate;
+    /** The username of the contact tracer assigned to the positive case. */
     @FXML
     private Label tracer;
+    /** The status of the positive case. */
     @FXML
     private Label status;
+    /** The ComboBox that holds the list of usernames of contact tracers in the system. */
     @FXML
     private ComboBox<String> tracerBox;
+    /** The Button that, when clicked, assigns the positive case to a selected contact tracer.*/
     @FXML
     private Button assignButton;
 

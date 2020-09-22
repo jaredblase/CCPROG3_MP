@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
  * and methods available for changing them.
  * @author Gabriel Pua
  * @author Jared Sy
- * @version 1.2
+ * @version 2.0
  */
 public class Name {
     /** The first name. */

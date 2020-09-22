@@ -13,25 +13,46 @@ import model.UserSystem;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The ModifyRoleController class handles the creation of a new account and the
+ * modification of the role of an existing user in the system.
+ * @author Gabriel Pua
+ * @author Jared Sy
+ * @version 1.0
+ * @see Controller
+ */
 public class ModifyRoleController extends Controller {
+    /** The ChoiceBox that contains the role options of account creation or role modification. */
     @FXML
     private ChoiceBox<String> choiceBox;
+    /** The username of the new user to be created or the user whose role is to be modified. */
     @FXML
     private TextField username;
+    /** The message that is displayed if the username is invalid. */
     @FXML
     private Label invalidUsername;
+    /** The Button that, when pressed, creates a new account or modifies the specified user. */
     @FXML
     private Button actionButton;
+    /** The message that is displayed after an action is executed successfully. */
     @FXML
     private Label modifyFeedback;
+    /** The MenuController that handles the menu of the user logged in. */
     @FXML
     private MenuController menuController;
 
+    /**
+     * Sets up the main controller to the menu controller.
+     */
     @Override
     public void update() {
         menuController.setMainController(mainController);
     }
 
+    /**
+     * Automatically called when the corresponding fxml file is loaded by FXML loader. Sets
+     * up the behaviour of the text field, choice box, invalid message label, and button.
+     */
     @FXML
     public void initialize() {
         username.setOnKeyPressed(e -> {
@@ -74,6 +95,9 @@ public class ModifyRoleController extends Controller {
         });
     }
 
+    /**
+     * Handles the event where the action button is pressed.
+     */
     @FXML
     public void onAction() {
         if (UserSystem.isValidNewUsername(username.getText())) { // create new user

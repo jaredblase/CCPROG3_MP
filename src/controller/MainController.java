@@ -10,18 +10,32 @@ import model.UserSystem;
 
 import java.io.IOException;
 
+/**
+ * The MainController class holds the information of the user logged in. This class
+ * also handles the display and switching of different scenes.
+ * @author Gabriel Pua
+ * @author Jared Sy
+ * @version 1.0
+ */
 public class MainController {
+    /** Value that corresponds to the login scene. */
     public static final int LOGIN_VIEW = 1;
+    /** Value that corresponds to the first register scene. */
     public static final int REGISTER_VIEW = 2;
+    /** Value that corresponds to the second register scene. */
     public static final int REGISTER_2_VIEW = 3;
+    /** Value that corresponds to the profile scene. */
     public static final int PROFILE_VIEW = 4;
+    /** Value that corresponds to the case table scene. */
     public static final int CASE_TABLE_VIEW = 5;
+    /** Value that corresponds to the modify role scene. */
     public static final int MODIFY_ROLE_VIEW = 6;
+    /** Value that corresponds to the trace scene. */
     public static final int TRACE_VIEW = 7;
 
     /** This is the user logged in. */
     private Citizen userModel;
-    /** These are the view components.   */
+    /** The Stage where the scenes are shown. */
     private final Stage primaryStage;
 
     /**
@@ -42,7 +56,7 @@ public class MainController {
 
     /**
      * Handles the switching of scenes of the main stage.
-     * @param view number representing a specific scene to switch to.
+     * @param view the number representing a specific scene to switch to.
      */
     public void changeScene(int view) {
         FXMLLoader loader = new FXMLLoader();

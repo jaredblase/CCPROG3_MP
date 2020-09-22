@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
  * such as registering, login, and loading and saving of users to the master list.
  * @author Gabriel Pua
  * @author Jared Sy
- * @version 1.1
+ * @version 2.0
  */
 public class UserSystem {
     /** All the registered usernames. */

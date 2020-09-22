@@ -6,16 +6,28 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+
 import model.Citizen;
 import model.UserSystem;
 
+/**
+ * The LoginController handles the logging in of a user.
+ * @author Gabriel Pua
+ * @author Jared Sy
+ * @version 1.0
+ * @see Controller
+ */
 public class LoginController extends Controller {
+    /** The username input. */
     @FXML
     private TextField usernameTextField;
+    /** The password input. */
     @FXML
     private TextField passwordTextField;
+    /** The message displayed if the login is unsuccessful. */
     @FXML
     private Label invalidLoginMessage;
+
 
     @Override
     public void update() {
@@ -24,7 +36,7 @@ public class LoginController extends Controller {
 
     /**
      * Automatically called when the corresponding fxml file is loaded by FXML loader.
-     * Sets up the behaviour of the text fields.
+     * Sets up the behaviour of the text fields and invalid message labels.
      */
     @FXML
     public void initialize() {
@@ -57,7 +69,7 @@ public class LoginController extends Controller {
     }
 
     /**
-     * Handles the event where the 'X' (exit) button was pressed.
+     * Handles the event where the 'X' (exit) button is pressed.
      * @param e the action event.
      */
     @FXML

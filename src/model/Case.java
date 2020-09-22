@@ -8,7 +8,7 @@ import java.util.Calendar;
  * provides methods to retrieve data from it, and set some of the other data.
  * @author Gabriel Pua
  * @author Jared Sy
- * @version 1.1
+ * @version 2.0
  */
 public class Case {
     /** The case number. */

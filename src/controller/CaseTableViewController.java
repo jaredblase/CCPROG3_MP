@@ -21,33 +21,63 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+/**
+ * The CaseTableViewController class holds the information of all positive cases in the system
+ * and sets the columns to be displayed to the information of the positive cases. This class also
+ * handles filtering of cases and displaying the information of an individual case.
+ * @author Gabriel Pua
+ * @author Jared Sy
+ * @version 1.0
+ * @see Controller
+ */
 public class CaseTableViewController extends Controller {
+    /** The TableView that displays all positive cases. */
     @FXML
     private TableView<Case> tableView;
+    /** The case numbers of the positive cases. */
     @FXML
     private TableColumn<Case, Integer> caseNumCol;
+    /** The report dates of the positive cases. */
     @FXML
     private TableColumn<Case, Calendar> dateCol;
+    /** The usernames of the positive users. */
     @FXML
     private TableColumn<Case, String> usernameCol;
+    /** The usernames of the contact tracers assigned to the positive cases. */
     @FXML
     private TableColumn<Case, String> tracerCol;
+    /** The statuses of the positive cases. */
     @FXML
     private TableColumn<Case, Character> statusCol;
+    /** The TextField which is used to filter the positive cases by city. */
     @FXML
     private TextField cityFilter;
+    /** The ChoiceBox which is used to filter the positive cases by status. */
     @FXML
     private ChoiceBox<Character> statusFilter;
+    /** The start date of the date range which is used to filter the positive cases. */
     @FXML
     private DatePicker startFilter;
+    /** The end date of the date range which is used to filter the positive cases. */
     @FXML
     private DatePicker endFilter;
+    /** The ToggleButton which is used to filter the positive cases by whether they are assigned.*/
     @FXML
     private ToggleButton unassignedOnly;
+    /** The Button that, when pressed, filters the positive cases to be displayed
+     * based on the filters.*/
     @FXML
     private Button actionButton;
+    /** The total number of positive cases. */
+    @FXML
+    private Label totalCtr;
+    /** The total number of positive cases after being filtered. */
+    @FXML
+    private Label currentCtr;
+    /** The MenuController that handles the menu of the user logged in. */
     @FXML
     private MenuController menuController;
+    /** The list of positive cases in the system. */
     private ObservableList<Case> cases;
 
     /**
@@ -122,12 +152,12 @@ public class CaseTableViewController extends Controller {
         FilteredList<Case> filteredList = new FilteredList<>(cases, p -> true);
 
         // when filter button is pressed
-        actionButton.setOnAction(e -> filteredList.setPredicate(c -> ((GovOfficial) this.mainController.getUserModel())
-                .filter(c, cityFilter.getText(), statusFilter.getValue() == null? '\0' : statusFilter.getValue(),
-                        startFilter.getValue(), endFilter.getValue(), unassignedOnly.isSelected()))
-        );
-
-        unassignedOnly.setOnAction(e -> actionButton.fire());
+        actionButton.setOnAction(e -> {
+            filteredList.setPredicate(c -> ((GovOfficial) this.mainController.getUserModel())
+                    .filter(c, cityFilter.getText(), statusFilter.getValue() == null ? '\0' : statusFilter.getValue(),
+                            startFilter.getValue(), endFilter.getValue(), unassignedOnly.isSelected()));
+            currentCtr.setText("Current Count: " + filteredList.size());
+        });
 
         SortedList<Case> sortedList = new SortedList<>(filteredList);
         sortedList.comparatorProperty().bind(tableView.comparatorProperty());
@@ -142,5 +172,7 @@ public class CaseTableViewController extends Controller {
     protected void update() {
         menuController.setMainController(mainController);
         cases.setAll(UserSystem.getCases());
+        totalCtr.setText("Total Cases: " + cases.size());
+        currentCtr.setText("Current Count: " + cases.size());
     }
 }

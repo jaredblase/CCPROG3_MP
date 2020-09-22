@@ -13,51 +13,77 @@ import model.UserSystem;
 
 import java.io.IOException;
 
+/**
+ * The ProfileController class sets the text fields to the information of the user logged in.
+ * This class also handles the changing of personal information of the user.
+ * @author Gabriel Pua
+ * @author Jared Sy
+ * @version 1.0
+ * @see Controller
+ */
 public class ProfileController extends Controller {
     /** Indicates whether the user is currently editing his profile or not */
     private boolean isEditing;
 
+    /** The first name of the user logged in. */
     @FXML
     private TextField firstName;
+    /** The middle name of the user logged in. */
     @FXML
     private TextField middleName;
+    /** The last name of the user logged in. */
     @FXML
     private TextField lastName;
+    /** The home address of the user logged in. */
     @FXML
     private TextField homeAddress;
+    /** The office address of the user logged in. */
     @FXML
     private TextField officeAddress;
+    /** The phone number of the user logged in. */
     @FXML
     private TextField phoneNumber;
+    /** The email of the user logged in. */
     @FXML
     private TextField email;
+    /** The Button that, when pressed, enables editing or saving of
+     * the personal information of the user logged in. */
     @FXML
     private Button actionButton;
+    /** The message displayed if the first name is invalid. */
     @FXML
     private Label invalidFirstName;
+    /** The message displayed if the middle name is invalid. */
     @FXML
     private Label invalidMiddleName;
+    /** The message displayed if the last name is invalid. */
     @FXML
     private Label invalidLastName;
+    /** The message displayed if the home address is invalid. */
     @FXML
     private Label invalidHomeAddress;
+    /** The message displayed if the office address is invalid. */
     @FXML
     private Label invalidOfficeAddress;
+    /** The message displayed if the phone number is invalid. */
     @FXML
     private Label invalidPhoneNumber;
+    /** The message displayed if the email is invalid. */
     @FXML
     private Label invalidEmail;
+    /** The Button that, when pressed, handles the changing of password of the user logged in. */
     @FXML
     private Button changePassButton;
+    /** The message displayed if the changing of personal information is successful. */
     @FXML
     private Label feedback;
-
+    /** The MenuController that handles the menu of the user logged in. */
     @FXML
     private MenuController menuController;
 
     /**
      * Automatically called when the corresponding fxml file is loaded by FXML loader.
-     * Sets up the behaviour of each invalid message label.
+     * Sets up the behaviour of the text fields and invalid message labels.
      */
     @FXML
     public void initialize() {

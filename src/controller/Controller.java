@@ -18,7 +18,7 @@ public abstract class Controller {
     }
 
     /**
-     * Updated any component that is dependent on the main controller.
+     * Updates any component that is dependent on the main controller.
      */
     protected abstract void update();
 }

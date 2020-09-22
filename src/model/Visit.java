@@ -9,7 +9,7 @@ import java.util.Calendar;
  * but once constructed, the fields cannot be reset.
  * @author Gabriel Pua
  * @author Jared Sy
- * @version 1.1
+ * @version 2.0
  */
 public class Visit {
     /** The establishment code. */
