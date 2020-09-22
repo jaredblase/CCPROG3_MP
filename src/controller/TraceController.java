@@ -18,9 +18,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class TraceController extends Controller {
-    /** This is the contact tracer logged in. */
-    private Tracer tracer;
-
     @FXML
     private ComboBox<Integer> caseNumber;
     @FXML
@@ -60,13 +57,13 @@ public class TraceController extends Controller {
     public void update() {
         menuController.setMainController(mainController);
 
-        tracer = (Tracer) mainController.getUserModel();
         init();
     }
 
     private void init() {
         ObservableList<Integer> caseNums = FXCollections.observableArrayList();
 
+        Tracer tracer = (Tracer) mainController.getUserModel();
         caseNums.addAll(tracer.getAssigned());
 
         caseNumber.setItems(caseNums);
@@ -76,6 +73,7 @@ public class TraceController extends Controller {
     public void onTraceAction() {
         ObservableList<Pair<String, Visit>> contacts = FXCollections.observableArrayList();
         if (caseNumber.getValue() != null) {
+            Tracer tracer = (Tracer) mainController.getUserModel();
             tracer.trace(caseNumber.getValue(), contacts);
             tableView.setItems(contacts);
         }
