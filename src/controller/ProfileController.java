@@ -14,8 +14,6 @@ import model.UserSystem;
 import java.io.IOException;
 
 public class ProfileController extends Controller {
-    /** This is the user logged in */
-    private Citizen user;
     /** Indicates whether the user is currently editing his profile or not */
     private boolean isEditing;
 
@@ -77,7 +75,7 @@ public class ProfileController extends Controller {
      */
     @Override
     public void update() {
-        user = mainController.getUserModel();
+        Citizen user = mainController.getUserModel();
         menuController.setMainController(super.mainController);
 
         firstName.setText(user.getName().getFirst());
@@ -98,6 +96,7 @@ public class ProfileController extends Controller {
         isEditing = !isEditing;
 
         if (!isEditing) {
+            Citizen user = mainController.getUserModel();
             Citizen temp = UserSystem.getUser(user.getUsername());
             boolean isValid = true, isChangedNow = false;
 
@@ -141,7 +140,7 @@ public class ProfileController extends Controller {
                 }
             }
             if (!temp.getOfficeAddress().equals(officeAddress.getText())) {
-                if (!user.setPersonalDetails(2, homeAddress.getText())) {
+                if (!user.setPersonalDetails(2, officeAddress.getText())) {
                     invalidOfficeAddress.setVisible(true);
                     isValid = false;
                 } else {
@@ -199,6 +198,7 @@ public class ProfileController extends Controller {
      */
     @FXML
     public void changePasswordAction() {
+        Citizen user = mainController.getUserModel();
         feedback.setVisible(false);
         String temp = user.getPassword();
         Stage dialog = new Stage();
@@ -215,10 +215,6 @@ public class ProfileController extends Controller {
             e.printStackTrace();
         }
 
-        if (!temp.equals(user.getPassword())) {
-            feedback.setVisible(true);
-        } else {
-            feedback.setVisible(false);
-        }
+        feedback.setVisible(!temp.equals(user.getPassword()));
     }
 }

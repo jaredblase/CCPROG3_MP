@@ -1,11 +1,9 @@
 package controller;
 
-import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 
-import javafx.stage.Stage;
 import model.Case;
 import model.Citizen;
 import model.GovOfficial;
@@ -13,11 +11,9 @@ import model.UserSystem;
 
 import java.text.SimpleDateFormat;
 
-public class CaseInformationController {
+public class CaseInformationController extends DialogController{
     /** This is the case being displayed. */
     private Case positive;
-    /** This is the government official logged in. */
-    private GovOfficial user;
 
     @FXML
     private Label fullName;
@@ -85,12 +81,10 @@ public class CaseInformationController {
     }
 
     /**
-     * Sets the user logged in and the case to display.
-     * @param user the user logged in.
+     * Sets the case to display.
      * @param positive the specific case to view.
      */
-    public void setModel(GovOfficial user, Case positive) {
-        this.user = user;
+    public void setModel(Case positive) {
         this.positive = positive;
         init();
     }
@@ -100,10 +94,10 @@ public class CaseInformationController {
      * to a contact tracer.
      * @param e the event where the "Assign" button was pressed.
      */
-    public void onAssignAction(ActionEvent e) {
+    public void onOKAction(Event e) {
         if (positive.getTracer().equals("000")) {
-            user.assignCase(positive, tracerBox.getValue());
-            onBackAction(e);
+            ((GovOfficial) user).assignCase(positive, tracerBox.getValue());
+            onCancelAction(e);
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Assign Case");
@@ -111,15 +105,5 @@ public class CaseInformationController {
             alert.setContentText("Case already assigned!");
             alert.showAndWait();
         }
-    }
-
-    /**
-     * Closes the current custom dialog box and brings the user back to the
-     * main program.
-     * @param e the event where the "Back" button was pressed.
-     */
-    public void onBackAction(ActionEvent e) {
-        Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-        stage.close();
     }
 }

@@ -17,9 +17,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 
 public class MenuController extends Controller {
-    /** This is the user logged in. */
-    private Citizen user;
-
     @FXML
     private Label fullName;
     @FXML
@@ -37,7 +34,7 @@ public class MenuController extends Controller {
 
     @Override
     public void update() {
-        user = mainController.getUserModel();
+        Citizen user = mainController.getUserModel();
         if (user instanceof GovOfficial) {
             govActions.setVisible(true);
         } else if (user instanceof Tracer) {
@@ -63,6 +60,7 @@ public class MenuController extends Controller {
 
     @FXML
     public void reportPositiveAction() {
+        Citizen user = mainController.getUserModel();
         if (!user.getIsPositive()) {
             Stage dialog = new Stage();
             FXMLLoader loader = new FXMLLoader();
@@ -96,7 +94,7 @@ public class MenuController extends Controller {
             dialog.setScene(new Scene(loader.load()));
             dialog.setTitle("Check In");
             dialog.initModality(Modality.APPLICATION_MODAL);
-            ((DialogController) loader.getController()).setUser(user);
+            ((DialogController) loader.getController()).setUser(mainController.getUserModel());
             dialog.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
@@ -120,7 +118,7 @@ public class MenuController extends Controller {
 
     @FXML
     public void handleLogoutAction() {
-        UserSystem.updateUser(user);
+        UserSystem.updateUser(mainController.getUserModel());
         mainController.changeScene(MainController.LOGIN_VIEW);
     }
 }
