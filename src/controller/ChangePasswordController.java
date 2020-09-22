@@ -27,6 +27,7 @@ public class ChangePasswordController extends DialogController {
         if (user.getPassword().equals(oldPassTextField.getText())) {
             invalidOldPass.setVisible(true);
         } else if (user.setPassword(newPassTextField.getText())) {
+            showConfirmation("Password was changed.");
             onCancelAction(e);
         } else {
             invalidNewPass.setVisible(true);

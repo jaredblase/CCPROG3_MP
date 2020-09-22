@@ -45,6 +45,7 @@ public class CheckInController extends DialogController {
             Calendar date = Calendar.getInstance();
             date.set(ld.getYear(), ld.getMonthValue() - 1, ld.getDayOfMonth());
             user.checkIn(estCodeTextField.getText(), date);
+            showConfirmation("Visit was logged.");
             onCancelAction(e);
         }
     }

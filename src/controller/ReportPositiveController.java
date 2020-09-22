@@ -26,6 +26,7 @@ public class ReportPositiveController extends DialogController {
             Calendar date = Calendar.getInstance();
             date.set(ld.getYear(), ld.getMonthValue() - 1, ld.getDayOfMonth());
             user.reportPositive(date);
+            showConfirmation("Case has been recorded. Thank you for reporting.");
             onCancelAction(e);
         } else {
             invalidDate.setVisible(true);
