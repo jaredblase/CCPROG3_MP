@@ -88,8 +88,10 @@ public class CaseTableViewController extends Controller {
                         loader.setLocation(getClass().getResource("/view/Case Information.fxml"));
                         stage.setScene(new Scene(loader.load()));
 
-                        ((CaseInformationController) loader.getController()).setModel(      // setup controller
-                                (GovOfficial) mainController.getUserModel(), c);
+                        // setup controller
+                        ((CaseInformationController) loader.getController()).setModel(c);
+                        ((DialogController) loader.getController()).setUser(mainController.getUserModel());
+
                         stage.showAndWait();                                                // display dialog
                         update();                                                           // update table view
                     } catch (IOException exception) {
