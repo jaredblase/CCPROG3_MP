@@ -70,7 +70,7 @@ public class TraceController extends Controller {
      * of the assigned positive cases.
      */
     @Override
-    public void update() {
+    protected void update() {
         menuController.setMainController(mainController);
 
         init();

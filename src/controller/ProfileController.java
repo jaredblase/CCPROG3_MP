@@ -100,7 +100,7 @@ public class ProfileController extends Controller {
      * Sets up the information to display from the user logged in.
      */
     @Override
-    public void update() {
+    protected void update() {
         Citizen user = mainController.getUserModel();
         menuController.setMainController(super.mainController);
 

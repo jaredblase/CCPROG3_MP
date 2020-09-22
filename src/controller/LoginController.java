@@ -28,9 +28,8 @@ public class LoginController extends Controller {
     @FXML
     private Label invalidLoginMessage;
 
-
     @Override
-    public void update() {
+    protected void update() {
 
     }
 

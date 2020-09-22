@@ -41,7 +41,7 @@ public class RegistrationController extends Controller {
     }
 
     @Override
-    public void update() {
+    protected void update() {
 
     }
 

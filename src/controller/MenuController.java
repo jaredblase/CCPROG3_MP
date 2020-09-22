@@ -53,7 +53,7 @@ public class MenuController extends Controller {
      * and the prompt message indicating possible contact.
      */
     @Override
-    public void update() {
+    protected void update() {
         Citizen user = mainController.getUserModel();
         // determine available actions
         if (user instanceof GovOfficial) {

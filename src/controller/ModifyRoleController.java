@@ -45,7 +45,7 @@ public class ModifyRoleController extends Controller {
      * Sets up the main controller to the menu controller.
      */
     @Override
-    public void update() {
+    protected void update() {
         menuController.setMainController(mainController);
     }
 

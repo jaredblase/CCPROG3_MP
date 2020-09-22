@@ -83,7 +83,7 @@ public class Registration2Controller extends Controller {
      * Determines whether the previous scene is Registration Form Part 1.
      */
     @Override
-    public void update() {
+    protected void update() {
         fromRegister = !UserSystem.getLastUser().getPassword().equals("");
     }
 
