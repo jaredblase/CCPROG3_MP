@@ -234,6 +234,13 @@ public class UserSystem {
 
     /**
      * Initializes all the ArrayLists from the text files.
+     * This assumes that the following files already exist:<br>
+     * Master_List.txt - the master list containing all the usernames and roles.<br>
+     * Establishment_Records.txt - the text file containing all the check in records of the users.<br>
+     * Positive_Cases.txt - the list of all the users who reported positive.<br>
+     * Respective .act files - contains the information of a user.<br>
+     *
+     * At the minimum, the Master_List.txt and the respective .act file for each user must exist.
      */
     public static void loadSystem() {
         usernames = new ArrayList<>();
@@ -350,6 +357,12 @@ public class UserSystem {
     /**
      * Called when terminating the program to free all the memory used and save
      * the system data in the appropriate text files.
+     *
+     * This writes the following files with the assigned file names:<br>
+     * Master_List.txt - the master list containing all the usernames and roles.<br>
+     * Establishment_Records.txt - the text file containing all the check in records of the users.<br>
+     * Positive_Cases.txt - the list of all the users who reported positive.<br>
+     * Respective .act files - contains the information of a user.<br>
      */
     public static void exitSystem() {
         // Update Master List
