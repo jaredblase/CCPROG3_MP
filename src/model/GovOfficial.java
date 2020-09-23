@@ -41,7 +41,7 @@ public class GovOfficial extends Citizen {
      */
     public boolean filter(Case c, String city, char status, LocalDate start, LocalDate end, boolean mustBeUnassigned) {
         if (mustBeUnassigned) {
-            return c.getTracer().equals("000") && filter(c, status, start, end);
+            return c.getTracer().equals("000") && filter(c, city, status, start, end);
         }
 
         return filter(c, city, status, start, end);
