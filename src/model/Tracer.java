@@ -222,12 +222,10 @@ public class Tracer extends Citizen {
     }
 
     /**
-     * Called when a contact tracer is demoted to a citizen. Sets the tracer username of all
-     * assigned cases to default.
+     * Called when a contact tracer is demoted to a citizen. Sets the list of assigned
+     * cases to null.
      */
     public void demote() {
-        for (Case i: assigned)
-            i.setTracer("000"); // set tracer username of all assigned cases to default
         assigned = null;
         System.gc();
     }

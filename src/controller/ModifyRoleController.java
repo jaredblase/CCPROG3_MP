@@ -108,7 +108,8 @@ public class ModifyRoleController extends Controller {
             mainController.changeScene(MainController.REGISTER_2_VIEW);
         } else { // modify user
             UserSystem.setRoleOf(UserSystem.getIndexOf(username.getText()), Role.getValueOf(choiceBox.getValue()));
-            modifyFeedback.setText(username.getText() + "'s role has been successfully modified");
+            modifyFeedback.setText(username.getText().toUpperCase() +
+                    "'s role has been successfully modified");
             modifyFeedback.setVisible(true);
 
             username.clear();
