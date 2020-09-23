@@ -75,7 +75,7 @@
       <Button fx:id="assignButton" disable="true" layoutX="219.0" layoutY="529.0" mnemonicParsing="false" onAction="#onOKAction" prefHeight="25.0" prefWidth="67.0" styleClass="green-button" text="Assign" />
       <ComboBox fx:id="tracerBox" layoutX="23.0" layoutY="529.0" prefHeight="25.0" prefWidth="183.0" promptText="Contact Tracer" />
       <Button layoutX="301.0" layoutY="529.0" mnemonicParsing="false" onAction="#onCancelAction" prefHeight="25.0" prefWidth="67.0" text="Back" />
-      <Label alignment="CENTER" layoutX="23.0" layoutY="506.0" prefHeight="17.0" prefWidth="140.0" styleClass="white-background" text="Contact Tracer to assign:" />
+      <Label fx:id="tracerLabel" alignment="CENTER" layoutX="23.0" layoutY="506.0" prefHeight="17.0" prefWidth="140.0" styleClass="white-background" text="Contact Tracer to assign:" />
    </children>
    <stylesheets>
       <URL value="@../resources/Master.css" />

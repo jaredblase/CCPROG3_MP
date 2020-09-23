@@ -52,6 +52,9 @@ public class CaseInformationController extends DialogController{
     /** The status of the positive case. */
     @FXML
     private Label status;
+    /** The Label for the ComboBox below. */
+    @FXML
+    private Label tracerLabel;
     /** The ComboBox that holds the list of usernames of contact tracers in the system. */
     @FXML
     private ComboBox<String> tracerBox;
@@ -97,6 +100,12 @@ public class CaseInformationController extends DialogController{
         reportDate.setText(format.format(positive.getReportDate().getTime()));
         tracer.setText(positive.getTracer());
         status.setText(String.valueOf(positive.getStatus()));
+
+        if (!positive.getTracer().equals("000")) {
+            tracerBox.setVisible(false);
+            assignButton.setVisible(false);
+            tracerLabel.setVisible(false);
+        }
     }
 
     /**
@@ -114,15 +123,7 @@ public class CaseInformationController extends DialogController{
      * @param e the event where the "Assign" button was pressed.
      */
     public void onOKAction(Event e) {
-        if (positive.getTracer().equals("000")) {
-            ((GovOfficial) user).assignCase(positive, tracerBox.getValue());
-            onCancelAction(e);
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Assign Case");
-            alert.setHeaderText("Assign Error");
-            alert.setContentText("Case already assigned!");
-            alert.showAndWait();
-        }
+        ((GovOfficial) user).assignCase(positive, tracerBox.getValue());
+        onCancelAction(e);
     }
 }
