@@ -30,7 +30,7 @@ public class Tracer extends Citizen {
 
         assigned = new ArrayList<>();
         for (Case i: UserSystem.getCases())
-            if (i.getTracer().equals(getUsername()) && i.getStatus() == 'P')
+            if (i.getTracer().equals(getUsername()) && i.getStatus() != 'T')
                 assigned.add(i);
     }
 
