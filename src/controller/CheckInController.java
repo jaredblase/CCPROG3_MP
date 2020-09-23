@@ -51,6 +51,11 @@ public class CheckInController extends DialogController {
 
         if (estCodeTextField.getText().isEmpty()) {
             isValid = false;
+            invalidEstCode.setText("Establishment code cannot be blank");
+            invalidEstCode.setVisible(true);
+        } else if (estCodeTextField.getText().contains(" ")) {
+            isValid = false;
+            invalidEstCode.setText("Space character not allowed");
             invalidEstCode.setVisible(true);
         }
 
