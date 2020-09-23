@@ -101,7 +101,7 @@ public class UserSystem {
     public static ArrayList<String> getTracers() {
         ArrayList<String> tracers = new ArrayList<>();
         for (Citizen i: users)
-            if (i instanceof Tracer)
+            if (getRoleOf(getIndexOf(i.getUsername())).equals("tracer"))
                 tracers.add(i.getUsername());
         return tracers;
     }
@@ -176,6 +176,13 @@ public class UserSystem {
         if (roles.get(index).equals("tracer")) { // previous role is tracer
             Tracer temp = (Tracer) users.get(index);
             temp.demote();
+
+            // set all pending cases assigned to contact tracer to default
+            for (Case i: cases) {
+                if (i.getTracer().equals(temp.getUsername()) && i.getStatus() != 'T') {
+                    i.setTracer("000");
+                }
+            }
         }
 
         roles.set(index, role);
