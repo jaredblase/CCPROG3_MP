@@ -73,13 +73,8 @@ public class CaseInformationController extends DialogController{
             tracerBox.getItems().add("No tracers in the system");
         }
 
-        tracerBox.setOnAction(e -> {
-            if (tracerBox.getItems().contains("No tracers in the system")) {
-                assignButton.setDisable(true);
-            } else {
-                assignButton.setDisable(tracerBox.getValue() == null || tracerBox.getValue().isEmpty());
-            }
-        });
+        tracerBox.setOnAction(e -> assignButton.setDisable(tracerBox.getValue() == null || tracerBox.getValue().isEmpty()
+                || tracerBox.getItems().contains("No tracers in the system")));
     }
 
     /**
