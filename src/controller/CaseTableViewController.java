@@ -173,6 +173,5 @@ public class CaseTableViewController extends Controller {
         menuController.setMainController(mainController);
         cases.setAll(UserSystem.getCases());
         totalCtr.setText("Total Cases: " + cases.size());
-        currentCtr.setText("Current Count: " + cases.size());
     }
 }
