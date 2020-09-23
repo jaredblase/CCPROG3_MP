@@ -37,6 +37,7 @@ public class GovOfficial extends Citizen {
      * @param status the status of the case.
      * @param start the start of date range.
      * @param end the end of date range.
+     * @param mustBeUnassigned the indicator if the case must be unassigned or not.
      * @return true if the case fits the criteria, false otherwise.
      */
     public boolean filter(Case c, String city, char status, LocalDate start, LocalDate end, boolean mustBeUnassigned) {
