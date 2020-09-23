@@ -236,8 +236,13 @@ public class UserSystem {
      * Initializes all the ArrayLists from the text files.
      * This assumes that the following files already exist:<br>
      * Master_List.txt - the master list containing all the usernames and roles.<br>
-     * Establishment_Records.txt - the text file containing all the check in records of the users.<br>
-     * Positive_Cases.txt - the list of all the users who reported positive.<br>
+     * Establishment_Records.txt - the text file containing all the check in records of the
+     * users. The records listed in this file are assumed to be complete and follow the order
+     * of the users in the master list i.e. this file first lists all the records of the first
+     * user in the master list, then all the records of the second user, and so on.<br>
+     * Positive_Cases.txt - the list of all the positive cases reported by the users. The
+     * cases listed in this file are assumed to sorted i.e. the first case is case number 1,
+     * followed by case number 2, and so on.<br>
      * Respective .act files - contains the information of a user.<br>
      *
      * At the minimum, the Master_List.txt and the respective .act file for each user must exist.
