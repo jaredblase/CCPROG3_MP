@@ -63,13 +63,13 @@ public class MainController {
 
         // load the scene from the corresponding fxml file
         switch (view) {
-            case 1 -> loader.setLocation(getClass().getResource("/view/Login Screen.fxml"));
-            case 2 -> loader.setLocation(getClass().getResource("/view/Registration Form Part 1.fxml"));
-            case 3 -> loader.setLocation(getClass().getResource("/view/Registration Form Part 2.fxml"));
-            case 4 -> loader.setLocation(getClass().getResource("/view/Profile.fxml"));
-            case 5 -> loader.setLocation(getClass().getResource("/view/Case Table View.fxml"));
-            case 6 -> loader.setLocation(getClass().getResource("/view/Modify Role.fxml"));
-            case 7 -> loader.setLocation(getClass().getResource("/view/Trace.fxml"));
+            case LOGIN_VIEW -> loader.setLocation(getClass().getResource("/view/Login Screen.fxml"));
+            case REGISTER_VIEW -> loader.setLocation(getClass().getResource("/view/Registration Form Part 1.fxml"));
+            case REGISTER_2_VIEW -> loader.setLocation(getClass().getResource("/view/Registration Form Part 2.fxml"));
+            case PROFILE_VIEW -> loader.setLocation(getClass().getResource("/view/Profile.fxml"));
+            case CASE_TABLE_VIEW -> loader.setLocation(getClass().getResource("/view/Case Table View.fxml"));
+            case MODIFY_ROLE_VIEW -> loader.setLocation(getClass().getResource("/view/Modify Role.fxml"));
+            case TRACE_VIEW -> loader.setLocation(getClass().getResource("/view/Trace.fxml"));
         }
 
         try {
