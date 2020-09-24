@@ -148,20 +148,28 @@ public class Registration2Controller extends Controller {
         }
 
         if (isValid) { // all of the information is valid
+            String content, header;
+
             if (fromRegister) {
                 mainController.changeScene(MainController.LOGIN_VIEW);
+                header = "Registered";
+                content = "Account has been successfully created.";
             } else {
                 // generate random password
                 citizen.setPassword(((GovOfficial) mainController.getUserModel()).generatePassword());
                 mainController.changeScene(MainController.MODIFY_ROLE_VIEW);
 
-                // display the random password in a dialog box
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Create Account");
-                alert.setHeaderText("Account Password");
-                alert.setContentText("Password of newly created account is " + citizen.getPassword());
-                alert.showAndWait();
+                // set the random password as content in a dialog box
+                header = "Account Password";
+                content = "Password of newly created account is " + citizen.getPassword();
+
             }
+
+            // display dialog box
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, content);
+            alert.setTitle("Create Account");
+            alert.setHeaderText(header);
+            alert.showAndWait();
         }
     }
 }

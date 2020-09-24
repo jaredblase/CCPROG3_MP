@@ -5,10 +5,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.util.Callback;
 import javafx.util.Pair;
 
@@ -86,6 +83,11 @@ public class TraceController extends Controller {
         caseNums.addAll(tracer.getAssigned());
 
         caseNumber.setItems(caseNums);
+        if (caseNumber.getItems().isEmpty()) {
+            caseNumber.setPromptText("No assigned cases");
+            caseNumber.setDisable(true);
+            caseNumber.setOpacity(1.0);
+        }
     }
 
     /**
@@ -105,6 +107,12 @@ public class TraceController extends Controller {
                     tracer.addContactInfo(i.getValue());
                 }
             }
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Traced Case #" + caseNumber.getValue() + " and" +
+                    " notified " + contacts.size() + " citizen(s).");
+            alert.setTitle("Trace");
+            alert.setHeaderText("Successful");
+            alert.showAndWait();
 
             // remove case number from choices
             update();
