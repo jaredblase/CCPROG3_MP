@@ -198,6 +198,7 @@ public class ProfileController extends Controller {
                 if (isChangedNow) {
                     update();   // to also update changes in the menuController (Update display name at the right side)
                     feedback.setVisible(true);
+                    UserSystem.updateUser(user);
                 }
                 actionButton.setText("Edit");
                 isEditing = false;
