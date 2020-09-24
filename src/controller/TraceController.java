@@ -78,18 +78,12 @@ public class TraceController extends Controller {
     protected void update() {
         menuController.setMainController(mainController);
 
-        init();
-    }
-
-    /**
-     * Retrieves the case numbers of the assigned positive cases and sets them to the combo box.
-     */
-    private void init() {
         ObservableList<Integer> caseNums = FXCollections.observableArrayList();
 
         Tracer tracer = (Tracer) mainController.getUserModel();
         caseNums.addAll(tracer.getAssigned());
 
+        // Retrieves the case numbers of the assigned positive cases and sets them to the combo box.
         caseNumber.setItems(caseNums);
         if (caseNumber.getItems().isEmpty()) {
             caseNumber.setPromptText("No assigned cases");
