@@ -43,12 +43,22 @@ public class ChangePasswordController extends DialogController {
     @Override
     @FXML
     public void onOKAction(Event e) {
-        if (user.getPassword().equals(oldPassTextField.getText())) {
-            invalidOldPass.setVisible(true);
-        } else if (user.setPassword(newPassTextField.getText())) {
+        if (user.getPassword().equals(oldPassTextField.getText()) &&
+                !user.getPassword().equals(newPassTextField.getText()) &&
+                user.setPassword(newPassTextField.getText())) {
             showConfirmation("Password was changed.");
             onCancelAction(e);
         } else {
+            invalidNewPass.setText("Invalid new password");
+            invalidNewPass.setVisible(true);
+        }
+
+        if (!user.getPassword().equals(oldPassTextField.getText())) {
+            invalidOldPass.setVisible(true);
+        }
+
+        if (user.getPassword().equals(newPassTextField.getText())) {
+            invalidNewPass.setText("New password matches old password");
             invalidNewPass.setVisible(true);
         }
     }
