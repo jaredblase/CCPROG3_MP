@@ -15,7 +15,15 @@ import model.Visit;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-
+/**
+ * The TracerController class handles everything that needs to be done for tracing.
+ * Once a case is traced, the table displays every citizen who might be infected.
+ *
+ * @author Gabriel Pua
+ * @author Jared Sy
+ * @version 1.0
+ * @see Controller
+ */
 public class TraceController extends Controller {
     /** The ComboBox that contains the case number of the assigned positive cases. */
     @FXML
@@ -120,6 +128,14 @@ public class TraceController extends Controller {
     }
 }
 
+/*
+ *    Title: PairKeyFactory
+ *    Author: jewelsea
+ *    Date: 2013
+ *    Code version: 1.1
+ *    Availability: http://gist.github.com/jewelsea/5767669
+ *
+ */
 class PairKeyFactory implements Callback<TableColumn.CellDataFeatures<Pair<String, Visit>, String>, ObservableValue<String>> {
     @Override
     public ObservableValue<String> call(TableColumn.CellDataFeatures<Pair<String, Visit>, String> data) {
