@@ -99,8 +99,15 @@ public class TraceController extends Controller {
             tracer.trace(caseNumber.getValue(), contacts);
             tableView.setItems(contacts);
 
+            // check if contact tracer is a contact of the positive case
+            for (Pair<String, Visit> i: contacts) {
+                if (i.getKey().equals(tracer.getUsername())) {
+                    tracer.addContactInfo(i.getValue());
+                }
+            }
+
             // remove case number from choices
-            init();
+            update();
         }
     }
 }
