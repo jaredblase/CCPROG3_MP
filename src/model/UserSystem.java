@@ -277,13 +277,6 @@ public class UserSystem {
                     e.printStackTrace();
                 }
             } while (input.hasNextLine());
-
-            for (int i = 0; i < roles.size(); i++) {
-                // update user in list of users if role is tracer
-                if (roles.get(i).equals("tracer")) {
-                    users.set(i, new Tracer(users.get(i)));
-                }
-            }
         } catch (FileNotFoundException e) {
             System.out.println("Error! Master list not found.\nNo admin currently.");
         } catch (Exception e) {
