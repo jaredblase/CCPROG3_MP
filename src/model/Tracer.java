@@ -105,9 +105,13 @@ public class Tracer extends Citizen {
 
             for (int i = 0; i < contacts.size(); i++) {
                 // add info to prompt user that he may be infected
-                Citizen user = UserSystem.getUser(contacts.get(i));
-                if (user != null)
-                    user.addContactInfo(contactPlaces.get(i));
+                if (contacts.get(i).equals(this.getUsername())) {
+                    this.addContactInfo(contactPlaces.get(i));
+                } else {
+                    Citizen user = UserSystem.getUser(contacts.get(i));
+                    if (user != null)
+                        user.addContactInfo(contactPlaces.get(i));
+                }
 
                 System.out.println(contacts.get(i));
                 System.out.println(contactPlaces.get(i).toString());
