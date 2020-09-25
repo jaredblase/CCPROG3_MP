@@ -21,7 +21,7 @@
             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Check In Date: " />
+            <Label text="Report Date: " />
             <Label fx:id="invalidDate" layoutX="125.0" layoutY="46.0" styleClass="invalid-message" text="Invalid date" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <DatePicker fx:id="datePicker" GridPane.columnIndex="1" />
          </children>

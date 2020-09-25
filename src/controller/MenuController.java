@@ -100,6 +100,7 @@ public class MenuController extends Controller {
                 dialog.initModality(Modality.APPLICATION_MODAL);
                 ((ReportPositiveController) loader.getController()).setUser(user);
                 dialog.showAndWait();
+                update();
             } catch (IOException e) {
                 e.printStackTrace();
             }
