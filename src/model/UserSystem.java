@@ -273,12 +273,15 @@ public class UserSystem {
                     users.add(new Citizen(new Name(name[0], name[1], name[2]), homeAdd,
                                     officeAdd, phoneNumber, email, info[0], password, false));
                 } catch (Exception e) {
-                    System.out.println("User file not found!");
+                    System.out.println("User file not found: " + info[0] + ".act!");
                     e.printStackTrace();
                 }
             } while (input.hasNextLine());
         } catch (FileNotFoundException e) {
-            System.out.println("Error! Master list not found.\nNo admin currently.");
+            users.add(new Citizen(new Name("Admin", "", "Gov"), "Malacañang Palace",
+                    "City Hall", "09123456789", "admin@gov.ph", "ADMIN2020", "@Dm1n0202", true));
+            roles.add("official");
+            System.out.println("Error! Master list not found.\nCreating default admin...");
         } catch (Exception e) {
             e.printStackTrace();
         }
