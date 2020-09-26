@@ -137,10 +137,10 @@ public class UserSystem {
      */
     public static Citizen login(String username, String password) {
         int index = getIndexOf(username.toUpperCase());
+        System.out.println(index);
 
         if (index != -1 && users.get(index).getPassword().equals(password)) {
-            String role = getRoleOf(index);
-            switch (role) {
+            switch (getRoleOf(index)) {
                 case "citizen":
                     return new Citizen(users.get(index));
 
@@ -278,6 +278,7 @@ public class UserSystem {
                 }
             } while (input.hasNextLine());
         } catch (FileNotFoundException e) {
+            usernames.add("ADMIN2020");
             users.add(new Citizen(new Name("Admin", "", "Gov"), "Malacañang Palace",
                     "City Hall", "09123456789", "admin@gov.ph", "ADMIN2020", "@Dm1n0202", true));
             roles.add("official");
