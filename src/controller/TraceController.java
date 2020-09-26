@@ -6,9 +6,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.Pair;
-
 import model.Tracer;
 import model.Visit;
 
@@ -105,6 +106,8 @@ public class TraceController extends Controller {
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Traced Case #" + caseNumber.getValue() + " and" +
                     " notified " + contacts.size() + " citizen(s).");
+            ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(
+                    new Image(getClass().getResource("/resources/Trace.png").toString()));
             alert.setTitle("Trace");
             alert.setHeaderText("Successful");
             alert.showAndWait();

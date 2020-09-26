@@ -4,7 +4,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 import model.Citizen;
 import model.GovOfficial;
 import model.UserSystem;
@@ -167,6 +168,8 @@ public class Registration2Controller extends Controller {
 
             // display dialog box
             Alert alert = new Alert(Alert.AlertType.INFORMATION, content);
+            ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(
+                    new Image(getClass().getResource("/resources/Register.png").toString()));
             alert.setTitle("Create Account");
             alert.setHeaderText(header);
             alert.showAndWait();
