@@ -2,7 +2,4 @@ user.png - https://www.flaticon.com/authors/freepik
 lock.png - https://www.flaticon.com/authors/freepik
 arrow.png - https://thenounproject.com/term/arrow-left-thin/582071/
 Check In.png - https://www.pngwave.com/png-clip-art-vgpyl
-Trace.png - https://www.flaticon.com/authors/freepik
 Warning.png - https://www.pngegg.com/en/png-yabil
-Register.png - https://dmd.center/wp-content/uploads/2015/12/Register-Icon.png
-DOH Logo.png - wikipedia
