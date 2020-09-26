@@ -113,8 +113,6 @@ public class Tracer extends Citizen {
                         user.addContactInfo(contactPlaces.get(i));
                 }
 
-                System.out.println(contacts.get(i));
-                System.out.println(contactPlaces.get(i).toString());
                 list.add(new Pair<>(contacts.get(i), contactPlaces.get(i)));
             }
 

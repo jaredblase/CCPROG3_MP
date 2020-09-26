@@ -302,9 +302,6 @@ public class UserSystem {
                     }
                 } else {
                     info = temp.split("\\s+");
-                    for(String k : info) {
-                        System.out.println(k);
-                    }
                     date = info[1].split(",");
                     time = Integer.parseInt(info[2]);
                     builder.setDate(Integer.parseInt(date[2]), Integer.parseInt(date[0]) - 1, Integer.parseInt(date[1]));
