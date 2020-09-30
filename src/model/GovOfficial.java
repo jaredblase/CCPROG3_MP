@@ -30,6 +30,15 @@ public class GovOfficial extends Citizen {
         positive.setTracer(tracer);
     }
 
+    public boolean filter(Case c, String city, char status, LocalDate start, LocalDate end, boolean mustBeUnassigned,
+                String severity) {
+        if (severity != null) {
+            return c.getSeverity().equals(severity) && filter(c, city, status, start, end, mustBeUnassigned);
+        }
+
+        return filter(c, city, status, start, end, mustBeUnassigned);
+    }
+
     /**
      * Checks whether the given case fits the criteria (parameter).
      * @param c the specific case to check.

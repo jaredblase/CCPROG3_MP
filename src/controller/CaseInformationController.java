@@ -61,6 +61,8 @@ public class CaseInformationController extends DialogController{
     /** The Button that, when clicked, assigns the positive case to a selected contact tracer.*/
     @FXML
     private Button assignButton;
+    @FXML
+    private Label severity;
 
     /**
      * Automatically called when the corresponding fxml file is loaded by FXML loader.
@@ -96,6 +98,7 @@ public class CaseInformationController extends DialogController{
         reportDate.setText(format.format(positive.getReportDate().getTime()));
         tracer.setText(positive.getTracer());
         status.setText(String.valueOf(positive.getStatus()));
+        severity.setText(positive.getSeverity());
 
         if (!positive.getTracer().equals("000")) {
             tracerBox.setVisible(false);

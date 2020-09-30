@@ -228,8 +228,8 @@ public class UserSystem {
      * @param username the username of the user who reported positive.
      * @param date the date when the case is reported.
      */
-    public static void addCase(String username, Calendar date) {
-        cases.add(new Case(username, date));
+    public static void addCase(String username, Calendar date, String severity) {
+        cases.add(new Case(username, date, severity));
     }
 
     /**
@@ -332,7 +332,7 @@ public class UserSystem {
 
                 Citizen temp = getUser(info[1]); // get the positive user
                 if (temp != null) {
-                    temp.reportPositive(builder.build()); // set isPositive to true
+                    temp.reportPositive(builder.build(), info[5]); // set isPositive to true
                     int index = Integer.parseInt(info[0]) - 1;
                     cases.get(index).setTracer(info[3]);
                     cases.get(index).setStatus(info[4].charAt(0));

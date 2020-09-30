@@ -49,6 +49,8 @@ public class CaseTableViewController extends Controller {
     /** The statuses of the positive cases. */
     @FXML
     private TableColumn<Case, Character> statusCol;
+    @FXML
+    private TableColumn<Case, String> severityCol;
     /** The TextField which is used to filter the positive cases by city. */
     @FXML
     private TextField cityFilter;
@@ -79,6 +81,8 @@ public class CaseTableViewController extends Controller {
     private MenuController menuController;
     /** The list of positive cases in the system. */
     private ObservableList<Case> cases;
+    @FXML
+    private ComboBox<String> severity;
 
     /**
      * Automatically called when the corresponding fxml file is loaded by FXML loader.
@@ -88,6 +92,7 @@ public class CaseTableViewController extends Controller {
     public void initialize() {
         // initialize statusFilter
         statusFilter.getItems().addAll('P', 'T', '\0');
+        severity.getItems().addAll("Asymptomatic", "Mild", "Severe");
 
         // initialize column data types
         caseNumCol.setCellValueFactory(new PropertyValueFactory<>("caseNum"));
@@ -95,6 +100,7 @@ public class CaseTableViewController extends Controller {
         usernameCol.setCellValueFactory(new PropertyValueFactory<>("username"));
         tracerCol.setCellValueFactory(new PropertyValueFactory<>("tracer"));
         statusCol.setCellValueFactory(new PropertyValueFactory<>("status"));
+        severityCol.setCellValueFactory(new PropertyValueFactory<>("severity"));
 
         // set rows to display a dialog when double clicked
         tableView.setRowFactory(tv -> {
@@ -155,7 +161,7 @@ public class CaseTableViewController extends Controller {
         actionButton.setOnAction(e -> {
             filteredList.setPredicate(c -> ((GovOfficial) this.mainController.getUserModel())
                     .filter(c, cityFilter.getText(), statusFilter.getValue() == null ? '\0' : statusFilter.getValue(),
-                            startFilter.getValue(), endFilter.getValue(), unassignedOnly.isSelected()));
+                            startFilter.getValue(), endFilter.getValue(), unassignedOnly.isSelected(), severity.getValue()));
             currentCtr.setText("Current Count: " + filteredList.size());
         });
 

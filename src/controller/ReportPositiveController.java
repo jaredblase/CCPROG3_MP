@@ -2,6 +2,7 @@ package controller;
 
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 
@@ -22,6 +23,8 @@ public class ReportPositiveController extends DialogController {
     /** The message displayed if the date is invalid. */
     @FXML
     private Label invalidDate;
+    @FXML
+    private ComboBox<String> severity;
 
     /**
      * Automatically called when the corresponding fxml file is loaded by FXML loader.
@@ -30,6 +33,7 @@ public class ReportPositiveController extends DialogController {
     @FXML
     public void initialize() {
         datePicker.setOnAction(e -> invalidDate.setVisible(false));
+        severity.getItems().addAll("Asymptomatic", "Mild", "Severe");
     }
 
     /**
@@ -38,15 +42,17 @@ public class ReportPositiveController extends DialogController {
      */
     @Override
     public void onOKAction(Event e) {
-        if (datePicker.getValue() != null) {
+        if (datePicker.getValue() != null && severity.getValue() != null) {
             LocalDate ld = datePicker.getValue();
             Calendar date = Calendar.getInstance();
             date.set(ld.getYear(), ld.getMonthValue() - 1, ld.getDayOfMonth());
-            user.reportPositive(date);
+            user.reportPositive(date, severity.getValue());
             showConfirmation("Case has been recorded. Thank you for reporting.");
             onCancelAction(e);
         } else {
             invalidDate.setVisible(true);
         }
     }
+
+
 }

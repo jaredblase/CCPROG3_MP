@@ -23,6 +23,7 @@ public class Case {
     private char status;
     /** The total number of cases. */
     private static int ctr = 0;
+    private String severity;
 
     /**
      * Constructs a Case object and assigns the username and date from the
@@ -31,12 +32,13 @@ public class Case {
      * @param username the username of the citizen who reported positive.
      * @param date the date when the user reported positive.
      */
-    public Case(String username, Calendar date) {
+    public Case(String username, Calendar date, String severity) {
         this.CASE_NUM = ++ctr;
         this.USERNAME = username;
         this.REPORT_DATE = date;
         this.tracer = "000";
         this.status = 'P';
+        this.severity = severity;
     }
 
     /**
@@ -77,6 +79,10 @@ public class Case {
      */
     public char getStatus() {
         return status;
+    }
+
+    public String getSeverity() {
+        return severity;
     }
 
     /**

@@ -228,9 +228,9 @@ public class Citizen {
      * this record to the list of cases in the system.
      * @param date the date when the user reported positive.
      */
-    public void reportPositive(Calendar date) {
+    public void reportPositive(Calendar date, String severity) {
         isPositive = true;
-        UserSystem.addCase(this.USERNAME, date);
+        UserSystem.addCase(this.USERNAME, date, severity);
     }
 
     /**
