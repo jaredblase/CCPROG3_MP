@@ -62,15 +62,16 @@ public class MainController {
         FXMLLoader loader = new FXMLLoader();
 
         // load the scene from the corresponding fxml file
-        switch (view) {
-            case LOGIN_VIEW -> loader.setLocation(getClass().getResource("/view/Login Screen.fxml"));
-            case REGISTER_VIEW -> loader.setLocation(getClass().getResource("/view/Registration Form Part 1.fxml"));
-            case REGISTER_2_VIEW -> loader.setLocation(getClass().getResource("/view/Registration Form Part 2.fxml"));
-            case PROFILE_VIEW -> loader.setLocation(getClass().getResource("/view/Profile.fxml"));
-            case CASE_TABLE_VIEW -> loader.setLocation(getClass().getResource("/view/Case Table View.fxml"));
-            case MODIFY_ROLE_VIEW -> loader.setLocation(getClass().getResource("/view/Modify Role.fxml"));
-            case TRACE_VIEW -> loader.setLocation(getClass().getResource("/view/Trace.fxml"));
-        }
+        loader.setLocation(getClass().getResource("/view/" + switch (view) {
+            case LOGIN_VIEW         -> "Login Screen";
+            case REGISTER_VIEW      -> "Registration Form Part 1";
+            case REGISTER_2_VIEW    -> "Registration Form Part 2";
+            case PROFILE_VIEW       -> "Profile";
+            case CASE_TABLE_VIEW    -> "Case Table View";
+            case MODIFY_ROLE_VIEW   -> "Modify Role";
+            case TRACE_VIEW         -> "Trace";
+            default                 -> "";
+        } + ".fxml"));
 
         try {
             primaryStage.setScene(new Scene(loader.load(), Color.TRANSPARENT));
